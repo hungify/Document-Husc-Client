@@ -1,10 +1,13 @@
-import "antd/dist/antd.css";
-import MainLayout from "layout/MainLayout";
 import DocumentDetail from "pages/DocumentDetail/DocumentDetail";
-import DocumentList from "pages/DocumentList/DocumentList";
+import DocumentView from "pages/DocumentView/DocumentView";
 import Home from "pages/Home/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import "antd/dist/antd.css";
+import Login from "pages/TabsAuth/TabsAuth";
+import TabsAuth from "pages/TabsAuth/TabsAuth";
+import Register from "pages/Register/Register";
+import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -12,8 +15,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="d/:documentId" element={<DocumentDetail />} />
+          <Route path="a" element={<TabsAuth />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="forgot" element={<ForgotPassword />} />
+          </Route>
 
+          <Route path="d/:documentId" element={<DocumentDetail />} />
+          <Route path="v:documentId" element={<DocumentView />} />
           <Route
             path="*"
             element={
