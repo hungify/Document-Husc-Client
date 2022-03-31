@@ -1,7 +1,7 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Drawer, Space } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
-import { SaveFile } from "components/SaveFile/SaveFile";
+import { SaveFile } from "components/SaveFile";
 import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
