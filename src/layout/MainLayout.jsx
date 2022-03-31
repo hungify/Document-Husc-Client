@@ -1,33 +1,15 @@
 import { AppstoreOutlined, FileTextOutlined, TeamOutlined } from "@ant-design/icons";
 import { Badge, Breadcrumb, Layout, Menu } from "antd";
-import LogoHusc from "assets/images/logo/logo.svg";
+import Footer from "components/Footer/Footer";
+import Header from "components/Header/Header";
 import { agencies, categories, documents } from "mocks";
-import Home from "pages/Home/Home";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, matchRoutes, useLocation, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 const { SubMenu } = Menu;
-const { Header, Content, Sider, Footer } = Layout;
+const { Content, Sider } = Layout;
 
-const HeaderAnt = styled(Header)`
-  background: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-`;
-const Logo = styled.div`
-  float: left;
-  width: 120px;
-  height: 50px;
-  margin: 0px 24px 20px 0;
-  background: rgba(255, 255, 255, 0.3);
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-`;
-const SiderStyled = styled(Sider)`
+const SiderAnt = styled(Sider)`
   height: 100vh;
   background: #fff;
   overflow-y: scroll;
@@ -51,6 +33,8 @@ const rootSubmenuKeys = ["document", "agency", "category"];
 export default function MainLayout(props) {
   const [collapsed, setCollapsed] = React.useState(false);
   const [openKeys, setOpenKeys] = React.useState(["document"]);
+  const { pathname } = useLocation();
+  const [pathnameSplit] = React.useState(pathname.split("/"));
 
   const handleMenuChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -70,18 +54,9 @@ export default function MainLayout(props) {
         minHeight: "100vh",
       }}
     >
-      <HeaderAnt>
-        <Logo>
-          <img src={LogoHusc} alt="" />
-        </Logo>
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1">Sinh viên</Menu.Item>
-          <Menu.Item key="2">Giảng viên</Menu.Item>
-          <Menu.Item key="3">Cán bộ</Menu.Item>
-        </Menu>
-      </HeaderAnt>
+      <Header />
       <Layout hasSider>
-        <SiderStyled
+        <SiderAnt
           width={380}
           collapsible
           collapsed={collapsed}
@@ -130,19 +105,32 @@ export default function MainLayout(props) {
               ))}
             </SubMenu>
           </Menu>
-        </SiderStyled>
-        <Layout style={{ marginLeft: 380 }}>
-          <Breadcrumb style={{ margin: "15px 0 5px 0" }}>
-            <Breadcrumb.Item>
-              <Link to="/">Trang chủ</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link to="search">Tra cứu văn bản</Link>
-            </Breadcrumb.Item>
-          </Breadcrumb>
+        </SiderAnt>
+        <Layout style={{ marginLeft: collapsed ? 80 : 380 }}>
+          {!pathnameSplit[1].includes("a") && (
+            <Breadcrumb style={{ margin: "15px 0 5px 0" }}>
+              <Breadcrumb.Item>
+                <Link to="/">Trang chủ</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link to={`${pathnameSplit[pathnameSplit.length - 1]}`}>
+                  {pathnameSplit[pathnameSplit.length - 1] === "search"
+                    ? "Tìm kiếm"
+                    : pathnameSplit[pathnameSplit.length - 1] === "document"
+                    ? "Loại văn bản"
+                    : pathnameSplit[pathnameSplit.length - 1] === "agency"
+                    ? "Cơ quan ban phát"
+                    : pathnameSplit[pathnameSplit.length - 1] === "category"
+                    ? "Chuyên mục"
+                    : "Tra cứu văn bản"}
+                </Link>
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          )}
           <Content style={{ margin: "10px 10px 0", overflow: "initial" }}>{props.children}</Content>
         </Layout>
       </Layout>
+      <Footer />
     </Layout>
   );
 }

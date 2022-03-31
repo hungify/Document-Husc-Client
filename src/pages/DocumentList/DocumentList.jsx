@@ -1,6 +1,13 @@
-import { ExpandOutlined, LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  ExpandOutlined,
+  FundViewOutlined,
+  LikeOutlined,
+  MessageOutlined,
+} from "@ant-design/icons";
 import {
   Avatar,
+  BackTop,
   Badge,
   Button,
   Card,
@@ -12,15 +19,55 @@ import {
   Space,
   Typography,
 } from "antd";
+import Icon from "@ant-design/icons";
 import pdfFile from "assets/pdf/test.pdf";
+import DropdownFilter from "components/DropdownFilter/DropdownFilter";
 import { SaveFile } from "components/SaveFile/SaveFile";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 const RowAnt = styled(Row)`
   margin-top: 20px;
+  display: flex;
+  align-items: center;
 `;
 const ColAnt = styled(Col)``;
+const WrapperIcon = styled.div`
+  box-shadow: 0 0.6em 1em 0.2em;
+  transform: translateY(0%);
+  transition: ease-out 200ms;
+  transition-property: transform, background-color;
+  min-width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: hsl(210, 100%, 39%);
+  box-shadow: 0 0.6em 1em 0.2em hsla(210, 100%, 39%, 0.4);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 200%;
+    transform: translateY(-30%);
+    background-color: rgba(0, 0, 0, 0);
+    display: block;
+  }
+  &:hover {
+    transform: translateY(-22%);
+    background-color: hsl(210, 100%, 49%);
+  }
+`;
+
+const BackTopAnt = styled(BackTop)`
+  right: 65px;
+`;
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -36,16 +83,23 @@ for (let i = 0; i < 23; i++) {
 }
 
 const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
+  <Link to={"a"}>
+    <Space>
+      <Icon style={{ marginRight: 8 }} component={icon} />
+      {text}
+    </Space>
+  </Link>
 );
 export default function DocumentList() {
   return (
     <Layout>
       <RowAnt>
-        <ColAnt span={24}>123 Văn bản</ColAnt>
+        <ColAnt span={20}>
+          <Typography.Text strong>Có tất cả 123 Văn bản</Typography.Text>
+        </ColAnt>
+        <ColAnt span={4}>
+          <DropdownFilter />
+        </ColAnt>
         <Divider
           type="horizontal"
           style={{
@@ -57,12 +111,15 @@ export default function DocumentList() {
         <ColAnt span={24}>
           <List
             itemLayout="vertical"
-            size="small"
+            size="default"
             pagination={{
+              pageSize: 10,
               onChange: (page) => {
                 console.log(page);
               },
-              pageSize: 10,
+              style: {
+                textAlign: "center",
+              },
             }}
             dataSource={listData}
             renderItem={(item) => (
@@ -70,9 +127,7 @@ export default function DocumentList() {
                 <Card>
                   <List.Item
                     actions={[
-                      <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                      <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                      <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                      <IconText icon={FundViewOutlined} text="156" key="list-vertical-star-o" />,
                     ]}
                   >
                     <List.Item.Meta
@@ -142,6 +197,11 @@ export default function DocumentList() {
           />
         </ColAnt>
       </Row>
+      <BackTopAnt visibilityHeight={1000}>
+        <WrapperIcon>
+          <ArrowUpOutlined />
+        </WrapperIcon>
+      </BackTopAnt>
     </Layout>
   );
 }
