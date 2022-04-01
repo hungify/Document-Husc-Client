@@ -1,10 +1,10 @@
 import { AppstoreOutlined, FileTextOutlined, TeamOutlined } from "@ant-design/icons";
 import { Badge, Breadcrumb, Layout, Menu } from "antd";
-import Footer from "components/Footer/Footer";
-import Header from "components/Header/Header";
+import Footer from "components/Footer";
+import Header from "components/Header";
 import { agencies, categories, documents } from "mocks";
 import React from "react";
-import { Link, matchRoutes, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -30,7 +30,7 @@ const BadgeAnt = styled(Badge)`
 `;
 
 const rootSubmenuKeys = ["document", "agency", "category"];
-export default function MainLayout(props) {
+export default function UserLayout(props) {
   const [collapsed, setCollapsed] = React.useState(false);
   const [openKeys, setOpenKeys] = React.useState(["document"]);
   const { pathname } = useLocation();
@@ -56,13 +56,7 @@ export default function MainLayout(props) {
     >
       <Header />
       <Layout hasSider>
-        <SiderAnt
-          width={380}
-          collapsible
-          collapsed={collapsed}
-          onCollapse={handleOnCollapse}
-          style={{}}
-        >
+        <SiderAnt width={380} collapsible collapsed={collapsed} onCollapse={handleOnCollapse}>
           <Menu mode="inline" openKeys={openKeys} onOpenChange={handleMenuChange}>
             <SubMenu key="document" icon={<FileTextOutlined />} title="Loại văn bản">
               {documents.data.map((document) => (

@@ -1,6 +1,6 @@
 import { Layout } from "antd";
-import SearchFilter from "components/SearchFilter/SearchFilter";
-import MainLayout from "layout/MainLayout";
+import SearchFilter from "components/SearchFilter";
+import MainLayout from "layout/UserLayout/UserLayout";
 import DocumentList from "pages/DocumentList/DocumentList";
 import React from "react";
 import styled from "styled-components";

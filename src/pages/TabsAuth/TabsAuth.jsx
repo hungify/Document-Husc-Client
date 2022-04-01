@@ -1,5 +1,5 @@
 import { Tabs } from "antd";
-import MainLayout from "layout/MainLayout";
+import UserLayout from "layout/UserLayout/UserLayout";
 import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
 import Login from "pages/Login/Login";
 import Register from "pages/Register/Register";
@@ -17,7 +17,7 @@ export default function TabsAuth() {
     navigate(key);
   }
   return (
-    <MainLayout>
+    <UserLayout>
       <Tabs onChange={handleOnChangeTab} activeKey={key}>
         <Tabs.TabPane tab="Đăng nhập" key="login">
           <Login active={key} />
@@ -29,6 +29,6 @@ export default function TabsAuth() {
           <Register active={key} />
         </Tabs.TabPane>
       </Tabs>
-    </MainLayout>
+    </UserLayout>
   );
 }

@@ -1,9 +1,7 @@
-import {
+import Icon, {
   ArrowUpOutlined,
   ExpandOutlined,
-  FundViewOutlined,
-  LikeOutlined,
-  MessageOutlined,
+  FundViewOutlined
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -17,12 +15,11 @@ import {
   List,
   Row,
   Space,
-  Typography,
+  Typography
 } from "antd";
-import Icon from "@ant-design/icons";
 import pdfFile from "assets/pdf/test.pdf";
-import DropdownFilter from "components/DropdownFilter/DropdownFilter";
-import { SaveFile } from "components/SaveFile/SaveFile";
+import DropdownFilter from "components/DropdownFilter";
+import { SaveFile } from "components/SaveFile";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
