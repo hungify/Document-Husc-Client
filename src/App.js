@@ -1,17 +1,21 @@
 import "antd/dist/antd.css";
 import DashBoard from "pages/Admin/DashBoard/Dashboard";
+import ForgotPassword from "pages/Auth/ForgotPassword/ForgotPassword";
+import Login from "pages/Auth/Login/Login";
+import Register from "pages/Auth/Register/Register";
+import TabsAuth from "pages/Auth/TabsAuth/TabsAuth";
 import DocumentDetail from "pages/DocumentDetail/DocumentDetail";
-import DocumentView from "pages/DocumentView/DocumentView";
-import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
+import ForwardList from "pages/ForwrardList/ForwardList";
 import Home from "pages/Home/Home";
-import Register from "pages/Register/Register";
-import { default as Login, default as TabsAuth } from "pages/TabsAuth/TabsAuth";
+import InboxList from "pages/InboxList/InboxList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { GlobalStyle } from "styles/global";
 import "./App.css";
 
 function App() {
   return (
-    <div>
+    <>
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -20,13 +24,24 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="forgot" element={<ForgotPassword />} />
           </Route>
+
+          <Route path="notifications" element={<InboxList />}>
+            <Route path="inbox" element={<InboxList />} />
+            <Route path="forward" element={<ForwardList />} />
+          </Route>
+
           <Route path="d/:documentId" element={<DocumentDetail />} />
-          <Route path="v:documentId" element={<DocumentView />} />
+          {/* <Route path="v:documentId" element={<DocumentView />} /> */}
           {/* <Route path="dashboard" element={<DashBoard />}>
             <Route path="d/post" element={<DocumentDetail />} />
             <Route path="d/:documentId" element={<DocumentDetail />} />
           </Route> */}
-          <Route path="/dashboard" element={<DashBoard />} />
+
+          <Route path="m">
+            <Route path="dashboard" element={<DashBoard />} />
+            <Route path="category" element={<DocumentDetail />} />
+            <Route path="document" element={<DocumentDetail />} />
+          </Route>
           <Route
             path="*"
             element={
@@ -37,7 +52,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 

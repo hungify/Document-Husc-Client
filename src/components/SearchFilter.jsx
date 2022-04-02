@@ -1,5 +1,5 @@
 import { Checkbox, Col, DatePicker, Input, Row, Select, TreeSelect } from "antd";
-import { agencies, categories, documents } from "mocks";
+import { agencies, categories, categoriesTree, documents } from "config/sidebar";
 import React from "react";
 import styled from "styled-components";
 
@@ -14,48 +14,11 @@ const SearchInput = styled(Input.Search)`
 const SelectWrapper = styled.div`
   padding: 8px 10px;
 `;
-
-const treeData = [
-  {
-    title: "Node1",
-    value: "0-0",
-    key: "0-0",
-    children: [
-      {
-        title: "Child Node1",
-        value: "0-0-0",
-        key: "0-0-0",
-      },
-    ],
-  },
-  {
-    title: "Node2",
-    value: "0-1",
-    key: "0-1",
-    children: [
-      {
-        title: "Child Node3",
-        value: "0-1-0",
-        key: "0-1-0",
-      },
-      {
-        title: "Child Node4",
-        value: "0-1-1",
-        key: "0-1-1",
-      },
-      {
-        title: "Child Node5",
-        value: "0-1-2",
-        key: "0-1-2",
-      },
-    ],
-  },
-];
 const plainOptions = ["Số hiệu văn bản"];
 const defaultCheckedList = [];
 
 export default function SearchFilter() {
-  const [value, setValue] = React.useState([]);
+  const [categoriesTreeValue, setCategoriesTreeValue] = React.useState([]);
   const [agency, setAgency] = React.useState("");
   const [document, setDocument] = React.useState("");
   const [dataDocument, setDataDocument] = React.useState(documents.data);
@@ -66,8 +29,8 @@ export default function SearchFilter() {
   const [checkAll, setCheckAll] = React.useState(false);
   const [placeholder, setPlaceholder] = React.useState("Tìm theo tiêu đề");
 
-  const handleTreeChange = (value) => {
-    setValue(value);
+  const handleTreeCategoryChange = (value) => {
+    setCategoriesTreeValue(value);
   };
 
   const handleSearchDocument = (value) => {
@@ -118,12 +81,12 @@ export default function SearchFilter() {
           <SelectWrapper>
             <Select
               size="large"
-              showSearch
               defaultActiveFirstOption={false}
               showArrow={true}
               filterOption={false}
               notFoundContent={true}
-              allowClear
+              allowClear={true}
+              showSearch={true}
               onSearch={handleSearchDocument}
               onChange={handleChangeDocument}
               style={{ width: "100%" }}
@@ -139,15 +102,15 @@ export default function SearchFilter() {
         </Col>
         <Col span={8}>
           <TreeSelect
-            treeData={treeData}
+            treeData={categoriesTree}
             style={{
               width: "100%",
               height: "100%",
               padding: "8px 10px",
             }}
             size="large"
-            value={value}
-            onChange={handleTreeChange}
+            value={categoriesTreeValue}
+            onChange={handleTreeCategoryChange}
             treeCheckable={true}
             showCheckedStrategy={TreeSelect.SHOW_PARENT}
             placeholder="Chọn chuyên mục"
@@ -200,7 +163,7 @@ export default function SearchFilter() {
         </Col>
         <Col span={6}>
           <DatePicker.RangePicker
-            format="DD-MM-YYYY"
+            format="DD/MM/YYYY"
             onChange={handleOnDateChange}
             onOk={handleOnDateOk}
           />

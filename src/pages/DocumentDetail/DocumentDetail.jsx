@@ -1,7 +1,7 @@
 import { Col, Row, Tabs } from "antd";
 import PreviewPdf from "components/PreviewPdf";
 import SummaryTable from "components/SummaryTable";
-import UserLayout from "layout/UserLayout/UserLayout";
+import GuestLayout from "layout/GuestLayout/GuestLayout";
 import React from "react";
 
 export default function DocumentDetail() {
@@ -10,7 +10,7 @@ export default function DocumentDetail() {
     setActiveTab(key);
   };
   return (
-    <UserLayout>
+    <GuestLayout>
       <Row>
         <Col span={24}>
           <Tabs defaultActiveKey="1" type="card" size={"large"} onChange={handleTabChange}>
@@ -29,6 +29,6 @@ export default function DocumentDetail() {
           </Tabs>
         </Col>
       </Row>
-    </UserLayout>
+    </GuestLayout>
   );
 }
