@@ -1,5 +1,4 @@
 import { Menu } from "antd";
-import SubMenu from "layout/components/SubMenu";
 import React from "react";
 
 export default function MenuNavigation(props) {
@@ -8,7 +7,6 @@ export default function MenuNavigation(props) {
   const [openKeys, setOpenKeys] = React.useState([]);
 
   const handleMenuChange = (keys) => {
-    console.log("🚀 :: keys", keys);
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       setOpenKeys(keys);
@@ -17,7 +15,6 @@ export default function MenuNavigation(props) {
     }
   };
   const handleMenuSelect = (keysSelected) => {
-    console.log("🚀 :: keysSelected", keysSelected);
     onMenuSelect(keysSelected);
   };
 
@@ -29,30 +26,51 @@ export default function MenuNavigation(props) {
       onOpenChange={handleMenuChange}
     >
       {hasSubMenu
-        ? dataRender.map((d) => {
-            return d.documents ? (
-              <SubMenu
-                dataRender={d.documents.data}
-                icon={d.documents.icon}
-                title={d.documents.title}
-                valueKey={d.documents.key}
-              />
+        ? dataRender.map((d) =>
+            d.documents ? (
+              <Menu.SubMenu key={d.documents.key} icon={d.documents.icon} title={d.documents.title}>
+                {d.documents.data.map((document) => (
+                  <Menu.Item key={document.id}>{document.title}</Menu.Item>
+                ))}
+              </Menu.SubMenu>
             ) : d.agencies ? (
-              <SubMenu
-                dataRender={d.agencies.data}
-                icon={d.agencies.icon}
-                title={d.agencies.title}
-                valueKey={d.agencies.key}
-              />
+              <Menu.SubMenu icon={d.agencies.icon} title={d.agencies.title} key={d.agencies.key}>
+                {d.agencies.data.map((agency) => (
+                  <Menu.Item>{agency.title}</Menu.Item>
+                ))}
+              </Menu.SubMenu>
             ) : (
-              <SubMenu
-                dataRender={d.categories.data}
+              <Menu.SubMenu
                 icon={d.categories.icon}
                 title={d.categories.title}
-                valueKey={d.categories.key}
-              />
-            );
-          })
+                key={d.categories.key}
+              >
+                {d.categories.data.map((category) => (
+                  <div key={category.id}>
+                    {category.children.length > 0 ? (
+                      <Menu.SubMenu title={category.title}>
+                        {category.children.map((child) =>
+                          child.children.length > 0 ? (
+                            <div key={child.id}>
+                              <Menu.SubMenu title={child.title}>
+                                {child?.children.map((c) => (
+                                  <Menu.Item key={c.id}>{c.title}</Menu.Item>
+                                ))}
+                              </Menu.SubMenu>
+                            </div>
+                          ) : (
+                            <Menu.Item key={child.id}>{child.title}</Menu.Item>
+                          )
+                        )}
+                      </Menu.SubMenu>
+                    ) : (
+                      <Menu.Item key={category.id}>{category.title}</Menu.Item>
+                    )}
+                  </div>
+                ))}
+              </Menu.SubMenu>
+            )
+          )
         : dataRender.map((d) => (
             <Menu.Item key={d.key} icon={d.icon}>
               {d.title}
