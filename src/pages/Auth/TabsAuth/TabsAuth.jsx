@@ -1,23 +1,30 @@
 import { Tabs } from "antd";
-import UserLayout from "layout/UserLayout/UserLayout";
-import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
-import Login from "pages/Login/Login";
-import Register from "pages/Register/Register";
+import GuestLayout from "layout/GuestLayout/GuestLayout";
+import ForgotPassword from "pages/Auth/ForgotPassword/ForgotPassword";
+import Login from "pages/Auth/Login/Login";
+import Register from "pages/Auth/Register/Register";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function TabsAuth() {
   const { pathname } = useLocation();
-  const [pathnameSplit] = React.useState(pathname.split("/"));
+  const navigate = useNavigate();
+  const pathnameSplit = pathname.split("/");
   const [key, setKey] = React.useState(pathnameSplit[pathnameSplit.length - 1]);
 
-  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (pathname === "/a") {
+      setKey("login");
+      navigate(`/a/login`);
+    }
+  }, [pathname]);
+
   function handleOnChangeTab(key) {
     setKey(key);
     navigate(key);
   }
   return (
-    <UserLayout>
+    <GuestLayout>
       <Tabs onChange={handleOnChangeTab} activeKey={key}>
         <Tabs.TabPane tab="Đăng nhập" key="login">
           <Login active={key} />
@@ -29,6 +36,6 @@ export default function TabsAuth() {
           <Register active={key} />
         </Tabs.TabPane>
       </Tabs>
-    </UserLayout>
+    </GuestLayout>
   );
 }
