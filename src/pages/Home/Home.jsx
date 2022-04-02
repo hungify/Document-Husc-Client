@@ -1,6 +1,7 @@
 import { Layout } from "antd";
-import SearchFilter from "components/SearchFilter/SearchFilter";
-import MainLayout from "layout/MainLayout";
+import SearchFilter from "components/SearchFilter";
+import GuestLayout from "layout/GuestLayout/GuestLayout";
+
 import DocumentList from "pages/DocumentList/DocumentList";
 import React from "react";
 import styled from "styled-components";
@@ -13,7 +14,7 @@ const HeaderWrapper = styled(Header)`
 
 export default function Home() {
   return (
-    <MainLayout>
+    <GuestLayout>
       <Layout>
         <HeaderWrapper>
           <SearchFilter />
@@ -25,6 +26,6 @@ export default function Home() {
         </Layout>
         <Footer>Footer</Footer>
       </Layout>
-    </MainLayout>
+    </GuestLayout>
   );
 }

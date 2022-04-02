@@ -1,9 +1,8 @@
 import { Col, Row, Tabs } from "antd";
-import PreviewPdf from "components/PreviewPdf/PreviewPdf";
-import SummaryTable from "components/SummaryTable/SummaryTable";
-import MainLayout from "layout/MainLayout";
+import PreviewPdf from "components/PreviewPdf";
+import SummaryTable from "components/SummaryTable";
+import GuestLayout from "layout/GuestLayout/GuestLayout";
 import React from "react";
-import { useParams } from "react-router-dom";
 
 export default function DocumentDetail() {
   const [activeTab, setActiveTab] = React.useState(0);
@@ -11,7 +10,7 @@ export default function DocumentDetail() {
     setActiveTab(key);
   };
   return (
-    <MainLayout>
+    <GuestLayout>
       <Row>
         <Col span={24}>
           <Tabs defaultActiveKey="1" type="card" size={"large"} onChange={handleTabChange}>
@@ -30,6 +29,6 @@ export default function DocumentDetail() {
           </Tabs>
         </Col>
       </Row>
-    </MainLayout>
+    </GuestLayout>
   );
 }
