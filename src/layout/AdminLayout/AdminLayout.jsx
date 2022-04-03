@@ -1,16 +1,16 @@
 import { Layout } from "antd";
 import { headerConfig } from "config/header";
-import { sidebarConfig } from "config/sidebar";
+import { menuConfig } from "config/menu";
 import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
 import Sidebar from "layout/components/Sidebar";
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const ContentAnt = styled(Layout.Content)`
-  margin-left: 280px;
-  padding: 20px 24px;
+  padding: 20px;
+  margin-left: ${(props) => (props.collapsed ? "80px" : "250px")};
 `;
 
 export default function AdminLayout({ children }) {
@@ -19,14 +19,12 @@ export default function AdminLayout({ children }) {
 
   const pathnameSplit = pathname.split("/");
   const { shouldFixedHeader } = headerConfig;
-
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState(pathnameSplit[pathnameSplit.length - 1]);
 
-  const handleMenuChange = (key) => {
+  const handleMenuChange = ({ key }) => {
     setActiveKey(key);
-
-    navigate("/m/" + key);
+    navigate(key);
   };
 
   const handleOnCollapse = (collapsed) => {
@@ -49,10 +47,13 @@ export default function AdminLayout({ children }) {
             mode="inline"
             onMenuSelect={handleMenuChange}
             activeKey={activeKey}
-            dataRender={sidebarConfig.adminLayout}
+            dataRender={menuConfig.adminLayout}
           />
         </Sidebar>
-        <ContentAnt>{children}</ContentAnt>
+        <ContentAnt collapsed={collapsed ? 1 : 0}>
+          {children}
+          <Outlet />
+        </ContentAnt>
       </Layout>
     </Layout>
   );
