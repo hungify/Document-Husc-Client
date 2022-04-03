@@ -2,7 +2,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Card, Col, Row, Tooltip, Typography } from "antd";
 import React from "react";
 
-export default function Analysis() {
+export default function Analytics() {
   return (
     <Row gutter={16}>
       <Col span={6}>
