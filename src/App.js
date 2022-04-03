@@ -7,9 +7,6 @@ import ManageAgency from "pages/Admin/ManageAgency/ManageAgency";
 import ManageCategory from "pages/Admin/ManageCategory/ManageCategory";
 import PostEditCategory from "pages/Admin/ManageCategory/PostEditCategory";
 import ManageDocument from "pages/Admin/ManageDocument/ManageDocument";
-import ForgotPassword from "pages/Auth/ForgotPassword/ForgotPassword";
-import Login from "pages/Auth/Login/Login";
-import Register from "pages/Auth/Register/Register";
 import TabsAuth from "pages/Auth/TabsAuth/TabsAuth";
 import DocumentDetail from "pages/DocumentDetail/DocumentDetail";
 import ForwardList from "pages/ForwardList/ForwardList";
@@ -37,7 +34,7 @@ function App() {
 
           <Route path="news" element={<UserLayout />}>
             <Route index element={<Navigate to="inbox" />} />
-            
+
             <Route path="inbox" element={<InboxList />} />
             <Route path="forward" element={<ForwardList />} />
           </Route>

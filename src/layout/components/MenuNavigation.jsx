@@ -36,7 +36,7 @@ export default function MenuNavigation(props) {
             ) : d.agencies ? (
               <Menu.SubMenu icon={d.agencies.icon} title={d.agencies.title} key={d.agencies.key}>
                 {d.agencies.data.map((agency) => (
-                  <Menu.Item>{agency.title}</Menu.Item>
+                  <Menu.Item key={agency.key}>{agency.title}</Menu.Item>
                 ))}
               </Menu.SubMenu>
             ) : (
