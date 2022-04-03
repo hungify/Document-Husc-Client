@@ -65,7 +65,6 @@ export default function AdminLayout({ children }) {
         <ContentAnt collapsed={collapsed ? 1 : 0}>
           <Breadcrumb style={{ margin: "20px 0" }}>
             {pathnames.map((item, index) => {
-              console.log("🚀 :: item", item);
               if (item === "") return null;
               return (
                 <Breadcrumb.Item key={index}>
@@ -88,7 +87,6 @@ export default function AdminLayout({ children }) {
               );
             })}
           </Breadcrumb>
-
           {children}
           <Outlet />
         </ContentAnt>

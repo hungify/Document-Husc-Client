@@ -37,7 +37,7 @@ function App() {
 
           <Route path="n" element={<UserLayout />}>
             <Route index element={<Navigate to="inbox" replace={true} />} />
-
+            
             <Route path="inbox" element={<Inbox />} />
             <Route path="forward" element={<Forward />} />
           </Route>
