@@ -38,7 +38,7 @@ for (let i = 0; i < 23; i++) {
 export default function InboxList() {
   const [selectionType, setSelectionType] = React.useState("checkbox");
   return (
-    <UserLayout>
+    <>
       <Row>
         <ColAnt span={24}>
           <Card title="Card title" size="small">
@@ -104,6 +104,6 @@ export default function InboxList() {
           </Card>
         </ColAnt>
       </Row>
-    </UserLayout>
+    </>
   );
 }
