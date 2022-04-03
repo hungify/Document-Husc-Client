@@ -1,4 +1,4 @@
-import { InboxOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
+import { InboxOutlined, UserOutlined } from "@ant-design/icons";
 
 export const documents = {
   size: 20,
@@ -77,9 +77,8 @@ export const documents = {
       children: [],
       type: "decision",
     },
-    {
+  ],
 };
-
 export const agencies = {
   size: 20,
   title: "Cơ quan ban hành",
@@ -429,4 +428,3 @@ export const categoriesTree = [
     ],
   },
 ];
-
