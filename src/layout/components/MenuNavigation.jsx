@@ -45,29 +45,25 @@ export default function MenuNavigation(props) {
                 title={d.categories.title}
                 key={d.categories.key}
               >
-                {d.categories.data.map((category) => (
-                  <div key={category.id}>
-                    {category.children.length > 0 ? (
-                      <Menu.SubMenu title={category.title}>
-                        {category.children.map((child) =>
-                          child.children.length > 0 ? (
-                            <div key={child.id}>
-                              <Menu.SubMenu title={child.title}>
-                                {child?.children.map((c) => (
-                                  <Menu.Item key={c.id}>{c.title}</Menu.Item>
-                                ))}
-                              </Menu.SubMenu>
-                            </div>
-                          ) : (
-                            <Menu.Item key={child.id}>{child.title}</Menu.Item>
-                          )
-                        )}
-                      </Menu.SubMenu>
-                    ) : (
-                      <Menu.Item key={category.id}>{category.title}</Menu.Item>
-                    )}
-                  </div>
-                ))}
+                {d.categories.data.map((category) =>
+                  category.children.length > 0 ? (
+                    <Menu.SubMenu title={category.title} key={category.key}>
+                      {category.children.map((child) =>
+                        child.children.length > 0 ? (
+                          <Menu.SubMenu title={child.title} key={child.key}>
+                            {child?.children.map((c) => (
+                              <Menu.Item key={c.id}>{c.title}</Menu.Item>
+                            ))}
+                          </Menu.SubMenu>
+                        ) : (
+                          <Menu.Item key={child.id}>{child.title}</Menu.Item>
+                        )
+                      )}
+                    </Menu.SubMenu>
+                  ) : (
+                    <Menu.Item key={category.id}>{category.title}</Menu.Item>
+                  )
+                )}
               </Menu.SubMenu>
             )
           )
