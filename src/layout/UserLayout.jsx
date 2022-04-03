@@ -29,12 +29,8 @@ export default function UserLayout({ children }) {
   const { shouldFixedHeader } = headerConfig.userLayout;
 
   React.useEffect(() => {
-    if (pathnames.length === 2) {
-      setActiveKey(menuConfig.userLayout[0].key);
-    } else {
-      setActiveKey(pathnames[pathnames.length - 1]);
-    }
-  }, []);
+    setActiveKey(pathnames[pathnames.length - 1]);
+  }, [pathnames]);
 
   const handleMenuChange = ({ key }) => {
     navigate(key);
@@ -69,14 +65,14 @@ export default function UserLayout({ children }) {
           <ContentAnt collapsed={collapsed ? 1 : 0}>
             <Breadcrumb style={{ margin: "20px 0" }}>
               <Breadcrumb.Item>
-                <Link to="/">Trang chủ</Link>
+                <Link to=".">Thông báo</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
                 <Link to={`${pathnames[pathnames.length - 1]}`}>
-                  {pathnames[pathnames.length - 1] === "search"
-                    ? "Tìm kiếm"
-                    : pathnames[pathnames.length - 1] === "document"
-                    ? "Loại văn bản"
+                  {pathnames[pathnames.length - 1] === "inbox"
+                    ? "Hộp thư"
+                    : pathnames[pathnames.length - 1] === "forward"
+                    ? "Chuyển tiếp"
                     : pathnames[pathnames.length - 1] === "agency"
                     ? "Cơ quan ban phát"
                     : pathnames[pathnames.length - 1] === "category"

@@ -3,6 +3,7 @@ import React from "react";
 
 export default function MenuNavigation(props) {
   const { dataRender, onMenuSelect, hasSubMenu } = props;
+
   const rootSubmenuKeys = ["documents", "agencies", "categories"];
   const [openKeys, setOpenKeys] = React.useState([]);
 
