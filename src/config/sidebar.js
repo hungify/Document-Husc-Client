@@ -78,19 +78,11 @@ export const documents = {
       type: "decision",
     },
     {
-      key: "document-officialDocuments",
-      value: "document-officialDocuments",
-      title: "Nghị định",
-      children: [],
-      type: "officialDocuments",
-    },
-  ],
 };
 
 export const agencies = {
   size: 20,
   title: "Cơ quan ban hành",
-  icon: <SendOutlined />,
   key: "agencies",
   value: "agencies",
   data: [
@@ -438,54 +430,3 @@ export const categoriesTree = [
   },
 ];
 
-export const sidebarConfig = {
-  adminLayout: [
-    {
-      title: "Dashboard",
-      key: "dashboard",
-      value: "dashboard",
-      icon: <UserOutlined />,
-    },
-    {
-      title: "Quản lý chuyên mục",
-      key: "category",
-      value: "category",
-      icon: <UserOutlined />,
-    },
-    {
-      title: "Quản lý loại văn bản",
-      key: "document",
-      value: "document",
-      icon: <UserOutlined />,
-    },
-    {
-      title: "Quản lý cơ quan ban hành",
-      key: "agency",
-      value: "agency",
-      icon: <UserOutlined />,
-    },
-  ],
-  userLayout: [
-    {
-      title: "Hộp thư gửi đến",
-      key: "inbox",
-      value: "inbox",
-      icon: <InboxOutlined />,
-    },
-    {
-      title: "Đã chuyển tiếp",
-      key: "forward",
-      value: "forward",
-      icon: <SendOutlined />,
-    },
-  ],
-  guestLayout: [
-    {
-      title: "Loại văn bản",
-      key: "document",
-      value: "document",
-      icon: <UserOutlined />,
-      data: documents.data,
-    },
-  ],
-};

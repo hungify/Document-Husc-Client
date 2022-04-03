@@ -6,11 +6,12 @@ import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
 import Sidebar from "layout/components/Sidebar";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const LayoutAnt = styled(Layout)`
   padding: 20px;
+  margin-left: ${(props) => (props.collapsed ? "80px" : "380px")};
 `;
 
 export default function GuestLayout({ children }) {
@@ -46,7 +47,7 @@ export default function GuestLayout({ children }) {
             hasSubMenu={1}
           />
         </Sidebar>
-        <Layout style={{ marginLeft: collapsed ? 80 : 380 }}>
+        <Layout collapsed={collapsed ? 1 : 0}>
           {!pathnameSplit[1].includes("a") && (
             <Breadcrumb style={{ margin: "15px 0 5px 0" }}>
               <Breadcrumb.Item>
@@ -68,7 +69,10 @@ export default function GuestLayout({ children }) {
             </Breadcrumb>
           )}
           <LayoutAnt>
-            <Layout.Content>{children}</Layout.Content>
+            <Layout.Content>
+              {children}
+              <Outlet />
+            </Layout.Content>
           </LayoutAnt>
         </Layout>
       </Layout>
