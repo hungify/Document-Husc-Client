@@ -1,5 +1,5 @@
 import { Card, Col, Divider, Row, Tabs } from "antd";
-import Analysis from "features/Manage/pages/Analysis/Analysis";
+import Analysis from "features/Manage/pages/Analytics/Analytics";
 import React from "react";
 
 export default function DashBoard() {

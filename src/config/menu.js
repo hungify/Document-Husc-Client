@@ -4,9 +4,9 @@ import { agencies, categories, documents } from "config/sidebar";
 export const menuConfig = {
   adminLayout: [
     {
-      title: "Dashboard",
-      key: "dashboard",
-      value: "dashboard",
+      title: "Thống kê",
+      key: "dashboard/analytics",
+      value: "dashboard/analytics",
       icon: <DashboardTwoTone />,
     },
     {

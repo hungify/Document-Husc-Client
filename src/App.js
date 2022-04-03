@@ -3,6 +3,7 @@ import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
 import Home from "features/Home/Home";
 import DocumentDetail from "features/Home/pages/DocumentDetail";
+import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
@@ -44,9 +45,13 @@ function App() {
           <Route path="d/:documentId" element={<DocumentDetail />} />
 
           <Route path="m" element={<AdminLayout />}>
-            <Route index element={<Navigate to="dashboard" replace={true} />} />
+            <Route index element={<Navigate to="dashboard/analytics" replace={true} />} />
 
-            <Route path="dashboard" element={<DashBoard />} />
+            <Route path="dashboard" element={<DashBoard />}>
+              <Route index element={<Navigate to="category" replace={true} />} />
+
+              <Route path="analytics" element={<Analytics />} />
+            </Route>
             <Route path="category">
               <Route index element={<ManageCategory />} />
               <Route path="post" element={<PostEditCategory />}>
@@ -57,6 +62,7 @@ function App() {
             <Route path="document" element={<ManageDocument />} />
             <Route path="agency" element={<ManageAgency />} />
           </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

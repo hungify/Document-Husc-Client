@@ -1,6 +1,7 @@
 import { Breadcrumb, Layout } from "antd";
 import { headerConfig } from "config/header";
 import { menuConfig } from "config/menu";
+import { capitalizeFirstLetter } from "helpers";
 import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
 import Sidebar from "layout/components/Sidebar";
@@ -24,7 +25,13 @@ export default function AdminLayout({ children }) {
   const [activeKey, setActiveKey] = React.useState();
 
   React.useEffect(() => {
-    setActiveKey(pathnames[pathnames.length - 1]);
+    if (pathnames[pathnames.length - 1] === "dashboard") {
+      const des = pathnames[pathnames.length - 1] + "/analytics";
+      setActiveKey(des);
+      navigate(des);
+    } else {
+      setActiveKey(pathnames[pathnames.length - 1]);
+    }
   }, [pathnames]);
 
   const handleMenuChange = ({ key }) => {
@@ -57,22 +64,28 @@ export default function AdminLayout({ children }) {
         </Sidebar>
         <ContentAnt collapsed={collapsed ? 1 : 0}>
           <Breadcrumb style={{ margin: "20px 0" }}>
-            <Breadcrumb.Item>
-              <Link to=".">Dashboard</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link to={`${pathnames[pathnames.length - 1]}`}>
-                {pathnames[pathnames.length - 1] === "document"
-                  ? "Quản lý văn bản"
-                  : pathnames[pathnames.length - 1] === "category"
-                  ? "Quản lý chuyên mục"
-                  : pathnames[pathnames.length - 1] === "agency"
-                  ? "Quản lý cơ quan ban hành"
-                  : pathnames[pathnames.length - 1] === "dashboard"
-                  ? "Analytics"
-                  : ""}
-              </Link>
-            </Breadcrumb.Item>
+            {pathnames.map((item, index) => {
+              if (item === "") return null;
+              return (
+                <Breadcrumb.Item key={index}>
+                  <Link to={item === "m" ? "." : item}>
+                    {item === "m"
+                      ? "Quản lý"
+                      : item === "document"
+                      ? capitalizeFirstLetter("Loại văn bản")
+                      : item === "category"
+                      ? capitalizeFirstLetter("Chuyên mục")
+                      : item === "agency"
+                      ? capitalizeFirstLetter("Cơ quan ban hành")
+                      : item === "analytics"
+                      ? capitalizeFirstLetter("Thống kê")
+                      : item === "dashboard"
+                      ? "Bảng điều khiển"
+                      : null}
+                  </Link>
+                </Breadcrumb.Item>
+              );
+            })}
           </Breadcrumb>
           {children}
           <Outlet />
