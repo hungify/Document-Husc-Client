@@ -34,9 +34,9 @@ function App() {
             <Route path="forgot" element={<TabsAuth />} />
           </Route>
 
-          <Route path="notifications" element={<UserLayout />}>
+          <Route path="n" element={<UserLayout />}>
             <Route index element={<Navigate to="inbox" replace={true} />} />
-
+            
             <Route path="inbox" element={<Inbox />} />
             <Route path="forward" element={<Forward />} />
           </Route>
