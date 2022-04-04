@@ -5,6 +5,7 @@ import Home from "features/Home/Home";
 import DocumentDetail from "features/Home/pages/DocumentDetail";
 import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";
+import AddEditAgency from "features/Manage/pages/ManageAgency/AddEditAgency";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
 import PostEditCategory from "features/Manage/pages/ManageCategory/PostEditCategory";
@@ -14,7 +15,6 @@ import Inbox from "features/Notifications/pages/Inbox/Inbox";
 import AdminLayout from "layout/AdminLayout";
 import GuestLayout from "layout/GuestLayout";
 import UserLayout from "layout/UserLayout";
-
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "styles/global";
 import "./App.css";
@@ -37,7 +37,7 @@ function App() {
 
           <Route path="n" element={<UserLayout />}>
             <Route index element={<Navigate to="inbox" replace={true} />} />
-            
+
             <Route path="inbox" element={<Inbox />} />
             <Route path="forward" element={<Forward />} />
           </Route>
@@ -60,7 +60,10 @@ function App() {
             </Route>
 
             <Route path="document" element={<ManageDocument />} />
-            <Route path="agency" element={<ManageAgency />} />
+
+            <Route path="agency">
+              <Route index element={<ManageAgency />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<NotFound />} />
