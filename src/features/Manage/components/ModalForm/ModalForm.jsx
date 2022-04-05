@@ -5,6 +5,13 @@ export default function ModalForm(props) {
   const { visible, onCreate, onCancel, children } = props;
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = React.useState(false);
+  
+  React.useEffect(() => {
+    if (visible) {
+      form.setFieldsValue(props.initialValues);
+    }
+  }, [visible]);
+
   return (
     <Modal
       {...props}
@@ -33,7 +40,6 @@ export default function ModalForm(props) {
         form={form}
         size={props.size}
         layout={props.layout}
-        initialValues={props.initialValues}
         name={props.name}
         wrapperCol={props.wrapperCol}
       >
