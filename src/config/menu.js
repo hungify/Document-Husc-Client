@@ -1,4 +1,12 @@
-import { DashboardTwoTone, InboxOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  AppstoreTwoTone,
+  BankTwoTone,
+  DashboardTwoTone,
+  FileUnknownTwoTone,
+  InboxOutlined,
+  SendOutlined,
+  SnippetsTwoTone
+} from "@ant-design/icons";
 import { agencies, categories, documents } from "config/sidebar";
 
 export const menuConfig = {
@@ -10,22 +18,28 @@ export const menuConfig = {
       icon: <DashboardTwoTone />,
     },
     {
+      title: "Quản lý văn bản",
+      key: "documents",
+      value: "documents",
+      icon: <SnippetsTwoTone />,
+    },
+    {
       title: "Quản lý loại văn bản",
       key: "document-type",
       value: "document-type",
-      icon: <UserOutlined />,
+      icon: <FileUnknownTwoTone />,
     },
     {
       title: "Quản lý chuyên mục",
       key: "category",
       value: "category",
-      icon: <UserOutlined />,
+      icon: <AppstoreTwoTone />,
     },
     {
       title: "Quản lý cơ quan ban hành",
       key: "agency",
       value: "agency",
-      icon: <UserOutlined />,
+      icon: <BankTwoTone />,
     },
   ],
   userLayout: [
@@ -42,27 +56,5 @@ export const menuConfig = {
       icon: <SendOutlined />,
     },
   ],
-  guestLayout: [
-    {
-      title: "Loại văn bản",
-      key: "document",
-      value: "document",
-      icon: <UserOutlined />,
-      data: documents.data,
-    },
-    {
-      title: "Cơ quan ban hành",
-      key: "agency",
-      value: "agency",
-      icon: <UserOutlined />,
-      data: agencies.data,
-    },
-    {
-      title: "Chuyên mục",
-      key: "category",
-      value: "category",
-      icon: <UserOutlined />,
-      data: categories.data,
-    },
-  ],
+  guestLayout: [{ documents }, { agencies }, { categories }],
 };
