@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Col, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
-import AddEditAgency from "features/Manage/pages/ManageAgency/AddEditAgency";
+import AddEdiDocumentType from "features/Manage/pages/ManageDocumentType/AddEditDocumentType";
 import React from "react";
 import styled from "styled-components";
 
@@ -17,9 +17,9 @@ const CardAnt = styled(Card)`
   }
 `;
 
-export default function ManageAgency() {
+export default function ManageDocumentType() {
   const [visible, setVisible] = React.useState(false);
-  const [agencyId, setAgencyId] = React.useState(null);
+  const [documentTypeId, setDocumentTypeId] = React.useState(null);
 
   const handleOnSubmit = (values) => {
     console.log("Received values of form: ", values);
@@ -27,15 +27,13 @@ export default function ManageAgency() {
   };
 
   const handleAddClick = () => {
-    setAgencyId(null);
+    setDocumentTypeId(null);
     setVisible(true);
   };
 
   const handleEditClick = (id) => {
-    setAgencyId(id);
+    setDocumentTypeId(id);
     setVisible(true);
-
-    // navigate(`post/${id}`);
   };
 
   const handleDeleteClick = () => {
@@ -80,8 +78,8 @@ export default function ManageAgency() {
           </Button>
         }
       >
-        <AddEditAgency
-          agencyId={agencyId}
+        <AddEdiDocumentType
+          documentTypeId={documentTypeId}
           visible={visible}
           onCreate={handleOnSubmit}
           onCancel={() => {
@@ -101,7 +99,7 @@ export default function ManageAgency() {
                   </Button>,
                 ]}
               >
-                <Meta title="Đại học khoa học Huế" description="Mô tả về cơ quan" />
+                <Meta title="Quyết định" description="Mô tả về loại văn bản" />
               </CardAnt>
             </Col>
           ))}

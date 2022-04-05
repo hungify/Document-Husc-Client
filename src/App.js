@@ -5,11 +5,10 @@ import Home from "features/Home/Home";
 import DocumentDetail from "features/Home/pages/DocumentDetail";
 import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";
-import AddEditAgency from "features/Manage/pages/ManageAgency/AddEditAgency";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
 import PostEditCategory from "features/Manage/pages/ManageCategory/PostEditCategory";
-import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
+import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
 import Forward from "features/Notifications/pages/Forward/Forward";
 import Inbox from "features/Notifications/pages/Inbox/Inbox";
 import AdminLayout from "layout/AdminLayout";
@@ -29,7 +28,6 @@ function App() {
 
           <Route path="a" element={<GuestLayout />}>
             <Route index element={<Navigate to="login" replace={true} />} />
-
             <Route path="login" element={<TabsAuth />} />
             <Route path="register" element={<TabsAuth />} />
             <Route path="forgot" element={<TabsAuth />} />
@@ -37,32 +35,32 @@ function App() {
 
           <Route path="n" element={<UserLayout />}>
             <Route index element={<Navigate to="inbox" replace={true} />} />
-
             <Route path="inbox" element={<Inbox />} />
             <Route path="forward" element={<Forward />} />
           </Route>
 
           <Route path="d/:documentId" element={<DocumentDetail />} />
-
           <Route path="m" element={<AdminLayout />}>
             <Route index element={<Navigate to="dashboard/analytics" replace={true} />} />
 
             <Route path="dashboard" element={<DashBoard />}>
               <Route index element={<Navigate to="category" replace={true} />} />
-
               <Route path="analytics" element={<Analytics />} />
             </Route>
-            <Route path="category">
-              <Route index element={<ManageCategory />} />
-              <Route path="post" element={<PostEditCategory />}>
-                <Route path=":categoryId" element={<PostEditCategory />} />
-              </Route>
-            </Route>
 
-            <Route path="document" element={<ManageDocument />} />
+            <Route path="document-type">
+              <Route index element={<ManageDocumentType />} />
+            </Route>
 
             <Route path="agency">
               <Route index element={<ManageAgency />} />
+            </Route>
+          </Route>
+
+          <Route path="category">
+            <Route index element={<ManageCategory />} />
+            <Route path="post" element={<PostEditCategory />}>
+              <Route path=":categoryId" element={<PostEditCategory />} />
             </Route>
           </Route>
 
