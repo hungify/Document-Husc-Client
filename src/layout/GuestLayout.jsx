@@ -1,6 +1,7 @@
 import { Breadcrumb, Layout } from "antd";
 import Footer from "components/Footer";
 import { headerConfig } from "config/header";
+import { menuConfig } from "config/menu";
 import { agencies, categories, documents } from "config/sidebar";
 import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
@@ -46,7 +47,7 @@ export default function GuestLayout({ children }) {
           <MenuNavigation
             mode="inline"
             onMenuSelect={handleMenuSelect}
-            dataRender={[{ documents }, { agencies }, { categories }]}
+            dataRender={menuConfig.guestLayout}
             hasSubMenu={1}
           />
         </Sidebar>
