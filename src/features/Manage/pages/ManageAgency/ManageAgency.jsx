@@ -1,8 +1,21 @@
-import { DeleteTwoTone, EditTwoTone, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  DeleteTwoTone,
+  EditTwoTone,
+  ExclamationCircleOutlined,
+  PlusCircleTwoTone,
+} from "@ant-design/icons";
 import { Button, Card, Col, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
+import AddEditAgency from "features/Manage/pages/ManageAgency/AddEditAgency";
 import React from "react";
-import AddEditAgency from "./AddEditAgency";
+import styled from "styled-components";
+
+const CardAnt = styled(Card)`
+  &:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+  }
+`;
 
 export default function ManageAgency() {
   const [visible, setVisible] = React.useState(false);
@@ -61,7 +74,11 @@ export default function ManageAgency() {
     <>
       <Card
         title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
-        extra={<Button onClick={handleAddClick}>Tạo mới</Button>}
+        extra={
+          <Button onClick={handleAddClick} type="primary">
+            <PlusCircleTwoTone key="edit" /> Tạo mới
+          </Button>
+        }
       >
         <AddEditAgency
           agencyId={agencyId}
@@ -74,14 +91,18 @@ export default function ManageAgency() {
         <Row>
           {Array.from(Array(20).keys()).map((item, i) => (
             <Col key={i + 1} xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
-              <Card
+              <CardAnt
                 actions={[
-                  <EditTwoTone key="edit" onClick={() => handleEditClick(i)} />,
-                  <DeleteTwoTone key="delete" onClick={() => handleDeleteClick()} />,
+                  <Button onClick={() => handleEditClick(i)}>
+                    <EditTwoTone key="edit" /> Chỉnh sửa
+                  </Button>,
+                  <Button onClick={() => handleDeleteClick()}>
+                    <DeleteTwoTone /> Xóa
+                  </Button>,
                 ]}
               >
                 <Meta title="Đại học khoa học Huế" description="Mô tả về cơ quan" />
-              </Card>
+              </CardAnt>
             </Col>
           ))}
         </Row>

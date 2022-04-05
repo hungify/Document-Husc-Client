@@ -15,14 +15,10 @@ export default function AddEditAgency({ visible, onCreate, onCancel, agencyId })
       okText={agencyId ? "Cập nhật" : "Thêm mới"}
       cancelText={agencyId ? "Hủy" : "Đóng"}
       layout="vertical"
-      initialValues={
-        agencyId
-          ? {
-              agency_name: "Đại học khoa học Huế",
-              agency_description: "lorem ipsum dolor sit amet",
-            }
-          : null
-      }
+      initialValues={{
+        agency_name: agencyId ? "Đại học khoa học Huế" : null,
+        agency_description: agencyId ? "lorem ipsum dolor sit amet" : null,
+      }}
       name="agency"
       wrapperCol={{
         xs: { span: 24, offset: 0 },
@@ -31,8 +27,7 @@ export default function AddEditAgency({ visible, onCreate, onCancel, agencyId })
       }}
     >
       <Form.Item
-        initialValues={agencyId ? "Đại học khoa học Huế" : null}
-        name={"agency_name"}
+        name="agency_name"
         label="Tên cơ quan"
         tooltip={{ title: "Tên cơ quan ban hành của bạn?", icon: <InfoCircleOutlined /> }}
         rules={[{ required: true, message: "Trường này là bắt buộc" }]}
@@ -40,13 +35,12 @@ export default function AddEditAgency({ visible, onCreate, onCancel, agencyId })
         <Input placeholder="Vui lòng nhập vào cơ quan ban hành" />
       </Form.Item>
       <Form.Item
-        name={"agency_description"}
+        name="agency_description"
         label="Mô tả"
-        initialValues={agencyId ? "lorem ipsum dolor sit amet" : null}
         tooltip={{ title: "Mô tả về cơ quan ban hành của ban?", icon: <InfoCircleOutlined /> }}
       >
         <Input.TextArea
-          placeholder="Vui lòng nhập vào mô tả của cơ quan ban hành"
+          placeholder="Vui lòng nhập vào mô tả cơ quan ban hành"
           requiredMark={"optional"}
           autoSize={{ minRows: 3, maxRows: 5 }}
         />
