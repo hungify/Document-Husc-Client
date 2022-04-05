@@ -1,9 +1,9 @@
-import { InboxOutlined, UserOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, AuditOutlined, FileUnknownOutlined } from "@ant-design/icons";
 
 export const documents = {
   size: 20,
   title: "Loại văn bản",
-  icon: <InboxOutlined />,
+  icon: <FileUnknownOutlined />,
   key: "documents",
   value: "documents",
   data: [
@@ -82,6 +82,7 @@ export const documents = {
 export const agencies = {
   size: 20,
   title: "Cơ quan ban hành",
+  icon: <AuditOutlined />,
   key: "agencies",
   value: "agencies",
   data: [
@@ -145,7 +146,7 @@ export const agencies = {
 export const categories = {
   size: 20,
   title: "Chuyên mục",
-  icon: <UserOutlined />,
+  icon: <AppstoreOutlined />,
   key: "categories",
   value: "categories",
   data: [
