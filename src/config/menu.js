@@ -11,8 +11,8 @@ export const menuConfig = {
     },
     {
       title: "Quản lý loại văn bản",
-      key: "document",
-      value: "document",
+      key: "document-type",
+      value: "document-type",
       icon: <UserOutlined />,
     },
     {
