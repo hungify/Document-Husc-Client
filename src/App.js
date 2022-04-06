@@ -7,7 +7,7 @@ import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
-import PostEditCategory from "features/Manage/pages/ManageCategory/PostEditCategory";
+import PostEditCategory from "features/Manage/pages/ManageCategory/AddEditCategory";
 import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
 import Forward from "features/Notifications/pages/Forward/Forward";
 import Inbox from "features/Notifications/pages/Inbox/Inbox";
@@ -55,12 +55,12 @@ function App() {
             <Route path="agency">
               <Route index element={<ManageAgency />} />
             </Route>
-          </Route>
 
-          <Route path="category">
-            <Route index element={<ManageCategory />} />
-            <Route path="post" element={<PostEditCategory />}>
-              <Route path=":categoryId" element={<PostEditCategory />} />
+            <Route path="category">
+              <Route index element={<ManageCategory />} />
+              <Route path="post" element={<PostEditCategory />}>
+                <Route path=":categoryId" element={<PostEditCategory />} />
+              </Route>
             </Route>
           </Route>
 

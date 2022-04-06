@@ -91,7 +91,7 @@ const options = [
 ];
 
 let index = 0;
-export default function PostEditCategory() {
+export default function AddEditCategory() {
   const [items, setItems] = React.useState(["jack", "lucy"]);
   const [name, setName] = React.useState("");
   const [selectTreeData, setSelectTreeData] = React.useState([]);
