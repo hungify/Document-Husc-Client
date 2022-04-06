@@ -17,6 +17,8 @@ import UserLayout from "layout/UserLayout";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "styles/global";
 import "./App.css";
+import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
+import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
 
 function App() {
   return (
@@ -46,6 +48,13 @@ function App() {
             <Route path="dashboard" element={<DashBoard />}>
               <Route index element={<Navigate to="category" replace={true} />} />
               <Route path="analytics" element={<Analytics />} />
+            </Route>
+
+            <Route path="document">
+              <Route index element={<ManageDocument />} />
+              <Route path="post" element={<AddEditDocument />}>
+                <Route path=":documentId" element={<AddEditDocument />} />
+              </Route>
             </Route>
 
             <Route path="document-type">
