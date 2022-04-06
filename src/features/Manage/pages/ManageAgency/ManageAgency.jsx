@@ -71,42 +71,40 @@ export default function ManageAgency() {
   };
 
   return (
-    <>
-      <Card
-        title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
-        extra={
-          <Button onClick={handleAddClick} type="primary">
-            <PlusCircleTwoTone key="edit" /> Tạo mới
-          </Button>
-        }
-      >
-        <AddEditAgency
-          agencyId={agencyId}
-          visible={visible}
-          onCreate={handleOnSubmit}
-          onCancel={() => {
-            setVisible(false);
-          }}
-        />
-        <Row>
-          {Array.from(Array(20).keys()).map((item, i) => (
-            <Col key={i + 1} xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
-              <CardAnt
-                actions={[
-                  <Button onClick={() => handleEditClick(i)}>
-                    <EditTwoTone key="edit" /> Chỉnh sửa
-                  </Button>,
-                  <Button onClick={() => handleDeleteClick()}>
-                    <DeleteTwoTone /> Xóa
-                  </Button>,
-                ]}
-              >
-                <Meta title="Đại học khoa học Huế" description="Mô tả về cơ quan" />
-              </CardAnt>
-            </Col>
-          ))}
-        </Row>
-      </Card>
-    </>
+    <Card
+      title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
+      extra={
+        <Button onClick={handleAddClick} type="primary">
+          <PlusCircleTwoTone key="edit" /> Thêm mới
+        </Button>
+      }
+    >
+      <AddEditAgency
+        agencyId={agencyId}
+        visible={visible}
+        onCreate={handleOnSubmit}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      />
+      <Row>
+        {Array.from(Array(20).keys()).map((item, i) => (
+          <Col key={i + 1} xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
+            <CardAnt
+              actions={[
+                <Button onClick={() => handleEditClick(i)}>
+                  <EditTwoTone key="edit" /> Chỉnh sửa
+                </Button>,
+                <Button onClick={() => handleDeleteClick()}>
+                  <DeleteTwoTone /> Xóa
+                </Button>,
+              ]}
+            >
+              <Meta title="Đại học khoa học Huế" description="Mô tả về cơ quan" />
+            </CardAnt>
+          </Col>
+        ))}
+      </Row>
+    </Card>
   );
 }

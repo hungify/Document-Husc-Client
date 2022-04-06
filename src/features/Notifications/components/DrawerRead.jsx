@@ -1,4 +1,5 @@
 import { Avatar, Button, Card, Col, Drawer, Space, Typography } from "antd";
+import DrawerCustom from "components/DrawerCustom";
 import React from "react";
 import styled from "styled-components";
 
@@ -13,16 +14,11 @@ const CardAnt = styled(Card)`
 
 export default function DrawerRead({ visible, onCloseDrawer }) {
   return (
-    <Drawer
+    <DrawerCustom
       title="Số người xem"
       placement="right"
-      onClose={() => onCloseDrawer()}
+      onCloseDrawer={onCloseDrawer}
       visible={visible}
-      extra={
-        <Space>
-          <Button onClick={() => onCloseDrawer()}>Đóng</Button>
-        </Space>
-      }
     >
       {Array(20)
         .fill(0)
@@ -35,6 +31,6 @@ export default function DrawerRead({ visible, onCloseDrawer }) {
             />
           </CardAnt>
         ))}
-    </Drawer>
+    </DrawerCustom>
   );
 }
