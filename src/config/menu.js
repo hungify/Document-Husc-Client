@@ -5,7 +5,7 @@ import {
   FileUnknownTwoTone,
   InboxOutlined,
   SendOutlined,
-  SnippetsTwoTone
+  SnippetsTwoTone,
 } from "@ant-design/icons";
 import { agencies, categories, documents } from "config/sidebar";
 
@@ -19,8 +19,8 @@ export const menuConfig = {
     },
     {
       title: "Quản lý văn bản",
-      key: "documents",
-      value: "documents",
+      key: "document",
+      value: "document",
       icon: <SnippetsTwoTone />,
     },
     {
