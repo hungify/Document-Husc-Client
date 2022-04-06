@@ -1,12 +1,23 @@
-import { Checkbox, Col, DatePicker, Input, Row, Select, TreeSelect } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
+import {
+  Card,
+  Checkbox,
+  Col,
+  Collapse,
+  DatePicker,
+  Divider,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+  TreeSelect,
+  Typography,
+} from "antd";
 import { agencies, categories, categoriesTree, documents } from "config/sidebar";
 import React from "react";
 import styled from "styled-components";
 
-const RowAnt = styled(Row)`
-  display: flex;
-  align-items: center;
-`;
 const SearchInput = styled(Input.Search)`
   height: 100%;
   display: block;
@@ -14,6 +25,7 @@ const SearchInput = styled(Input.Search)`
 const SelectWrapper = styled.div`
   padding: 8px 10px;
 `;
+
 const plainOptions = ["Số hiệu văn bản"];
 const defaultCheckedList = [];
 
@@ -76,99 +88,19 @@ export default function SearchFilter() {
   const handleOnDateOk = (value) => {};
   return (
     <>
-      <RowAnt>
-        <Col span={8}>
-          <SelectWrapper>
-            <Select
-              size="large"
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={false}
-              notFoundContent={true}
-              allowClear={true}
-              showSearch={true}
-              onSearch={handleSearchDocument}
-              onChange={handleChangeDocument}
-              style={{ width: "100%" }}
-              placeholder="Chọn loại văn bản"
-            >
-              {dataDocument.map((document) => (
-                <Select.Option key={document.id} value={document.value}>
-                  {document.value}
-                </Select.Option>
-              ))}
-            </Select>
-          </SelectWrapper>
-        </Col>
-        <Col span={8}>
-          <TreeSelect
-            treeData={categoriesTree}
-            style={{
-              width: "100%",
-              height: "100%",
-              padding: "8px 10px",
-            }}
-            size="large"
-            value={categoriesTreeValue}
-            onChange={handleTreeCategoryChange}
-            treeCheckable={true}
-            showCheckedStrategy={TreeSelect.SHOW_PARENT}
-            placeholder="Chọn chuyên mục"
-          />
-        </Col>
-        <Col span={8}>
-          <SelectWrapper>
-            <Select
-              size="large"
-              showSearch
-              defaultActiveFirstOption={false}
-              showArrow={true}
-              filterOption={false}
-              notFoundContent={true}
-              allowClear
-              onSearch={handleSearchAgency}
-              onChange={handleChangeAgency}
-              style={{ width: "100%" }}
-              placeholder="Chọn cơ quan ban hành"
-            >
-              {dataAgency.map((agency) => (
-                <Select.Option key={agency.id} value={agency.value}>
-                  {agency.value}
-                </Select.Option>
-              ))}
-            </Select>
-          </SelectWrapper>
-        </Col>
-      </RowAnt>
-      <RowAnt>
-        <Col span={4}>
+      <Row align="middle">
+        <Col flex={1}>
+          <Radio.Group size="large">
+            <Radio value={1}>Tất cả</Radio>
+            <Radio value={2}>Chính xác cụm từ</Radio>
+          </Radio.Group>
           <Checkbox.Group
             options={plainOptions}
             value={checkedList}
             onChange={handleCheckboxChange}
           />
         </Col>
-        <Col span={4}>
-          <Select
-            onChange={handleSelectDateChange}
-            defaultValue="Ngày phát hành"
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            <Select.Option value="Ngày phát hành">Ngày phát hành</Select.Option>
-            <Select.Option value="Ngày cập nhật">Ngày cập nhật</Select.Option>
-            <Select.Option value="Ngày áp dụng">Ngày áp dụng</Select.Option>
-          </Select>
-        </Col>
-        <Col span={6}>
-          <DatePicker.RangePicker
-            format="DD/MM/YYYY"
-            onChange={handleOnDateChange}
-            onOk={handleOnDateOk}
-          />
-        </Col>
-        <Col span={9} offset={1}>
+        <Col flex={4}>
           <SearchInput
             allowClear
             placeholder={placeholder}
@@ -178,7 +110,114 @@ export default function SearchFilter() {
             value={searchTerm}
           />
         </Col>
-      </RowAnt>
+      </Row>
+      <Collapse
+        bordered={false}
+        defaultActiveKey={["1"]}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+      >
+        <Collapse.Panel
+          header={
+            <Typography.Text keyboard strong>
+              Tìm kiếm nâng cao
+            </Typography.Text>
+          }
+        >
+          <Row>
+            <Col span={7}>
+              <SelectWrapper>
+                <Select
+                  size="large"
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={false}
+                  notFoundContent={true}
+                  allowClear={true}
+                  showSearch={true}
+                  onSearch={handleSearchDocument}
+                  onChange={handleChangeDocument}
+                  style={{ width: "100%" }}
+                  placeholder="Chọn loại văn bản"
+                >
+                  {dataDocument.map((document) => (
+                    <Select.Option key={document.id} value={document.value}>
+                      {document.value}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </SelectWrapper>
+            </Col>
+            <Col span={10}>
+              <SelectWrapper>
+                <TreeSelect
+                  treeData={categoriesTree}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  size="large"
+                  value={categoriesTreeValue}
+                  onChange={handleTreeCategoryChange}
+                  treeCheckable={true}
+                  showCheckedStrategy={TreeSelect.SHOW_PARENT}
+                  placeholder="Chọn chuyên mục"
+                />
+              </SelectWrapper>
+            </Col>
+            <Col span={7}>
+              <SelectWrapper>
+                <Select
+                  size="large"
+                  showSearch
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  filterOption={false}
+                  notFoundContent={true}
+                  allowClear
+                  onSearch={handleSearchAgency}
+                  onChange={handleChangeAgency}
+                  style={{ width: "100%" }}
+                  placeholder="Chọn cơ quan ban hành"
+                >
+                  {dataAgency.map((agency) => (
+                    <Select.Option key={agency.id} value={agency.value}>
+                      {agency.value}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </SelectWrapper>
+            </Col>
+          </Row>
+          <Divider />
+          <Row justify="space-around">
+            <Col span={6}>
+              <Select
+                style={{
+                  width: "100%",
+                }}
+                size="large"
+                onChange={handleSelectDateChange}
+                defaultValue="Ngày phát hành"
+                filterOption={(input, option) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                <Select.Option value="Ngày phát hành">Ngày phát hành</Select.Option>
+                <Select.Option value="Ngày cập nhật">Ngày cập nhật</Select.Option>
+                <Select.Option value="Ngày áp dụng">Ngày áp dụng</Select.Option>
+              </Select>
+            </Col>
+            <Col span={6}>
+              <DatePicker.RangePicker
+                size="large"
+                format="DD/MM/YYYY"
+                onChange={handleOnDateChange}
+                onOk={handleOnDateOk}
+              />
+            </Col>
+          </Row>
+        </Collapse.Panel>
+      </Collapse>
     </>
   );
 }
