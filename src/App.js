@@ -1,7 +1,7 @@
 import "antd/dist/antd.css";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
-import Home from "features/Home/Home";
+import Home from "features/Home/pages/Home";
 import DocumentDetail from "features/Home/pages/DocumentDetail";
 import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";

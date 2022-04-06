@@ -15,6 +15,7 @@ import {
 import pdfFile from "assets/pdf/test.pdf";
 import DropdownFilter from "components/DropdownFilter";
 import { SaveFile } from "components/SaveFile";
+import { dropdownConfig } from "config/dropdown";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -55,7 +56,7 @@ export default function DocumentList() {
           <Typography.Text strong>Có tất cả 123 Văn bản</Typography.Text>
         </ColAnt>
         <ColAnt span={4}>
-          <DropdownFilter />
+          <DropdownFilter dataRender={dropdownConfig.documentFilter} />
         </ColAnt>
         <Divider
           type="horizontal"
