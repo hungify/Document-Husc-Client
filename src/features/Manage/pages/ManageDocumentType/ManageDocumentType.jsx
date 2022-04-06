@@ -74,7 +74,7 @@ export default function ManageDocumentType() {
         title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
         extra={
           <Button onClick={handleAddClick} type="primary">
-            <PlusCircleTwoTone key="edit" /> Tạo mới
+            <PlusCircleTwoTone key="edit" /> Thêm mới
           </Button>
         }
       >
@@ -94,7 +94,7 @@ export default function ManageDocumentType() {
                   <Button onClick={() => handleEditClick(i)}>
                     <EditTwoTone key="edit" /> Chỉnh sửa
                   </Button>,
-                  <Button onClick={() => handleDeleteClick()}>
+                  <Button onClick={() => handleDeleteClick(i)}>
                     <DeleteTwoTone /> Xóa
                   </Button>,
                 ]}
