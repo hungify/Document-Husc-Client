@@ -1,19 +1,14 @@
-import { Button, Card, Collapse } from "antd";
+import { Avatar, Button, Card, Col, Collapse, Row, Space, Tooltip, Typography } from "antd";
 import DocumentDetail from "features/Home/pages/DocumentDetail";
-import SenderInfo from "features/Notifications/components/SenderInfo";
+import MailContent from "features/Notifications/components/MailContent";
+import MailInfo from "features/Notifications/components/MailInfo";
 import React from "react";
 
 export default function InboxDetail() {
   return (
-    <Card title="Nội dung văn bản" extra={<Button type="primary">Chuyển tiếp</Button>}>
-      <Collapse defaultActiveKey={["1"]} onChange={() => {}}>
-        <Collapse.Panel header="Thông tin khác" key="1">
-          <SenderInfo />
-        </Collapse.Panel>
-        <Collapse.Panel header="Thông tin văn bản" key="2">
-          <DocumentDetail />
-        </Collapse.Panel>
-      </Collapse>
+    <Card title="Nội dung thông báo" extra={<Button type="primary">Chuyển tiếp</Button>}>
+      <MailInfo />
+      <MailContent />
     </Card>
   );
 }
