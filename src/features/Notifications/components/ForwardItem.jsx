@@ -1,6 +1,5 @@
-import { BulbFilled } from "@ant-design/icons";
-import { Avatar, Col, List, Row, Tag, Typography } from "antd";
-import DrawerRead from "features/Notifications/components/DrawerRead";
+import { Avatar, Col, List, Row, Typography } from "antd";
+import DrawerRead from "features/Notifications/components/DrawerReader";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -67,13 +66,8 @@ export default function ForwardItem({ item }) {
               </Avatar.Group>
             </div>
           </ColAnt>
-          <Col span={1}>
-            <Tag color="red" icon={<BulbFilled />}>
-              NEW
-            </Tag>
-          </Col>
-          <ColAnt span={4}>
-            <Typography.Text>2 day ago</Typography.Text>
+          <ColAnt span={5}>
+            <Typography.Text>22/2/2022</Typography.Text>
           </ColAnt>
         </RowAnt>
       </ListItemAnt>
