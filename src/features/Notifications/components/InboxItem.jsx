@@ -31,7 +31,6 @@ const ListItemAnt = styled(List.Item)`
 `;
 
 export default function InboxItem({ item }) {
-  console.log("🚀 :: item", item);
   const [visible, setVisible] = React.useState(false);
 
   const handleOpenDrawer = () => {
