@@ -9,6 +9,7 @@ import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory"
 import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
 import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
 import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
+import ForwardDetail from "features/Notifications/components/ForwardDetail";
 import InboxDetail from "features/Notifications/components/InboxDetail";
 import Forward from "features/Notifications/pages/Forward/Forward";
 import Inbox from "features/Notifications/pages/Inbox/Inbox";
@@ -21,11 +22,11 @@ export const routePathDefinition = [
   {
     path: "/",
     element: <GuestLayout />,
-    breadcrumb: "Trang chủ",
     children: [
       {
         index: true,
         element: <Home />,
+        breadcrumb: "Trang chủ",
       },
       {
         path: "detail",
@@ -48,7 +49,6 @@ export const routePathDefinition = [
       {
         index: true,
         element: <Navigate to="login" replace={true} />,
-        breadcrumb: null,
       },
       {
         path: "login",
@@ -61,7 +61,7 @@ export const routePathDefinition = [
         breadcrumb: "Đăng ký",
       },
       {
-        path: "forgot-password",
+        path: "forgot",
         element: <TabsAuth />,
         breadcrumb: "Quên mật khẩu",
       },
@@ -70,11 +70,11 @@ export const routePathDefinition = [
   {
     path: "n",
     element: <UserLayout />,
+    breadcrumb: "Thông báo",
     children: [
       {
         index: true,
         element: <Navigate to="inbox" replace={true} />,
-        breadcrumb: "Thông báo",
       },
       {
         path: "inbox",
@@ -99,8 +99,24 @@ export const routePathDefinition = [
       },
       {
         path: "forward",
-        element: <Forward />,
-        breadcrumb: "Hộp thư chuyển tiếp",
+        children: [
+          {
+            index: true,
+            element: <Forward />,
+            breadcrumb: "Hộp thư chuyển tiếp",
+          },
+          {
+            path: "detail",
+            breadcrumb: null,
+            children: [
+              {
+                path: ":forwardId",
+                element: <ForwardDetail />,
+                breadcrumb: "Thông tin chi tiết",
+              },
+            ],
+          },
+        ],
       },
     ],
   },
