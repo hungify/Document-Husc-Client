@@ -12,7 +12,7 @@ const CardAnt = styled(Card)`
   }
 `;
 
-export default function DrawerRead({ visible, onCloseDrawer }) {
+export default function DrawerReader({ visible, onCloseDrawer }) {
   return (
     <DrawerCustom
       title="Số người xem"
@@ -20,7 +20,7 @@ export default function DrawerRead({ visible, onCloseDrawer }) {
       onCloseDrawer={onCloseDrawer}
       visible={visible}
     >
-      <Card title={<Typography.Text strong>Người gửi: Nguyễn Mạnh Tuấn</Typography.Text>}>
+      <Card title={<Typography.Text strong>Danh sách người đã xem (20)</Typography.Text>}>
         {Array(20)
           .fill(0)
           .map((_, i) => (
