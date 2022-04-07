@@ -1,12 +1,12 @@
-import { Breadcrumb, Layout } from "antd";
+import { Layout } from "antd";
 import { headerConfig } from "config/header";
 import { menuConfig } from "config/menu";
-import { capitalizeFirstLetter } from "helpers";
+import DynamicBreadcrumb from "layout/components/DynamicBreadcrumb";
 import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
 import Sidebar from "layout/components/Sidebar";
 import React from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const ContentAnt = styled(Layout.Content)`
@@ -19,7 +19,7 @@ export default function AdminLayout({ children }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const pathnames = pathname?.split("/");
+  const pathnames = pathname.split("/").filter((item) => item);
   const { shouldFixedHeader } = headerConfig;
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
@@ -63,30 +63,7 @@ export default function AdminLayout({ children }) {
           />
         </Sidebar>
         <ContentAnt collapsed={collapsed ? 1 : 0}>
-          <Breadcrumb style={{ margin: "20px 0" }}>
-            {pathnames.map((item, index) => {
-              if (item === "") return null;
-              return (
-                <Breadcrumb.Item key={index}>
-                  <Link to={item === "m" ? "." : item}>
-                    {item === "m"
-                      ? "Quản lý"
-                      : item === "document"
-                      ? capitalizeFirstLetter("Loại văn bản")
-                      : item === "category"
-                      ? capitalizeFirstLetter("Chuyên mục")
-                      : item === "agency"
-                      ? capitalizeFirstLetter("Cơ quan ban hành")
-                      : item === "analytics"
-                      ? capitalizeFirstLetter("Thống kê")
-                      : item === "dashboard"
-                      ? "Bảng điều khiển"
-                      : null}
-                  </Link>
-                </Breadcrumb.Item>
-              );
-            })}
-          </Breadcrumb>
+          <DynamicBreadcrumb />
           {children}
           <Outlet />
         </ContentAnt>
