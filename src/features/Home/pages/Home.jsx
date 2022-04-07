@@ -14,18 +14,14 @@ const HeaderWrapper = styled(Header)`
 
 export default function Home() {
   return (
-    <GuestLayout>
+    <>
+      <SearchFilter />
       <Layout>
-        <HeaderWrapper>
-          <SearchFilter />
-        </HeaderWrapper>
-        <Layout>
-          <Content>
-            <DocumentList />
-          </Content>
-        </Layout>
-        <Footer>Footer</Footer>
+        <Content>
+          <DocumentList />
+        </Content>
       </Layout>
-    </GuestLayout>
+      <Footer>Footer</Footer>
+    </>
   );
 }

@@ -20,17 +20,19 @@ export default function DrawerRead({ visible, onCloseDrawer }) {
       onCloseDrawer={onCloseDrawer}
       visible={visible}
     >
-      {Array(20)
-        .fill(0)
-        .map((_, i) => (
-          <CardAnt size="small" key={i}>
-            <Card.Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={<Typography.Text strong>Nguyễn Văn {i}</Typography.Text>}
-              description={<Typography.Text code>{i} hour ago</Typography.Text>}
-            />
-          </CardAnt>
-        ))}
+      <Card title={<Typography.Text strong>Người gửi: Nguyễn Mạnh Tuấn</Typography.Text>}>
+        {Array(20)
+          .fill(0)
+          .map((_, i) => (
+            <CardAnt size="small" key={i}>
+              <Card.Meta
+                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                title={<Typography.Text strong>Nguyễn Văn {i}</Typography.Text>}
+                description={<Typography.Text code>{i} hour ago</Typography.Text>}
+              />
+            </CardAnt>
+          ))}
+      </Card>
     </DrawerCustom>
   );
 }
