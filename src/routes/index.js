@@ -1,5 +1,6 @@
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
+import DocumentDetail from "features/Home/pages/DocumentDetail";
 import Home from "features/Home/pages/Home";
 import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";
@@ -8,6 +9,7 @@ import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory"
 import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
 import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
 import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
+import InboxDetail from "features/Notifications/components/InboxDetail";
 import Forward from "features/Notifications/pages/Forward/Forward";
 import Inbox from "features/Notifications/pages/Inbox/Inbox";
 import AdminLayout from "layout/AdminLayout";
@@ -18,8 +20,25 @@ import { Navigate } from "react-router-dom";
 export const routePathDefinition = [
   {
     path: "/",
-    element: <Home />,
+    element: <GuestLayout />,
     breadcrumb: "Trang chủ",
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "detail",
+        breadcrumb: null,
+        children: [
+          {
+            path: ":documentId",
+            element: <DocumentDetail />,
+            breadcrumb: "Chi tiết văn bản",
+          },
+        ],
+      },
+    ],
   },
   {
     path: "a",
@@ -46,10 +65,6 @@ export const routePathDefinition = [
         element: <TabsAuth />,
         breadcrumb: "Quên mật khẩu",
       },
-      {
-        path: "dashboard",
-        element: <Home />,
-      },
     ],
   },
   {
@@ -63,13 +78,29 @@ export const routePathDefinition = [
       },
       {
         path: "inbox",
-        element: <Inbox />,
-        breadcrumb: "Hộp thư",
+        children: [
+          {
+            index: true,
+            element: <Inbox />,
+            breadcrumb: "Hộp thư đến",
+          },
+          {
+            path: "detail",
+            breadcrumb: null,
+            children: [
+              {
+                path: ":inboxId",
+                element: <InboxDetail />,
+                breadcrumb: "Thông tin chi tiết",
+              },
+            ],
+          },
+        ],
       },
       {
         path: "forward",
         element: <Forward />,
-        breadcrumb: "Chuyển tiếp",
+        breadcrumb: "Hộp thư chuyển tiếp",
       },
     ],
   },
