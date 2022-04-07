@@ -40,14 +40,6 @@ for (let i = 0; i < 23; i++) {
   });
 }
 
-const IconText = ({ icon, text }) => (
-  <Link to={"a"}>
-    <Space>
-      <Icon style={{ marginRight: 8 }} component={icon} />
-      {text}
-    </Space>
-  </Link>
-);
 export default function DocumentList() {
   return (
     <Layout>
@@ -83,14 +75,10 @@ export default function DocumentList() {
             renderItem={(item) => (
               <Badge.Ribbon text="Bình thường" color="green" key={item.id}>
                 <Card>
-                  <List.Item
-                    actions={[
-                      <IconText icon={FundViewOutlined} text="156" key="list-vertical-star-o" />,
-                    ]}
-                  >
+                  <List.Item>
                     <List.Item.Meta
                       avatar={<Avatar src={item.avatar} />}
-                      title={<Link to={`/d/${item.id}`}>{item.title}</Link>}
+                      title={<Link to={`/detail/${item.id}`}>{item.title}</Link>}
                       description={item.description}
                     />
                     <Row>

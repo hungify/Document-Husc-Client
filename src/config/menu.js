@@ -44,7 +44,7 @@ export const menuConfig = {
   ],
   userLayout: [
     {
-      title: "Hộp thư gửi đến",
+      title: "Hộp thư đến",
       key: "inbox",
       value: "inbox",
       icon: <InboxOutlined />,

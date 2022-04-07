@@ -89,7 +89,7 @@ export default function SummaryTable() {
       </RowAnt>
       <RowAnt>
         <Col span={24}>
-          <Typography.Title level={3}>Tóm tắt văn bản</Typography.Title>
+          <Typography.Title level={4}>Tóm tắt văn bản</Typography.Title>
           <Typography.Paragraph
             style={{
               fontSize: "17px",
