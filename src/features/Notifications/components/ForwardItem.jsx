@@ -63,7 +63,7 @@ export default function ForwardItem({ item }) {
                 {Array(20)
                   .fill(0)
                   .map((_, i) => (
-                    <Avatar src="https://i.pravatar.cc/300" />
+                    <Avatar src="https://i.pravatar.cc/300" key={i} />
                   ))}
               </Avatar.Group>
             </div>
