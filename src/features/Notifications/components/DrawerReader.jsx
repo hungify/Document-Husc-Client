@@ -20,7 +20,7 @@ export default function DrawerReader({ visible, onCloseDrawer }) {
       onCloseDrawer={onCloseDrawer}
       visible={visible}
     >
-      <Card title={<Typography.Text strong>Danh sách người đã xem (20)</Typography.Text>}>
+      <Card title={<Typography.Text strong>Danh sách người nhận (20)</Typography.Text>}>
         {Array(20)
           .fill(0)
           .map((_, i) => (
@@ -28,7 +28,11 @@ export default function DrawerReader({ visible, onCloseDrawer }) {
               <Card.Meta
                 avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                 title={<Typography.Text strong>Nguyễn Văn {i}</Typography.Text>}
-                description={<Typography.Text code>{i} hour ago</Typography.Text>}
+                description={
+                  ![1, 4, 6, 6].includes(i) && (
+                    <Typography.Text code>{i + 1} hour ago</Typography.Text>
+                  )
+                }
               />
             </CardAnt>
           ))}

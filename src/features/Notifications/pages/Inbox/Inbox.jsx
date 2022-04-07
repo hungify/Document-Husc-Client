@@ -1,5 +1,5 @@
 import { Card, Divider, List, Radio } from "antd";
-import InboxItem from "features/Notifications/components/InboxItem";
+import MailItem from "features/Notifications/components/MailItem";
 import React from "react";
 
 const listInboxData = [];
@@ -41,7 +41,7 @@ export default function Inbox() {
           pageSize: 10,
         }}
         dataSource={listInboxData}
-        renderItem={(item) => <InboxItem item={item} filterType={filterType} />}
+        renderItem={(item) => <MailItem item={item} filterType={filterType} />}
       />
     </Card>
   );

@@ -1,5 +1,5 @@
 import { Card, Col, List, Row } from "antd";
-import ForwardItem from "features/Notifications/components/ForwardItem";
+import MailItem from "features/Notifications/components/MailItem";
 import React from "react";
 import styled from "styled-components";
 
@@ -44,7 +44,7 @@ export default function Forward() {
               pageSize: 10,
             }}
             dataSource={listForwardData}
-            renderItem={(item) => <ForwardItem item={item} />}
+            renderItem={(item) => <MailItem item={item} />}
           />
         </Card>
       </ColAnt>
