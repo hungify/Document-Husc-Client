@@ -8,6 +8,7 @@ import {
 import { Avatar, Button, Col, List, Row, Tag, Tooltip, Typography } from "antd";
 import DrawerRead from "features/Notifications/components/DrawerRead";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const RowAnt = styled(Row)`
@@ -30,6 +31,7 @@ const ListItemAnt = styled(List.Item)`
 `;
 
 export default function InboxItem({ item }) {
+  console.log("🚀 :: item", item);
   const [visible, setVisible] = React.useState(false);
 
   const handleOpenDrawer = () => {
@@ -48,7 +50,11 @@ export default function InboxItem({ item }) {
           <ColAnt span={14}>
             <List.Item.Meta
               avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={<Typography.Text strong>{item.title}</Typography.Text>}
+              title={
+                <Link to={`detail/${item.id}`}>
+                  <Typography.Text strong>{item.title}</Typography.Text>
+                </Link>
+              }
               description={item.summary}
             />
           </ColAnt>
@@ -63,7 +69,7 @@ export default function InboxItem({ item }) {
                 {Array(20)
                   .fill(0)
                   .map((_, i) => (
-                    <Avatar src="https://i.pravatar.cc/300" />
+                    <Avatar src="https://i.pravatar.cc/300" key={i} />
                   ))}
               </Avatar.Group>
             </div>

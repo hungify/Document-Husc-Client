@@ -15,22 +15,18 @@ export default function Inbox() {
   const [filterType, setFilterType] = React.useState("all");
 
   return (
-    <Row>
-      <ColAnt span={24}>
-        <Card size="small">
-          <Radio.Group
-            onChange={(e) => {
-              setFilterType(e.target.value);
-            }}
-            value={filterType}
-          >
-            <Radio value="all">Tất cả</Radio>
-            <Radio value="unread">Chưa đọc</Radio>
-          </Radio.Group>
-          <Divider />
-          <NotificationList filterType={filterType} />
-        </Card>
-      </ColAnt>
-    </Row>
+    <Card size="small">
+      <Radio.Group
+        onChange={(e) => {
+          setFilterType(e.target.value);
+        }}
+        value={filterType}
+      >
+        <Radio value="all">Tất cả</Radio>
+        <Radio value="unread">Chưa đọc</Radio>
+      </Radio.Group>
+      <Divider />
+      <NotificationList filterType={filterType} />
+    </Card>
   );
 }
