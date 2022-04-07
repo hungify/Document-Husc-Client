@@ -1,13 +1,7 @@
-import {
-  AntDesignOutlined,
-  BulbFilled,
-  BulbTwoTone,
-  SafetyCertificateFilled,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Button, Col, List, Row, Tag, Tooltip, Typography } from "antd";
-import DrawerRead from "features/Notifications/components/DrawerRead";
+import { Avatar, Col, List, Row, Typography } from "antd";
+import DrawerRead from "features/Notifications/components/DrawerReader";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const RowAnt = styled(Row)`
@@ -48,7 +42,11 @@ export default function ForwardItem({ item }) {
           <ColAnt span={14}>
             <List.Item.Meta
               avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={<Typography.Text strong>{item.title}</Typography.Text>}
+              title={
+                <Link to={`detail/${item.id}`}>
+                  <Typography.Text strong>{item.title}</Typography.Text>
+                </Link>
+              }
               description={item.summary}
             />
           </ColAnt>
@@ -68,13 +66,8 @@ export default function ForwardItem({ item }) {
               </Avatar.Group>
             </div>
           </ColAnt>
-          <Col span={1}>
-            <Tag color="red" icon={<BulbFilled />}>
-              NEW
-            </Tag>
-          </Col>
-          <ColAnt span={4}>
-            <Typography.Text>2 day ago</Typography.Text>
+          <ColAnt span={5}>
+            <Typography.Text>22/2/2022</Typography.Text>
           </ColAnt>
         </RowAnt>
       </ListItemAnt>

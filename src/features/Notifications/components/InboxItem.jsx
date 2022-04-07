@@ -1,12 +1,6 @@
-import {
-  AntDesignOutlined,
-  BulbFilled,
-  BulbTwoTone,
-  SafetyCertificateFilled,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Button, Col, List, Row, Tag, Tooltip, Typography } from "antd";
-import DrawerRead from "features/Notifications/components/DrawerRead";
+import { BulbFilled } from "@ant-design/icons";
+import { Avatar, Col, List, Row, Tag, Typography } from "antd";
+import DrawerRead from "features/Notifications/components/DrawerReader";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -31,7 +25,6 @@ const ListItemAnt = styled(List.Item)`
 `;
 
 export default function InboxItem({ item }) {
-  console.log("🚀 :: item", item);
   const [visible, setVisible] = React.useState(false);
 
   const handleOpenDrawer = () => {
