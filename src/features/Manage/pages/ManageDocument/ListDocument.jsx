@@ -48,7 +48,7 @@ export default function ListDocument() {
     navigate("post");
   };
   const handleEditClick = (item) => {
-    navigate(`post/${item.id}`);
+    navigate(`edit/${item.id}`);
   };
   const handleDeleteClick = (item) => {
     Modal.confirm({

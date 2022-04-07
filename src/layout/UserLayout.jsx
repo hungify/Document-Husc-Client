@@ -2,6 +2,7 @@ import { Breadcrumb, Layout } from "antd";
 import Footer from "components/Footer";
 import { headerConfig } from "config/header";
 import { menuConfig } from "config/menu";
+import DynamicBreadcrumb from "layout/components/DynamicBreadcrumb";
 import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
 import Sidebar from "layout/components/Sidebar";
@@ -63,24 +64,7 @@ export default function UserLayout({ children }) {
         </Sidebar>
         <LayoutAnt shouldFixedHeader={shouldFixedHeader}>
           <ContentAnt collapsed={collapsed ? 1 : 0}>
-            <Breadcrumb style={{ margin: "20px 0" }}>
-              <Breadcrumb.Item>
-                <Link to=".">Thông báo</Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <Link to={`${pathnames[pathnames.length - 1]}`}>
-                  {pathnames[pathnames.length - 1] === "inbox"
-                    ? "Hộp thư"
-                    : pathnames[pathnames.length - 1] === "forward"
-                    ? "Chuyển tiếp"
-                    : pathnames[pathnames.length - 1] === "agency"
-                    ? "Cơ quan ban phát"
-                    : pathnames[pathnames.length - 1] === "category"
-                    ? "Chuyên mục"
-                    : "Tra cứu văn bản"}
-                </Link>
-              </Breadcrumb.Item>
-            </Breadcrumb>
+            <DynamicBreadcrumb />
             {children}
             <Outlet />
           </ContentAnt>
