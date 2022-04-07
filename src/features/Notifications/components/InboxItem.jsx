@@ -5,9 +5,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const RowAnt = styled(Row)`
-  align-items: center;
-`;
 const ColAnt = styled(Col)`
   :not(:first-child) {
     display: flex;
@@ -15,7 +12,7 @@ const ColAnt = styled(Col)`
     align-items: center;
   }
 `;
-const ListItemAnt = styled(List.Item)`
+const Wrapper = styled.div`
   transition: all 0.3s ease;
   &:hover {
     cursor: pointer;
@@ -24,7 +21,7 @@ const ListItemAnt = styled(List.Item)`
   }
 `;
 
-export default function InboxItem({ item }) {
+export default function InboxItem({ item, filterType }) {
   const [visible, setVisible] = React.useState(false);
 
   const handleOpenDrawer = () => {
@@ -36,47 +33,48 @@ export default function InboxItem({ item }) {
   };
 
   return (
-    <>
+    <Wrapper>
       <DrawerRead visible={visible} onCloseDrawer={handleCloseDrawer} />
-      <ListItemAnt>
-        <RowAnt>
-          <ColAnt span={14}>
+      <Row align="middle">
+        <ColAnt span={6}>
+          <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              avatar={<Avatar src={item.from.avatar} />}
               title={
                 <Link to={`detail/${item.id}`}>
                   <Typography.Text strong>{item.title}</Typography.Text>
                 </Link>
               }
-              description={item.summary}
+              description={`Từ: ${item.from.email}`}
             />
-          </ColAnt>
-          <ColAnt span={5}>
-            <div onClick={handleOpenDrawer}>
-              <Avatar.Group
-                maxCount={5}
-                maxPopoverTrigger="focus"
-                size="large"
-                maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}
-              >
-                {Array(20)
-                  .fill(0)
-                  .map((_, i) => (
-                    <Avatar src="https://i.pravatar.cc/300" key={i} />
-                  ))}
-              </Avatar.Group>
-            </div>
-          </ColAnt>
-          <Col span={1}>
-            <Tag color="red" icon={<BulbFilled />}>
-              NEW
-            </Tag>
-          </Col>
-          <ColAnt span={4}>
-            <Typography.Text>2 day ago</Typography.Text>
-          </ColAnt>
-        </RowAnt>
-      </ListItemAnt>
-    </>
+          </List.Item>
+        </ColAnt>
+        <Col span={8}>{item.message}</Col>
+        <ColAnt span={5}>
+          <div onClick={handleOpenDrawer}>
+            <Avatar.Group
+              maxCount={5}
+              maxPopoverTrigger="focus"
+              size="large"
+              maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}
+            >
+              {Array(20)
+                .fill(0)
+                .map((_, i) => (
+                  <Avatar src="https://i.pravatar.cc/300" key={i} />
+                ))}
+            </Avatar.Group>
+          </div>
+        </ColAnt>
+        <Col span={1}>
+          <Tag color="red" icon={<BulbFilled />}>
+            NEW
+          </Tag>
+        </Col>
+        <ColAnt span={4}>
+          <Typography.Text>2 day ago</Typography.Text>
+        </ColAnt>
+      </Row>
+    </Wrapper>
   );
 }
