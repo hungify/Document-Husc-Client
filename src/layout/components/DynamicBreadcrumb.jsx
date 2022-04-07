@@ -8,17 +8,12 @@ export default function DynamicBreadcrumb() {
   const breadcrumbs = useBreadcrumbs(routePathDefinition);
 
   return (
-    <Breadcrumb style={{ margin: "20px 0" }}>
-      {breadcrumbs.map(({ match, breadcrumb }) => {
-        console.log("🚀 :: match, breadcrumb", match);
-        console.log("🚀 :: breadcrumb", breadcrumb);
-
-        return (
-          <Breadcrumb.Item key={match.pathname}>
-            <Link to={match.pathname}>{breadcrumb}</Link>
-          </Breadcrumb.Item>
-        );
-      })}
+    <Breadcrumb style={{ margin: "10px 0" }}>
+      {breadcrumbs.map(({ match, breadcrumb }) => (
+        <Breadcrumb.Item key={match.pathname}>
+          <Link to={match.pathname}>{breadcrumb}</Link>
+        </Breadcrumb.Item>
+      ))}
     </Breadcrumb>
   );
 }
