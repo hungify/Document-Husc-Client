@@ -1,17 +1,5 @@
-import Icon, { ExpandOutlined, FundViewOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  Col,
-  Divider,
-  Layout,
-  List,
-  Row,
-  Space,
-  Typography,
-} from "antd";
+import { ExpandOutlined } from "@ant-design/icons";
+import { Avatar, Badge, Button, Card, Col, Divider, Layout, List, Row, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import DropdownFilter from "components/DropdownFilter";
 import { SaveFile } from "components/SaveFile";
@@ -50,12 +38,7 @@ export default function DocumentList() {
         <ColAnt span={4}>
           <DropdownFilter dataRender={dropdownConfig.documentFilter} />
         </ColAnt>
-        <Divider
-          type="horizontal"
-          style={{
-            width: "100%",
-          }}
-        />
+        <Divider type="horizontal" />
       </RowAnt>
       <Row>
         <ColAnt span={24}>
@@ -66,9 +49,6 @@ export default function DocumentList() {
               pageSize: 10,
               onChange: (page) => {
                 console.log(page);
-              },
-              style: {
-                textAlign: "center",
               },
             }}
             dataSource={listData}

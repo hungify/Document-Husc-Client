@@ -1,18 +1,17 @@
 import { CaretRightOutlined } from "@ant-design/icons";
 import {
-  Card,
   Checkbox,
   Col,
   Collapse,
   DatePicker,
   Divider,
-  Form,
   Input,
   Radio,
   Row,
   Select,
   TreeSelect,
   Typography,
+  Space,
 } from "antd";
 import { agencies, categories, categoriesTree, documents } from "config/sidebar";
 import React from "react";
@@ -22,12 +21,8 @@ const SearchInput = styled(Input.Search)`
   height: 100%;
   display: block;
 `;
-const SelectWrapper = styled.div`
-  padding: 8px 10px;
-`;
 
 const plainOptions = ["Số hiệu văn bản"];
-const defaultCheckedList = [];
 
 export default function SearchFilter() {
   const [categoriesTreeValue, setCategoriesTreeValue] = React.useState([]);
@@ -36,12 +31,13 @@ export default function SearchFilter() {
   const [dataDocument, setDataDocument] = React.useState(documents.data);
   const [dataAgency, setDataAgency] = React.useState(agencies.data);
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [checkedList, setCheckedList] = React.useState(defaultCheckedList);
+  const [checkedList, setCheckedList] = React.useState([]);
   const [indeterminate, setIndeterminate] = React.useState(true);
   const [checkAll, setCheckAll] = React.useState(false);
   const [placeholder, setPlaceholder] = React.useState("Tìm theo tiêu đề");
 
   const handleTreeCategoryChange = (value) => {
+    console.log("🚀 :: value", value);
     setCategoriesTreeValue(value);
   };
 
@@ -90,15 +86,17 @@ export default function SearchFilter() {
     <>
       <Row align="middle">
         <Col flex={1}>
-          <Radio.Group size="large">
-            <Radio value={1}>Tất cả</Radio>
-            <Radio value={2}>Chính xác cụm từ</Radio>
-          </Radio.Group>
-          <Checkbox.Group
-            options={plainOptions}
-            value={checkedList}
-            onChange={handleCheckboxChange}
-          />
+          <Space>
+            <Radio.Group size="large">
+              <Radio value={1}>Tất cả</Radio>
+              <Radio value={2}>Chính xác cụm từ</Radio>
+            </Radio.Group>
+            <Checkbox.Group
+              options={plainOptions}
+              value={checkedList}
+              onChange={handleCheckboxChange}
+            />
+          </Space>
         </Col>
         <Col flex={4}>
           <SearchInput
@@ -111,6 +109,7 @@ export default function SearchFilter() {
           />
         </Col>
       </Row>
+      <Divider />
       <Collapse
         bordered={false}
         defaultActiveKey={["1"]}
@@ -123,69 +122,63 @@ export default function SearchFilter() {
             </Typography.Text>
           }
         >
-          <Row>
+          <Row gutter={[10, 10]}>
             <Col span={7}>
-              <SelectWrapper>
-                <Select
-                  size="large"
-                  defaultActiveFirstOption={false}
-                  showArrow={true}
-                  filterOption={false}
-                  notFoundContent={true}
-                  allowClear={true}
-                  showSearch={true}
-                  onSearch={handleSearchDocument}
-                  onChange={handleChangeDocument}
-                  style={{ width: "100%" }}
-                  placeholder="Chọn loại văn bản"
-                >
-                  {dataDocument.map((document) => (
-                    <Select.Option key={document.id} value={document.value}>
-                      {document.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </SelectWrapper>
+              <Select
+                size="large"
+                defaultActiveFirstOption={false}
+                showArrow={true}
+                filterOption={false}
+                notFoundContent={true}
+                allowClear={true}
+                showSearch={true}
+                onSearch={handleSearchDocument}
+                onChange={handleChangeDocument}
+                style={{ width: "100%" }}
+                placeholder="Chọn loại văn bản"
+              >
+                {dataDocument.map((document) => (
+                  <Select.Option key={document.key} value={document.key}>
+                    {document.title}
+                  </Select.Option>
+                ))}
+              </Select>
             </Col>
             <Col span={10}>
-              <SelectWrapper>
-                <TreeSelect
-                  treeData={categoriesTree}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  size="large"
-                  value={categoriesTreeValue}
-                  onChange={handleTreeCategoryChange}
-                  treeCheckable={true}
-                  showCheckedStrategy={TreeSelect.SHOW_PARENT}
-                  placeholder="Chọn chuyên mục"
-                />
-              </SelectWrapper>
+              <TreeSelect
+                allowClear
+                treeData={categoriesTree}
+                style={{
+                  width: "100%",
+                }}
+                size="large"
+                value={categoriesTreeValue}
+                onChange={handleTreeCategoryChange}
+                treeCheckable={true}
+                showCheckedStrategy={TreeSelect.SHOW_PARENT}
+                placeholder="Chọn chuyên mục"
+              />
             </Col>
             <Col span={7}>
-              <SelectWrapper>
-                <Select
-                  size="large"
-                  showSearch
-                  defaultActiveFirstOption={false}
-                  showArrow={true}
-                  filterOption={false}
-                  notFoundContent={true}
-                  allowClear
-                  onSearch={handleSearchAgency}
-                  onChange={handleChangeAgency}
-                  style={{ width: "100%" }}
-                  placeholder="Chọn cơ quan ban hành"
-                >
-                  {dataAgency.map((agency) => (
-                    <Select.Option key={agency.id} value={agency.value}>
-                      {agency.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </SelectWrapper>
+              <Select
+                size="large"
+                showSearch
+                defaultActiveFirstOption={false}
+                showArrow={true}
+                filterOption={false}
+                notFoundContent={true}
+                allowClear
+                onSearch={handleSearchAgency}
+                onChange={handleChangeAgency}
+                style={{ width: "100%" }}
+                placeholder="Chọn cơ quan ban hành"
+              >
+                {dataAgency.map((agency) => (
+                  <Select.Option key={agency.id} value={agency.value}>
+                    {agency.title}
+                  </Select.Option>
+                ))}
+              </Select>
             </Col>
           </Row>
           <Divider />
