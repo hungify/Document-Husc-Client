@@ -32,10 +32,10 @@ export default function MailItem({ item }) {
   return (
     <Container>
       <DrawerRead visible={visible} onCloseDrawer={handleCloseDrawer} />
-      <Row align="middle" onClick={() => navigate(`detail/${item.id}`)}>
+      <Row align="middle">
         {slug === "inbox" ? (
           <>
-            <Col span={6}>
+            <Col span={6} onClick={() => navigate(`detail/${item.id}`)}>
               <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src={item.from.avatar} />}
@@ -48,7 +48,9 @@ export default function MailItem({ item }) {
                 />
               </List.Item>
             </Col>
-            <Col span={9}>{item.message}</Col>
+            <Col span={9} onClick={() => navigate(`detail/${item.id}`)}>
+              {item.message}
+            </Col>
             <Col span={5}>
               <div onClick={handleOpenDrawer}>
                 <Avatar.Group
@@ -65,18 +67,18 @@ export default function MailItem({ item }) {
                 </Avatar.Group>
               </div>
             </Col>
-            <Col span={2}>
+            <Col span={2} onClick={() => navigate(`detail/${item.id}`)}>
               <Tag color="red" icon={<BulbFilled />}>
                 NEW
               </Tag>
             </Col>
-            <Col span={2}>
+            <Col span={2} onClick={() => navigate(`detail/${item.id}`)}>
               <Typography.Text>2 day ago</Typography.Text>
             </Col>
           </>
         ) : (
           <>
-            <Col span={7}>
+            <Col span={7} onClick={() => navigate(`detail/${item.id}`)}>
               <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
@@ -85,9 +87,13 @@ export default function MailItem({ item }) {
                 />
               </List.Item>
             </Col>
-            <Col flex="auto">{item.myMessage}</Col>
-            <Col flex="auto">Forward từ {item.publisher.email}</Col>
-            <Col flex="auto">
+            <Col flex="auto" onClick={() => navigate(`detail/${item.id}`)}>
+              {item.myMessage}
+            </Col>
+            <Col flex="auto" onClick={() => navigate(`detail/${item.id}`)}>
+              Forward từ {item.publisher.email}
+            </Col>
+            <Col flex="auto" onClick={() => navigate(`detail/${item.id}`)}>
               <Typography.Text>22/2/2022</Typography.Text>
             </Col>
           </>

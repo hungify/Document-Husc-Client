@@ -1,8 +1,6 @@
 import {
   DeleteTwoTone,
-  EditTwoTone,
-  PlusCircleTwoTone,
-  ExclamationCircleOutlined,
+  EditTwoTone, ExclamationCircleOutlined, PlusCircleTwoTone
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -10,22 +8,17 @@ import {
   Button,
   Card,
   Col,
-  List,
-  Row,
+  List, Modal, notification, Row,
   Tooltip,
-  Typography,
-  notification,
-  Modal,
-  Input,
+  Typography
 } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import DropdownFilter from "components/DropdownFilter";
+import SearchFilter from "components/SearchFilter";
 import { dropdownConfig } from "config/dropdown";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import SearchFilter from "components/SearchFilter";
 
 const ColAnt = styled(Col)``;
 
