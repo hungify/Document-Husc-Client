@@ -1,4 +1,5 @@
 import { CaretRightOutlined } from "@ant-design/icons";
+import TreeSelectForm from "components/TreeSelectForm";
 import {
   Checkbox,
   Col,
@@ -9,11 +10,11 @@ import {
   Radio,
   Row,
   Select,
+  Space,
   TreeSelect,
   Typography,
-  Space,
 } from "antd";
-import { agencies, categories, categoriesTree, documents } from "config/sidebar";
+import { agencies, categories, documents } from "config/sidebar";
 import React from "react";
 import styled from "styled-components";
 
@@ -25,7 +26,7 @@ const SearchInput = styled(Input.Search)`
 const plainOptions = ["Số hiệu văn bản"];
 
 export default function SearchFilter() {
-  const [categoriesTreeValue, setCategoriesTreeValue] = React.useState([]);
+  const [categoriesTreeValue, setCategoriesTreeValue] = React.useState(categories.data);
   const [agency, setAgency] = React.useState("");
   const [document, setDocument] = React.useState("");
   const [dataDocument, setDataDocument] = React.useState(documents.data);
@@ -36,9 +37,8 @@ export default function SearchFilter() {
   const [checkAll, setCheckAll] = React.useState(false);
   const [placeholder, setPlaceholder] = React.useState("Tìm theo tiêu đề");
 
-  const handleTreeCategoryChange = (value) => {
-    console.log("🚀 :: value", value);
-    setCategoriesTreeValue(value);
+  const handleTreeCategorySelect = (value) => {
+    setCategoriesTreeValue([...categoriesTreeValue, value]);
   };
 
   const handleSearchDocument = (value) => {
@@ -145,18 +145,17 @@ export default function SearchFilter() {
               </Select>
             </Col>
             <Col span={10}>
-              <TreeSelect
+              <TreeSelectForm
+                treeData={categoriesTreeValue}
+                onTreeSelect={handleTreeCategorySelect}
+                placeholder="Chọn chuyên mục"
                 allowClear
-                treeData={categoriesTree}
+                size="large"
+                showCheckedStrategy={TreeSelect.SHOW_PARENT}
+                treeCheckable={true}
                 style={{
                   width: "100%",
                 }}
-                size="large"
-                value={categoriesTreeValue}
-                onChange={handleTreeCategoryChange}
-                treeCheckable={true}
-                showCheckedStrategy={TreeSelect.SHOW_PARENT}
-                placeholder="Chọn chuyên mục"
               />
             </Col>
             <Col span={7}>
