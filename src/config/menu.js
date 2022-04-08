@@ -4,6 +4,7 @@ import {
   DashboardTwoTone,
   FileUnknownTwoTone,
   InboxOutlined,
+  NotificationTwoTone,
   SendOutlined,
   SnippetsTwoTone,
 } from "@ant-design/icons";
@@ -22,6 +23,12 @@ export const menuConfig = {
       key: "document",
       value: "document",
       icon: <SnippetsTwoTone />,
+    },
+    {
+      title: "Quản lý thông báo",
+      key: "notification",
+      value: "notification",
+      icon: <NotificationTwoTone />,
     },
     {
       title: "Quản lý loại văn bản",
