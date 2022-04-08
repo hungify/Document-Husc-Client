@@ -2,8 +2,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, DatePicker, Form, Input, Row } from "antd";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { categoriesTree } from "config/sidebar";
 import { selectConfig } from "config/select";
+import { categories } from "config/sidebar";
 import TreeSelect from "rc-tree-select";
 import React from "react";
 import styled from "styled-components";
@@ -50,7 +50,7 @@ export default function SecondStep({ form, onSubmitForm }) {
               }}
             >
               <TreeSelectForm
-                treeData={categoriesTree}
+                treeData={categories.data}
                 value={categoriesTreeValue}
                 onTreeSelect={handleTreeCategoryChange}
                 placeholder="Chọn chuyên mục"
