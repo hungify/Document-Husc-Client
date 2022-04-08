@@ -9,6 +9,8 @@ import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory"
 import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
 import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
 import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
+import AddEditNotification from "features/Manage/pages/ManageNotification/AddEditNotification";
+import ManageNotification from "features/Manage/pages/ManageNotification/ManageNotification";
 import ForwardDetail from "features/Notifications/components/ForwardDetail";
 import InboxDetail from "features/Notifications/components/InboxDetail";
 import Forward from "features/Notifications/pages/Forward/Forward";
@@ -154,6 +156,11 @@ export const routePathDefinition = [
             element: <ManageDocument />,
           },
           {
+            path: "post",
+            element: <AddEditDocument />,
+            breadcrumb: "Thêm mới văn bản",
+          },
+          {
             path: "edit",
             breadcrumb: null,
             children: [
@@ -164,10 +171,31 @@ export const routePathDefinition = [
               },
             ],
           },
+        ],
+      },
+      {
+        path: "notification",
+        breadcrumb: "Thông báo",
+        children: [
+          {
+            index: true,
+            element: <ManageNotification />,
+          },
           {
             path: "post",
-            element: <AddEditDocument />,
-            breadcrumb: "Thêm mới văn bản",
+            element: <AddEditNotification />,
+            breadcrumb: "Thêm mới thông báo",
+          },
+          {
+            path: "edit",
+            breadcrumb: null,
+            children: [
+              {
+                path: ":documentId",
+                element: <AddEditNotification />,
+                breadcrumb: "Chỉnh sửa thông báo",
+              },
+            ],
           },
         ],
       },
