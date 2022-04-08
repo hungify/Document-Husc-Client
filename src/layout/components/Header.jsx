@@ -80,12 +80,24 @@ export default function Header({ shouldFixedHeader }) {
         <Col span={6} offset={14}>
           <Menu mode="horizontal">
             {!pathnameSplit[1].includes("a") ? (
-              <Menu.Item key="1">
-                <Space>
-                  <LoginOutlined />
-                  <Link to="/a/login">Đăng nhập</Link>
-                </Space>
-              </Menu.Item>
+              <>
+                <Menu.Item key="1">
+                  <Space>
+                    <LoginOutlined />
+                    <Link to="/a/login">Đăng nhập</Link>
+                  </Space>
+                </Menu.Item>
+                <Menu.Item key="1">
+                  <Space>
+                    <Link to="/n">User</Link>
+                  </Space>
+                </Menu.Item>
+                <Menu.Item key="1">
+                  <Space>
+                    <Link to="/m">Quản lý</Link>
+                  </Space>
+                </Menu.Item>
+              </>
             ) : (
               <Row>
                 <Col>
