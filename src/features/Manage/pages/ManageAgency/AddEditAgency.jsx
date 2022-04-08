@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
-import ModalForm from "features/Manage/components/ModalForm/ModalForm";
+import ModalForm from "components/ModalForm";
 import React from "react";
 
 export default function AddEditAgency({ visible, onCreate, onCancel, agencyId }) {

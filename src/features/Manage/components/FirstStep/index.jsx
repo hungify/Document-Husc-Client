@@ -145,9 +145,6 @@ export default function FirstStep({ onSubmitForm, form, formValues }) {
                 size="large"
                 showCheckedStrategy={TreeSelect.SHOW_PARENT}
                 treeCheckable={true}
-                style={{
-                  padding: "8px 10px",
-                }}
               />
             </Form.Item>
           </Col>
