@@ -1,8 +1,10 @@
 import { TreeSelect } from "antd";
 import React from "react";
 export default function TreeSelectForm(props) {
-  
-  const onHandlerTreeSelect = (value) => {
+  console.log('🚀 :: props', props)
+  const onHandlerTreeSelect = (value, info) => {
+  console.log('🚀 :: value', value)
+    console.log("🚀 :: info", info);
     props.onTreeSelect(value);
   };
 

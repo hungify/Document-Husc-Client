@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
 import DrawerCustom from "components/DrawerCustom";
+import { categories } from "config/sidebar";
 import React from "react";
 import styled from "styled-components";
 
@@ -14,35 +15,7 @@ const treeData = [
   {
     title: "root",
     key: "root",
-    children: [
-      {
-        title: "parent 1",
-        key: "parent 1",
-        children: [
-          {
-            title: "parent 1-0",
-            key: "parent 1-0",
-            children: [
-              {
-                title: "leaf 1",
-                key: "leaf 1",
-                children: [],
-              },
-            ],
-          },
-          {
-            title: "parent 1-1",
-            key: "parent 1-1",
-            children: [],
-          },
-        ],
-      },
-      {
-        title: "parent 2",
-        key: "parent 2",
-        children: [],
-      },
-    ],
+    children: categories.data,
   },
 ];
 
@@ -83,7 +56,6 @@ export default function ManageCategory() {
   const [selectedNode, setSelectedNode] = React.useState();
   const [isAddMode, setIsAddMode] = React.useState(false);
   const [treeDataPreview, setTreeDataPreview] = React.useState([]);
-  console.log("🚀 :: treeDataPreview", treeDataPreview);
 
   React.useEffect(() => {
     if (!isAddMode) {
@@ -225,7 +197,7 @@ export default function ManageCategory() {
         placement="right"
         onCloseDrawer={handleCloseDrawer}
         visible={showDrawer}
-        size="small"
+        size="large"
       >
         <Form
           name="basic"
