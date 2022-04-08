@@ -152,7 +152,6 @@ export default function SearchFilter() {
                 allowClear
                 size="large"
                 showCheckedStrategy={TreeSelect.SHOW_PARENT}
-                treeCheckable={true}
                 style={{
                   width: "100%",
                 }}
