@@ -15,7 +15,7 @@ const WrapForm = styled.div`
   box-shadow: 0 0 40px rgb(0 0 0 / 16%);
   border-radius: 12px;
 `;
-export default function AddEditNotification() {
+export default function AddEditNotify() {
   const [form] = Form.useForm();
   const handleOnSubmit = (values) => {};
   const handleTreeReceiverSelect = (value) => {};
