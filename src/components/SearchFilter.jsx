@@ -1,5 +1,4 @@
 import { CaretRightOutlined } from "@ant-design/icons";
-import TreeSelectForm from "components/TreeSelectForm";
 import {
   Checkbox,
   Col,
@@ -14,6 +13,7 @@ import {
   TreeSelect,
   Typography,
 } from "antd";
+import TreeSelectForm from "components/TreeSelectForm";
 import { agencies, categories, documents } from "config/sidebar";
 import React from "react";
 import styled from "styled-components";
