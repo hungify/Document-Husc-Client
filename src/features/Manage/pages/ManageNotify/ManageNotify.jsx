@@ -32,7 +32,7 @@ for (let i = 0; i < 23; i++) {
   );
 }
 
-export default function ManageNotification() {
+export default function ManageNotify() {
   const navigate = useNavigate();
 
   return (
