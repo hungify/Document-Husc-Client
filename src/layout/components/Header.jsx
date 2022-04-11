@@ -16,17 +16,25 @@ const HeaderAnt = styled(Layout.Header)`
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 `;
+const WrapHeader = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background: #fff;
+`;
 const Logo = styled.div`
-  float: left;
-  width: 120px;
-  height: 50px;
-  margin: 0px 24px 20px 0;
-  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
   img {
-    width: 100%;
-    height: 100%;
+    height: 60px;
     object-fit: contain;
   }
+`;
+
+const Title = styled.h1`
+  margin-left: 10px;
+  margin-bottom: 0;
 `;
 
 const notifications = (
@@ -69,38 +77,44 @@ export default function Header({ shouldFixedHeader }) {
 
   return (
     <HeaderAnt theme={"light"} shouldFixedHeader={shouldFixedHeader}>
-      <Row>
-        <Col span={4}>
+      <WrapHeader>
+        <div>
           <Link to="/">
             <Logo>
               <img src={LogoHusc} alt="logo" />
+              <Title>Hệ thống tra cứu văn bản Đại học Khoa học Huế</Title>
             </Logo>
           </Link>
-        </Col>
-        <Col span={6} offset={14}>
-          <Menu mode="horizontal">
-            {!pathnameSplit[1].includes("a") ? (
-              <>
-                <Menu.Item key="1">
-                  <Space>
-                    <LoginOutlined />
-                    <Link to="/a/login">Đăng nhập</Link>
-                  </Space>
-                </Menu.Item>
-                <Menu.Item key="1">
-                  <Space>
-                    <Link to="/n">User</Link>
-                  </Space>
-                </Menu.Item>
-                <Menu.Item key="1">
-                  <Space>
-                    <Link to="/m">Quản lý</Link>
-                  </Space>
-                </Menu.Item>
-              </>
-            ) : (
-              <Row>
-                <Col>
+        </div>
+        <div
+          style={{
+            flex: "1 1 0%",
+          }}
+        ></div>
+        <div>
+          <Menu mode="horizontal" style={{ height: "100%" }}>
+            <>
+              {!pathnameSplit[1].includes("a") ? (
+                <>
+                  <Menu.Item key="1">
+                    <Space>
+                      <LoginOutlined />
+                      <Link to="/a/login">Đăng nhập</Link>
+                    </Space>
+                  </Menu.Item>
+                  <Menu.Item key="1">
+                    <Space>
+                      <Link to="/n">User</Link>
+                    </Space>
+                  </Menu.Item>
+                  <Menu.Item key="1">
+                    <Space>
+                      <Link to="/m">Quản lý</Link>
+                    </Space>
+                  </Menu.Item>
+                </>
+              ) : (
+                <>
                   <Menu.Item key="3">
                     <Dropdown overlay={notifications} placement="bottomRight">
                       <Badge count={3} offset={[-5, 5]}>
@@ -123,8 +137,7 @@ export default function Header({ shouldFixedHeader }) {
                       </Badge>
                     </Dropdown>
                   </Menu.Item>
-                </Col>
-                <Col>
+
                   <Menu.Item>
                     <Dropdown overlay={profile}>
                       <Space>
@@ -133,12 +146,12 @@ export default function Header({ shouldFixedHeader }) {
                       </Space>
                     </Dropdown>
                   </Menu.Item>
-                </Col>
-              </Row>
-            )}
+                </>
+              )}
+            </>
           </Menu>
-        </Col>
-      </Row>
+        </div>
+      </WrapHeader>
     </HeaderAnt>
   );
 }
