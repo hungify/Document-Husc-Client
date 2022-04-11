@@ -1,15 +1,13 @@
 import { DeleteTwoTone, DownloadOutlined, EditTwoTone, ExpandOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Card, Col, Divider, List, Row, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
-import ButtonDelete from "components/ButtonDelete";
-import ButtonEdit from "components/ButtonEdit";
 import ButtonFlexible from "components/ButtonFlexible";
 import DropdownFilter from "components/DropdownFilter";
 import { dropdownConfig } from "config/dropdown";
+import { saveAs } from "file-saver";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { saveAs } from "file-saver";
 
 const RowAnt = styled(Row)`
   margin-top: 20px;
@@ -131,9 +129,6 @@ export default function DocumentList(props) {
                           </>
                         ) : type === "user" ? (
                           <>
-                            <Typography.Title level={5}>
-                              <ButtonEdit />
-                            </Typography.Title>
                             <Typography.Title level={5}>Văn bản chờ được xử lý</Typography.Title>
                           </>
                         ) : null}

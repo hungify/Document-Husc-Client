@@ -1,7 +1,8 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { DownloadOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Drawer, Space } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
-import ButtonSaveFile from "components/ButtonSaveFile";
+import ButtonFlexible from "components/ButtonFlexible";
+import { saveAs } from "file-saver";
 import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
@@ -51,6 +52,10 @@ export default function PreviewPdf({ activeTab }) {
     if (pageNumber === totalPage) return;
     setPageNumber(pageNumber + 1);
   };
+
+  const handleSaveFileClick = () => {
+    saveAs(pdfFile, "name_cua_file.pdf");
+  };
   return (
     <>
       <Drawer
@@ -62,7 +67,15 @@ export default function PreviewPdf({ activeTab }) {
         extra={
           <Space>
             <Button onClick={onClose}>Ẩn</Button>
-            <ButtonSaveFile file={pdfFile} />
+            <ButtonFlexible
+              type="primary"
+              shape="round"
+              icon={<DownloadOutlined />}
+              onDocumentClick={handleSaveFileClick}
+              document={pdfFile}
+            >
+              Tải xuống
+            </ButtonFlexible>
           </Space>
         }
       >
