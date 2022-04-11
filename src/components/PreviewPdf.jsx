@@ -1,7 +1,7 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Drawer, Space } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
-import { SaveFile } from "components/SaveFile";
+import ButtonSaveFile from "components/ButtonSaveFile";
 import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
@@ -62,7 +62,7 @@ export default function PreviewPdf({ activeTab }) {
         extra={
           <Space>
             <Button onClick={onClose}>Ẩn</Button>
-            <SaveFile file={pdfFile} />
+            <ButtonSaveFile file={pdfFile} />
           </Space>
         }
       >
