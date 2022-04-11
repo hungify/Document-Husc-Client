@@ -45,7 +45,7 @@ export default function GuestLayout({ children }) {
           <MenuNavigation
             mode="inline"
             onMenuSelect={handleMenuSelect}
-            dataRender={menuConfig.guestLayout}
+            dataMenuSub={menuConfig.guestLayout}
             hasSubMenu={1}
           />
         </Sidebar>

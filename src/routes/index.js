@@ -1,9 +1,9 @@
 import DocumentDetail from "components/DocumentDetail";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
+import Analytics from "features/Dashboard/Analytics";
+import DashBoard from "features/Dashboard/Dashboard";
 import Home from "features/Home/pages/Home";
-import Analytics from "features/Manage/pages/Analytics/Analytics";
-import DashBoard from "features/Manage/pages/DashBoard/Dashboard";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
 import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
@@ -75,8 +75,13 @@ export const routePathDefinition = [
     breadcrumb: "Thông báo",
     children: [
       {
+        path: "dashboard",
+        element: <DashBoard />,
+        breadcrumb: "Bảng điều khiển",
+      },
+      {
         index: true,
-        element: <Navigate to="inbox" replace={true} />,
+        element: <Navigate to="dashboard" replace={true} />,
       },
       {
         path: "inbox",
@@ -84,7 +89,7 @@ export const routePathDefinition = [
           {
             index: true,
             element: <Inbox />,
-            breadcrumb: "Hộp thư đến",
+            breadcrumb: "Văn bản đến",
           },
           {
             path: "detail",
@@ -105,7 +110,7 @@ export const routePathDefinition = [
           {
             index: true,
             element: <Forward />,
-            breadcrumb: "Hộp thư chuyển tiếp",
+            breadcrumb: "Văn bản đã gửi",
           },
           {
             path: "detail",

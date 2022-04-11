@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout } from "antd";
+import { Layout } from "antd";
 import Footer from "components/Footer";
 import { headerConfig } from "config/header";
 import { menuConfig } from "config/menu";
@@ -7,7 +7,7 @@ import Header from "layout/components/Header";
 import MenuNavigation from "layout/components/MenuNavigation";
 import Sidebar from "layout/components/Sidebar";
 import React from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const LayoutAnt = styled(Layout)`
@@ -59,7 +59,8 @@ export default function UserLayout({ children }) {
             mode="inline"
             onMenuSelect={handleMenuChange}
             activeKey={activeKey}
-            dataRender={menuConfig.userLayout}
+            dataMenuItem={menuConfig.userLayout}
+            // dataMenuSub={menuConfig.guestLayout}
           />
         </Sidebar>
         <LayoutAnt shouldFixedHeader={shouldFixedHeader}>

@@ -1,8 +1,5 @@
-import { Layout, Typography } from "antd";
-import pdfFile from "assets/pdf/test.pdf";
+import { Layout } from "antd";
 import DocumentList from "components/DocumentList";
-import PreviewFile from "components/ButtonPreviewFile";
-import ButtonSaveFile from "components/ButtonSaveFile";
 import SearchFilter from "components/SearchFilter";
 import React from "react";
 

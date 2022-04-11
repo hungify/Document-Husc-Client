@@ -2,8 +2,7 @@ import { Menu } from "antd";
 import React from "react";
 
 export default function MenuNavigation(props) {
-  const { dataRender, onMenuSelect, hasSubMenu } = props;
-
+  const { dataMenuItem, dataMenuSub, onMenuSelect } = props;
   const rootSubmenuKeys = ["documents", "agencies", "categories"];
   const [openKeys, setOpenKeys] = React.useState([]);
 
@@ -26,8 +25,14 @@ export default function MenuNavigation(props) {
       onSelect={handleMenuSelect}
       onOpenChange={handleMenuChange}
     >
-      {hasSubMenu
-        ? dataRender.map((d) =>
+      {dataMenuItem &&
+        dataMenuItem.map((d) => (
+          <Menu.Item key={d.key} icon={d.icon}>
+            {d.title}
+          </Menu.Item>
+        ))}
+      {dataMenuSub
+        ? dataMenuSub.map((d) =>
             d.documents ? (
               <Menu.SubMenu key={d.documents.key} icon={d.documents.icon} title={d.documents.title}>
                 {d.documents.data.map((document) => (
@@ -68,7 +73,7 @@ export default function MenuNavigation(props) {
               </Menu.SubMenu>
             )
           )
-        : dataRender.map((d) => (
+        : dataMenuSub?.map((d) => (
             <Menu.Item key={d.key} icon={d.icon}>
               {d.title}
             </Menu.Item>

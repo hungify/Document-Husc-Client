@@ -1,7 +1,9 @@
 import {
   AppstoreTwoTone,
   BankTwoTone,
+  DashboardOutlined,
   DashboardTwoTone,
+  FileSearchOutlined,
   FileUnknownTwoTone,
   InboxOutlined,
   NotificationTwoTone,
@@ -51,16 +53,28 @@ export const menuConfig = {
   ],
   userLayout: [
     {
-      title: "Hộp thư đến",
+      title: "Thống kê",
+      key: "dashboard",
+      value: "dashboard",
+      icon: <DashboardOutlined />,
+    },
+    {
+      title: "Văn bản đến",
       key: "inbox",
       value: "inbox",
       icon: <InboxOutlined />,
     },
     {
-      title: "Đã chuyển tiếp",
+      title: "Văn bản đã gửi",
       key: "forward",
       value: "forward",
       icon: <SendOutlined />,
+    },
+    {
+      title: "Tra cứu văn bản",
+      key: "..",
+      value: "..",
+      icon: <FileSearchOutlined />,
     },
   ],
   guestLayout: [{ documents }, { agencies }, { categories }],

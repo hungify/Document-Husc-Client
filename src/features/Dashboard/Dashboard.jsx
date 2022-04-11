@@ -1,15 +1,11 @@
 import { Card, Col, Divider, Row, Tabs } from "antd";
-import Analysis from "features/Manage/pages/Analytics/Analytics";
+import Analytics from "features/Dashboard/Analytics";
 import React from "react";
 
 export default function DashBoard() {
   return (
     <>
-      <Row>
-        <Col span={24}>
-          <Analysis />
-        </Col>
-      </Row>
+      <Analytics />
       <Divider />
       <Row>
         <Col span={24}>
