@@ -1,4 +1,4 @@
-import { Col, Row, Space, Table, Tag, Typography } from "antd";
+import { Col, Row, Table, Tag, Typography } from "antd";
 import React from "react";
 import styled from "styled-components";
 
@@ -75,7 +75,7 @@ const data = [
     dateIssued: "20/02/2022",
     signer: "Huỳnh Văn Chương",
     validityStatus: "Đang có hiệu lực",
-    documentType: ["nghị quyết", "thông báo"],
+    documentType: ["nghị quyết"],
     degreeOfUrgency: "Bình thường",
   },
 ];

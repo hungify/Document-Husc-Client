@@ -19,6 +19,9 @@ export default function DocumentDetail() {
       <Tabs.TabPane tab="Văn bản liên quan" key="3">
         Văn bản liên quan
       </Tabs.TabPane>
+      <Tabs.TabPane tab=" Cây xử lý" key="4">
+        Cây xử lý
+      </Tabs.TabPane>
     </Tabs>
   );
 }

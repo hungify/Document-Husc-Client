@@ -1,5 +1,5 @@
 import { Card, Col, Collapse, Row, Typography } from "antd";
-import DocumentDetail from "features/Home/pages/DocumentDetail";
+import DocumentDetail from "components/DocumentDetail";
 import React from "react";
 
 export default function MailContent({ dataRender }) {
