@@ -1,6 +1,6 @@
+import DocumentDetail from "components/DocumentDetail";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
-import DocumentDetail from "features/Home/pages/DocumentDetail";
 import Home from "features/Home/pages/Home";
 import Analytics from "features/Manage/pages/Analytics/Analytics";
 import DashBoard from "features/Manage/pages/DashBoard/Dashboard";

@@ -1,5 +1,4 @@
-import { Avatar, Button, Card, Col, Collapse, Row, Space, Tooltip, Typography } from "antd";
-import DocumentDetail from "features/Home/pages/DocumentDetail";
+import { Button, Card } from "antd";
 import MailBox from "features/Notifications/components/MailBox";
 import MailContent from "features/Notifications/components/MailContent";
 import MailInfo from "features/Notifications/components/MailInfo";
@@ -28,7 +27,6 @@ export default function InboxDetail() {
   };
 
   const handleForwardClick = (forwardId) => {
-    console.log("🚀 :: forwardId", forwardId);
     setVisible(true);
   };
   const handleOnSubmit = (values) => {
