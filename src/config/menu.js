@@ -27,12 +27,6 @@ export const menuConfig = {
       icon: <SnippetsTwoTone />,
     },
     {
-      title: "Quản lý thông báo",
-      key: "notification",
-      value: "notification",
-      icon: <NotificationTwoTone />,
-    },
-    {
       title: "Quản lý loại văn bản",
       key: "document-type",
       value: "document-type",

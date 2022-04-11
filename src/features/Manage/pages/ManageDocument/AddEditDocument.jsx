@@ -1,26 +1,22 @@
-import { Alert, Button, Col, Form, message, Row, Steps } from "antd";
-import FirstStep from "features/Manage/components/FirstStep";
-import LastStep from "features/Manage/components/LastStep";
-import SecondStep from "features/Manage/components/SecondStep";
-import ThirdStep from "features/Manage/components/ThirdStep";
+import { Alert, Button, Col, Form, Row, Space, Steps } from "antd";
+import ButtonFlexible from "components/ButtonFlexible";
+import CreateDocument from "features/Manage/components/CreateDocument";
+import PreviewDocument from "features/Manage/components/PreviewDocument";
+import ResultMessage from "features/Manage/components/ResultMessage";
 import React from "react";
 import styled from "styled-components";
 const steps = [
   {
+    key: 0,
+    title: "Nhập văn bản",
+  },
+  {
     key: 1,
-    title: "First",
+    title: "Kiểm lại thông tin",
   },
   {
     key: 2,
-    title: "Second",
-  },
-  {
-    key: 3,
-    title: "Third",
-  },
-  {
-    key: 4,
-    title: "Last",
+    title: "Kết thúc",
   },
 ];
 const WrapStep = styled.div``;
@@ -43,10 +39,12 @@ const StepAction = styled.div`
 export default function AddEditDocument({ visible, onCreate, onCancel, agencyId }) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
+  const [formValuesDraft, setFormValuesDraft] = React.useState();
+  const [required, setRequired] = React.useState(true);
 
   const [form] = Form.useForm();
-
   const handleSubmitForm = (values) => {
+    console.log("🚀 :: values", values);
     if (values) {
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
@@ -68,8 +66,8 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
   };
 
   const nextStep = () => {
-    // form.submit();
-    // handleSubmitForm();
+    form.submit();
+    handleSubmitForm();
     setCurrentStep(currentStep + 1);
   };
 
@@ -77,10 +75,13 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
     setCurrentStep(currentStep - 1);
   };
 
-  const goToStep = (step) => {
-    setCurrentStep(step);
+  const handleSaveDraftDocumentClick = () => {
+    form.submit();
+    handleSubmitForm();
+    setFormValuesDraft(formValues);
+    setCurrentStep(steps[steps.length - 1].key);
   };
-
+  const handleIssuanceDocumentClick = () => {};
   return (
     <WrapStep>
       <Steps current={currentStep}>
@@ -90,57 +91,62 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
       </Steps>
       <Container>
         <Row>
-          {steps[currentStep].title === "First" ? (
-            <Col span={20} offset={2}>
+          {steps[currentStep].key === 0 ? (
+            <Col span={24}>
               <WrapAlert>
                 <Alert
-                  message="Để đăng lên một văn bản bạn cần hoàn thành các bước sau"
+                  message="Để ban hành một văn bản bạn cần hoàn thành các bước sau"
                   type="info"
                   showIcon
                   closable
                 />
               </WrapAlert>
               <WrapForm>
-                <FirstStep form={form} onSubmitForm={handleSubmitForm} formValues={formValues} />
+                <CreateDocument
+                  form={form}
+                  onSubmitForm={handleSubmitForm}
+                  formValues={formValues}
+                  currentStep={currentStep}
+                  nextStep={nextStep}
+                  required={required}
+                />
               </WrapForm>
             </Col>
-          ) : steps[currentStep].title === "Second" ? (
-            <Col span={20} offset={2}>
-              <WrapForm>
-                <SecondStep form={form} onSubmitForm={handleSubmitForm} />
-              </WrapForm>
-            </Col>
-          ) : steps[currentStep].title === "Third" ? (
-            <Col span={20} offset={2}>
-              <WrapForm>
-                <ThirdStep form={form} onSubmitForm={handleSubmitForm} />
-              </WrapForm>
+          ) : steps[currentStep].key === 1 ? (
+            <Col span={24}>
+              <PreviewDocument formValues={formValues} form={form} />
             </Col>
           ) : (
             <Col span={24}>
-              <WrapForm>
-                <LastStep form={form} onSubmitForm={handleSubmitForm} goToStep={goToStep} />
-              </WrapForm>
+              <ResultMessage form={form} formValues={formValues} />
             </Col>
           )}
         </Row>
       </Container>
       <StepAction>
-        {currentStep < steps.length - 1 && (
-          <Button type="primary" onClick={() => nextStep()}>
-            Tiếp theo
-          </Button>
-        )}
-        {currentStep === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success("Processing complete!")}>
-            Tải lên
-          </Button>
-        )}
-        {currentStep > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prevStep()}>
-            Quay lại
-          </Button>
-        )}
+        {currentStep === 0 ? (
+          <Space size="large">
+            <Button type="default" size="large" onClick={() => handleSaveDraftDocumentClick()}>
+              Lưu bản nháp
+            </Button>
+            <Button type="primary" size="large" onClick={() => nextStep()}>
+              Tiếp theo
+            </Button>
+          </Space>
+        ) : currentStep === 1 ? (
+          <Space size={"large"}>
+            <ButtonFlexible size="large" onDocumentClick={() => prevStep()}>
+              Quay lại
+            </ButtonFlexible>
+            <ButtonFlexible
+              size="large"
+              type="primary"
+              onDocumentClick={handleIssuanceDocumentClick}
+            >
+              Ban hành ngay
+            </ButtonFlexible>
+          </Space>
+        ) : null}
       </StepAction>
     </WrapStep>
   );

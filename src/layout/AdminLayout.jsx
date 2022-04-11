@@ -59,7 +59,7 @@ export default function AdminLayout({ children }) {
             mode="inline"
             onMenuSelect={handleMenuChange}
             selectedKeys={activeKey}
-            dataRender={menuConfig.adminLayout}
+            dataMenuItem={menuConfig.adminLayout}
           />
         </Sidebar>
         <ContentAnt collapsed={collapsed ? 1 : 0}>

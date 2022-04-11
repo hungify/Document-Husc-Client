@@ -1,6 +1,8 @@
-import { Col, Row } from "antd";
+import { PlusCircleTwoTone } from "@ant-design/icons";
+import { Button, Card, Col, Row, Tooltip } from "antd";
 import DocumentList from "components/DocumentList";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -18,6 +20,7 @@ for (let i = 0; i < 23; i++) {
   });
 }
 export default function ManageDocument() {
+  const navigate = useNavigate();
   const handleDeleteDocumentClick = (item) => {
     console.log(item);
   };
@@ -26,15 +29,32 @@ export default function ManageDocument() {
     console.log(item);
   };
 
+  const handleCreateDocumentClick = () => {
+    navigate("post");
+  };
   return (
     <Row gutter={[0, 20]}>
       <Col span={24}>
-        <DocumentList
-          dataRender={listData}
-          type="admin"
-          onEditDocument={handleEditDocumentClick}
-          onDeleteDocument={handleDeleteDocumentClick}
-        />
+        <Card
+          extra={
+            <Tooltip title="Ban hành một văn bản?">
+              <Button
+                icon={<PlusCircleTwoTone />}
+                type="default"
+                onClick={handleCreateDocumentClick}
+              >
+                Ban hành
+              </Button>
+            </Tooltip>
+          }
+        >
+          <DocumentList
+            dataRender={listData}
+            type="admin"
+            onEditDocument={handleEditDocumentClick}
+            onDeleteDocument={handleDeleteDocumentClick}
+          />
+        </Card>
       </Col>
     </Row>
   );
