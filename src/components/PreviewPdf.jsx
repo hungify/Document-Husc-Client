@@ -25,20 +25,23 @@ const PageControl = styled.div`
 
 const Wrapper = styled.div`
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 `;
 
-export default function PreviewPdf({ activeTab }) {
+export default function PreviewPdf({ activeTab, onClosePreview }) {
   const [totalPage, setTotalPage] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
-    if (+activeTab === 2) setVisible(true);
+    if (activeTab === "preview") setVisible(true);
     else setVisible(false);
   }, [activeTab]);
 
   const onClose = () => {
     setVisible(false);
+    onClosePreview(true);
   };
 
   const onDocumentLoadSuccess = ({ numPages }) => {
@@ -60,8 +63,8 @@ export default function PreviewPdf({ activeTab }) {
     <>
       <Drawer
         title={`Trang ${pageNumber}/${totalPage}`}
-        placement="right"
-        size={"large"}
+        placement="top"
+        size="large"
         onClose={onClose}
         visible={visible}
         extra={
