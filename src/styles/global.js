@@ -7,4 +7,7 @@ export const GlobalStyle = createGlobalStyle`
   margin: 0;
   font-family: "Encode Sans Expanded", sans-serif;
 }
+h1, h2, h3, h4, h5 {
+  margin-bottom: 0 !important;
+}
 `;

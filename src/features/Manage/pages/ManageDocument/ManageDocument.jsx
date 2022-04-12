@@ -3,6 +3,13 @@ import { Button, Card, Col, Row, Tooltip } from "antd";
 import DocumentList from "components/DocumentList";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const WrapButton = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  padding-bottom: 0;
+`;
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -19,6 +26,7 @@ for (let i = 0; i < 23; i++) {
       "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
   });
 }
+
 export default function ManageDocument() {
   const navigate = useNavigate();
   const handleDeleteDocumentClick = (item) => {
@@ -33,28 +41,21 @@ export default function ManageDocument() {
     navigate("post");
   };
   return (
-    <Row gutter={[0, 20]}>
+    <Row>
       <Col span={24}>
-        <Card
-          extra={
-            <Tooltip title="Ban hành một văn bản?">
-              <Button
-                icon={<PlusCircleTwoTone />}
-                type="default"
-                onClick={handleCreateDocumentClick}
-              >
-                Ban hành
-              </Button>
-            </Tooltip>
-          }
-        >
-          <DocumentList
-            dataRender={listData}
-            type="admin"
-            onEditDocument={handleEditDocumentClick}
-            onDeleteDocument={handleDeleteDocumentClick}
-          />
-        </Card>
+        <WrapButton>
+          <Tooltip title="Ban hành một văn bản?">
+            <Button icon={<PlusCircleTwoTone />} type="default" onClick={handleCreateDocumentClick}>
+              Ban hành văn bản
+            </Button>
+          </Tooltip>
+        </WrapButton>
+        <DocumentList
+          dataRender={listData}
+          type="admin"
+          onEditDocument={handleEditDocumentClick}
+          onDeleteDocument={handleDeleteDocumentClick}
+        />
       </Col>
     </Row>
   );
