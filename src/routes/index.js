@@ -12,15 +12,13 @@ import ReceiverDocument from "features/ReceiverDocument/ReceiverDocument";
 import ReceiverDocumentDetail from "features/ReceiverDocument/ReceiverDocumentDetail";
 import SentDocument from "features/SentDocument/SentDocument";
 import SentDocumentDetail from "features/SentDocument/SentDocumentDetail";
-import AdminLayout from "layout/AdminLayout";
-import GuestLayout from "layout/GuestLayout";
-import UserLayout from "layout/UserLayout";
+import MainLayout from "layouts/MainLayout/MainLayout";
 import { Navigate } from "react-router-dom";
 
 export const routePathDefinition = [
   {
     path: "/",
-    element: <GuestLayout />,
+    element: <MainLayout />,
     children: [
       {
         index: true,
@@ -38,39 +36,6 @@ export const routePathDefinition = [
           },
         ],
       },
-    ],
-  },
-  {
-    path: "a",
-    element: <GuestLayout />,
-    breadcrumb: "Tài khoản",
-    children: [
-      {
-        index: true,
-        element: <Navigate to="login" replace={true} />,
-      },
-      {
-        path: "login",
-        element: <TabsAuth />,
-        breadcrumb: "Đăng nhập",
-      },
-      {
-        path: "register",
-        element: <TabsAuth />,
-        breadcrumb: "Đăng ký",
-      },
-      {
-        path: "forgot",
-        element: <TabsAuth />,
-        breadcrumb: "Quên mật khẩu",
-      },
-    ],
-  },
-  {
-    path: "n",
-    element: <UserLayout />,
-    breadcrumb: "Thông báo",
-    children: [
       {
         path: "dashboard",
         element: <DashBoard />,
@@ -125,8 +90,34 @@ export const routePathDefinition = [
     ],
   },
   {
+    path: "a",
+    element: <MainLayout />,
+    breadcrumb: "Tài khoản",
+    children: [
+      {
+        index: true,
+        element: <Navigate to="login" replace={true} />,
+      },
+      {
+        path: "login",
+        element: <TabsAuth />,
+        breadcrumb: "Đăng nhập",
+      },
+      {
+        path: "register",
+        element: <TabsAuth />,
+        breadcrumb: "Đăng ký",
+      },
+      {
+        path: "forgot",
+        element: <TabsAuth />,
+        breadcrumb: "Quên mật khẩu",
+      },
+    ],
+  },
+  {
     path: "m",
-    element: <AdminLayout />,
+    element: <MainLayout />,
     breadcrumb: "Quản lý",
     children: [
       {
