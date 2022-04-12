@@ -210,7 +210,8 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
           </Col>
         </Row>
       </Card>
-      {/* <Card>
+      
+      <Card>
         <Row justify="space-between">
           <Col span={10}>
             <FormItemAnt
@@ -362,7 +363,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
             </FormItemAnt>
           </Col>
         </Row>
-      </Card> */}
+      </Card>
     </Form>
   );
 }

@@ -38,13 +38,13 @@ const StepAction = styled.div`
 
 export default function AddEditDocument({ visible, onCreate, onCancel, agencyId }) {
   const [currentStep, setCurrentStep] = React.useState(0);
+  console.log('🚀 :: currentStep', currentStep)
   const [formValues, setFormValues] = React.useState([]);
   const [formValuesDraft, setFormValuesDraft] = React.useState();
   const [required, setRequired] = React.useState(true);
 
   const [form] = Form.useForm();
   const handleSubmitForm = (values) => {
-    console.log("🚀 :: values", values);
     if (values) {
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {

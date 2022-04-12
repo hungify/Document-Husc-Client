@@ -9,8 +9,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const CardAnt = styled(Card)``;
+
 const RowAnt = styled(Row)`
-  margin-top: 20px;
   display: flex;
   align-items: center;
 `;
@@ -28,17 +29,14 @@ export default function DocumentList(props) {
   };
 
   return (
-    <>
-      <RowAnt>
+    <CardAnt bordered={false}>
+      <Row gutter={[10, 10]}>
         <Col span={20}>
           <Typography.Text strong>Có tất cả 123 Văn bản</Typography.Text>
         </Col>
         <Col span={4}>
           <DropdownFilter dataRender={dropdownConfig.documentFilter} />
         </Col>
-        <Divider type="horizontal" />
-      </RowAnt>
-      <Row>
         <Col span={24}>
           <List
             itemLayout="vertical"
@@ -141,6 +139,6 @@ export default function DocumentList(props) {
           />
         </Col>
       </Row>
-    </>
+    </CardAnt>
   );
 }

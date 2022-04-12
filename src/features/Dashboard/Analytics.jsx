@@ -1,78 +1,48 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Card, Col, Row, Tooltip, Typography } from "antd";
+import { Card, Col, Row, Typography } from "antd";
 import React from "react";
+import styled from "styled-components";
 
-export default function Analytics() {
+const IconBox = styled.div`
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  background: #1890ff;
+  color: #fff;
+  border-radius: 0.5rem;
+  line-height: 48px;
+`;
+
+const WrapTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export default function Analytics({ dataRender }) {
   return (
-    <Row gutter={16}>
-      <Col span={6}>
-        <Card>
-          <Row>
-            <Col span={20}>
-              <Typography.Title level={5}>Văn bản nháp</Typography.Title>
-            </Col>
-            <Col span={4} push={2}>
-              <Tooltip placement="topLeft" title="Số văn bản nháp">
-                <InfoCircleOutlined />
-              </Tooltip>
-            </Col>
-          </Row>
-          <Row>
-            <Typography.Text>0 văn bản nháp</Typography.Text>
-          </Row>
-        </Card>
-      </Col>
-      <Col span={6}>
-        <Card>
-          <Row>
-            <Col span={20}>
-              <Typography.Title level={5}>Số văn bản đang chờ xử lý</Typography.Title>
-            </Col>
-            <Col span={4} push={2}>
-              <Tooltip placement="topLeft" title="Số văn bản đang chờ xử lý">
-                <InfoCircleOutlined />
-              </Tooltip>
-            </Col>
-          </Row>
-          <Row>
-            <Typography.Text>2 văn bản đang chờ xử lý</Typography.Text>
-          </Row>
-        </Card>
-      </Col>
-      <Col span={6}>
-        <Card>
-          <Row>
-            <Col span={20}>
-              <Typography.Title level={5}>Số văn bản đã gửi</Typography.Title>
-            </Col>
-            <Col span={4} push={2}>
-              <Tooltip placement="topLeft" title="Số văn bản đã gửi">
-                <InfoCircleOutlined />
-              </Tooltip>
-            </Col>
-          </Row>
-          <Row>
-            <Typography.Text>10 văn bản đã gửi</Typography.Text>
-          </Row>
-        </Card>
-      </Col>
-      <Col span={6}>
-        <Card>
-          <Row>
-            <Col span={20}>
-              <Typography.Title level={5}>Số văn bản đã xử lý</Typography.Title>
-            </Col>
-            <Col span={4} push={2}>
-              <Tooltip placement="topLeft" title="Số văn bản đã xử lý">
-                <InfoCircleOutlined />
-              </Tooltip>
-            </Col>
-          </Row>
-          <Row>
-            <Typography.Text>10 văn bản đã xứ lý</Typography.Text>
-          </Row>
-        </Card>
-      </Col>
+    <Row gutter={[10, 10]}>
+      {dataRender.map((item) => (
+        <Col span={dataRender.length > 3 ? 6 : 8} key={item.key}>
+          <Card>
+            <Row>
+              <Col span={24}>
+                <WrapTitle>
+                  <div>
+                    <Typography.Text type="secondary">
+                      <Typography.Title level={4}>{item.title}</Typography.Title>
+                    </Typography.Text>
+                    <Typography.Title level={5}>
+                      <Typography.Text type="secondary">{item.value}</Typography.Text>
+                    </Typography.Title>
+                  </div>
+                  <IconBox>{item.icon}</IconBox>
+                </WrapTitle>
+              </Col>
+            </Row>
+            <Row></Row>
+          </Card>
+        </Col>
+      ))}
     </Row>
   );
 }

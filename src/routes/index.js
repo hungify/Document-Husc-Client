@@ -134,23 +134,12 @@ export const routePathDefinition = [
     children: [
       {
         index: true,
-        element: <Navigate to="dashboard/analytics" replace={true} />,
+        element: <Navigate to="dashboard" replace={true} />,
       },
       {
         path: "dashboard",
         element: <DashBoard />,
         breadcrumb: "Bảng điều khiển",
-        children: [
-          {
-            index: true,
-            element: <Navigate to="analytics" replace={true} />,
-          },
-          {
-            path: "analytics",
-            element: <Analytics />,
-            breadcrumb: "Thống kê",
-          },
-        ],
       },
       {
         path: "document",
@@ -163,7 +152,7 @@ export const routePathDefinition = [
           {
             path: "post",
             element: <AddEditDocument />,
-            breadcrumb: "Thêm mới văn bản",
+            breadcrumb: "Ban hành",
           },
           {
             path: "edit",
@@ -173,32 +162,6 @@ export const routePathDefinition = [
                 path: ":documentId",
                 element: <AddEditDocument />,
                 breadcrumb: "Chỉnh sửa văn bản",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: "notification",
-        breadcrumb: "Thông báo",
-        children: [
-          {
-            index: true,
-            element: <ManageNotify />,
-          },
-          {
-            path: "post",
-            element: <AddEditNotify />,
-            breadcrumb: "Thêm mới thông báo",
-          },
-          {
-            path: "edit",
-            breadcrumb: null,
-            children: [
-              {
-                path: ":documentId",
-                element: <AddEditNotify />,
-                breadcrumb: "Chỉnh sửa thông báo",
               },
             ],
           },

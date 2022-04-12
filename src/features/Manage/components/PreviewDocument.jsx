@@ -12,11 +12,8 @@ const FormItemAnt = styled(Form.Item)`
   padding-left: 20px;
 `;
 export default function PreviewDocument({ form, formValues }) {
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  const onFinish = (values) => {};
   React.useEffect(() => {
-    console.log("🚀 :: formValues", formValues);
     form.setFieldsValue(formValues);
   }, [formValues, form]);
 
