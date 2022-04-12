@@ -16,23 +16,23 @@ const ContentAnt = styled(Layout.Content)`
 `;
 
 export default function AdminLayout({ children }) {
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const pathnames = pathname.split("/").filter((item) => item);
+  // const pathnames = pathname.split("/").filter((item) => item);
   const { shouldFixedHeader } = headerConfig;
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
 
-  React.useEffect(() => {
-    if (pathnames[pathnames.length - 1] === "dashboard") {
-      const des = pathnames[pathnames.length - 1] + "/analytics";
-      setActiveKey(des);
-      navigate(des);
-    } else {
-      setActiveKey(pathnames[pathnames.length - 1]);
-    }
-  }, [pathnames]);
+  // React.useEffect(() => {
+  //   if (pathnames[pathnames.length - 1] === "dashboard") {
+  //     const des = pathnames[pathnames.length - 1] + "/analytics";
+  //     setActiveKey(des);
+  //     navigate(des);
+  //   } else {
+  //     setActiveKey(pathnames[pathnames.length - 1]);
+  //   }
+  // }, [pathnames]);
 
   const handleMenuChange = ({ key }) => {
     setActiveKey(key);
