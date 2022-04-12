@@ -1,20 +1,17 @@
 import DocumentDetail from "components/DocumentDetail";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
-import Analytics from "features/Dashboard/Analytics";
 import DashBoard from "features/Dashboard/Dashboard";
-import Home from "features/Home/pages/Home";
+import Home from "features/Home/Home";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
 import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
 import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
 import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
-import AddEditNotify from "features/Manage/pages/ManageNotify/AddEditNotify";
-import ManageNotify from "features/Manage/pages/ManageNotify/ManageNotify";
-import ForwardDetail from "features/Notifications/components/ForwardDetail";
-import InboxDetail from "features/Notifications/components/InboxDetail";
-import Forward from "features/Notifications/pages/Forward/Forward";
-import Inbox from "features/Notifications/pages/Inbox/Inbox";
+import ReceiverDocument from "features/ReceiverDocument/ReceiverDocument";
+import ReceiverDocumentDetail from "features/ReceiverDocument/ReceiverDocumentDetail";
+import SentDocument from "features/SentDocument/SentDocument";
+import SentDocumentDetail from "features/SentDocument/SentDocumentDetail";
 import AdminLayout from "layout/AdminLayout";
 import GuestLayout from "layout/GuestLayout";
 import UserLayout from "layout/UserLayout";
@@ -88,7 +85,7 @@ export const routePathDefinition = [
         children: [
           {
             index: true,
-            element: <Inbox />,
+            element: <ReceiverDocument />,
             breadcrumb: "Văn bản đến",
           },
           {
@@ -97,7 +94,7 @@ export const routePathDefinition = [
             children: [
               {
                 path: ":inboxId",
-                element: <InboxDetail />,
+                element: <ReceiverDocumentDetail />,
                 breadcrumb: "Thông tin chi tiết",
               },
             ],
@@ -109,7 +106,7 @@ export const routePathDefinition = [
         children: [
           {
             index: true,
-            element: <Forward />,
+            element: <SentDocument />,
             breadcrumb: "Văn bản đã gửi",
           },
           {
@@ -118,7 +115,7 @@ export const routePathDefinition = [
             children: [
               {
                 path: ":forwardId",
-                element: <ForwardDetail />,
+                element: <SentDocumentDetail />,
                 breadcrumb: "Thông tin chi tiết",
               },
             ],

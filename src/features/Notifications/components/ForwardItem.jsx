@@ -1,5 +1,4 @@
 import { Avatar, Col, List, Row, Typography } from "antd";
-import DrawerRead from "features/Notifications/components/DrawerReader";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -29,7 +28,6 @@ export default function ForwardItem({ item }) {
 
   return (
     <Wrapper>
-      <DrawerRead visible={visible} onCloseDrawer={handleCloseDrawer} />
       <Row align="middle">
         <ColAnt span={7}>
           <List.Item>
