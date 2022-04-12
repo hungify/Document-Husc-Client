@@ -2,12 +2,12 @@ import { Layout } from "antd";
 import Footer from "components/Footer";
 import { headerConfig } from "config/header";
 import { menuConfig } from "config/menu";
-import DynamicBreadcrumb from "layout/components/DynamicBreadcrumb";
-import Header from "layout/components/Header";
-import MenuNavigation from "layout/components/MenuNavigation";
-import Sidebar from "layout/components/Sidebar";
+import DynamicBreadcrumb from "layouts/components/DynamicBreadcrumb";
+import Header from "layouts/components/Header";
+import MenuNavigation from "layouts/components/MenuNavigation";
+import Sidebar from "layouts/components/Sidebar";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const LayoutAnt = styled(Layout)`
@@ -19,12 +19,27 @@ const ContentAnt = styled(Layout.Content)`
   padding-top: 0;
 `;
 
-export default function GuestLayout({ children }) {
+export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = React.useState(false);
+  const [menuSetting, setMenuSetting] = React.useState();
+  const { pathname } = useLocation();
+  const [activeKey, setActiveKey] = React.useState();
+  const pathnames = pathname.split("/").filter((item) => item);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    const path = pathnames[0];
+    if (path === "n") {
+      setMenuSetting(menuConfig.userLayout);
+    } else {
+      setMenuSetting(menuConfig.adminLayout);
+    }
+  }, [pathnames]);
+
   const { shouldFixedHeader } = headerConfig.guestLayout;
 
-  const handleMenuSelect = (item) => {
-    console.log(item);
+  const handleMenuSelect = ({ key }, isUser) => {
+    setActiveKey(key);
+    navigate(`${key}`);
   };
 
   const handleOnCollapse = (collapsed) => {
@@ -45,7 +60,9 @@ export default function GuestLayout({ children }) {
           <MenuNavigation
             mode="inline"
             onMenuSelect={handleMenuSelect}
+            selectedKeys={activeKey}
             dataMenuSub={menuConfig.guestLayout}
+            dataMenuItem={menuSetting}
             hasSubMenu={1}
           />
         </Sidebar>
