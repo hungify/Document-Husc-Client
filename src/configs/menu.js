@@ -6,11 +6,9 @@ import {
   FileSearchOutlined,
   FileUnknownTwoTone,
   InboxOutlined,
-  NotificationTwoTone,
   SendOutlined,
   SnippetsTwoTone,
 } from "@ant-design/icons";
-import { agencies, categories, documents } from "configs/sidebar";
 
 export const menuConfig = {
   ADMIN: [
@@ -65,5 +63,12 @@ export const menuConfig = {
       icon: <SendOutlined />,
     },
   ],
-  GUEST: [{ documents }, { agencies }, { categories }],
+  GUEST: [
+    {
+      title: "Tra cứu văn bản",
+      key: "lookup",
+      value: "lookup",
+      icon: <FileSearchOutlined />,
+    },
+  ],
 };
