@@ -14,7 +14,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const LayoutAnt = styled(Layout)`
-  margin-left: ${(props) => (props.collapsed && props.isAdmin ? "80px" : "270px")};
+  margin-left: ${(props) => (props.collapsed ? "80px" : props.isAdmin ? "250px" : "200px")};
 `;
 
 const ContentAnt = styled(Layout.Content)`
@@ -71,7 +71,7 @@ export default function MainLayout({ children }) {
       <Header shouldFixedHeader={shouldFixedHeader} />
       <Layout hasSider>
         <Sidebar
-          width={isAuth && role === ROLES.ADMIN ? 270 : 200}
+          width={isAuth && role === ROLES.ADMIN ? 250 : 200}
           collapsible
           collapsed={collapsed}
           onCollapse={handleOnCollapse}
