@@ -1,5 +1,4 @@
-import { BulbFilled } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, Divider, List, Radio, Row, Space, Tag, Typography } from "antd";
+import { Avatar, Badge, Card, Col, Divider, List, Radio, Row, Typography } from "antd";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,16 +7,13 @@ const CardAnt = styled(Card)`
   transition: all 0.3s ease;
   padding-left: 0;
   padding-right: 0;
+  border: 1px solid rgba(0, 0, 0, 0.24);
+  background-color: ${(props) => (props.isRead ? "white" : "rgba(65, 132, 228, 0.15)")};
   &:hover {
+    filter: grayscale(0);
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: rgba(65, 132, 228, 0.15);
   }
-`;
-
-const WrapText = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 const listInboxData = [];
@@ -41,7 +37,6 @@ for (let i = 0; i < 23; i++) {
 export default function ReceiverDocument() {
   const [filterType, setFilterType] = React.useState("all");
   const navigate = useNavigate();
-  const [visible, setVisible] = React.useState(false);
 
   return (
     <Card size="small">
@@ -69,45 +64,46 @@ export default function ReceiverDocument() {
             text={item.urgentLevel}
             color={item.urgentLevel === "Bình thường" ? "green" : "red"}
           >
-            <CardAnt>
+            <CardAnt isRead={item.id % 2 === 0 ? 1 : 0}>
               <Row
                 align="middle"
                 justify="space-between"
                 onClick={() => navigate(`detail/${item.id}`)}
               >
-                <Col span={8}>
+                <Col span={24}>
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar>{item.from.avatar.charAt(0).toUpperCase()}</Avatar>}
+                      avatar={
+                        <Avatar.Group
+                          maxCount={2}
+                          maxPopoverTrigger="click"
+                          size="large"
+                          maxStyle={{
+                            color: "#f56a00",
+                            backgroundColor: "#fde3cf",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <Avatar>K</Avatar>
+                        </Avatar.Group>
+                      }
                       title={
                         <Link to={`${item.id}`}>
                           <Typography.Text strong>{item.title}</Typography.Text>
                         </Link>
                       }
-                      description={`Từ: ${item.from.name}`}
+                      description={
+                        <Typography.Text type="secondary">
+                          <Typography.Paragraph ellipsis={{ rows: 1 }}>
+                            <Typography.Text type="secondary">Từ: {item.from.name}</Typography.Text>
+                          </Typography.Paragraph>
+                        </Typography.Text>
+                      }
                     />
                   </List.Item>
                 </Col>
-                <Col span={12}>
-                  <Typography.Paragraph
-                    ellipsis={{ rows: 3, expandable: true, symbol: "Chi tiết" }}
-                  >
-                    {item.summary}
-                  </Typography.Paragraph>
-                </Col>
-                <Col span={2}>
-                  {item.isRead && (
-                    <WrapText>
-                      <Tag color="red" icon={<BulbFilled />}>
-                        NEW
-                      </Tag>
-                    </WrapText>
-                  )}
-                </Col>
-                <Col span={2}>
-                  <WrapText>
-                    <Typography.Text>2 day ago</Typography.Text>
-                  </WrapText>
+                <Col span={24}>
+                  <Typography.Paragraph ellipsis={{ rows: 3 }}>{item.summary}</Typography.Paragraph>
                 </Col>
               </Row>
             </CardAnt>

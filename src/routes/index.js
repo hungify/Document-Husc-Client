@@ -63,21 +63,20 @@ export const routePathDefinition = [
           },
           {
             path: "inbox",
-            breadcrumb: "Văn bản đến",
-            element: <ReceiverDocument />,
             children: [
+              {
+                index: true,
+                breadcrumb: "Văn bản đến",
+                element: <ReceiverDocument />,
+              },
               {
                 path: "detail",
                 breadcrumb: null,
                 children: [
                   {
                     path: ":inboxId",
+                    element: <ReceiverDocumentDetail />,
                     breadcrumb: "Thông tin chi tiết",
-                    element: (
-                      <RequireAuth redirectPath="/" allowedRoles={[ROLES.USER, ROLES.ADMIN]}>
-                        <ReceiverDocumentDetail />
-                      </RequireAuth>
-                    ),
                   },
                 ],
               },
