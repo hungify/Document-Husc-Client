@@ -2,8 +2,8 @@ import { Card, Col, DatePicker, Form, Input, Row, Space, TreeSelect, Upload } fr
 import DebounceSelect from "components/DebounceSelect";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { selectConfig } from "config/select";
-import { categories } from "config/sidebar";
+import { selectConfig } from "configs/select";
+import { categories } from "configs/sidebar";
 import React from "react";
 import styled from "styled-components";
 

@@ -10,7 +10,7 @@ import {
   SendOutlined,
   SnippetsTwoTone,
 } from "@ant-design/icons";
-import { agencies, categories, documents } from "config/sidebar";
+import { agencies, categories, documents } from "configs/sidebar";
 
 export const menuConfig = {
   ADMIN: [
@@ -22,8 +22,8 @@ export const menuConfig = {
     },
     {
       title: "Quản lý văn bản",
-      key: "document",
-      value: "document",
+      key: "documents",
+      value: "documents",
       icon: <SnippetsTwoTone />,
     },
     {
@@ -34,13 +34,13 @@ export const menuConfig = {
     },
     {
       title: "Quản lý chuyên mục",
-      key: "category",
-      value: "category",
+      key: "categories",
+      value: "categories",
       icon: <AppstoreTwoTone />,
     },
     {
       title: "Quản lý cơ quan ban hành",
-      key: "agency",
+      key: "agencies",
       value: "agency",
       icon: <BankTwoTone />,
     },
@@ -63,12 +63,6 @@ export const menuConfig = {
       key: "forward",
       value: "forward",
       icon: <SendOutlined />,
-    },
-    {
-      title: "Tra cứu văn bản",
-      key: "..",
-      value: "..",
-      icon: <FileSearchOutlined />,
     },
   ],
   GUEST: [{ documents }, { agencies }, { categories }],

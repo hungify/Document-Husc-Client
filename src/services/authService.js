@@ -55,7 +55,7 @@ const authService = {
   logout: (refreshToken) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (refreshToken === "321") {
+        if (refreshToken === "321" || refreshToken === "4321") {
           resolve({
             message: "Logout success",
             status: 200,
