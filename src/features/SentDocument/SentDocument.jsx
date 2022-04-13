@@ -66,7 +66,6 @@ for (let i = 0; i < 23; i++) {
   });
 }
 export default function SentDocument() {
-  const [filterType, setFilterType] = React.useState("all");
   const navigate = useNavigate();
 
   return (

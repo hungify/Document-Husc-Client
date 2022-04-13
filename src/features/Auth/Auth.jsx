@@ -13,7 +13,7 @@ export default function Auth() {
 
   function handleOnChangeTab(key) {
     setKey(key);
-    navigate(`${key}`);
+    navigate(`/${key}`);
   }
   return (
     <>

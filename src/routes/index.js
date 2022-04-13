@@ -28,6 +28,11 @@ export const routePathDefinition = [
         breadcrumb: "Trang chủ",
       },
       {
+        path: "lookup",
+        element: <Home />,
+        breadcrumb: "Tìm kiếm",
+      },
+      {
         path: "detail",
         breadcrumb: null,
         children: [
