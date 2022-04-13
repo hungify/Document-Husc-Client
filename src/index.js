@@ -1,3 +1,4 @@
+import store from "app/store";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -5,14 +6,36 @@ import { GlobalStyle } from "styles/global";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const persistor = persistStore(store);
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <GlobalStyle />
-    <App />
-  </BrowserRouter>,
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <Provider store={store}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
+      <BrowserRouter>
+        <GlobalStyle />
+        <ToastContainer
+          autoClose={5000}
+          position="bottom-right"
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <App />
+      </BrowserRouter>
+      {/* </PersistGate> */}
+    </Provider>
+    ,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

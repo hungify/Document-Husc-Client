@@ -13,7 +13,7 @@ import {
 import { agencies, categories, documents } from "config/sidebar";
 
 export const menuConfig = {
-  adminLayout: [
+  ADMIN: [
     {
       title: "Bảng điều khiển",
       key: "dashboard",
@@ -45,7 +45,7 @@ export const menuConfig = {
       icon: <BankTwoTone />,
     },
   ],
-  userLayout: [
+  USER: [
     {
       title: "Bảng điều khiển",
       key: "dashboard",
@@ -71,5 +71,5 @@ export const menuConfig = {
       icon: <FileSearchOutlined />,
     },
   ],
-  guestLayout: [{ documents }, { agencies }, { categories }],
+  GUEST: [{ documents }, { agencies }, { categories }],
 };

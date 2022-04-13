@@ -1,12 +1,15 @@
 import { Layout } from "antd";
+import { getRole, isAuthenticated } from "app/selectors/authSelector";
 import Footer from "components/Footer";
 import { headerConfig } from "config/header";
 import { menuConfig } from "config/menu";
-import DynamicBreadcrumb from "layouts/components/DynamicBreadcrumb";
-import Header from "layouts/components/Header";
-import MenuNavigation from "layouts/components/MenuNavigation";
-import Sidebar from "layouts/components/Sidebar";
+import { ROLES } from "config/roles";
+import DynamicBreadcrumb from "layouts/MainLayout/components/DynamicBreadcrumb";
+import Header from "layouts/MainLayout/components/Header";
+import MenuNavigation from "layouts/MainLayout/components/MenuNavigation";
+import Sidebar from "layouts/MainLayout/components/Sidebar";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -21,19 +24,19 @@ const ContentAnt = styled(Layout.Content)`
 
 export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = React.useState(false);
-  const [menuSetting, setMenuSetting] = React.useState();
-  const { pathname } = useLocation();
   const [activeKey, setActiveKey] = React.useState();
-  const pathnames = pathname.split("/").filter((item) => item);
   const navigate = useNavigate();
+  const isAuth = useSelector(isAuthenticated);
+  const role = useSelector(getRole);
+  const [menuItems, setMenuItems] = React.useState([]);
+
   React.useEffect(() => {
-    const path = pathnames[0];
-    if (path === "n") {
-      setMenuSetting(menuConfig.userLayout);
+    if (isAuth) {
+      setMenuItems(menuConfig[role]);
     } else {
-      setMenuSetting(menuConfig.adminLayout);
+      setMenuItems([]);
     }
-  }, [pathnames]);
+  }, [role, isAuth]);
 
   const { shouldFixedHeader } = headerConfig.guestLayout;
 
@@ -61,8 +64,8 @@ export default function MainLayout({ children }) {
             mode="inline"
             onMenuSelect={handleMenuSelect}
             selectedKeys={activeKey}
-            dataMenuSub={menuConfig.guestLayout}
-            dataMenuItem={menuSetting}
+            dataMenuSub={menuConfig.GUEST}
+            dataMenuItem={menuItems}
             hasSubMenu={1}
           />
         </Sidebar>
