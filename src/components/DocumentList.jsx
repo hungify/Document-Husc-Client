@@ -1,20 +1,12 @@
 import { DeleteTwoTone, DownloadOutlined, EditTwoTone, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, Divider, List, Row, Typography } from "antd";
+import { Avatar, Badge, Card, Col, List, Row, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonFlexible from "components/ButtonFlexible";
 import DropdownFilter from "components/DropdownFilter";
-import { dropdownConfig } from "config/dropdown";
+import { dropdownConfig } from "configs/dropdown";
 import { saveAs } from "file-saver";
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-
-const CardAnt = styled(Card)``;
-
-const RowAnt = styled(Row)`
-  display: flex;
-  align-items: center;
-`;
 
 export default function DocumentList(props) {
   const { dataRender, type, onEditDocument, onDeleteDocument } = props;
@@ -29,7 +21,7 @@ export default function DocumentList(props) {
   };
 
   return (
-    <CardAnt bordered={false}>
+    <Card bordered={false}>
       <Row gutter={[10, 10]}>
         <Col span={20}>
           <Typography.Text strong>Có tất cả 123 Văn bản</Typography.Text>
@@ -139,6 +131,6 @@ export default function DocumentList(props) {
           />
         </Col>
       </Row>
-    </CardAnt>
+    </Card>
   );
 }

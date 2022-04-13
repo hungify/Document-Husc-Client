@@ -70,13 +70,17 @@ export default function ReceiverDocument() {
             color={item.urgentLevel === "Bình thường" ? "green" : "red"}
           >
             <CardAnt>
-              <Row align="middle" justify="space-between">
-                <Col span={8} onClick={() => navigate(`detail/${item.id}`)}>
+              <Row
+                align="middle"
+                justify="space-between"
+                onClick={() => navigate(`detail/${item.id}`)}
+              >
+                <Col span={8}>
                   <List.Item>
                     <List.Item.Meta
                       avatar={<Avatar>{item.from.avatar.charAt(0).toUpperCase()}</Avatar>}
                       title={
-                        <Link to={`detail/${item.id}`}>
+                        <Link to={`${item.id}`}>
                           <Typography.Text strong>{item.title}</Typography.Text>
                         </Link>
                       }
@@ -84,14 +88,14 @@ export default function ReceiverDocument() {
                     />
                   </List.Item>
                 </Col>
-                <Col span={12} onClick={() => navigate(`detail/${item.id}`)}>
+                <Col span={12}>
                   <Typography.Paragraph
                     ellipsis={{ rows: 3, expandable: true, symbol: "Chi tiết" }}
                   >
                     {item.summary}
                   </Typography.Paragraph>
                 </Col>
-                <Col span={2} onClick={() => navigate(`detail/${item.id}`)}>
+                <Col span={2}>
                   {item.isRead && (
                     <WrapText>
                       <Tag color="red" icon={<BulbFilled />}>
@@ -100,7 +104,7 @@ export default function ReceiverDocument() {
                     </WrapText>
                   )}
                 </Col>
-                <Col span={2} onClick={() => navigate(`detail/${item.id}`)}>
+                <Col span={2}>
                   <WrapText>
                     <Typography.Text>2 day ago</Typography.Text>
                   </WrapText>

@@ -2,7 +2,7 @@ import { Menu } from "antd";
 import React from "react";
 
 export default function MenuNavigation(props) {
-  const { dataMenuItem, dataMenuSub, onMenuSelect } = props;
+  const { dataMenuItem, dataMenuSub, onMenuSelect, selectedKeys } = props;
   const rootSubmenuKeys = ["documents", "agencies", "categories"];
   const [openKeys, setOpenKeys] = React.useState([]);
 
@@ -21,6 +21,7 @@ export default function MenuNavigation(props) {
   return (
     <Menu
       {...props}
+      selectedKeys={selectedKeys}
       openKeys={openKeys}
       onSelect={handleMenuSelect}
       onOpenChange={handleMenuChange}

@@ -14,7 +14,7 @@ export default function Login({ active }) {
 
   React.useEffect(() => {
     if (isAuth) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [isAuth, navigate]);
 

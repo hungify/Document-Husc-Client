@@ -1,9 +1,9 @@
 import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/authSelector";
 import Footer from "components/Footer";
-import { headerConfig } from "config/header";
-import { menuConfig } from "config/menu";
-import { ROLES } from "config/roles";
+import { headerConfig } from "configs/header";
+import { menuConfig } from "configs/menu";
+import { ROLES } from "configs/roles";
 import DynamicBreadcrumb from "layouts/MainLayout/components/DynamicBreadcrumb";
 import Header from "layouts/MainLayout/components/Header";
 import MenuNavigation from "layouts/MainLayout/components/MenuNavigation";
@@ -23,12 +23,23 @@ const ContentAnt = styled(Layout.Content)`
 `;
 
 export default function MainLayout({ children }) {
-  const [collapsed, setCollapsed] = React.useState(false);
-  const [activeKey, setActiveKey] = React.useState();
   const navigate = useNavigate();
   const isAuth = useSelector(isAuthenticated);
   const role = useSelector(getRole);
+  const { pathname } = useLocation();
+  const path = pathname.split("/").filter((item) => item);
+
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [activeKey, setActiveKey] = React.useState();
   const [menuItems, setMenuItems] = React.useState([]);
+
+  React.useEffect(() => {
+    if (path.length > 2) {
+      setActiveKey(path[0]);
+    } else {
+      setActiveKey(path[path.length - 1]);
+    }
+  }, [path]);
 
   React.useEffect(() => {
     if (isAuth) {
@@ -42,7 +53,12 @@ export default function MainLayout({ children }) {
 
   const handleMenuSelect = ({ key }, isUser) => {
     setActiveKey(key);
-    navigate(`${key}`);
+    if (isAuth && role === ROLES.ADMIN) {
+      if (key !== "dashboard") {
+        return navigate(`m/${key}`);
+      }
+    }
+    return navigate(`${key}`);
   };
 
   const handleOnCollapse = (collapsed) => {

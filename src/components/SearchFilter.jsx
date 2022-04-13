@@ -13,7 +13,7 @@ import {
   Typography,
 } from "antd";
 import TreeSelectForm from "components/TreeSelectForm";
-import { agencies, categories, documents } from "config/sidebar";
+import { agencies, categories, documents } from "configs/sidebar";
 import React from "react";
 import styled from "styled-components";
 

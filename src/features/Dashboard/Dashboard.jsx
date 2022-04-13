@@ -8,12 +8,13 @@ import {
   SnippetsOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Divider, Row, Tabs } from "antd";
+import { getRole } from "app/selectors/authSelector";
 import Analytics from "features/Dashboard/Analytics";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const analytics = {
-  adminLayout: [
+  ADMIN: [
     {
       title: "Số văn bản",
       key: "document-total",
@@ -33,7 +34,7 @@ const analytics = {
       icon: <AuditOutlined size="large" />,
     },
   ],
-  userLayout: [
+  USER: [
     {
       title: "Văn bản nháp",
       key: "document-draft",
@@ -62,13 +63,11 @@ const analytics = {
 };
 
 export default function DashBoard() {
-  const { pathname } = useLocation();
+  const role = useSelector(getRole);
 
   return (
     <>
-      <Analytics
-        dataRender={pathname === "/m/dashboard" ? analytics.adminLayout : analytics.userLayout}
-      />
+      <Analytics dataRender={analytics[role]} />
       <Divider />
       <Row>
         <Col span={24}>

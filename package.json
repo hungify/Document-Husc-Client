@@ -27,7 +27,7 @@
     "react-toastify": "^8.2.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.5",
-    "use-react-router-breadcrumbs": "^3.2.0",
+    "use-react-router-breadcrumbs": "^3.2.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
