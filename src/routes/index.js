@@ -1,6 +1,9 @@
 import DocumentDetail from "components/DocumentDetail";
+import RequireAuth from "components/RequireAuth";
+import { ROLES } from "config/roles";
 import NotFound from "features/404/NotFound";
-import TabsAuth from "features/Auth/TabsAuth/TabsAuth";
+import TabsAuth from "features/Auth/Auth";
+import Unauthorized from "features/Auth/pages/Unauthorized";
 import DashBoard from "features/Dashboard/Dashboard";
 import Home from "features/Home/Home";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
@@ -38,21 +41,22 @@ export const routePathDefinition = [
       },
       {
         path: "dashboard",
-        element: <DashBoard />,
+        element: (
+          <RequireAuth redirectPath="/" allowedRoles={[ROLES.ADMIN, ROLES.USER]}>
+            <DashBoard />
+          </RequireAuth>
+        ),
         breadcrumb: "Bảng điều khiển",
       },
       {
-        index: true,
-        element: <Navigate to="dashboard" replace={true} />,
-      },
-      {
         path: "inbox",
+        breadcrumb: "Văn bản đến",
+        element: (
+          <RequireAuth redirectPath="/" allowedRoles={[ROLES.ADMIN, ROLES.USER]}>
+            <ReceiverDocument />
+          </RequireAuth>
+        ),
         children: [
-          {
-            index: true,
-            element: <ReceiverDocument />,
-            breadcrumb: "Văn bản đến",
-          },
           {
             path: "detail",
             breadcrumb: null,
@@ -86,6 +90,11 @@ export const routePathDefinition = [
             ],
           },
         ],
+      },
+      {
+        path: "unauthorized",
+        element: <Unauthorized />,
+        breadcrumb: "Không có quyền truy cập",
       },
     ],
   },

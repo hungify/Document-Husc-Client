@@ -62,7 +62,7 @@ const ButtonAnt = styled(Button)`
 const RowAnt = styled(Row)`
   width: 100%;
 `;
-export default function FormAuth({ active, onFinish, onFailed }) {
+export default function FormAuth({ active, onFinish, onFailed, form }) {
   const onSubmit = (values) => {
     onFinish(values);
   };
@@ -87,8 +87,8 @@ export default function FormAuth({ active, onFinish, onFailed }) {
               <Col span={12}>
                 <FormAnt
                   name="login-form"
-                  initialValues={{ remember: true }}
-                  onFinish={onFinish}
+                  form={form}
+                  onFinish={onSubmit}
                   onFinishFailed={onSubmitFailed}
                 >
                   <Title>Chào mừng quay trở lại </Title>
@@ -104,9 +104,6 @@ export default function FormAuth({ active, onFinish, onFailed }) {
                     rules={[{ required: true, message: "Please input your password!" }]}
                   >
                     <Input.Password placeholder="Password" size="large" />
-                  </Form.Item>
-                  <Form.Item name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
                   </Form.Item>
                   <Form.Item>
                     <ButtonAnt type="primary" htmlType="submit">
@@ -128,6 +125,7 @@ export default function FormAuth({ active, onFinish, onFailed }) {
               </Col>
               <Col span={12}>
                 <FormAnt
+                  form={form}
                   name="register-form"
                   initialValues={{ remember: true }}
                   onFinish={onSubmit}

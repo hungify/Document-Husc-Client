@@ -1,20 +1,34 @@
+import { Form } from "antd";
+import { isAuthenticated } from "app/selectors/authSelector";
+import { getLogin } from "features/Auth/authSlice";
 import FormAuth from "features/Auth/components/FormAuth";
 import React from "react";
-import styled from "styled-components";
-
-const Wrapper = styled.div``;
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ active }) {
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const isAuth = useSelector(isAuthenticated);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
+
   const handleOnFinish = (values) => {
-    console.log("Success:", values);
+    dispatch(getLogin(values));
+    form.resetFields(["username", "password"]);
   };
 
   const handleOnFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <Wrapper>
-      <FormAuth onFinish={handleOnFinish} onFailed={handleOnFailed} active={active} />
-    </Wrapper>
+    <div>
+      <FormAuth onFinish={handleOnFinish} onFailed={handleOnFailed} active={active} form={form} />
+    </div>
   );
 }
