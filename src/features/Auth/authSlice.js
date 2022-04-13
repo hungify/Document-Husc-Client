@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import showToast, { toastPosition } from "config/toast";
+import showToast, { toastPosition } from "configs/toast";
 import authService from "services/authService";
 
 const refreshToken = createAction("auth/refreshToken");
@@ -80,7 +80,7 @@ const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.role = action.payload.role;
-      showToast("success", action.payload.message, toastPosition.topRight, {
+      showToast("success", action.payload.message, toastPosition.bottomRight, {
         pauseOnHover: false,
       });
     });
@@ -126,7 +126,7 @@ const authSlice = createSlice({
       state.isError = false;
       state.isAuthenticated = false;
       state.role = null;
-      showToast("success", action.payload, toastPosition.topRight);
+      showToast("success", action.payload, toastPosition.bottomRight);
     });
     builder.addCase(getLogout.rejected, (state, action) => {
       state.isLoading = false;

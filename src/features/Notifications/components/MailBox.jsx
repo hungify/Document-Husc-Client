@@ -2,7 +2,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Form, Input, TreeSelect } from "antd";
 import ModalForm from "components/ModalForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { treePeople } from "config/sidebar";
+import { treePeople } from "configs/sidebar";
 import React from "react";
 export default function MailBox({ visible, onCreate, onCancel, documentTypeId }) {
   const [treeReceiver, setTreeReceiver] = React.useState();

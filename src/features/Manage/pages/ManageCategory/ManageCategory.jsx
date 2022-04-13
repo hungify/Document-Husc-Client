@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
 import DrawerCustom from "components/DrawerCustom";
-import { categories } from "config/sidebar";
+import { categories } from "configs/sidebar";
 import React from "react";
 import styled from "styled-components";
 

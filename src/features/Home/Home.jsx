@@ -1,7 +1,10 @@
 import { Layout } from "antd";
+import { isAuthenticated } from "app/selectors/authSelector";
 import DocumentList from "components/DocumentList";
 import SearchFilter from "components/SearchFilter";
 import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -19,6 +22,15 @@ for (let i = 0; i < 23; i++) {
   });
 }
 export default function Home() {
+  const navigate = useNavigate();
+  const isAuth = useSelector(isAuthenticated);
+
+  React.useEffect(() => {
+    if (isAuth) {
+      navigate("dashboard");
+    }
+  }, [isAuth, navigate]);
+
   return (
     <Layout>
       <SearchFilter />

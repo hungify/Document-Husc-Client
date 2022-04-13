@@ -3,8 +3,8 @@ import { Button, Card, Col, DatePicker, Form, Input, message, Row, TreeSelect, U
 import DebounceSelect from "components/DebounceSelect";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { selectConfig } from "config/select";
-import { categories, treePeople } from "config/sidebar";
+import { selectConfig } from "configs/select";
+import { categories, treePeople } from "configs/sidebar";
 import React from "react";
 import styled from "styled-components";
 
@@ -210,7 +210,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
           </Col>
         </Row>
       </Card>
-      
+
       <Card>
         <Row justify="space-between">
           <Col span={10}>

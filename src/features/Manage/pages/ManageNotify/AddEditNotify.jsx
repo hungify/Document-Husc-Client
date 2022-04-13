@@ -2,7 +2,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Row, TreeSelect } from "antd";
 import RichEditor from "components/RichEditor";
 import TreeSelectForm from "components/TreeSelectForm";
-import { treePeople } from "config/sidebar";
+import { treePeople } from "configs/sidebar";
 import React from "react";
 import styled from "styled-components";
 

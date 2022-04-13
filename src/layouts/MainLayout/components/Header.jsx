@@ -3,6 +3,7 @@ import {
   LogoutOutlined,
   NotificationOutlined,
   SettingOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Badge, Button, Dropdown, Layout, Menu, Space, Typography } from "antd";
 import { getToken, isAuthenticated } from "app/selectors/authSelector";
@@ -50,7 +51,7 @@ export default function Header({ shouldFixedHeader }) {
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(getLogout(refreshToken));
-    navigate("/");
+    if (!isAuth) navigate("/");
   };
 
   const profile = (
@@ -139,10 +140,10 @@ export default function Header({ shouldFixedHeader }) {
             <Button
               type="text"
               size="large"
-              icon={<LoginOutlined />}
-              onClick={() => navigate("/a/login")}
+              icon={<UserOutlined />}
+              onClick={() => navigate("login")}
             >
-              Đăng nhập
+              Tài khoản
             </Button>
           </Space>
         )}

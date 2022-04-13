@@ -1,9 +1,5 @@
-import { Avatar, Button, Card, Col, Collapse, Row, Space, Tooltip, Typography } from "antd";
+import { Button, Card, Col } from "antd";
 import DocumentDetail from "components/DocumentDetail";
-import MailBox from "features/Notifications/components/MailBox";
-import MailContent from "features/Notifications/components/MailContent";
-import MailInfo from "features/Notifications/components/MailInfo";
-
 import React from "react";
 import { useParams } from "react-router-dom";
 

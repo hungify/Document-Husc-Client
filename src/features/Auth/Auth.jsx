@@ -1,19 +1,19 @@
 import { Tabs } from "antd";
-import ForgotPassword from "features/Auth/ForgotPassword/ForgotPassword";
+import ForgotPassword from "features/Auth/pages/ForgotPassword";
 import Login from "features/Auth/pages/Login";
 import Register from "features/Auth/pages/Register";
 import React from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const pathnameSplit = pathname.split("/");
-  const [key, setKey] = React.useState(pathnameSplit[pathnameSplit.length - 1]);
+  const paths = pathname.split("/").filter((item) => item);
+  const [key, setKey] = React.useState(paths[paths.length - 1]);
 
   function handleOnChangeTab(key) {
     setKey(key);
-    navigate(`/${pathnameSplit[1]}/${key}`);
+    navigate(`${key}`);
   }
   return (
     <>
@@ -28,7 +28,6 @@ export default function Auth() {
           <ForgotPassword active={key} />
         </Tabs.TabPane>
       </Tabs>
-      <Outlet />
     </>
   );
 }

@@ -2,7 +2,7 @@ import { PlusCircleTwoTone } from "@ant-design/icons";
 import { Avatar, Badge, Button, Card, Col, List, Row, Tooltip, Typography } from "antd";
 import DropdownFilter from "components/DropdownFilter";
 import SearchFilter from "components/SearchFilter";
-import { dropdownConfig } from "config/dropdown";
+import { dropdownConfig } from "configs/dropdown";
 import React from "react";
 import Linkify from "linkify-react";
 import { useNavigate } from "react-router-dom";
