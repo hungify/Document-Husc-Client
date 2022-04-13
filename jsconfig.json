@@ -4,6 +4,6 @@
     "target": "ES6",
     "baseUrl": "./src"
   },
-  "include": ["src"],
+  "include": ["src", "src/features/Auth/AuthTabs/.jsx"],
   "exclude": ["node_modules"]
 }

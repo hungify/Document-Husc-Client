@@ -1,18 +1,14 @@
 import { Tabs } from "antd";
-import ForgotPassword from "features/Auth/pages/ForgotPassword";
+import ForgotPassword from "features/Auth/ForgotPassword/ForgotPassword";
 import Login from "features/Auth/pages/Login";
 import Register from "features/Auth/pages/Register";
 import React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-export default function TabsAuth() {
+export default function Auth() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const pathnameSplit = pathname.split("/");
-  console.log(
-    "🚀 :: pathnameSplit[pathnameSplit.length - 1]",
-    pathnameSplit[pathnameSplit.length - 1]
-  );
   const [key, setKey] = React.useState(pathnameSplit[pathnameSplit.length - 1]);
 
   function handleOnChangeTab(key) {
