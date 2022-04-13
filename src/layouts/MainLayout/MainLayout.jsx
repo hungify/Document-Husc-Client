@@ -14,7 +14,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const LayoutAnt = styled(Layout)`
-  margin-left: ${(props) => (props.collapsed ? "80px" : "380px")};
+  margin-left: ${(props) => (props.collapsed && props.isAdmin ? "80px" : "270px")};
 `;
 
 const ContentAnt = styled(Layout.Content)`
@@ -31,7 +31,7 @@ export default function MainLayout({ children }) {
 
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
-  const [menuItems, setMenuItems] = React.useState([]);
+  const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
 
   React.useEffect(() => {
     if (path.length > 2) {
@@ -43,9 +43,10 @@ export default function MainLayout({ children }) {
 
   React.useEffect(() => {
     if (isAuth) {
-      setMenuItems(menuConfig[role]);
+      const menu = menuConfig.GUEST;
+      setMenuItems([...menu, ...menuConfig[role]]);
     } else {
-      setMenuItems([]);
+      setMenuItems(menuConfig.GUEST);
     }
   }, [role, isAuth]);
 
@@ -70,7 +71,7 @@ export default function MainLayout({ children }) {
       <Header shouldFixedHeader={shouldFixedHeader} />
       <Layout hasSider>
         <Sidebar
-          width={380}
+          width={isAuth && role === ROLES.ADMIN ? 270 : 200}
           collapsible
           collapsed={collapsed}
           onCollapse={handleOnCollapse}
@@ -80,12 +81,12 @@ export default function MainLayout({ children }) {
             mode="inline"
             onMenuSelect={handleMenuSelect}
             selectedKeys={activeKey}
-            dataMenuSub={menuConfig.GUEST}
+            // dataMenuSub={menuConfig.GUEST}
             dataMenuItem={menuItems}
             hasSubMenu={1}
           />
         </Sidebar>
-        <LayoutAnt collapsed={collapsed ? 1 : 0}>
+        <LayoutAnt collapsed={collapsed ? 1 : 0} isAdmin={isAuth && role === ROLES.ADMIN}>
           <ContentAnt>
             <DynamicBreadcrumb />
             {children}
