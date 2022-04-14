@@ -16,7 +16,9 @@ const options = [
 export default function SearchTime(props) {
   const { onDatePickerChange, onSelectDateChange, onDateOk } = props;
   const [selectedDateType, setSelectedDateType] = React.useState(options[0].value);
-  const handleSelectDateTypeChange = (value) => {};
+  const handleSelectDateTypeChange = (value) => {
+    setSelectedDateType(value);
+  };
   return (
     <>
       <Row gutter={[20, 15]}>

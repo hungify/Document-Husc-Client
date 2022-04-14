@@ -5,6 +5,7 @@ import SummaryTable from "components/SummaryTable";
 import { ROLES } from "configs/roles";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
+import RelatedDocument from "features/RelatedDocument/RelatedDocument";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -23,26 +24,26 @@ const data = [
   },
 ];
 export default function DetailDocument() {
-  const [activeTab, setActiveTab] = React.useState("summary");
+  const [activeTab, setActiveTab] = React.useState("property");
   const role = useSelector(getRole);
   const handleTabChangeClick = (key) => {
     setActiveTab(key);
   };
   console.log(role === ROLES.ADMIN || role === ROLES.USER);
   const onClosePreview = (visible) => {
-    if (visible) setActiveTab("summary");
+    if (visible) setActiveTab("property");
   };
 
   return (
     <Tabs activeKey={activeTab} type="card" size="large" onTabClick={handleTabChangeClick}>
-      <Tabs.TabPane tab="Tóm tắt" key="summary">
+      <Tabs.TabPane tab="Thuộc tính" key="property">
         <SummaryTable documentData={data} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Văn bản gốc" key="preview">
         <PreviewPdf activeTab={activeTab} onClosePreview={onClosePreview} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Văn bản liên quan" key="related">
-        Danh sách văn bản liên quan
+        <RelatedDocument />
       </Tabs.TabPane>
       {(role === ROLES.ADMIN || role === ROLES.USER) && (
         <>

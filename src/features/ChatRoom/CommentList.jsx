@@ -1,4 +1,4 @@
-import { Comment, List } from "antd";
+import { Avatar, Comment, List, Tooltip, Typography } from "antd";
 import React from "react";
 
 export default function CommentList(prop) {
@@ -7,9 +7,20 @@ export default function CommentList(prop) {
     comments.length > 0 && (
       <List
         dataSource={comments}
-        header={`${comments.length} ${comments.length > 1 ? "replies" : "reply"}`}
+        header={`${comments.length} phản hồi`}
         itemLayout="horizontal"
-        renderItem={(props) => <Comment {...props} />}
+        renderItem={(item) => (
+          <Comment
+            author={<Typography.Text strong>{item.author}</Typography.Text>}
+            avatar={<Avatar>{item.author.charAt(0).toUpperCase()}</Avatar>}
+            content={<Typography.Paragraph>{item.content}</Typography.Paragraph>}
+            datetime={
+              <Tooltip title="10:10 AM 20/02/2022">
+                <span>{item.datetime} </span>
+              </Tooltip>
+            }
+          />
+        )}
       />
     )
   );

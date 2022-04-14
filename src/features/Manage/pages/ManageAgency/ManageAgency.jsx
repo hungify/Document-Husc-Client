@@ -82,7 +82,7 @@ export default function ManageAgency() {
       <AddEditAgency
         agencyId={agencyId}
         visible={visible}
-        onCreate={handleOnSubmit}
+        onSubmit={handleOnSubmit}
         onCancel={() => {
           setVisible(false);
         }}

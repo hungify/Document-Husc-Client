@@ -9,67 +9,24 @@ import {
 } from "@ant-design/icons";
 import { Card, Col, Divider, Row, Tabs } from "antd";
 import { getRole } from "app/selectors/authSelector";
+import { analyticsConfig } from "configs/dashboard";
+import { ROLES } from "configs/roles";
 import Analytics from "features/Dashboard/Analytics";
 import React from "react";
 import { useSelector } from "react-redux";
-
-const analytics = {
-  ADMIN: [
-    {
-      title: "Số văn bản",
-      key: "document-total",
-      value: 60,
-      icon: <SnippetsOutlined size="large" />,
-    },
-    {
-      title: "Số chuyên mục",
-      key: "category-total",
-      value: 10,
-      icon: <AppstoreOutlined size="large" />,
-    },
-    {
-      title: "Số cơ quan ban hành",
-      key: "agency-total",
-      value: 10,
-      icon: <AuditOutlined size="large" />,
-    },
-  ],
-  USER: [
-    {
-      title: "Văn bản nháp",
-      key: "document-draft",
-      value: 2,
-      icon: <FormOutlined size="large" />,
-    },
-    {
-      title: "Văn bản chờ xử lý",
-      key: "document-pending",
-      value: 3,
-      icon: <ClockCircleOutlined size="large" />,
-    },
-    {
-      title: "Văn bản đã xử lý",
-      key: "document-approved",
-      value: 10,
-      icon: <CheckCircleOutlined size="large" />,
-    },
-    {
-      title: "Văn bản đã gửi",
-      key: "document-sent",
-      value: 20,
-      icon: <SendOutlined size="large" />,
-    },
-  ],
-};
 
 export default function DashBoard() {
   const role = useSelector(getRole);
 
   return (
     <>
-      <Analytics dataRender={analytics[role]} />
-      <Divider />
-      <Row>
+      {role === ROLES.ADMIN && (
+        <>
+          <Analytics dataRender={analyticsConfig[ROLES.USER]} />
+          <Analytics dataRender={analyticsConfig[ROLES.ADMIN]} />
+        </>
+      )}
+      {/* <Row>
         <Col span={24}>
           <Card>
             <Tabs defaultActiveKey="1" type="card">
@@ -86,7 +43,7 @@ export default function DashBoard() {
             </Tabs>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 }
