@@ -38,7 +38,7 @@ const StepAction = styled.div`
 
 export default function AddEditDocument({ visible, onCreate, onCancel, agencyId }) {
   const [currentStep, setCurrentStep] = React.useState(0);
-  console.log('🚀 :: currentStep', currentStep)
+  console.log("🚀 :: currentStep", currentStep);
   const [formValues, setFormValues] = React.useState([]);
   const [formValuesDraft, setFormValuesDraft] = React.useState();
   const [required, setRequired] = React.useState(true);
@@ -135,14 +135,10 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
           </Space>
         ) : currentStep === 1 ? (
           <Space size={"large"}>
-            <ButtonFlexible size="large" onDocumentClick={() => prevStep()}>
+            <ButtonFlexible size="large" onButtonClick={() => prevStep()}>
               Quay lại
             </ButtonFlexible>
-            <ButtonFlexible
-              size="large"
-              type="primary"
-              onDocumentClick={handleIssuanceDocumentClick}
-            >
+            <ButtonFlexible size="large" type="primary" onButtonClick={handleIssuanceDocumentClick}>
               Ban hành ngay
             </ButtonFlexible>
           </Space>

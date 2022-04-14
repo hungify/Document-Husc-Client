@@ -1,5 +1,5 @@
 import { Button, Card, Col } from "antd";
-import DocumentDetail from "components/DocumentDetail";
+import DocumentDetail from "components/DetailDocument";
 import React from "react";
 import { useParams } from "react-router-dom";
 

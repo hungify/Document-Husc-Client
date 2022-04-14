@@ -1,4 +1,4 @@
-import DocumentDetail from "components/DocumentDetail";
+import DocumentDetail from "components/DetailDocument";
 import RequireAuth from "components/RequireAuth";
 import { ROLES } from "configs/roles";
 import Unauthorized from "features/403/Unauthorized";
@@ -31,7 +31,7 @@ export const routePathDefinition = [
       {
         path: "lookup",
         element: <Home />,
-        breadcrumb: "Tìm kiếm",
+        breadcrumb: "Tra cứu văn bản",
       },
       {
         path: "detail",

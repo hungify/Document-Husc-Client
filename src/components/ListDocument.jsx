@@ -1,17 +1,15 @@
 import { DeleteTwoTone, DownloadOutlined, EditTwoTone, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, List, Radio, Row, Typography } from "antd";
+import { Avatar, Badge, Card, Col, List, Row, Typography } from "antd";
+import { getRole } from "app/selectors/authSelector";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonFlexible from "components/ButtonFlexible";
-import DropdownFilter from "components/DropdownFilter";
-import { dropdownConfig } from "configs/dropdown";
+import SortFilter from "components/SortFilter";
+import { ROLES } from "configs/roles";
 import { saveAs } from "file-saver";
 import React from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getRole } from "app/selectors/authSelector";
-import { ROLES } from "configs/roles";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import SortFilter from "components/SortFilter";
 
 const WrapCard = styled(Card)`
   background-color: rgba(248, 250, 252, 1);
@@ -34,7 +32,7 @@ const dataRadio = [
     value: "updatedDate",
   },
 ];
-export default function DocumentList(props) {
+export default function ListDocument(props) {
   const { dataRender, onEditDocument, onDeleteDocument } = props;
   const role = useSelector(getRole);
 
@@ -105,7 +103,7 @@ export default function DocumentList(props) {
                             type="primary"
                             shape="round"
                             icon={<ExpandOutlined />}
-                            onDocumentClick={handlePreviewFileClick}
+                            onButtonClick={handlePreviewFileClick}
                             document={pdfFile}
                           >
                             Xem trước
@@ -117,7 +115,7 @@ export default function DocumentList(props) {
                             type="primary"
                             shape="round"
                             icon={<DownloadOutlined />}
-                            onDocumentClick={handleSaveFileClick}
+                            onButtonClick={handleSaveFileClick}
                             document={pdfFile}
                           >
                             Tải xuống
@@ -129,7 +127,7 @@ export default function DocumentList(props) {
                           <>
                             <Typography.Title level={5}>
                               <ButtonFlexible
-                                onDocumentClick={onEditDocument}
+                                onButtonClick={onEditDocument}
                                 document={item}
                                 icon={<EditTwoTone />}
                                 type="outline"
@@ -140,7 +138,7 @@ export default function DocumentList(props) {
                             <Typography.Title level={5}>
                               <ButtonFlexible
                                 document={item}
-                                onDocumentClick={onDeleteDocument}
+                                onButtonClick={onDeleteDocument}
                                 danger
                                 type="dashed"
                                 icon={<DeleteTwoTone twoToneColor="#FD5D5D" />}

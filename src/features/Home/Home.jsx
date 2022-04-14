@@ -1,13 +1,12 @@
-import { Layout } from "antd";
 import { isAuthenticated } from "app/selectors/authSelector";
-import DocumentList from "components/DocumentList";
+import ListDocument from "components/ListDocument";
 import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const LayoutAnt = styled(Layout)`
+const Wrapper = styled.section`
   background-color: rgba(248, 250, 252, 1);
 `;
 const listData = [];
@@ -36,13 +35,9 @@ export default function Home() {
   // }, [isAuth, navigate]);
 
   return (
-    <Layout>
+    <Wrapper>
       <SearchGroup />
-      <LayoutAnt>
-        <Layout.Content>
-          <DocumentList dataRender={listData} />
-        </Layout.Content>
-      </LayoutAnt>
-    </Layout>
+      <ListDocument dataRender={listData} />
+    </Wrapper>
   );
 }

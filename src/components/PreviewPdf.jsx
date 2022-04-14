@@ -74,7 +74,7 @@ export default function PreviewPdf({ activeTab, onClosePreview }) {
               type="primary"
               shape="round"
               icon={<DownloadOutlined />}
-              onDocumentClick={handleSaveFileClick}
+              onButtonClick={handleSaveFileClick}
               document={pdfFile}
             >
               Tải xuống
