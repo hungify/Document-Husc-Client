@@ -4,6 +4,7 @@ import {
   CarryOutTwoTone,
   DashboardOutlined,
   DashboardTwoTone,
+  DeleteTwoTone,
   FileOutlined,
   FileSearchOutlined,
   FileTextTwoTone,
@@ -48,8 +49,8 @@ export const menuConfig = {
     },
     {
       title: "Quản lý loại văn bản",
-      key: "document-type",
-      value: "document-type",
+      key: "types-of-documents",
+      value: "types-of-documents",
       icon: <FileUnknownTwoTone />,
     },
     {
@@ -63,6 +64,12 @@ export const menuConfig = {
       key: "agencies",
       value: "agency",
       icon: <BankTwoTone />,
+    },
+    {
+      title: "Quản lý văn bản thu hồi",
+      key: "revoke-documents",
+      value: "revoke-documents",
+      icon: <DeleteTwoTone />,
     },
   ],
   USER: [

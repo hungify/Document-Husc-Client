@@ -30,7 +30,7 @@ for (let i = 0; i < 23; i++) {
   });
 }
 
-export default function ManageDocument() {
+export default function ManageDocuments() {
   const navigate = useNavigate();
   const handleDeleteDocumentClick = (item) => {
     console.log(item);

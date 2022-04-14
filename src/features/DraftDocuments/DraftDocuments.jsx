@@ -40,7 +40,7 @@ for (let i = 0; i < 23; i++) {
   });
 }
 
-export default function DraftDocument(props) {
+export default function DraftDocuments(props) {
   const navigate = useNavigate();
   const [checkedDraft, setCheckedDraft] = React.useState([]);
   const [indeterminate, setIndeterminate] = React.useState(false);

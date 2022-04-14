@@ -3,7 +3,7 @@ import { Form, Input } from "antd";
 import ModalForm from "components/ModalForm";
 import React from "react";
 
-export default function AddEditDocumentType({ visible, onSubmit, onCancel, documentTypeId }) {
+export default function AddEditTypeOfDocument({ visible, onSubmit, onCancel, documentTypeId }) {
   return (
     <ModalForm
       visible={visible}

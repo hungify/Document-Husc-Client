@@ -4,7 +4,8 @@ import DebounceSelect from "components/DebounceSelect";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import { selectConfig } from "configs/select";
-import { categories, treePeople } from "configs/sidebar";
+import { categories } from "configs/sidebar";
+import { treePeople } from "configs/trees";
 import React from "react";
 import styled from "styled-components";
 

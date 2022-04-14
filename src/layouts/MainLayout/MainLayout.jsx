@@ -1,7 +1,6 @@
 import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/authSelector";
 import Footer from "components/Footer";
-import { headerConfig } from "configs/header";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
 import DynamicBreadcrumb from "layouts/MainLayout/components/DynamicBreadcrumb";
@@ -15,11 +14,11 @@ import styled from "styled-components";
 
 const LayoutAnt = styled(Layout)`
   margin-left: ${(props) => (props.collapsed ? "80px" : props.isAdmin ? "250px" : "200px")};
+  margin-top: 64px;
 `;
 
 const ContentAnt = styled(Layout.Content)`
   padding: 20px;
-  padding-top: 0;
 `;
 
 export default function MainLayout({ children }) {
@@ -32,6 +31,16 @@ export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
+
+  React.useEffect(() => {
+    if (path.length === 0) {
+      if (isAuth && role === ROLES.ADMIN) {
+        navigate("dashboard");
+      } else {
+        navigate("lookup");
+      }
+    }
+  }, [isAuth, navigate, role, path]);
 
   React.useEffect(() => {
     if (path.length > 2) {
@@ -54,8 +63,6 @@ export default function MainLayout({ children }) {
     }
   }, [role, isAuth]);
 
-  const { shouldFixedHeader } = headerConfig.guestLayout;
-
   const handleMenuSelect = ({ key }, isUser) => {
     const shouldAddPrefixPath = ["dashboard", "lookup", "inbox", "sent", "draft", "forward"];
     setActiveKey(key);
@@ -73,7 +80,7 @@ export default function MainLayout({ children }) {
 
   return (
     <Layout>
-      <Header shouldFixedHeader={shouldFixedHeader} />
+      <Header shouldFixedHeader={1} />
       <Layout hasSider>
         <Sidebar
           width={isAuth && role === ROLES.ADMIN ? 250 : 200}
