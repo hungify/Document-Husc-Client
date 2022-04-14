@@ -49,7 +49,7 @@ const ButtonAnt = styled(Button)`
     color: #4184e4;
   }
 `;
-export default function ManageCategory() {
+export default function ManageCategories() {
   const [form] = Form.useForm();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showLayer, setShowLayer] = React.useState(false);

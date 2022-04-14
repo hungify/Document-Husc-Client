@@ -1,11 +1,11 @@
 import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Form, Modal, Space, TreeSelect } from "antd";
-import DocumentDetail from "components/DetailDocument";
-import React from "react";
-import { useParams } from "react-router-dom";
+import DetailDocument from "components/DetailDocument";
 import ModalForm from "components/ModalForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { treePeople } from "configs/sidebar";
+import { treePeople } from "configs/trees";
+import React from "react";
+import { useParams } from "react-router-dom";
 
 export default function ReceiverDocumentDetail() {
   const [visible, setVisible] = React.useState(false);
@@ -112,7 +112,7 @@ export default function ReceiverDocumentDetail() {
         }
       >
         <Col flex="auto">
-          <DocumentDetail />
+          <DetailDocument />
         </Col>
       </Card>
     </>

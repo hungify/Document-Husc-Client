@@ -65,7 +65,7 @@ for (let i = 0; i < 23; i++) {
     urgentLevel: i % 3 === 0 ? "Khẩn cấp" : "Bình thường",
   });
 }
-export default function SentDocument() {
+export default function SentDocuments() {
   const navigate = useNavigate();
 
   return (

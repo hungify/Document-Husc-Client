@@ -8,7 +8,7 @@ export default function DynamicBreadcrumb() {
   const breadcrumbs = useBreadcrumbs(routePathDefinition);
 
   return (
-    <Breadcrumb style={{ margin: "10px 0" }}>
+    <Breadcrumb style={{ marginBottom: "10px" }}>
       {breadcrumbs.map(({ match, breadcrumb }) => (
         <Breadcrumb.Item key={match.pathname}>
           <Link to={match.pathname}>{breadcrumb}</Link>

@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 
 const RowAnt = styled(Row)`
-  margin-top: 16px;
   margin-bottom: 16px;
 `;
 const CardAnt = styled(Card)`
