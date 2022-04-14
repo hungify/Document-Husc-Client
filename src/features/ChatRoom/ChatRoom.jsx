@@ -1,88 +1,66 @@
-import ChatBox from "features/ChatRoom/ChatBox";
-import { detectURL } from "helpers";
+import { Avatar, Button, Comment, Form, Input } from "antd";
+import CommentList from "features/ChatRoom/CommentList";
 import React from "react";
 import "./style.css";
-const data = [
-  {
-    id: 1,
-    sender: "Shun",
-    senderAvatar: "https://i.pravatar.cc/150?img=32",
-    message: "Hello 👋",
-  },
-  {
-    id: 2,
-    sender: "Gabe",
-    senderAvatar: "https://i.pravatar.cc/150?img=56",
-    message: "Hey!",
-  },
-  {
-    id: 3,
-    sender: "Gabe",
-    senderAvatar: "https://i.pravatar.cc/150?img=56",
-    message: "How are you?",
-  },
-  {
-    id: 4,
-    sender: "Shun",
-    senderAvatar: "https://i.pravatar.cc/150?img=32",
-    message: "Great! It's been a while... 🙃",
-  },
-  {
-    id: 5,
-    sender: "Gabe",
-    senderAvatar: "https://i.pravatar.cc/150?img=56",
-    message: "Indeed.... We're gonna have to fix that. 🌮🍻",
-  },
-];
-export default function ChatRoom() {
-  const [messages, setMessages] = React.useState(data);
-  const [isTyping, setIsTyping] = React.useState([]);
 
-  const sendMessage = (sender, senderAvatar, message) => {
-    setTimeout(() => {
-      let messageFormat = detectURL(message);
-      let newMessageItem = {
-        id: messages.length + 1,
-        sender: sender,
-        senderAvatar: senderAvatar,
-        message: messageFormat,
-      };
-      setMessages([...messages, newMessageItem]);
-      resetTyping(sender);
-    }, 400);
-  };
-  /* updates the writing indicator if not already displayed */
-  const typing = (writer) => {
-    if (!isTyping[writer]) {
-      let stateTyping = this.state.isTyping;
-      stateTyping[writer] = true;
-      setIsTyping(stateTyping);
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
+  <>
+    <Form.Item>
+      <Input.TextArea rows={4} onChange={onChange} value={value} />
+    </Form.Item>
+    <Form.Item>
+      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+        Add Comment
+      </Button>
+    </Form.Item>
+  </>
+);
+
+export default function ChatRoom() {
+  const [comments, setComments] = React.useState([]);
+  const [submitting, setSubmitting] = React.useState(false);
+  const [value, setValue] = React.useState("");
+
+  const handleSubmit = () => {
+    if (!value) {
+      return;
     }
+
+    setSubmitting(true);
+
+    setTimeout(() => {
+      setSubmitting(false);
+      setValue("");
+      setComments([
+        ...comments,
+        {
+          author: "Han Solo",
+          avatar: "https://joeschmoe.io/api/v1/random",
+          content: <p>{value}</p>,
+          datetime: "2 day ago",
+        },
+      ]);
+    }, 1000);
   };
-  /* hide the writing indicator */
-  const resetTyping = (writer) => {
-    let stateTyping = isTyping;
-    stateTyping[writer] = false;
-    setIsTyping(stateTyping);
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
   };
-  let users = {};
-  let chatBoxes = [];
-  users[0] = { name: "Shun", avatar: "https://i.pravatar.cc/150?img=32" };
-  users[1] = { name: "Gabe", avatar: "https://i.pravatar.cc/150?img=56" };
-  Object.keys(users).map(function (key) {
-    var user = users[key];
-    chatBoxes.push(
-      <ChatBox
-        key={key}
-        owner={user.name}
-        ownerAvatar={user.avatar}
-        sendMessage={sendMessage}
-        typing={typing}
-        resetTyping={resetTyping}
-        messages={messages}
-        isTyping={isTyping}
+
+  return (
+    <div>
+      <CommentList comments={comments} />
+      <Comment
+        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        content={
+          <Editor
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            submitting={submitting}
+            value={value}
+          />
+        }
       />
-    );
-  });
-  return <div className={"chatApp__room"}>{chatBoxes}</div>;
+    </div>
+  );
 }
