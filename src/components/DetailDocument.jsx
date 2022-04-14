@@ -1,13 +1,13 @@
 import { Tabs } from "antd";
+import { getRole } from "app/selectors/authSelector";
 import PreviewPdf from "components/PreviewPdf";
 import SummaryTable from "components/SummaryTable";
+import { ROLES } from "configs/roles";
+import ChartReceiver from "features/ChartReceiver/ChartReceiver";
+import ChatRoom from "features/ChatRoom/ChatRoom";
+import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import React from "react";
 import { useSelector } from "react-redux";
-import { getRole } from "app/selectors/authSelector";
-import { ROLES } from "configs/roles";
-import TreeProcessing from "features/TreeProcessing/TreeProcessing";
-import Feedback from "features/Feedback/Feedback";
-import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 
 const data = [
   {
@@ -53,7 +53,7 @@ export default function DetailDocument() {
             <TreeProcessing />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Phản hồi" key="feedback">
-            <Feedback />
+            <ChatRoom />
           </Tabs.TabPane>
         </>
       )}
