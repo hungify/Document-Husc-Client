@@ -7,6 +7,7 @@ import { getRole } from "app/selectors/authSelector";
 import { ROLES } from "configs/roles";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import Feedback from "features/Feedback/Feedback";
+import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 
 const data = [
   {
@@ -45,6 +46,9 @@ export default function DetailDocument() {
       </Tabs.TabPane>
       {(role === ROLES.ADMIN || role === ROLES.USER) && (
         <>
+          <Tabs.TabPane tab="Phân tích" key="analytics">
+            <ChartReceiver />
+          </Tabs.TabPane>
           <Tabs.TabPane tab="Cây xử lý" key="tree">
             <TreeProcessing />
           </Tabs.TabPane>
