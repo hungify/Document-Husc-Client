@@ -1,5 +1,5 @@
 import { DeleteTwoTone, DownloadOutlined, EditTwoTone, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, List, Row, Typography } from "antd";
+import { Avatar, Badge, Card, Col, List, Radio, Row, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonFlexible from "components/ButtonFlexible";
 import DropdownFilter from "components/DropdownFilter";
@@ -7,9 +7,37 @@ import { dropdownConfig } from "configs/dropdown";
 import { saveAs } from "file-saver";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getRole } from "app/selectors/authSelector";
+import { ROLES } from "configs/roles";
+import styled from "styled-components";
+import SortFilter from "components/SortFilter";
 
+const WrapCard = styled(Card)`
+  background-color: rgba(248, 250, 252, 1);
+`;
+
+const CardItemAnt = styled(Card)`
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+`;
+
+const ListItemAnt = styled(List.Item)``;
+
+const dataRadio = [
+  {
+    label: "Ngày ban hành",
+    value: "issuedDate",
+  },
+  {
+    label: "Ngày cập nhật",
+    value: "updatedDate",
+  },
+];
 export default function DocumentList(props) {
-  const { dataRender, type, onEditDocument, onDeleteDocument } = props;
+  const { dataRender, onEditDocument, onDeleteDocument } = props;
+  const role = useSelector(getRole);
+
   const handlePreviewFileClick = (item) => {
     window.open(item, {
       target: "_blank",
@@ -19,15 +47,15 @@ export default function DocumentList(props) {
   const handleSaveFileClick = (item) => {
     saveAs(item, "name_cua_file.pdf");
   };
-
+  const handleRadioDateChange = (value) => {};
   return (
-    <Card bordered={false}>
+    <WrapCard bordered={false}>
       <Row gutter={[10, 10]}>
-        <Col span={20}>
-          <Typography.Text strong>Có tất cả 123 Văn bản</Typography.Text>
+        <Col span={16}>
+          <Typography.Text strong>123 Văn bản</Typography.Text>
         </Col>
-        <Col span={4}>
-          <DropdownFilter dataRender={dropdownConfig.documentFilter} />
+        <Col span={8}>
+          <SortFilter dataRadio={dataRadio} onRadioChange={handleRadioDateChange} />
         </Col>
         <Col span={24}>
           <List
@@ -41,17 +69,21 @@ export default function DocumentList(props) {
             }}
             dataSource={dataRender}
             renderItem={(item) => (
-              <Badge.Ribbon text="Bình thường" color="green" key={item.id}>
-                <Card>
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>}
-                      title={<Link to={`/detail/${item.id}`}>{item.title}</Link>}
-                    />
+              <ListItemAnt>
+                <Badge.Ribbon text="Bình thường" color="green" key={item.id}>
+                  <CardItemAnt bordered={false}>
                     <Row align="middle" justify="space-between">
+                      <Col span={24}>
+                        <List.Item.Meta
+                          avatar={
+                            <Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>
+                          }
+                          title={<Link to={`/detail/${item.id}`}>{item.title}</Link>}
+                        />
+                      </Col>
                       <Col span={7}>
                         <Typography.Title level={5}>
-                          Số hiệu văn bản:{" "}
+                          Số hiệu văn bản:
                           <Typography.Text keyboard>{item.textNumber}</Typography.Text>
                         </Typography.Title>
                         <Typography.Title level={5}>
@@ -93,7 +125,7 @@ export default function DocumentList(props) {
                         </Typography.Title>
                       </Col>
                       <Col span={4}>
-                        {type === "admin" ? (
+                        {role === ROLES.ADMIN ? (
                           <>
                             <Typography.Title level={5}>
                               <ButtonFlexible
@@ -117,20 +149,20 @@ export default function DocumentList(props) {
                               </ButtonFlexible>
                             </Typography.Title>
                           </>
-                        ) : type === "user" ? (
+                        ) : role === ROLES.USER ? (
                           <>
                             <Typography.Title level={5}>Văn bản chờ được xử lý</Typography.Title>
                           </>
                         ) : null}
                       </Col>
                     </Row>
-                  </List.Item>
-                </Card>
-              </Badge.Ribbon>
+                  </CardItemAnt>
+                </Badge.Ribbon>
+              </ListItemAnt>
             )}
           />
         </Col>
       </Row>
-    </Card>
+    </WrapCard>
   );
 }

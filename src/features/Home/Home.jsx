@@ -5,7 +5,11 @@ import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
+const LayoutAnt = styled(Layout)`
+  background-color: rgba(248, 250, 252, 1);
+`;
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
@@ -34,11 +38,11 @@ export default function Home() {
   return (
     <Layout>
       <SearchGroup />
-      <Layout>
+      <LayoutAnt>
         <Layout.Content>
-          <DocumentList dataRender={listData} type="guest" />
+          <DocumentList dataRender={listData} />
         </Layout.Content>
-      </Layout>
+      </LayoutAnt>
     </Layout>
   );
 }

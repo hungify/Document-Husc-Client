@@ -53,9 +53,10 @@ export default function MainLayout({ children }) {
   const { shouldFixedHeader } = headerConfig.guestLayout;
 
   const handleMenuSelect = ({ key }, isUser) => {
+    const shouldAddPrefixPath = ["dashboard", "lookup", "inbox", "sent", "draft", "forward"];
     setActiveKey(key);
     if (isAuth && role === ROLES.ADMIN) {
-      if (key !== "dashboard") {
+      if (!shouldAddPrefixPath.includes(key)) {
         return navigate(`m/${key}`);
       }
     }
