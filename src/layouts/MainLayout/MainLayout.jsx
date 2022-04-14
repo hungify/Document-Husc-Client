@@ -33,7 +33,7 @@ export default function MainLayout({ children }) {
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
 
   React.useEffect(() => {
-    if (path.length === 0) {
+    if (path.length === 0 || path[0] === "lookup") {
       if (isAuth && role === ROLES.ADMIN) {
         navigate("dashboard");
       } else {
