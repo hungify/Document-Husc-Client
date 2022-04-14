@@ -5,6 +5,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { getRole } from "app/selectors/authSelector";
 import { ROLES } from "configs/roles";
+import TreeProcessing from "features/TreeProcessing/TreeProcessing";
+import Feedback from "features/Feedback/Feedback";
 
 const data = [
   {
@@ -22,7 +24,6 @@ const data = [
 export default function DetailDocument() {
   const [activeTab, setActiveTab] = React.useState("summary");
   const role = useSelector(getRole);
-  console.log("🚀 :: role", role);
   const handleTabChangeClick = (key) => {
     setActiveTab(key);
   };
@@ -45,10 +46,10 @@ export default function DetailDocument() {
       {(role === ROLES.ADMIN || role === ROLES.USER) && (
         <>
           <Tabs.TabPane tab="Cây xử lý" key="tree">
-            Cây xử lý
+            <TreeProcessing />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Phản hồi" key="feedback">
-            Danh sách phản hồi
+            <Feedback />
           </Tabs.TabPane>
         </>
       )}

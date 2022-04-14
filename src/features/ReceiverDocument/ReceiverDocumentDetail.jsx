@@ -1,4 +1,4 @@
-import { Button, Card, Col } from "antd";
+import { Button, Card, Col, Space } from "antd";
 import DocumentDetail from "components/DetailDocument";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -37,9 +37,14 @@ export default function ReceiverDocumentDetail() {
       <Card
         title="Nội dung văn bản"
         extra={
-          <Button type="primary" onClick={() => handleForwardClick(data.id)}>
-            Chuyển tiếp
-          </Button>
+          <Space>
+            <Button type="primary" onClick={() => handleForwardClick(data.id)}>
+              Báo cáo đã xứ lý
+            </Button>
+            <Button type="primary" onClick={() => handleForwardClick(data.id)}>
+              Chuyển tiếp
+            </Button>
+          </Space>
         }
       >
         <Col flex="auto">
