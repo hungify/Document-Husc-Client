@@ -5,6 +5,7 @@ import Unauthorized from "features/403/Unauthorized";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/Auth";
 import DashBoard from "features/Dashboard/Dashboard";
+import DraftDocument from "features/DraftDocument/DraftDocument";
 import Home from "features/Home/Home";
 import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
 import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
@@ -65,6 +66,11 @@ export const routePathDefinition = [
             path: "dashboard",
             breadcrumb: "Bảng điều khiển",
             element: <DashBoard />,
+          },
+          {
+            path: "draft",
+            breadcrumb: "Văn bản nháp",
+            element: <DraftDocument />,
           },
           {
             path: "inbox",
