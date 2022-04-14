@@ -1,11 +1,16 @@
-import { Button, Card, Col, Space } from "antd";
+import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { Button, Card, Col, Form, Modal, Space, TreeSelect } from "antd";
 import DocumentDetail from "components/DetailDocument";
 import React from "react";
 import { useParams } from "react-router-dom";
+import ModalForm from "components/ModalForm";
+import TreeSelectForm from "components/TreeSelectForm";
+import { treePeople } from "configs/sidebar";
 
 export default function ReceiverDocumentDetail() {
   const [visible, setVisible] = React.useState(false);
   const { inboxId } = useParams();
+  const [treeReceiver, setTreeReceiver] = React.useState();
 
   const data = {
     id: inboxId,
@@ -24,21 +29,80 @@ export default function ReceiverDocumentDetail() {
     },
   };
 
+  const handleTreeReceiverSelect = (value) => {
+    setTreeReceiver([...treeReceiver, value]);
+  };
+
   const handleForwardClick = (forwardId) => {
-    console.log("🚀 :: forwardId", forwardId);
     setVisible(true);
   };
+
+  const handleFinishProcessed = () => {
+    Modal.confirm({
+      title: "Xác nhận",
+      icon: <ExclamationCircleOutlined />,
+      content: "Thông báo đã cho mọi người bạn đã xử lý xong?",
+      okText: "Hoàn thành",
+      cancelText: "Hủy",
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log("Oops errors!"));
+      },
+      onCancel() {},
+    });
+  };
+
   const handleOnSubmit = (values) => {
-    console.log("Received values of form: ", values);
+    console.log("🚀 :: values", values);
     setVisible(false);
   };
+  const handleOnCancel = () => {
+    setVisible(false);
+  };
+
   return (
     <>
+      <ModalForm
+        visible={visible}
+        onSubmit={handleOnSubmit}
+        onCancel={handleOnCancel}
+        size="large"
+        title={"Chuyển tiếp văn bản"}
+        okText={"Chuyển tiếp"}
+        cancelText={"Hủy"}
+        layout="vertical"
+        name="forward"
+        width={1000}
+        wrapperCol={{
+          xs: { span: 24, offset: 0 },
+          sm: { span: 22, offset: 1 },
+          md: { span: 20, offset: 2 },
+        }}
+      >
+        <Form.Item
+          name="to"
+          label="Người nhận"
+          tooltip={{ title: "Người nhận văn bản của bạn?", icon: <InfoCircleOutlined /> }}
+          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+        >
+          <TreeSelectForm
+            treeData={treePeople}
+            onTreeSelect={handleTreeReceiverSelect}
+            placeholder="Chọn người nhận"
+            allowClear
+            size="large"
+            showCheckedStrategy={TreeSelect.SHOW_PARENT}
+            treeCheckable={true}
+          />
+        </Form.Item>
+      </ModalForm>
+
       <Card
         title="Nội dung văn bản"
         extra={
           <Space>
-            <Button type="primary" onClick={() => handleForwardClick(data.id)}>
+            <Button type="primary" onClick={() => handleFinishProcessed(data.id)}>
               Báo cáo đã xứ lý
             </Button>
             <Button type="primary" onClick={() => handleForwardClick(data.id)}>

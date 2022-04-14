@@ -17,16 +17,17 @@ import ReceiverDocumentDetail from "features/ReceiverDocument/ReceiverDocumentDe
 import SentDocument from "features/SentDocument/SentDocument";
 import SentDocumentDetail from "features/SentDocument/SentDocumentDetail";
 import MainLayout from "layouts/MainLayout/MainLayout";
+import { Navigate } from "react-router-dom";
 
 export const routePathDefinition = [
   {
     path: "/",
     element: <MainLayout />,
+    breadcrumb: "Trang chủ",
     children: [
       {
         index: true,
-        element: <Home />,
-        breadcrumb: "Trang chủ",
+        element: <Navigate to="lookup" replace />,
       },
       {
         path: "lookup",

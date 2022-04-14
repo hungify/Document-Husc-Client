@@ -2,10 +2,10 @@ import { Form, message, Modal } from "antd";
 import React from "react";
 
 export default function ModalForm(props) {
-  const { visible, onCreate, onCancel, children } = props;
+  const { visible, onSubmit, onCancel, children } = props;
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  
+
   React.useEffect(() => {
     if (visible) {
       form.setFieldsValue(props.initialValues);
@@ -28,7 +28,7 @@ export default function ModalForm(props) {
               setConfirmLoading(false);
               message.success({ content: "Cập nhật thành công", key: "updatable", duration: 2 });
               form.resetFields();
-              onCreate(values);
+              onSubmit(values);
             }, 2000);
           })
           .catch((info) => {

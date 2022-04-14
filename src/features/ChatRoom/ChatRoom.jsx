@@ -1,4 +1,5 @@
 import { Avatar, Button, Comment, Form, Input } from "antd";
+import Item from "antd/lib/list/Item";
 import CommentList from "features/ChatRoom/CommentList";
 import React from "react";
 import "./style.css";
@@ -6,11 +7,16 @@ import "./style.css";
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
     <Form.Item>
-      <Input.TextArea rows={4} onChange={onChange} value={value} />
+      <Input.TextArea
+        rows={4}
+        onChange={onChange}
+        value={value}
+        placeholder="Nhập vào thông tin phản hồi"
+      />
     </Form.Item>
     <Form.Item>
       <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        Add Comment
+        Gửi phản hồi
       </Button>
     </Form.Item>
   </>
@@ -34,8 +40,8 @@ export default function ChatRoom() {
       setComments([
         ...comments,
         {
-          author: "Han Solo",
-          avatar: "https://joeschmoe.io/api/v1/random",
+          author: "Nguyễn Kim Ngàn",
+          avatar: "Nguyễn Kim Ngàn",
           content: <p>{value}</p>,
           datetime: "2 day ago",
         },
@@ -51,7 +57,7 @@ export default function ChatRoom() {
     <div>
       <CommentList comments={comments} />
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        avatar={<Avatar>N</Avatar>}
         content={
           <Editor
             onChange={handleChange}
