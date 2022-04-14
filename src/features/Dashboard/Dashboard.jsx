@@ -1,13 +1,3 @@
-import {
-  AppstoreOutlined,
-  AuditOutlined,
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  FormOutlined,
-  SendOutlined,
-  SnippetsOutlined,
-} from "@ant-design/icons";
-import { Card, Col, Divider, Row, Tabs } from "antd";
 import { getRole } from "app/selectors/authSelector";
 import { analyticsConfig } from "configs/dashboard";
 import { ROLES } from "configs/roles";
@@ -20,11 +10,13 @@ export default function DashBoard() {
 
   return (
     <>
-      {role === ROLES.ADMIN && (
+      {role === ROLES.ADMIN ? (
         <>
           <Analytics dataRender={analyticsConfig[ROLES.USER]} />
           <Analytics dataRender={analyticsConfig[ROLES.ADMIN]} />
         </>
+      ) : (
+        <Analytics dataRender={analyticsConfig[ROLES.USER]} />
       )}
       {/* <Row>
         <Col span={24}>

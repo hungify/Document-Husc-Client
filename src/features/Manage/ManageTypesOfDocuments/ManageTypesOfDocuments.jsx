@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Col, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
-import AddEditAgency from "features/Manage/pages/ManageAgency/AddEditAgency";
+import AddEditTypeOfDocument from "features/Manage/ManageTypesOfDocuments/AddEditTypeOfDocument";
 import React from "react";
 import styled from "styled-components";
 
@@ -17,9 +17,9 @@ const CardAnt = styled(Card)`
   }
 `;
 
-export default function ManageAgency() {
+export default function ManageTypesOfDocuments() {
   const [visible, setVisible] = React.useState(false);
-  const [agencyId, setAgencyId] = React.useState(null);
+  const [documentTypeId, setDocumentTypeId] = React.useState(null);
 
   const handleOnSubmit = (values) => {
     console.log("Received values of form: ", values);
@@ -27,15 +27,13 @@ export default function ManageAgency() {
   };
 
   const handleAddClick = () => {
-    setAgencyId(null);
+    setDocumentTypeId(null);
     setVisible(true);
   };
 
   const handleEditClick = (id) => {
-    setAgencyId(id);
+    setDocumentTypeId(id);
     setVisible(true);
-
-    // navigate(`post/${id}`);
   };
 
   const handleDeleteClick = () => {
@@ -71,40 +69,42 @@ export default function ManageAgency() {
   };
 
   return (
-    <Card
-      title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
-      extra={
-        <Button onClick={handleAddClick} type="primary">
-          <PlusCircleTwoTone key="edit" /> Thêm mới
-        </Button>
-      }
-    >
-      <AddEditAgency
-        agencyId={agencyId}
-        visible={visible}
-        onSubmit={handleOnSubmit}
-        onCancel={() => {
-          setVisible(false);
-        }}
-      />
-      <Row>
-        {Array.from(Array(20).keys()).map((item, i) => (
-          <Col key={i + 1} xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
-            <CardAnt
-              actions={[
-                <Button onClick={() => handleEditClick(i)}>
-                  <EditTwoTone key="edit" /> Chỉnh sửa
-                </Button>,
-                <Button onClick={() => handleDeleteClick()}>
-                  <DeleteTwoTone /> Xóa
-                </Button>,
-              ]}
-            >
-              <Meta title="Đại học khoa học Huế" description="Mô tả về cơ quan" />
-            </CardAnt>
-          </Col>
-        ))}
-      </Row>
-    </Card>
+    <>
+      <Card
+        title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
+        extra={
+          <Button onClick={handleAddClick} type="primary">
+            <PlusCircleTwoTone key="edit" /> Thêm mới
+          </Button>
+        }
+      >
+        <AddEditTypeOfDocument
+          documentTypeId={documentTypeId}
+          visible={visible}
+          onCreate={handleOnSubmit}
+          onCancel={() => {
+            setVisible(false);
+          }}
+        />
+        <Row>
+          {Array.from(Array(20).keys()).map((item, i) => (
+            <Col key={i + 1} xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
+              <CardAnt
+                actions={[
+                  <Button onClick={() => handleEditClick(i)}>
+                    <EditTwoTone key="edit" /> Chỉnh sửa
+                  </Button>,
+                  <Button onClick={() => handleDeleteClick(i)}>
+                    <DeleteTwoTone /> Xóa
+                  </Button>,
+                ]}
+              >
+                <Meta title="Quyết định" description="Mô tả về loại văn bản" />
+              </CardAnt>
+            </Col>
+          ))}
+        </Row>
+      </Card>
+    </>
   );
 }

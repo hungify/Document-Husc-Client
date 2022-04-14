@@ -1,9 +1,6 @@
-import { isAuthenticated } from "app/selectors/authSelector";
 import ListDocument from "components/ListDocument";
 import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.section`
@@ -25,15 +22,6 @@ for (let i = 0; i < 23; i++) {
   });
 }
 export default function Home() {
-  const navigate = useNavigate();
-  const isAuth = useSelector(isAuthenticated);
-
-  // React.useEffect(() => {
-  //   if (isAuth) {
-  //     navigate("dashboard");
-  //   }
-  // }, [isAuth, navigate]);
-
   return (
     <Wrapper>
       <SearchGroup />

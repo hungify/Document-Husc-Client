@@ -50,7 +50,7 @@ const dataRadio = [
   },
 ];
 
-export default function ReceiverDocument() {
+export default function ReceiverDocuments() {
   const navigate = useNavigate();
 
   const handleRadioReceiverDocumentChange = (value) => {};

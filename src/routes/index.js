@@ -5,29 +5,29 @@ import Unauthorized from "features/403/Unauthorized";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/Auth";
 import DashBoard from "features/Dashboard/Dashboard";
-import DraftDocument from "features/DraftDocument/DraftDocument";
+import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
-import ManageAgency from "features/Manage/pages/ManageAgency/ManageAgency";
-import ManageCategory from "features/Manage/pages/ManageCategory/ManageCategory";
-import AddEditDocument from "features/Manage/pages/ManageDocument/AddEditDocument";
-import ManageDocument from "features/Manage/pages/ManageDocument/ManageDocument";
-import ManageDocumentType from "features/Manage/pages/ManageDocumentType/ManageDocumentType";
-import ReceiverDocument from "features/ReceiverDocument/ReceiverDocument";
-import ReceiverDocumentDetail from "features/ReceiverDocument/ReceiverDocumentDetail";
-import SentDocument from "features/SentDocument/SentDocument";
-import SentDocumentDetail from "features/SentDocument/SentDocumentDetail";
+import ManageAgencies from "features/Manage/ManageAgencies/ManageAgencies";
+import ManageCategories from "features/Manage/ManageCategories/ManageCategories";
+import ManageDocuments from "features/Manage/ManageDocuments/ManageDocuments";
+import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";
+import ManageTypesOfDocuments from "features/Manage/ManageTypesOfDocuments/ManageTypesOfDocuments";
+import ReceiverDocumentDetail from "features/ReceiverDocuments/ReceiverDocumentDetail";
+import ReceiverDocuments from "features/ReceiverDocuments/ReceiverDocuments";
+import SentDocumentDetail from "features/SentDocuments/SentDocumentDetail";
+import SentDocuments from "features/SentDocuments/SentDocuments";
 import MainLayout from "layouts/MainLayout/MainLayout";
-import { Navigate } from "react-router-dom";
+import AddEditDocument from "features/Manage/ManageDocuments/AddEditDocument";
 
 export const routePathDefinition = [
   {
     path: "/",
     element: <MainLayout />,
-    breadcrumb: "Trang chủ",
     children: [
       {
         index: true,
-        element: <Navigate to="lookup" replace />,
+        breadcrumb: "Trang chủ",
+        element: <Home />,
       },
       {
         path: "lookup",
@@ -71,7 +71,7 @@ export const routePathDefinition = [
           {
             path: "draft",
             breadcrumb: "Văn bản nháp",
-            element: <DraftDocument />,
+            element: <DraftDocuments />,
           },
           {
             path: "inbox",
@@ -79,7 +79,7 @@ export const routePathDefinition = [
               {
                 index: true,
                 breadcrumb: "Văn bản đến",
-                element: <ReceiverDocument />,
+                element: <ReceiverDocuments />,
               },
               {
                 path: "detail",
@@ -99,7 +99,7 @@ export const routePathDefinition = [
             children: [
               {
                 index: true,
-                element: <SentDocument />,
+                element: <SentDocuments />,
                 breadcrumb: "Văn bản đã gửi",
               },
               {
@@ -128,7 +128,7 @@ export const routePathDefinition = [
             children: [
               {
                 index: true,
-                element: <ManageDocument />,
+                element: <ManageDocuments />,
               },
               {
                 path: "post",
@@ -151,17 +151,22 @@ export const routePathDefinition = [
           {
             path: "categories",
             breadcrumb: "Chuyên mục",
-            element: <ManageCategory />,
+            element: <ManageCategories />,
           },
           {
-            path: "document-type",
-            element: <ManageDocumentType />,
+            path: "types-of-documents",
+            element: <ManageTypesOfDocuments />,
             breadcrumb: "Loại văn bản",
           },
           {
             path: "agencies",
-            element: <ManageAgency />,
+            element: <ManageAgencies />,
             breadcrumb: "Cơ quan ban hành",
+          },
+          {
+            path: "revoke-documents",
+            element: <ManageRevokeDocuments />,
+            breadcrumb: "Văn bản thu hồi",
           },
         ],
       },
