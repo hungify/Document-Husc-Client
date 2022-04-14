@@ -17,6 +17,27 @@ const SiderAnt = styled(Layout.Sider)`
     background-color: #488fb1;
     color: #fff;
   }
+  & .ant-layout-sider-children,
+  & .ant-menu-root.ant-menu-vertical,
+  .ant-menu-root.ant-menu-vertical-left,
+  .ant-menu-root.ant-menu-vertical-right,
+  .ant-menu-root.ant-menu-inline {
+    background-color: rgba(248, 250, 252, 1);
+  }
+  & .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    font-weight: bold;
+  }
+
+  & .ant-menu-light .ant-menu-item:hover,
+  .ant-menu-light .ant-menu-item-active,
+  .ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+  .ant-menu-light .ant-menu-submenu-active,
+  .ant-menu-light .ant-menu-submenu-title:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
 `;
 
 export default function Sidebar(props) {

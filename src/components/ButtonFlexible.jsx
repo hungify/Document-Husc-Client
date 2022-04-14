@@ -1,7 +1,7 @@
 import { Button, Tooltip } from "antd";
 
 export default function ButtonFlexible(props) {
-  const { document, type, icon, onDocumentClick, title, disabled, loading, children, ...rest } =
+  const { document, type, icon, onButtonClick, title, disabled, loading, children, ...rest } =
     props;
   return (
     <Tooltip title={title}>
@@ -9,7 +9,7 @@ export default function ButtonFlexible(props) {
         {...rest}
         type={type}
         icon={icon}
-        onClick={() => onDocumentClick(document)}
+        onClick={() => onButtonClick(document)}
         disabled={disabled}
         loading={loading}
       >
