@@ -1,4 +1,5 @@
 import { Avatar, Badge, Card, Col, Divider, List, Radio, Row, Typography } from "antd";
+import SortFilter from "components/SortFilter";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -34,21 +35,29 @@ for (let i = 0; i < 23; i++) {
     urgentLevel: i % 3 === 0 ? "Khẩn cấp" : "Bình thường",
   });
 }
+const dataRadio = [
+  {
+    label: "Tất cả",
+    value: "all",
+  },
+  {
+    label: "Chưa xử lý",
+    value: "unread",
+  },
+  {
+    label: "Đã xử lý",
+    value: "read",
+  },
+];
+
 export default function ReceiverDocument() {
-  const [filterType, setFilterType] = React.useState("all");
   const navigate = useNavigate();
+
+  const handleRadioReceiverDocumentChange = (value) => {};
 
   return (
     <Card size="small">
-      <Radio.Group
-        onChange={(e) => {
-          setFilterType(e.target.value);
-        }}
-        value={filterType}
-      >
-        <Radio value="all">Tất cả</Radio>
-        <Radio value="unread">Chưa xem</Radio>
-      </Radio.Group>
+      <SortFilter dataRadio={dataRadio} onRadioChange={handleRadioReceiverDocumentChange} />
       <Divider />
       <List
         size="small"
