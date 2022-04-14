@@ -99,9 +99,9 @@ export default function ManageCategories() {
 
   const handleDeleteClick = (item) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
+      title: "Xác nhận",
       icon: <ExclamationCircleOutlined />,
-      content: "Bạn có chắc chắn muốn xóa?",
+      content: "Bạn có chắc chắn muốn xóa chuyên mục này?",
       okText: "Có",
       cancelText: "Không",
       onOk() {
