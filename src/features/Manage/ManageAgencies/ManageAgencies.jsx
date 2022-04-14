@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Col, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
-import AddEditAgency from "features/Manage/ManageAgencies/AddEditAgency";
+import AddEditAgency from "features/Manage/ManageAgencies/AddEditAgencies";
 import React from "react";
 import styled from "styled-components";
 

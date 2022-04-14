@@ -33,7 +33,7 @@ const dataRadio = [
   },
 ];
 export default function ListDocument(props) {
-  const { dataRender, onEditDocument, onDeleteDocument } = props;
+  const { dataRender, onEditDocument, onRevokeDocument } = props;
   const role = useSelector(getRole);
 
   const handlePreviewFileClick = (item) => {
@@ -139,7 +139,7 @@ export default function ListDocument(props) {
                             <Typography.Title level={5}>
                               <ButtonFlexible
                                 document={item}
-                                onButtonClick={onDeleteDocument}
+                                onButtonClick={onRevokeDocument}
                                 danger
                                 type="dashed"
                                 icon={<DeleteTwoTone twoToneColor="#FD5D5D" />}
