@@ -1,12 +1,15 @@
 import { PlusCircleTwoTone } from "@ant-design/icons";
-import { Button, Card, Col, Row, Tooltip } from "antd";
-import DocumentList from "components/DocumentList";
+import { Button, Tooltip } from "antd";
+import ListDocument from "components/ListDocument";
+import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+const Wrapper = styled.section`
+  background-color: rgba(248, 250, 252, 1);
+`;
 const WrapButton = styled.div`
-  background-color: #fff;
   padding: 20px;
   padding-bottom: 0;
 `;
@@ -41,22 +44,23 @@ export default function ManageDocument() {
     navigate("post");
   };
   return (
-    <Row>
-      <Col span={24}>
-        <WrapButton>
-          <Tooltip title="Ban hành một văn bản?">
-            <Button icon={<PlusCircleTwoTone />} type="default" onClick={handleCreateDocumentClick}>
-              Ban hành văn bản
-            </Button>
-          </Tooltip>
-        </WrapButton>
-        <DocumentList
-          dataRender={listData}
-          type="admin"
-          onEditDocument={handleEditDocumentClick}
-          onDeleteDocument={handleDeleteDocumentClick}
-        />
-      </Col>
-    </Row>
+    <Wrapper>
+      <SearchGroup />
+      <WrapButton>
+        <Button
+          icon={<PlusCircleTwoTone />}
+          size="large"
+          type="primary"
+          onClick={handleCreateDocumentClick}
+        >
+          Ban hành văn bản
+        </Button>
+      </WrapButton>
+      <ListDocument
+        dataRender={listData}
+        onEditDocument={handleEditDocumentClick}
+        onDeleteDocument={handleDeleteDocumentClick}
+      />
+    </Wrapper>
   );
 }

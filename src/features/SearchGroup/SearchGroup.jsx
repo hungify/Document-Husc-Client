@@ -1,12 +1,14 @@
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Card, Col, Collapse, Form, Row, Space, Typography } from "antd";
+import { Card, Collapse, Form, Typography } from "antd";
 import SearchBox from "features/SearchGroup/components/SearchBox";
 import SearchFilter from "features/SearchGroup/components/SearchFilter";
 import SearchTime from "features/SearchGroup/components/SearchTime";
 import styled from "styled-components";
 const Wrapper = styled.div``;
 
-const CardAnt = styled(Card)``;
+const CardAnt = styled(Card)`
+  background-color: rgba(248, 250, 252, 1);
+`;
 
 const CardFilter = styled(CardAnt)``;
 
@@ -16,6 +18,10 @@ const CollapseAnt = styled(Collapse)`
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  .ant-collapse-header {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-bottom: 10px;
+  }
 `;
 const CollapsePanelAnt = styled(Collapse.Panel)``;
 
