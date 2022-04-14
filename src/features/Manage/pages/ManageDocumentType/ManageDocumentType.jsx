@@ -2,7 +2,7 @@ import {
   DeleteTwoTone,
   EditTwoTone,
   ExclamationCircleOutlined,
-  PlusCircleTwoTone,
+  PlusCircleTwoTone
 } from "@ant-design/icons";
 import { Button, Card, Col, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";

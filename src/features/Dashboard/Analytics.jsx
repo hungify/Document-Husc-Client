@@ -2,6 +2,13 @@ import { Card, Col, Row, Typography } from "antd";
 import React from "react";
 import styled from "styled-components";
 
+const RowAnt = styled(Row)`
+  margin-top: 16px;
+  margin-bottom: 16px;
+`;
+const CardAnt = styled(Card)`
+  border-radius: 15px;
+`;
 const IconBox = styled.div`
   width: 48px;
   height: 48px;
@@ -20,10 +27,10 @@ const WrapTitle = styled.div`
 
 export default function Analytics({ dataRender }) {
   return (
-    <Row gutter={[10, 10]}>
+    <RowAnt gutter={[15, 0]}>
       {dataRender.map((item) => (
         <Col span={dataRender.length > 3 ? 6 : 8} key={item.key}>
-          <Card>
+          <CardAnt>
             <Row>
               <Col span={24}>
                 <WrapTitle>
@@ -39,10 +46,9 @@ export default function Analytics({ dataRender }) {
                 </WrapTitle>
               </Col>
             </Row>
-            <Row></Row>
-          </Card>
+          </CardAnt>
         </Col>
       ))}
-    </Row>
+    </RowAnt>
   );
 }

@@ -3,11 +3,11 @@ import { Form, Input } from "antd";
 import ModalForm from "components/ModalForm";
 import React from "react";
 
-export default function AddEditAgency({ visible, onCreate, onCancel, agencyId }) {
+export default function AddEditAgency({ visible, onSubmit, onCancel, agencyId }) {
   return (
     <ModalForm
       visible={visible}
-      onCreate={onCreate}
+      onSubmit={onSubmit}
       onCancel={onCancel}
       agencyId={agencyId}
       size="large"

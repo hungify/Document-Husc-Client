@@ -1,20 +1,20 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Col, Form, Input, Row, Space } from "antd";
+import { Button, Col, Form, Input, Radio, Row } from "antd";
 import React from "react";
 
-const plainOptions = ["Cụm từ chính xác", "Số hiệu văn bản"];
+const plainOptions = ["Tất cả", "Tiêu đề", "Số hiệu văn bản"];
 
 export default function SearchBox(props) {
-  const [checkedList, setCheckedList] = React.useState();
   const [placeholder, setPlaceholder] = React.useState("Tìm theo tiêu đề");
+  const [searchType, setSearchType] = React.useState(plainOptions[0]);
 
-  const handleCheckboxChange = (checkedList) => {
-    const newList = checkedList.map((checked) => checked.toLowerCase());
-    setCheckedList(checkedList);
-    if (newList.length === 0) {
-      setPlaceholder("Tìm theo tiêu đề");
+  const handleRadioChange = (e) => {
+    const value = e.target.value;
+    setSearchType(value.toLowerCase());
+    if (value === "Tất cả") {
+      setPlaceholder("Tìm theo tiêu đề, số hiệu văn bản");
     } else {
-      setPlaceholder(`Tìm theo ${newList.join(", ")}`);
+      setPlaceholder(`Tìm theo ${value.toLowerCase()}`);
     }
   };
 
@@ -22,11 +22,7 @@ export default function SearchBox(props) {
     <Row gutter={[20, 5]} align="middle">
       <Col span={8}>
         <Form.Item name="check-type">
-          <Checkbox.Group
-            options={plainOptions}
-            value={checkedList}
-            onChange={handleCheckboxChange}
-          />
+          <Radio.Group options={plainOptions} value={searchType} onChange={handleRadioChange} />
         </Form.Item>
       </Col>
       <Col span={16}>

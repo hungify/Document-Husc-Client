@@ -50,7 +50,8 @@ export default function ListDocument(props) {
     <WrapCard bordered={false}>
       <Row gutter={[10, 10]}>
         <Col span={16}>
-          <Typography.Text strong>123 Văn bản</Typography.Text>
+          Có <Typography.Text strong>18</Typography.Text> kết quả chứa từ khóa:
+          <Typography.Text strong>&nbsp; Nghị quyết</Typography.Text>
         </Col>
         <Col span={8}>
           <SortFilter dataRadio={dataRadio} onRadioChange={handleRadioDateChange} />
