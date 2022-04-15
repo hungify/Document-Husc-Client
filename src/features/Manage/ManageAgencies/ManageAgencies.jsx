@@ -22,7 +22,6 @@ export default function ManageAgencies() {
   const [agencyId, setAgencyId] = React.useState(null);
 
   const handleOnSubmit = (values) => {
-    console.log("Received values of form: ", values);
     setVisible(false);
   };
 
@@ -72,7 +71,7 @@ export default function ManageAgencies() {
 
   return (
     <Card
-      title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
+      title={<Typography.Text strong>20 cơ quan ban hành</Typography.Text>}
       extra={
         <Button onClick={handleAddClick} type="primary">
           <PlusCircleTwoTone key="edit" /> Thêm mới

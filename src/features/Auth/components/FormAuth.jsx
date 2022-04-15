@@ -74,16 +74,16 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
     <Wrapper forgot={active === "forgot" ? 1 : 0}>
       <FormAuthInner forgot={active === "forgot" ? 1 : 0}>
         <RowAnt>
+          <Col span={12}>
+            <WrapperHero>
+              <img
+                src="https://mixkit.imgix.net/art/preview/mixkit-left-handed-man-sitting-at-a-table-writing-in-a-notebook-27-original-large.png?q=80&auto=format%2Ccompress&h=700"
+                alt="Login"
+              />
+            </WrapperHero>
+          </Col>
           {active === "login" ? (
             <>
-              <Col span={12}>
-                <WrapperHero>
-                  <img
-                    src="https://mixkit.imgix.net/art/preview/mixkit-left-handed-man-sitting-at-a-table-writing-in-a-notebook-27-original-large.png?q=80&auto=format%2Ccompress&h=700"
-                    alt="Login"
-                  />
-                </WrapperHero>
-              </Col>
               <Col span={12}>
                 <FormAnt
                   name="login-form"
@@ -95,19 +95,19 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
                   <TitleDesc>Đăng nhập vào hệ thống</TitleDesc>
                   <Form.Item
                     name="username"
-                    rules={[{ required: true, message: "Please input your username!" }]}
+                    rules={[{ required: true, message: "Vui lòng nhập vào tên đăng nhập!" }]}
                   >
-                    <Input placeholder="Username" size="large" />
+                    <Input placeholder="Tên đăng nhập" size="large" />
                   </Form.Item>
                   <Form.Item
                     name="password"
-                    rules={[{ required: true, message: "Please input your password!" }]}
+                    rules={[{ required: true, message: "Vui lòng nhập vào mật khẩu!" }]}
                   >
-                    <Input.Password placeholder="Password" size="large" />
+                    <Input.Password placeholder="Mật khẩu" size="large" />
                   </Form.Item>
                   <Form.Item>
                     <ButtonAnt type="primary" htmlType="submit">
-                      Login
+                      Đăng nhập
                     </ButtonAnt>
                   </Form.Item>
                 </FormAnt>
@@ -116,14 +116,6 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
           ) : active === "register" ? (
             <>
               <Col span={12}>
-                <WrapperHero>
-                  <img
-                    src="https://mixkit.imgix.net/art/preview/mixkit-left-handed-man-sitting-at-a-table-writing-in-a-notebook-27-original-large.png?q=80&auto=format%2Ccompress&h=700"
-                    alt="Login"
-                  />
-                </WrapperHero>
-              </Col>
-              <Col span={12}>
                 <FormAnt
                   form={form}
                   name="register-form"
@@ -131,38 +123,35 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
                   onFinish={onSubmit}
                   onFinishFailed={onSubmitFailed}
                 >
-                  <Title>Chào mừng quay trở lại </Title>
+                  <Title>Chào mừng đến với hệ thống</Title>
                   <TitleDesc>Đăng ký vào hệ thống</TitleDesc>
                   <Form.Item
                     name="username"
-                    rules={[{ required: true, message: "Please input your username!" }]}
+                    rules={[{ required: true, message: "Vui lòng nhập vào tên đăng nhập!" }]}
                   >
                     <Input placeholder="Username" size="large" />
                   </Form.Item>
                   <Form.Item
                     name="email"
-                    rules={[{ required: true, message: "Please input your email!" }]}
+                    rules={[{ required: true, message: "Vui lòng nhập vào email!" }]}
                   >
                     <Input placeholder="Email" size="large" />
                   </Form.Item>
                   <Form.Item
                     name="password"
-                    rules={[{ required: true, message: "Please input your password!" }]}
+                    rules={[{ required: true, message: "Vui lòng nhập vào mật khẩu!" }]}
                   >
                     <Input.Password placeholder="Password" size="large" />
                   </Form.Item>
                   <Form.Item
                     name="confirmPassword"
-                    rules={[{ required: true, message: "Please input your confirm password!" }]}
+                    rules={[{ required: true, message: "Vui lòng xác nhận lại mật khẩu đã nhập!" }]}
                   >
                     <Input.Password placeholder="Confirm password" size="large" />
                   </Form.Item>
-                  <Form.Item name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                  </Form.Item>
                   <Form.Item>
                     <ButtonAnt type="primary" htmlType="submit">
-                      Register
+                      Đăng ký
                     </ButtonAnt>
                   </Form.Item>
                 </FormAnt>
@@ -170,14 +159,6 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
             </>
           ) : (
             <>
-              <Col span={12}>
-                <WrapperHero>
-                  <img
-                    src="https://mixkit.imgix.net/art/preview/mixkit-left-handed-man-sitting-at-a-table-writing-in-a-notebook-27-original-large.png?q=80&auto=format%2Ccompress&h=700"
-                    alt="Login"
-                  />
-                </WrapperHero>
-              </Col>
               <Col span={12}>
                 <FormAnt
                   forgot={active === "forgot" ? 1 : 0}
@@ -190,14 +171,13 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
                   <TitleDesc>Kiểm tra hộp thư email</TitleDesc>
                   <Form.Item
                     name="email"
-                    rules={[{ required: true, message: "Please input your email!" }]}
+                    rules={[{ required: true, message: "Vui lòng nhập vào email!" }]}
                   >
-                    <Input placeholder="Enter your email" size="large" />
+                    <Input placeholder="Email" size="large" />
                   </Form.Item>
-
                   <Form.Item>
                     <ButtonAnt type="primary" htmlType="submit">
-                      Reset password
+                      Lấy lại mật khẩu
                     </ButtonAnt>
                   </Form.Item>
                 </FormAnt>

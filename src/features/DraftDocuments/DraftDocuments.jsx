@@ -1,3 +1,4 @@
+import { DeleteColumnOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Card, Checkbox, Col, List, Row, Space, Typography } from "antd";
 import _ from "lodash";
 import React from "react";
@@ -10,6 +11,10 @@ const WrapCard = styled(Card)`
 
 const CardCheckBox = styled(Card)`
   background-color: rgba(248, 250, 252, 1);
+  & .ant-card-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 `;
 
 const CardItemAnt = styled(Card)`
@@ -84,10 +89,7 @@ export default function DraftDocuments(props) {
   };
   return (
     <WrapCard bordered={false}>
-      <Row gutter={[10, 10]}>
-        <Col span={24}>
-          <Typography.Text strong>12 Văn bản</Typography.Text>
-        </Col>
+      <Row>
         <Col>
           <CardCheckBox bordered={false}>
             <Space>
@@ -98,7 +100,9 @@ export default function DraftDocuments(props) {
               >
                 {titleCheckAll}
               </Checkbox>
-              <Button type="primary">Xóa</Button>
+              <Button type="default" size="middle" icon={<DeleteOutlined />} danger>
+                Xóa
+              </Button>
             </Space>
           </CardCheckBox>
         </Col>

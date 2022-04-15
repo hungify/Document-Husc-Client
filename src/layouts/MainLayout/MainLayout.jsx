@@ -1,4 +1,4 @@
-import { Layout } from "antd";
+import { Button, Form, Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/authSelector";
 import Footer from "components/Footer";
 import { menuConfig } from "configs/menu";
@@ -19,6 +19,23 @@ const LayoutAnt = styled(Layout)`
 
 const ContentAnt = styled(Layout.Content)`
   padding: 20px;
+  height: 100vh;
+`;
+
+const FormAnt = styled(Form)`
+  flex: 1 0 100%;
+  /* max-width: 480px; */
+  width: 100%;
+  padding: 50px;
+  max-height: 800px;
+  height: 100%;
+`;
+
+const ButtonAnt = styled(Button)`
+  height: 42px;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  width: 100%;
 `;
 
 export default function MainLayout({ children }) {
@@ -27,13 +44,14 @@ export default function MainLayout({ children }) {
   const role = useSelector(getRole);
   const { pathname } = useLocation();
   const path = pathname.split("/").filter((item) => item);
+  const [form] = Form.useForm();
 
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
 
   React.useEffect(() => {
-    if (path.length === 0 || path[0] === "lookup") {
+    if (path.length === 0) {
       if (isAuth && role === ROLES.ADMIN) {
         navigate("dashboard");
       } else {
@@ -52,19 +70,14 @@ export default function MainLayout({ children }) {
 
   React.useEffect(() => {
     if (isAuth) {
-      const menu = menuConfig.GUEST;
-      if (role === ROLES.USER) {
-        setMenuItems([...menu, ...menuConfig[role]]);
-      } else {
-        setMenuItems(menuConfig[role]);
-      }
+      setMenuItems(menuConfig[role]);
     } else {
       setMenuItems(menuConfig.GUEST);
     }
   }, [role, isAuth]);
 
   const handleMenuSelect = ({ key }, isUser) => {
-    const shouldAddPrefixPath = ["dashboard", "lookup", "inbox", "sent", "draft", "forward"];
+    const shouldAddPrefixPath = ["dashboard", "lookup", "inbox", "sent", "forward"];
     setActiveKey(key);
     if (isAuth && role === ROLES.ADMIN) {
       if (!shouldAddPrefixPath.includes(key)) {
@@ -76,6 +89,10 @@ export default function MainLayout({ children }) {
 
   const handleOnCollapse = (collapsed) => {
     setCollapsed(collapsed);
+  };
+
+  const handleOnSubmit = (values) => {
+    console.log(values);
   };
 
   return (

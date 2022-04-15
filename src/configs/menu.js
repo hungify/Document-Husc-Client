@@ -24,12 +24,6 @@ export const menuConfig = {
       icon: <DashboardTwoTone />,
     },
     {
-      title: "Văn bản nháp",
-      key: "draft",
-      value: "draft",
-      icon: <FileTextTwoTone />,
-    },
-    {
       title: "Văn bản đến",
       key: "inbox",
       value: "inbox",
@@ -40,6 +34,12 @@ export const menuConfig = {
       key: "forward",
       value: "forward",
       icon: <CarryOutTwoTone />,
+    },
+    {
+      title: "Văn bản nháp",
+      key: "draft",
+      value: "draft",
+      icon: <FileTextTwoTone />,
     },
     {
       title: "Quản lý văn bản",
@@ -80,10 +80,10 @@ export const menuConfig = {
       icon: <DashboardOutlined />,
     },
     {
-      title: "Văn bản nháp",
-      key: "draft",
-      value: "draft",
-      icon: <FileOutlined />,
+      title: "Tra cứu văn bản",
+      key: "lookup",
+      value: "lookup",
+      icon: <FileSearchOutlined />,
     },
     {
       title: "Văn bản đến",

@@ -1,7 +1,8 @@
 import { InfoCircleOutlined, PlusCircleTwoTone } from "@ant-design/icons";
-import { Button, Form, Input, Tooltip } from "antd";
+import { Button, Form, Input } from "antd";
 import ListDocument from "components/ListDocument";
 import ModalForm from "components/ModalForm";
+import HeaderListDocument from "components/HeaderListDocument";
 import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -93,11 +94,13 @@ export default function ManageDocuments() {
           Ban hành văn bản
         </Button>
       </WrapButton>
-      <ListDocument
-        dataRender={listData}
-        onEditDocument={handleEditDocumentClick}
-        onRevokeDocument={handleRevokeDocumentClick}
-      />
+      <HeaderListDocument>
+        <ListDocument
+          dataRender={listData}
+          onEditDocument={handleEditDocumentClick}
+          onRevokeDocument={handleRevokeDocumentClick}
+        />
+      </HeaderListDocument>
     </Wrapper>
   );
 }

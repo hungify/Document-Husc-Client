@@ -25,7 +25,6 @@ const SiderAnt = styled(Layout.Sider)`
     background-color: rgba(248, 250, 252, 1);
   }
   & .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    padding: 10px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     font-weight: bold;
