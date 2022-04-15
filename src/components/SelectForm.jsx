@@ -29,14 +29,14 @@ export default function SelectForm(props) {
       showSearch
       size="large"
     >
-      {searchSelect?.map((data) => (
-        <Select.Option value={data.value} key={data.value}>
+      {searchSelect?.map((item) => (
+        <Select.Option value={item.value} key={item.value}>
           {hasTag ? (
-            <Tag icon={data?.icon} color={data.colorTag}>
-              {data.label}
+            <Tag icon={item?.icon} color={item.colorTag}>
+              {item.label}
             </Tag>
           ) : (
-            data.label
+            item.label
           )}
         </Select.Option>
       ))}

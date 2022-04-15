@@ -7,7 +7,7 @@ export default function DropdownFilter({ dataRender }) {
   }
   return (
     <Space wrap>
-      <Select defaultValue={dataRender[0].value} onChange={handleSelectChange}>
+      <Select onChange={handleSelectChange}>
         {dataRender.map((item) => (
           <Select.Option value={item.value} key={item.value}>
             {item.title}

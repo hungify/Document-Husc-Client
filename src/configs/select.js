@@ -13,7 +13,7 @@ export const selectConfig = {
       colorTag: "red",
     },
   ],
-  status: [
+  ur: [
     {
       value: "public",
       label: "Công khai",
@@ -27,7 +27,7 @@ export const selectConfig = {
       icon: <UsergroupAddOutlined />,
     },
   ],
-  document: [
+  typesOfDocuments: [
     {
       value: "document-1",
       label: "Quyết định",
@@ -73,7 +73,7 @@ export const selectConfig = {
       label: "Nghị định",
     },
   ],
-  agency: [
+  agencies: [
     {
       value: "agency-1",
       label: "Chính phủ",

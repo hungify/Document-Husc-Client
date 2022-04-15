@@ -41,9 +41,11 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
   const [formValues, setFormValues] = React.useState([]);
   const [formValuesDraft, setFormValuesDraft] = React.useState();
   const [required, setRequired] = React.useState(true);
+  const [modeSave, setModeSave] = React.useState("official");
 
   const [form] = Form.useForm();
   const handleSubmitForm = (values) => {
+    console.log("🚀 :: values", values);
     if (values) {
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
@@ -62,11 +64,14 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
       }
       setCurrentStep(currentStep + 1);
     }
+    //Test mode
+    setCurrentStep(currentStep + 1);
   };
 
   const nextStep = () => {
     form.submit();
     handleSubmitForm();
+    setModeSave("official");
     setCurrentStep(currentStep + 1);
   };
 
@@ -75,17 +80,24 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
   };
 
   const handleSaveDraftDocumentClick = () => {
-    form.submit();
-    handleSubmitForm();
+    // form.submit();
+    // handleSubmitForm();
+    setModeSave("draft");
     setFormValuesDraft(formValues);
     setCurrentStep(steps[steps.length - 1].key);
   };
-  const handleIssuanceDocumentClick = () => {};
+  const handleIssuanceDocumentClick = () => {
+    // form.submit();
+    // handleSubmitForm();
+    setModeSave("official");
+    setFormValuesDraft(formValues);
+    setCurrentStep(steps[steps.length - 1].key);
+  };
   return (
     <WrapStep>
       <Steps current={currentStep}>
         {steps.map((item) => (
-          <Steps.Step key={item.title} title={item.title} />
+          <Steps.Step key={item.key} title={item.title} />
         ))}
       </Steps>
       <Container>
@@ -117,7 +129,7 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
             </Col>
           ) : (
             <Col span={24}>
-              <ResultMessage form={form} formValues={formValues} />
+              <ResultMessage modeSave={modeSave} />
             </Col>
           )}
         </Row>
