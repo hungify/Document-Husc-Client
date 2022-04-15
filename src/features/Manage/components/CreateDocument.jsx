@@ -1,6 +1,20 @@
 import { InfoCircleOutlined, UploadOutlined } from "@ant-design/icons";
-import { Button, Card, Col, DatePicker, Form, Input, message, Row, TreeSelect, Upload } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  Radio,
+  Row,
+  TreeSelect,
+  Typography,
+  Upload,
+} from "antd";
 import DebounceSelect from "components/DebounceSelect";
+import RichEditor from "components/RichEditor";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import { selectConfig } from "configs/select";
@@ -25,13 +39,26 @@ async function fetchUserList(username) {
     );
 }
 
+const dataRadio = [
+  {
+    label: "Từ tệp",
+    value: "attach",
+  },
+  {
+    label: "Nhập vào",
+    value: "input",
+  },
+];
+
 export default function CreateDocument({ form, onSubmitForm, formValues }) {
   const [treeData, setTreeData] = React.useState(treePeople);
   const [receiverSelected, setReceiverSelected] = React.useState(
     formValues?.receiver ? [formValues?.receiver] : []
   );
 
-  const [statusSelected, setStatusSelected] = React.useState(formValues?.status);
+  const [documentFrom, setDocumentFrom] = React.useState(dataRadio[0].value);
+  console.log("🚀 :: documentFrom", documentFrom);
+
   const [urgencySelected, setUrgencySelected] = React.useState(formValues?.urgency);
 
   const [agenciesSelected, setAgencySelected] = React.useState();
@@ -109,13 +136,23 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
     console.log("🚀 :: file", file);
   };
 
+  const handleRadioDocumentFromChange = (e) => {
+    setDocumentFrom(e.target.value);
+  };
+
   return (
-    <Form name="basic" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+    <Form
+      name="issued-document"
+      form={form}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      layout="vertical"
+    >
       <Card>
         <Row>
           <Col span={12}>
             <FormItemAnt
-              label="Loại văn bản"
+              label={<Typography.Text strong>Loại văn bản</Typography.Text>}
               name="documentType"
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
@@ -124,7 +161,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
               }}
             >
               <SelectForm
-                data={selectConfig.document}
+                selectData={selectConfig.typesOfDocuments}
                 onSelectChange={handleChangeDocumentType}
                 placeholder="Chọn loại văn bản"
                 size="large"
@@ -132,14 +169,13 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
                 filterOption={false}
                 notFoundContent={true}
                 allowClear
-                document={1}
               />
             </FormItemAnt>
           </Col>
 
           <Col span={12}>
             <FormItemAnt
-              label="Cơ quan ban hành"
+              label={<Typography.Text strong>Cơ quan ban hành</Typography.Text>}
               name="agencies"
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
@@ -148,15 +184,14 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
               }}
             >
               <SelectForm
-                data={selectConfig.agency}
+                selectData={selectConfig.agencies}
                 onSelectChange={handleChangeAgency}
+                selectedKeys={agenciesSelected}
                 placeholder="Chọn cơ quan ban hành"
                 size="large"
-                showSearch
                 filterOption={false}
                 notFoundContent={true}
                 allowClear
-                document={1}
               />
             </FormItemAnt>
           </Col>
@@ -164,7 +199,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
         <Row>
           <Col span={24}>
             <FormItemAnt
-              label="Chuyên mục"
+              label={<Typography.Text strong>Chuyên mục</Typography.Text>}
               name="categories"
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
@@ -189,7 +224,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
         <Row>
           <Col span={24}>
             <FormItemAnt
-              label="Người nhận"
+              label={<Typography.Text strong>Người nhận</Typography.Text>}
               name="receiver"
               tooltip={{
                 title: "Ai sẽ là người nhận được văn bản của bạn?",
@@ -217,19 +252,19 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
           <Col span={10}>
             <FormItemAnt
               name="textNumber"
-              label="Số hiệu văn bản"
+              label={<Typography.Text strong>Số hiệu văn bản</Typography.Text>}
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
                 title: "Số hiệu văn bản của bạn?",
                 icon: <InfoCircleOutlined />,
               }}
             >
-              <Input placeholder="Ex: 26/NQ-HĐĐH" size="large" />
+              <Input placeholder="Nhập vào số hiệu văn bản" size="large" />
             </FormItemAnt>
           </Col>
-          <Col flex="auto">
+          <Col span={6}>
             <FormItemAnt
-              label="Độ khẩn"
+              label={<Typography.Text strong>Độ khẩn</Typography.Text>}
               name="level"
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
@@ -238,18 +273,19 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
               }}
             >
               <SelectForm
-                value={urgencySelected}
+                hasTag={1}
+                selectedKey={urgencySelected}
                 onSelectChange={handleSelectUrgencyChange}
-                data={selectConfig.urgency}
+                selectData={selectConfig.urgency}
                 size="large"
                 placeholder="Chọn đổ khẩn của văn bản"
               />
             </FormItemAnt>
           </Col>
 
-          <Col flex="auto">
+          <Col span={8}>
             <FormItemAnt
-              label="Ngày ban hành"
+              label={<Typography.Text strong>Ngày ban hành</Typography.Text>}
               name="publishDate"
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
@@ -257,14 +293,20 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
                 icon: <InfoCircleOutlined />,
               }}
             >
-              <DatePicker format="DD/MM/YYYY" placeholder="Ex: 10/02/2021" size="large" />
+              <DatePicker
+                format="DD/MM/YYYY"
+                placeholder="Chọn ngày ban hành"
+                size="large"
+                value={new Date()}
+                style={{ width: "100%" }}
+              />
             </FormItemAnt>
           </Col>
         </Row>
         <Row>
           <Col span={24}>
             <FormItemAnt
-              label="Người ký"
+              label={<Typography.Text strong>Người ký</Typography.Text>}
               name="signer"
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
@@ -282,34 +324,14 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
           <Col span={24}>
             <FormItemAnt
               name="title"
-              label="Tiêu đề"
+              label={<Typography.Text strong>Tiêu đề</Typography.Text>}
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
                 title: "Tiêu đề văn bản của bạn?",
                 icon: <InfoCircleOutlined />,
               }}
             >
-              <Input placeholder="Ex:Biên bản nghiệm thu và thanh lý đề tài" size="large" />
-            </FormItemAnt>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <FormItemAnt
-              label="Tóm tắt"
-              name="summary"
-              rules={[{ required: true, message: "Trường này là bắt buộc" }]}
-              tooltip={{
-                title: "Tóm tắt nhanh văn bản của bạn?",
-                icon: <InfoCircleOutlined />,
-              }}
-            >
-              <Input.TextArea
-                value={summaryValue}
-                onChange={handleSummaryChange}
-                placeholder="Ex: 26/NQ-HĐĐH : Nghị quyết về việc phê duyệt Đề án thành lập Trung tâm Khảo thí - Đại học Huế"
-                autoSize={{ minRows: 3, maxRows: 6 }}
-              />
+              <Input placeholder="Nhập vào tiêu đề của văn bản" size="large" />
             </FormItemAnt>
           </Col>
         </Row>
@@ -317,7 +339,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
           <Col span={24}>
             <FormItemAnt
               name="relativeDocument"
-              label="Văn bản liên quan"
+              label={<Typography.Text strong>Văn bản liên quan</Typography.Text>}
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
                 title: "Văn bản liên quan đến văn bản của bạn?",
@@ -338,32 +360,91 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
             </FormItemAnt>
           </Col>
         </Row>
-        <Row>
-          <Col span={12}>
+        <Row gutter={[10, 10]}>
+          <Col span={24}>
             <FormItemAnt
-              label="Tệp đính kèm"
-              name="files"
+              label={<Typography.Text strong>Văn bản tải lên</Typography.Text>}
+              name="documentFrom"
+              initialValue={documentFrom}
               rules={[{ required: true, message: "Trường này là bắt buộc" }]}
               tooltip={{
-                title: "Các tệp văn bản của bạn?",
+                title: "Văn bản của bạn được tải lên từ đâu?",
                 icon: <InfoCircleOutlined />,
               }}
             >
-              <Upload
-                action={"http://localhost:3000/"}
-                multiple
-                showUploadList={{
-                  previewIcon: true,
-                  showPreviewIcon: true,
-                }}
-                onChange={handleUploadFileChange}
-                beforeUpload={handleBeforeUploadFile}
+              <Radio.Group
+                onChange={handleRadioDocumentFromChange}
+                value={documentFrom}
+                size="large"
               >
-                <Button icon={<UploadOutlined />}>Upload</Button>
-              </Upload>
+                {dataRadio.map((item, index) => (
+                  <Radio value={item.value} key={item.value}>
+                    {item.label}
+                  </Radio>
+                ))}
+              </Radio.Group>
             </FormItemAnt>
           </Col>
         </Row>
+        <Row>
+          <Col span={24}>
+            {documentFrom === "attach" ? (
+              <FormItemAnt
+                label={<Typography.Text strong>Văn bản đính kèm</Typography.Text>}
+                name="files"
+                rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+                tooltip={{
+                  title: "Các tệp văn bản của bạn?",
+                  icon: <InfoCircleOutlined />,
+                }}
+              >
+                <Upload
+                  action={"http://localhost:3000/"}
+                  multiple
+                  fileList={fileList}
+                  showUploadList={{
+                    previewIcon: true,
+                    showPreviewIcon: true,
+                  }}
+                  onChange={handleUploadFileChange}
+                  beforeUpload={handleBeforeUploadFile}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload>
+              </FormItemAnt>
+            ) : (
+              <FormItemAnt
+                label={<Typography.Text strong>Nội dung</Typography.Text>}
+                name="content"
+                rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+              >
+                <RichEditor />
+              </FormItemAnt>
+            )}
+          </Col>
+        </Row>
+        {documentFrom === "attach" && (
+          <Row>
+            <Col span={24}>
+              <FormItemAnt
+                label={<Typography.Text strong>Tóm tắt</Typography.Text>}
+                name="summary"
+                rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+                tooltip={{
+                  title: "Tóm tắt nhanh văn bản của bạn?",
+                  icon: <InfoCircleOutlined />,
+                }}
+              >
+                <Input.TextArea
+                  value={summaryValue}
+                  onChange={handleSummaryChange}
+                  placeholder="Ex: 26/NQ-HĐĐH : Nghị quyết về việc phê duyệt Đề án thành lập Trung tâm Khảo thí - Đại học Huế"
+                  autoSize={{ minRows: 3, maxRows: 6 }}
+                />
+              </FormItemAnt>
+            </Col>
+          </Row>
+        )}
       </Card>
     </Form>
   );
