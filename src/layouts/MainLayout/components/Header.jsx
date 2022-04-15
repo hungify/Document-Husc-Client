@@ -109,7 +109,7 @@ export default function Header({ shouldFixedHeader }) {
             <Menu.Item key="notification">
               <Dropdown overlay={notifications} placement="bottomRight">
                 <Badge dot>
-                  <NotificationOutlined style={{ fontSize: 18 }} />
+                  <NotificationOutlined />
                 </Badge>
               </Dropdown>
             </Menu.Item>

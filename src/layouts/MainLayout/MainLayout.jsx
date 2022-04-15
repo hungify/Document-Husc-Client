@@ -55,10 +55,14 @@ export default function MainLayout({ children }) {
   }, [path]);
 
   React.useEffect(() => {
-    if (isAuth) {
-      setMenuItems(menuConfig[role]);
+    const menuGuest = menuConfig.GUEST;
+    const menuUser = menuConfig.USER;
+    if (isAuth && role === ROLES.ADMIN) {
+      setMenuItems([...menuUser, ...menuConfig[role]]);
+    } else if (role === ROLES.USER) {
+      setMenuItems([...menuGuest, ...menuUser]);
     } else {
-      setMenuItems(menuConfig.GUEST);
+      setMenuItems(menuGuest);
     }
   }, [role, isAuth]);
 
