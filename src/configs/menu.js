@@ -66,16 +66,16 @@ export const menuConfig = {
       icon: <DashboardOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
     },
     {
-      title: "Văn bản đã gửi",
-      key: "forward",
-      value: "forward",
-      icon: <SendOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
-    },
-    {
       title: "Văn bản đến",
       key: "inbox",
       value: "inbox",
       icon: <InboxOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
+    },
+    {
+      title: "Văn bản đã gửi",
+      key: "forward",
+      value: "forward",
+      icon: <SendOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
     },
   ],
   GUEST: [
