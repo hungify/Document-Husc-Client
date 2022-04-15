@@ -107,10 +107,12 @@ export default function Header({ shouldFixedHeader }) {
         {isAuth ? (
           <Menu mode="horizontal">
             <Menu.Item key="notification">
-              <Dropdown overlay={notifications} placement="bottomRight">
-                <Badge dot>
-                  <NotificationOutlined />
-                </Badge>
+              <Dropdown overlay={notifications} trigger="hover" placement="bottomRight">
+                <Button type="text">
+                  <Badge dot>
+                    <NotificationOutlined />
+                  </Badge>
+                </Button>
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="profile">

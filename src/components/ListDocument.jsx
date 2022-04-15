@@ -1,5 +1,5 @@
 import { DeleteTwoTone, DownloadOutlined, EditTwoTone, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, List, Row, Typography } from "antd";
+import { Avatar, Badge, Card, Col, List, Row, Space, Typography } from "antd";
 import { getRole } from "app/selectors/authSelector";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonFlexible from "components/ButtonFlexible";
@@ -42,7 +42,7 @@ export default function ListDocument(props) {
       }}
       dataSource={dataRender}
       renderItem={(item) => (
-        <List.Item>
+        <List.Item key={item.id}>
           <Badge.Ribbon text="Bình thường" color="green" key={item.id}>
             <CardItemAnt bordered={false}>
               <Row align="middle" justify="space-between">
@@ -52,24 +52,31 @@ export default function ListDocument(props) {
                     title={<Link to={`/detail/${item.id}`}>{item.title}</Link>}
                   />
                 </Col>
-                <Col span={7}>
-                  <Typography.Title level={5}>
-                    Số hiệu văn bản:
-                    <Typography.Text keyboard>{item.textNumber}</Typography.Text>
-                  </Typography.Title>
-                  <Typography.Title level={5}>
-                    Người ký: <Typography.Text keyboard>{item.signer}</Typography.Text>
-                  </Typography.Title>
+                <Col span={8}>
+                  <Space direction="vertical">
+                    <Typography.Text>
+                      Số hiệu văn bản:&nbsp;
+                      <Typography.Text strong>{item.textNumber}</Typography.Text>
+                    </Typography.Text>
+                    <Typography.Text>
+                      Người ký:&nbsp;
+                      <Typography.Text strong>{item.signer}</Typography.Text>
+                    </Typography.Text>
+                  </Space>
                 </Col>
-                <Col span={9}>
-                  <Typography.Title level={5}>
-                    Ngày Ban hành: <Typography.Text keyboard>{item.dateIssued}</Typography.Text>
-                  </Typography.Title>
-                  <Typography.Title level={5}>
-                    Cơ quan ban hành:
-                    <Typography.Text keyboard>{item.authorityIssuing}</Typography.Text>
-                  </Typography.Title>
+                <Col span={8}>
+                  <Space direction="vertical">
+                    <Typography.Text>
+                      Ngày Ban hành:&nbsp;
+                      <Typography.Text strong>{item.dateIssued}</Typography.Text>
+                    </Typography.Text>
+                    <Typography.Text>
+                      Cơ quan ban hành:&nbsp;
+                      <Typography.Text strong>{item.authorityIssuing}</Typography.Text>
+                    </Typography.Text>
+                  </Space>
                 </Col>
+
                 <Col span={4}>
                   <Typography.Title level={5}>
                     <ButtonFlexible
