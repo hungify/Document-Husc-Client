@@ -1,7 +1,7 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Card, Space, Tree, Typography } from "antd";
-import BadgeCheckIcon from "components/BadgeCheckIcon";
-import BroadcastIcon from "components/BroadcastIcon";
+import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
+import BroadcastIcon from "components/Icons/BroadcastIcon";
 import { treeReceiver } from "mocks/treeReceiver";
 import React from "react";
 import styled from "styled-components";
@@ -59,7 +59,7 @@ export default function TreeProcessing() {
             {item.key === "root" ? (
               <SpaceAnt size="small">
                 <Typography.Title level={4}>{item.title}</Typography.Title>
-                <BroadcastIcon size="large" />
+                <BroadcastIcon style={{ color: "#FF6464" }} />
                 <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
                   Ban hành:
                   {" " + new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString()}
@@ -70,7 +70,7 @@ export default function TreeProcessing() {
                 {item?.children?.length > 0 ? (
                   <SpaceAnt size="small">
                     <Typography.Title level={5}>{item.title}</Typography.Title>
-                    <BadgeCheckIcon size="large" />
+                    <BadgeCheckIcon style={{ color: "#30AADD" }} />
                     <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
                       Xử lý:
                       {" " +
@@ -84,7 +84,7 @@ export default function TreeProcessing() {
                     <Typography.Text>{item.title}</Typography.Text>
                     {item.title.charAt(0) === "N" && (
                       <>
-                        <BadgeCheckIcon size="large" />
+                        <BadgeCheckIcon style={{ color: "#30AADD" }} />
                         <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
                           Xử lý:
                           {" " +
