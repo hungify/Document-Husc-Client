@@ -15,4 +15,8 @@ h1, h2, h3, h4, h5 {
 .ant-menu {
   background-color: transparent;
 }
+
+.ant-menu-item .ant-menu-item-icon, .ant-menu-submenu-title .ant-menu-item-icon, .ant-menu-item .anticon, .ant-menu-submenu-title .anticon {
+  font-size: 18px;
+}
 `;

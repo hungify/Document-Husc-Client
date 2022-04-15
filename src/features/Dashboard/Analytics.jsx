@@ -15,7 +15,9 @@ const IconBox = styled.div`
   background: #1890ff;
   color: #fff;
   border-radius: 0.5rem;
-  line-height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const WrapTitle = styled.div`
