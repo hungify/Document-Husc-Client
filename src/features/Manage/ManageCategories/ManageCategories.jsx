@@ -1,7 +1,7 @@
 import {
-  DeleteOutlined,
+  DeleteTwoTone,
   DownOutlined,
-  EditOutlined,
+  EditTwoTone,
   ExclamationCircleOutlined,
   PlusCircleTwoTone,
 } from "@ant-design/icons";
@@ -37,25 +37,18 @@ const Overlay = styled.div`
   background-color: #bae7ff;
 `;
 const ActionList = styled.div`
-  width: 10%;
+  width: 20%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 `;
-const ButtonAnt = styled(Button)`
-  color: #cdd9e5;
-  &:hover {
-    background-color: rgba(65, 132, 228, 0.15);
-    color: #4184e4;
-  }
-`;
+
 export default function ManageCategories() {
   const [form] = Form.useForm();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showLayer, setShowLayer] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState();
   const [isAddMode, setIsAddMode] = React.useState(false);
-  const [treeDataPreview, setTreeDataPreview] = React.useState([]);
 
   React.useEffect(() => {
     if (!isAddMode) {
@@ -131,7 +124,7 @@ export default function ManageCategories() {
 
   return (
     <Card
-      title="Danh sách chuyên mục"
+      title={<Typography.Text strong>Danh sách chuyên mục</Typography.Text>}
       extra={
         selectedNode && (
           <Tooltip
@@ -161,21 +154,21 @@ export default function ManageCategories() {
         titleRender={(item) =>
           showLayer && item.key !== "root" && item.key === selectedNode?.key ? (
             <Overlay>
-              <Typography.Text type="secondary">{item.title}</Typography.Text>
+              <Typography.Text strong>{item.title}</Typography.Text>
               <ActionList>
                 <Tooltip
                   placement="top"
                   title="Cập nhật thông tin chuyên mục này"
                   arrowPointAtCenter
                 >
-                  <ButtonAnt size="small" onClick={() => handleEditClick(item)}>
-                    <EditOutlined />
-                  </ButtonAnt>
+                  <Button onClick={() => handleEditClick(item)}>
+                    <EditTwoTone />
+                  </Button>
                 </Tooltip>
                 <Tooltip placement="top" title="Xóa chuyên mục này" arrowPointAtCenter>
-                  <ButtonAnt size="small" onClick={() => handleDeleteClick(item)}>
-                    <DeleteOutlined />
-                  </ButtonAnt>
+                  <Button onClick={() => handleDeleteClick(item)} danger>
+                    <DeleteTwoTone twoToneColor="#FD5D5D" />
+                  </Button>
                 </Tooltip>
               </ActionList>
             </Overlay>

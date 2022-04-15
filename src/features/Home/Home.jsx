@@ -1,3 +1,4 @@
+import HeaderListDocument from "components/HeaderListDocument";
 import ListDocument from "components/ListDocument";
 import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
@@ -25,7 +26,9 @@ export default function Home() {
   return (
     <Wrapper>
       <SearchGroup />
-      <ListDocument dataRender={listData} />
+      <HeaderListDocument>
+        <ListDocument dataRender={listData} />
+      </HeaderListDocument>
     </Wrapper>
   );
 }

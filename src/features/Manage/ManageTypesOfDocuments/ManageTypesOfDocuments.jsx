@@ -1,8 +1,7 @@
 import {
-  DeleteTwoTone,
-  EditTwoTone,
+  DeleteOutlined, EditTwoTone,
   ExclamationCircleOutlined,
-  PlusCircleTwoTone,
+  PlusCircleTwoTone
 } from "@ant-design/icons";
 import { Button, Card, Col, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
@@ -71,7 +70,7 @@ export default function ManageTypesOfDocuments() {
   return (
     <>
       <Card
-        title={<Typography.Text>Có 20 cơ quan</Typography.Text>}
+        title={<Typography.Text strong>20 cơ quan</Typography.Text>}
         extra={
           <Button onClick={handleAddClick} type="primary">
             <PlusCircleTwoTone key="edit" /> Thêm mới
@@ -94,8 +93,8 @@ export default function ManageTypesOfDocuments() {
                   <Button onClick={() => handleEditClick(i)}>
                     <EditTwoTone key="edit" /> Chỉnh sửa
                   </Button>,
-                  <Button onClick={() => handleDeleteClick(i)}>
-                    <DeleteTwoTone /> Xóa
+                  <Button onClick={() => handleDeleteClick(i)} icon={<DeleteOutlined />} danger>
+                    Xóa
                   </Button>,
                 ]}
               >

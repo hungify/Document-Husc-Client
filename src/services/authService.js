@@ -9,7 +9,7 @@ const authService = {
             accessToken: "1234",
             refreshToken: "4321",
             role: "ADMIN",
-            message: "Login success",
+            message: "Đăng nhập thành công",
             status: 200,
           });
         } else if (username === "user" && password === "user") {
@@ -17,7 +17,7 @@ const authService = {
             accessToken: "123",
             refreshToken: "321",
             role: "USER",
-            message: "Login success",
+            message: "Đăng nhập thành công",
             status: 200,
           });
         } else {
@@ -57,7 +57,7 @@ const authService = {
       setTimeout(() => {
         if (refreshToken === "321" || refreshToken === "4321") {
           resolve({
-            message: "Logout success",
+            message: "Đăng xuất thành công",
             status: 200,
           });
         } else {

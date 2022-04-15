@@ -5,11 +5,11 @@ import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
-  labels: ["Đã xử lý", "Chưa xử lý", "Quá thời hạn"],
+  labels: ["Đã xử lý", "Chưa xử lý"],
   datasets: [
     {
       label: "Số lượng xử lý văn bản",
-      data: [12, 19, 1],
+      data: [12, 19],
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
         "rgba(54, 162, 235, 0.2)",
@@ -61,7 +61,7 @@ export default function ChartReceiver() {
       sorter: (a, b) => a.processedDate - b.processedDate,
     },
     {
-      title: "Công cụ",
+      title: "Thao tác",
       dataIndex: "",
       key: "x",
       render: () => <Button type="link">Phản hồi</Button>,
