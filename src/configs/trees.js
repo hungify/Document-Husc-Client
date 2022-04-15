@@ -5,9 +5,9 @@ export const treePeople = [
     value: "everyone",
   },
   {
-    title: "Tất cả giảng viên khoa công nghệ thông tin",
-    key: "everyone-information-technology",
-    value: "everyone-information-technology",
+    title: "Văn thư khoa Công Nghệ Thông Tin",
+    key: "vthkctt",
+    value: "vthkctt",
     children: [
       {
         title: "Nguyễn Dũng",
@@ -47,25 +47,28 @@ export const treePeople = [
     ],
   },
   {
-    title: "Phòng Khảo thí và ĐBCLGD",
-    key: "Testing-and-quality-assurance",
-    value: "Testing-and-quality-assurance",
-    children: [
-      {
-        title: "",
-        key: "0-0-0-",
-        value: "0-0-0-",
-      },
-      {
-        title: "Child Node4",
-        key: "0-1-1",
-        value: "0-1-1",
-      },
-      {
-        title: "Child Node5",
-        key: "0-1-2",
-        value: "0-1-2",
-      },
-    ],
+    title: "Văn thư Khoa Toán",
+    key: "vthkt",
+    value: "vthkt",
+  },
+  {
+    title: "Văn thư Phòng Khảo thí và ĐBCLGD",
+    key: "pktvdbclgd",
+    value: "pktvdbclgd",
+  },
+  {
+    title: "Văn thư Khoa Môi Trường",
+    key: "vthkmt",
+    value: "vthkmt",
+  },
+  {
+    title: "Văn thư Khoa Vật Lý",
+    key: "vthkvl",
+    value: "vthkvl",
+  },
+  {
+    title: "Văn thư Khoa Ngữ Văn",
+    key: "vthknv",
+    value: "vthknv",
   },
 ];

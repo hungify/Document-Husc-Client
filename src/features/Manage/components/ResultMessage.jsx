@@ -1,16 +1,26 @@
 import { Button, Result } from "antd";
+import { useNavigate } from "react-router-dom";
 
-export default function ResultMessage() {
+export default function ResultMessage({ modeSave }) {
+  const navigate = useNavigate();
   return (
     <Result
       status="success"
-      title="Phát hành văn bản thành công"
-      subTitle="Bạn có thể vào văn bản đã phát hành để xem chi tiết việc xử lý của các bên liên quan"
+      title={
+        modeSave === "official"
+          ? "Phát hành văn bản thành công"
+          : "Văn bản đã được lưu trữ ở chế độ bản nháp"
+      }
+      subTitle={
+        modeSave === "official"
+          ? "Bạn có thể vào văn bản đã phát hành để xem công tác xử lý của các bên liên quan"
+          : "Bạn có thể vào văn bản nháp để tiếp tục phát hành văn bản này"
+      }
       extra={[
-        <Button type="primary" key="console">
+        <Button type="primary" onClick={() => navigate("/")}>
           Quay lại bảng điều khiển
         </Button>,
-        <Button>Phát hành văn bản khác</Button>,
+        <Button onClick={() => navigate("..")}>Phát hành văn bản khác</Button>,
       ]}
     />
   );

@@ -72,7 +72,7 @@ export default function ManageDocuments() {
       >
         <Form.Item
           name="agency_description"
-          label="Mô tả"
+          label="Lý do"
           tooltip={{ title: "Lý do thu hồi văn bản?", icon: <InfoCircleOutlined /> }}
           rules={[{ required: true, message: "Trường này là bắt buộc" }]}
         >
