@@ -1,7 +1,9 @@
+import { Card, Col, Row, Typography } from "antd";
 import { getRole } from "app/selectors/authSelector";
 import { analyticsConfig } from "configs/dashboard";
 import { ROLES } from "configs/roles";
 import Analytics from "features/Dashboard/Analytics";
+import NotificationList from "features/NotificationList/NotificationList";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -18,24 +20,17 @@ export default function DashBoard() {
       ) : (
         <Analytics dataRender={analyticsConfig[ROLES.USER]} />
       )}
-      {/* <Row>
-        <Col span={24}>
-          <Card>
-            <Tabs defaultActiveKey="1" type="card">
-              <Tabs.TabPane tab="Dashboard" key="1">
-                <Row>
-                  <Col>Empty tab</Col>
-                </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Something" key="2">
-                <Row>
-                  <Col>Empty tab</Col>
-                </Row>
-              </Tabs.TabPane>
-            </Tabs>
-          </Card>
-        </Col>
-      </Row> */}
+
+      <Card bordered={false}>
+        <Row gutter={[10, 10]}>
+          <Col span={16}>
+            <Typography.Text strong>Danh sách thông báo</Typography.Text>
+          </Col>
+          <Col span={24}>
+            <NotificationList />
+          </Col>
+        </Row>
+      </Card>
     </>
   );
 }
