@@ -141,6 +141,9 @@ export default function DetailDocument() {
             <Tabs.TabPane tab="Văn bản liên quan" key="related">
               <RelatedDocument />
             </Tabs.TabPane>
+            {/* <Tabs.TabPane tab="Lịch sử cập nhật" key="related">
+              Danh sách lịch sử sửa đổi của văn bản
+            </Tabs.TabPane> */}
             {(role === ROLES.ADMIN || role === ROLES.USER) && (
               <>
                 <Tabs.TabPane tab="Phân tích" key="analytics">

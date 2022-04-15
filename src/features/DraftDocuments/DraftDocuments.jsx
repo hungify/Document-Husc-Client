@@ -1,5 +1,17 @@
-import { DeleteColumnOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Button, Card, Checkbox, Col, List, Row, Space, Typography } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Divider,
+  List,
+  Row,
+  Space,
+  Typography,
+} from "antd";
 import _ from "lodash";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -89,23 +101,21 @@ export default function DraftDocuments(props) {
   };
   return (
     <WrapCard bordered={false}>
+      <CardCheckBox bordered={false}>
+        <Space>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={handleCheckedAllDraft}
+            checked={checkAll}
+          >
+            {titleCheckAll}
+          </Checkbox>
+          <Button type="default" size="middle" icon={<DeleteOutlined />} danger>
+            Xóa
+          </Button>
+        </Space>
+      </CardCheckBox>
       <Row>
-        <Col>
-          <CardCheckBox bordered={false}>
-            <Space>
-              <Checkbox
-                indeterminate={indeterminate}
-                onChange={handleCheckedAllDraft}
-                checked={checkAll}
-              >
-                {titleCheckAll}
-              </Checkbox>
-              <Button type="default" size="middle" icon={<DeleteOutlined />} danger>
-                Xóa
-              </Button>
-            </Space>
-          </CardCheckBox>
-        </Col>
         <Col span={24}>
           <List
             itemLayout="vertical"

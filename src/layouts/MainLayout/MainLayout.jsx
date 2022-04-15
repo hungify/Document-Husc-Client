@@ -1,9 +1,9 @@
-import { Button, Form, Layout } from "antd";
+import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/authSelector";
 import Footer from "components/Footer";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
-import DynamicBreadcrumb from "layouts/MainLayout/components/DynamicBreadcrumb";
+import BreadcrumbTrail from "layouts/MainLayout/components/BreadcrumbTrail";
 import Header from "layouts/MainLayout/components/Header";
 import MenuNavigation from "layouts/MainLayout/components/MenuNavigation";
 import Sidebar from "layouts/MainLayout/components/Sidebar";
@@ -12,30 +12,17 @@ import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const LayoutAnt = styled(Layout)`
-  margin-left: ${(props) => (props.collapsed ? "80px" : props.isAdmin ? "250px" : "200px")};
+const LayoutMain = styled(Layout)`
   margin-top: 64px;
 `;
 
+const LayoutWrapContent = styled(Layout)`
+  margin-left: ${(props) => (props.collapsed ? "80px" : props.isAdmin ? "250px" : "200px")};
+  margin-top: 5px;
+`;
+
 const ContentAnt = styled(Layout.Content)`
-  padding: 20px;
-  height: 100vh;
-`;
-
-const FormAnt = styled(Form)`
-  flex: 1 0 100%;
-  /* max-width: 480px; */
-  width: 100%;
-  padding: 50px;
-  max-height: 800px;
-  height: 100%;
-`;
-
-const ButtonAnt = styled(Button)`
-  height: 42px;
-  letter-spacing: 1px;
-  border-radius: 6px;
-  width: 100%;
+  padding: 0 20px;
 `;
 
 export default function MainLayout({ children }) {
@@ -44,7 +31,6 @@ export default function MainLayout({ children }) {
   const role = useSelector(getRole);
   const { pathname } = useLocation();
   const path = pathname.split("/").filter((item) => item);
-  const [form] = Form.useForm();
 
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
@@ -98,7 +84,7 @@ export default function MainLayout({ children }) {
   return (
     <Layout>
       <Header shouldFixedHeader={1} />
-      <Layout hasSider>
+      <LayoutMain hasSider>
         <Sidebar
           width={isAuth && role === ROLES.ADMIN ? 250 : 200}
           collapsible
@@ -115,14 +101,14 @@ export default function MainLayout({ children }) {
             hasSubMenu={1}
           />
         </Sidebar>
-        <LayoutAnt collapsed={collapsed ? 1 : 0} isAdmin={isAuth && role === ROLES.ADMIN}>
+        <LayoutWrapContent collapsed={collapsed ? 1 : 0} isAdmin={isAuth && role === ROLES.ADMIN}>
           <ContentAnt>
-            <DynamicBreadcrumb />
+            <BreadcrumbTrail />
             {children}
             <Outlet />
           </ContentAnt>
-        </LayoutAnt>
-      </Layout>
+        </LayoutWrapContent>
+      </LayoutMain>
       <Footer />
     </Layout>
   );
