@@ -57,7 +57,6 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
   );
 
   const [documentFrom, setDocumentFrom] = React.useState(dataRadio[0].value);
-  console.log("🚀 :: documentFrom", documentFrom);
 
   const [urgencySelected, setUrgencySelected] = React.useState(formValues?.urgency);
 
@@ -150,7 +149,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
     >
       <Card>
         <Row>
-          <Col span={12}>
+          <Col span={7}>
             <FormItemAnt
               label={<Typography.Text strong>Loại văn bản</Typography.Text>}
               name="documentType"
@@ -172,8 +171,29 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
               />
             </FormItemAnt>
           </Col>
-
-          <Col span={12}>
+          <Col span={10}>
+            <FormItemAnt
+              label={<Typography.Text strong>Chuyên mục</Typography.Text>}
+              name="categories"
+              rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+              tooltip={{
+                title: "Chuyên mục văn bản của bạn?",
+                icon: <InfoCircleOutlined />,
+              }}
+            >
+              <TreeSelectForm
+                treeData={categories.data}
+                onTreeSelect={handleCategoriesSelect}
+                onTreeDeSelect={handleCategoriesDeSelect}
+                placeholder="Chọn chuyên mục"
+                allowClear
+                size="large"
+                showCheckedStrategy={TreeSelect.SHOW_PARENT}
+              />
+            </FormItemAnt>
+          </Col>
+          <Col span={7}>
+            {" "}
             <FormItemAnt
               label={<Typography.Text strong>Cơ quan ban hành</Typography.Text>}
               name="agencies"
@@ -192,30 +212,6 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
                 filterOption={false}
                 notFoundContent={true}
                 allowClear
-              />
-            </FormItemAnt>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <FormItemAnt
-              label={<Typography.Text strong>Chuyên mục</Typography.Text>}
-              name="categories"
-              rules={[{ required: true, message: "Trường này là bắt buộc" }]}
-              tooltip={{
-                title: "Chuyên mục văn bản của bạn?",
-                icon: <InfoCircleOutlined />,
-              }}
-            >
-              <TreeSelectForm
-                treeData={categories.data}
-                onTreeSelect={handleCategoriesSelect}
-                onTreeDeSelect={handleCategoriesDeSelect}
-                placeholder="Chọn chuyên mục"
-                allowClear
-                size="large"
-                showCheckedStrategy={TreeSelect.SHOW_PARENT}
-                treeCheckable={true}
               />
             </FormItemAnt>
           </Col>
@@ -314,7 +310,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
                 icon: <InfoCircleOutlined />,
               }}
             >
-              <Input placeholder="Ex: Huỳnh Văn Chương" size="large" />
+              <Input placeholder="Nhập vào người kí văn bản" size="large" />
             </FormItemAnt>
           </Col>
         </Row>
@@ -361,7 +357,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
           </Col>
         </Row>
         <Row gutter={[10, 10]}>
-          <Col span={24}>
+          <Col span={6}>
             <FormItemAnt
               label={<Typography.Text strong>Văn bản tải lên</Typography.Text>}
               name="documentFrom"
@@ -385,9 +381,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
               </Radio.Group>
             </FormItemAnt>
           </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
+          <Col span={18}>
             {documentFrom === "attach" ? (
               <FormItemAnt
                 label={<Typography.Text strong>Văn bản đính kèm</Typography.Text>}
@@ -438,7 +432,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
                 <Input.TextArea
                   value={summaryValue}
                   onChange={handleSummaryChange}
-                  placeholder="Ex: 26/NQ-HĐĐH : Nghị quyết về việc phê duyệt Đề án thành lập Trung tâm Khảo thí - Đại học Huế"
+                  placeholder="Nhập vào tóm tắt của văn bản"
                   autoSize={{ minRows: 3, maxRows: 6 }}
                 />
               </FormItemAnt>

@@ -1,5 +1,4 @@
 import { Layout } from "antd";
-import useScrollPosition from "hooks/useScrollPosition";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,10 +7,8 @@ const SiderAnt = styled(Layout.Sider)`
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
   overflow: auto;
-  margin-top: ${(props) =>
-    props.shouldFixedHeader ? "64px" : props.scrollPosition > 40 ? "0" : "64px"};
+  margin-top: 64px;
   transition: margin-top 0.5s ease-in-out;
   .ant-layout-sider-trigger {
     background-color: #488fb1;
@@ -41,7 +38,6 @@ const SiderAnt = styled(Layout.Sider)`
 
 export default function Sidebar(props) {
   const { collapsed, onCollapse, shouldFixedHeader } = props;
-  const scrollPosition = useScrollPosition();
 
   return (
     <SiderAnt
@@ -50,7 +46,6 @@ export default function Sidebar(props) {
       collapsed={collapsed}
       onCollapse={(collapsed) => onCollapse(collapsed)}
       shouldFixedHeader={shouldFixedHeader}
-      scrollPosition={shouldFixedHeader ? undefined : scrollPosition}
     >
       {props.children}
     </SiderAnt>

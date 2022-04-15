@@ -2,12 +2,13 @@ import {
   LogoutOutlined,
   NotificationOutlined,
   SettingOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Badge, Button, Dropdown, Layout, Menu, Space, Typography } from "antd";
 import { getToken, isAuthenticated } from "app/selectors/authSelector";
 import LogoHusc from "assets/images/logo/logo.svg";
 import { getLogout } from "features/Auth/authSlice";
+import useScrollPosition from "hooks/useScrollPosition";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,15 +17,16 @@ const HeaderAnt = styled(Layout.Header)`
   position: ${(props) => (props.shouldFixedHeader ? "fixed" : "relative")};
   z-index: 1;
   width: 100%;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: ${(props) =>
+    props.scrollPosition > 40 ? "rgba(0, 0, 0, 0.1) 0px 10px 50px" : "none"};
+  background-color: ${(props) => (props.scrollPosition > 40 ? "rgba(248, 251, 250, 1)" : "#fff")};
 `;
 const WrapHeader = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   height: 100%;
-  background: #fff;
 `;
 const Logo = styled.div`
   display: flex;
@@ -47,6 +49,7 @@ export default function Header({ shouldFixedHeader }) {
   const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const refreshToken = useSelector(getToken)?.refreshToken;
+  const scrollPosition = useScrollPosition();
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(getLogout(refreshToken));
@@ -90,7 +93,7 @@ export default function Header({ shouldFixedHeader }) {
   );
 
   return (
-    <HeaderAnt theme="light" shouldFixedHeader={shouldFixedHeader}>
+    <HeaderAnt theme="light" shouldFixedHeader={shouldFixedHeader} scrollPosition={scrollPosition}>
       <WrapHeader>
         <div>
           <Link to="/">
@@ -102,33 +105,18 @@ export default function Header({ shouldFixedHeader }) {
         </div>
         <Flex />
         {isAuth ? (
-          <Menu mode="horizontal" style={{ height: "100%" }}>
+          <Menu mode="horizontal">
             <Menu.Item key="notification">
               <Dropdown overlay={notifications} placement="bottomRight">
-                <Badge count={3} offset={[-5, 5]}>
-                  <Avatar
-                    shape="circle"
-                    size="large"
-                    style={{
-                      outline: "none",
-                      border: "none",
-                      background: "transparent",
-                    }}
-                  >
-                    <NotificationOutlined
-                      size="large"
-                      style={{
-                        color: "#000",
-                      }}
-                    />
-                  </Avatar>
+                <Badge dot>
+                  <NotificationOutlined style={{ fontSize: 18 }} />
                 </Badge>
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="profile">
               <Dropdown overlay={profile}>
                 <Space>
-                  <Avatar />
+                  <Avatar>N</Avatar>
                   <Typography.Text>Nguyễn Mạnh Hùng</Typography.Text>
                 </Space>
               </Dropdown>
