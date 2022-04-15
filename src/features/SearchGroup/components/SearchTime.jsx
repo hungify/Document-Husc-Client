@@ -1,4 +1,5 @@
-import { Col, DatePicker, Form, Row, Select, Typography } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { Col, DatePicker, Form, Row, Typography } from "antd";
 import SelectForm from "components/SelectForm";
 import React from "react";
 
@@ -34,9 +35,26 @@ export default function SearchTime(props) {
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
-          <Form.Item name="date-picker">
-            <DatePicker.RangePicker
+        <Col span={4}>
+          <Form.Item name="startDate">
+            <DatePicker
+              size="large"
+              placeholder="Từ ngày"
+              format="DD/MM/YYYY"
+              onChange={onDatePickerChange}
+              onOk={onDateOk}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={1}>
+          <Form.Item>
+            <ArrowRightOutlined />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="endDate">
+            <DatePicker
+              placeholder="Đến ngày"
               size="large"
               format="DD/MM/YYYY"
               onChange={onDatePickerChange}
