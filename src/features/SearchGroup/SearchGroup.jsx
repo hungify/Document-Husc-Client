@@ -40,7 +40,7 @@ export default function SearchGroup() {
               <Col span={24}>
                 <Typography.Text strong>Tìm theo</Typography.Text>
               </Col>
-              <Col>
+              <Col span={24}>
                 <Form form={form} name="lookup text" onFinish={handleFormSearchSubmit}>
                   <Row gutter={[10, 10]}>
                     <Col span={12}>
