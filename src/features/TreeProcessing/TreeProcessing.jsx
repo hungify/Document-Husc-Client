@@ -44,7 +44,16 @@ export default function TreeProcessing() {
   return (
     <Card>
       {Math.random() > 0 ? (
-        <Alert message="Bạn đã xứ lý văn bản này" type="success" showIcon closable />
+        <Alert
+          message={
+            <Typography.Text strong>
+              Bạn đã xử lý văn bản này vào lúc 10:10 PM 20/09/2022
+            </Typography.Text>
+          }
+          type="success"
+          showIcon
+          closable
+        />
       ) : (
         <Alert
           message="Xác nhận xứ lý văn bản"
@@ -69,7 +78,7 @@ export default function TreeProcessing() {
             {item.key === "root" ? (
               <SpaceAnt size="small">
                 <Typography.Title level={4}>{item.title}</Typography.Title>
-                <BroadcastIcon style={{ color: "#FF6464" }} />
+                <BroadcastIcon style={{ color: "rgb(255, 77, 79)" }} />
                 <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
                   Ban hành:
                   {" " + new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString()}

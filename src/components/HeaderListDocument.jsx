@@ -1,8 +1,8 @@
-import { Card, Col, Row, Typography } from "antd";
+import { Card, Col, Divider, Row, Typography } from "antd";
 import SortFilter from "components/SortFilter";
 import styled from "styled-components";
 
-const WrapCard = styled(Card)`
+const CardAnt = styled(Card)`
   background-color: rgba(248, 250, 252, 1);
 `;
 
@@ -21,24 +21,19 @@ export default function HeaderListDocument({ children }) {
 
   return (
     <>
-      <WrapCard>
-        <Row gutter={[10, 10]}>
-          <Col span={24}>
-            <Card>
-              <Row>
-                <Col span={16}>
-                  Có <Typography.Text strong>18</Typography.Text> kết quả chứa từ khóa:
-                  <Typography.Text strong>&nbsp; Nghị quyết</Typography.Text>
-                </Col>
-                <Col span={8}>
-                  <SortFilter dataRadio={dataRadio} onRadioChange={handleRadioDateChange} />
-                </Col>
-              </Row>
-            </Card>
+      <CardAnt>
+        <Row>
+          <Col span={16}>
+            Có <Typography.Text strong>18</Typography.Text> kết quả chứa từ khóa:
+            <Typography.Text strong>&nbsp; Nghị quyết</Typography.Text>
           </Col>
+          <Col span={8}>
+            <SortFilter dataRadio={dataRadio} onRadioChange={handleRadioDateChange} />
+          </Col>
+          <Divider />
           <Col span={24}>{children}</Col>
         </Row>
-      </WrapCard>
+      </CardAnt>
     </>
   );
 }

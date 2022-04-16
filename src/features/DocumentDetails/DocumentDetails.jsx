@@ -73,7 +73,7 @@ export default function DetailDocument() {
 
   const handleFinishProcessed = () => {
     Modal.confirm({
-      title: "Xác nhận",
+      title: "Lưu ý",
       icon: <ExclamationCircleOutlined />,
       content: "Thông báo đã cho mọi người bạn đã xử lý xong?",
       okText: "Hoàn thành",
