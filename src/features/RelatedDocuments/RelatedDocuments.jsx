@@ -32,7 +32,7 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
-export default function RelatedDocument() {
+export default function RelatedDocuments() {
   const handlePreviewFileClick = (item) => {
     window.open(item, {
       target: "_blank",

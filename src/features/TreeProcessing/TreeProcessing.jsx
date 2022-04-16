@@ -1,5 +1,5 @@
 import { DownOutlined } from "@ant-design/icons";
-import { Card, Divider, Space, Tree, Typography } from "antd";
+import { Alert, Card, Divider, Space, Tree, Typography } from "antd";
 import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
 import BroadcastIcon from "components/Icons/BroadcastIcon";
 import { treeReceiver } from "mocks/treeReceiver";
@@ -43,6 +43,16 @@ export default function TreeProcessing() {
 
   return (
     <Card>
+      {Math.random() > 0 ? (
+        <Alert message="Bạn đã xứ lý văn bản này" type="success" showIcon closable />
+      ) : (
+        <Alert
+          message="Xác nhận xứ lý văn bản"
+          description="Thông báo cho mọi người là bạn đã xứ lý văn bản này"
+          type="warning"
+          showIcon
+        />
+      )}
       <TreeAnt
         selectedKeys={[selectedNode]}
         showIcon={true}
@@ -60,7 +70,7 @@ export default function TreeProcessing() {
               <SpaceAnt size="small">
                 <Typography.Title level={4}>{item.title}</Typography.Title>
                 <BroadcastIcon style={{ color: "#FF6464" }} />
-                <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+                <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
                   Ban hành:
                   {" " + new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString()}
                 </Typography.Text>
@@ -72,7 +82,7 @@ export default function TreeProcessing() {
                     <Typography.Title level={5}>{item.title}</Typography.Title>
                     <BadgeCheckIcon style={{ color: "#30AADD" }} />
                     <Space direction="horizontal" split={<Divider type="vertical" />}>
-                      <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+                      <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
                         Xử lý:
                         {" " +
                           new Date().toLocaleTimeString() +
@@ -94,7 +104,7 @@ export default function TreeProcessing() {
                     {item.title.charAt(0) === "N" && (
                       <>
                         <BadgeCheckIcon style={{ color: "#30AADD" }} />
-                        <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+                        <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
                           Xử lý:
                           {" " +
                             new Date().toLocaleTimeString() +

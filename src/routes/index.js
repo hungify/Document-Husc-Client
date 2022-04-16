@@ -4,7 +4,7 @@ import Unauthorized from "features/403/Unauthorized";
 import NotFound from "features/404/NotFound";
 import TabsAuth from "features/Auth/Auth";
 import DashBoard from "features/Dashboard/Dashboard";
-import DetailDocument from "features/DetailDocument/DetailDocument";
+import DetailDocument from "features/DocumentDetails/DocumentDetails";
 import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
 import ManageAgencies from "features/Manage/ManageAgencies/ManageAgencies";
