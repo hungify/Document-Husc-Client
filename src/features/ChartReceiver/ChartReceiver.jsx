@@ -1,4 +1,4 @@
-import { Button, Col, Row, Table } from "antd";
+import { Col, Row, Table } from "antd";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from "react";
 import { Pie } from "react-chartjs-2";
@@ -60,12 +60,6 @@ export default function ChartReceiver() {
       defaultSortOrder: "descend",
       sorter: (a, b) => a.processedDate - b.processedDate,
     },
-    {
-      title: "Thao tác",
-      dataIndex: "",
-      key: "x",
-      render: () => <Button type="link">Phản hồi</Button>,
-    },
   ];
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
@@ -73,7 +67,7 @@ export default function ChartReceiver() {
   return (
     <Row gutter={[0, 20]}>
       <Col span={24}>
-        <Pie data={data} width={450} height={450} options={{ maintainAspectRatio: false }} />
+        <Pie data={data} width={420} height={420} options={{ maintainAspectRatio: false }} />
       </Col>
       <Col span={24}>
         <Table columns={columns} dataSource={dataProcessed} onChange={onChange} />
