@@ -1,5 +1,17 @@
-import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Form, Modal, Space, Tabs, TreeSelect } from "antd";
+import { ExclamationCircleOutlined, InfoCircleOutlined, PoweroffOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Modal,
+  Row,
+  Space,
+  Tabs,
+  TreeSelect,
+  Typography,
+} from "antd";
 import { getRole } from "app/selectors/authSelector";
 import ModalForm from "components/ModalForm";
 import PreviewPdf from "components/PreviewPdf";
@@ -9,11 +21,17 @@ import { ROLES } from "configs/roles";
 import { treePeople } from "configs/trees";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
-import RelatedDocument from "features/RelatedDocument/RelatedDocument";
+import RelatedDocument from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import ForwardIcon from "components/Icons/ForwardIcon";
+import styled from "styled-components";
+
+const ButtonAnt = styled(Button)`
+  display: flex;
+`;
 
 export default function DetailDocument() {
   const [visible, setVisible] = React.useState(false);
@@ -117,48 +135,45 @@ export default function DetailDocument() {
         title="Nội dung văn bản"
         extra={
           (role === ROLES.ADMIN || role === ROLES.USER) && (
-            <Space>
-              {data[0].isFinished && (
-                <Button type="primary" onClick={() => handleFinishProcessed(data.id)}>
-                  Báo cáo đã xứ lý
-                </Button>
-              )}
-              <Button type="primary" onClick={() => handleForwardClick(data.id)}>
-                Chuyển tiếp
+            <Space split={<Divider type="vertical" />}>
+              <Button type="primary" onClick={() => handleFinishProcessed(data.id)} size="large">
+                Báo cáo đã xứ lý
               </Button>
+              <ButtonAnt type="primary" icon={<ForwardIcon />} size="large">
+                Chuyển tiếp
+              </ButtonAnt>
             </Space>
           )
         }
       >
-        <Col flex="auto">
-          <Tabs activeKey={activeTab} type="card" size="large" onTabClick={handleTabChangeClick}>
-            <Tabs.TabPane tab="Thuộc tính" key="property">
-              <SummaryTable documentData={data} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Văn bản gốc" key="preview">
-              <PreviewPdf activeTab={activeTab} onClosePreview={onClosePreview} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Văn bản liên quan" key="related">
-              <RelatedDocument />
-            </Tabs.TabPane>
-            {/* <Tabs.TabPane tab="Lịch sử cập nhật" key="related">
-              Danh sách lịch sử sửa đổi của văn bản
-            </Tabs.TabPane> */}
-            {(role === ROLES.ADMIN || role === ROLES.USER) && (
-              <>
-                <Tabs.TabPane tab="Phân tích" key="analytics">
-                  <ChartReceiver />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Cây xử lý" key="tree">
-                  <TreeProcessing />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Phản hồi" key="feedback">
-                  <ChatRoom />
-                </Tabs.TabPane>
-              </>
-            )}
-          </Tabs>
-        </Col>
+        <Row>
+          <Col flex="auto">
+            <Tabs activeKey={activeTab} type="card" size="large" onTabClick={handleTabChangeClick}>
+              <Tabs.TabPane tab="Thuộc tính" key="property">
+                <SummaryTable documentData={data} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Văn bản gốc" key="preview">
+                <PreviewPdf activeTab={activeTab} onClosePreview={onClosePreview} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Văn bản liên quan" key="related">
+                <RelatedDocument />
+              </Tabs.TabPane>
+              {(role === ROLES.ADMIN || role === ROLES.USER) && (
+                <>
+                  <Tabs.TabPane tab="Phân tích" key="analytics">
+                    <ChartReceiver />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Cây xử lý" key="tree">
+                    <TreeProcessing />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Phản hồi" key="feedback">
+                    <ChatRoom />
+                  </Tabs.TabPane>
+                </>
+              )}
+            </Tabs>
+          </Col>
+        </Row>
       </Card>
     </>
   );

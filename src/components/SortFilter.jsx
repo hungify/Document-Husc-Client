@@ -16,11 +16,9 @@ export default function SortFilter({ dataRadio, onRadioChange, ...restProps }) {
   };
 
   return (
-    <Space size="large">
-      <Space>
-        <IconAnt component={SwapOutlined} size="large" />
-        <Typography.Text strong>Sắp xếp theo</Typography.Text>
-      </Space>
+    <Space>
+      <IconAnt component={SwapOutlined} size="large" />
+      <Typography.Text strong>Sắp xếp theo</Typography.Text>
       <Radio.Group onChange={handleRadioChange} value={value} size="large" {...restProps}>
         {dataRadio.map((item, index) => (
           <Radio value={item.value} key={item.value}>

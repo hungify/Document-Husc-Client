@@ -1,5 +1,5 @@
 import HeaderListDocument from "components/HeaderListDocument";
-import ListDocument from "components/ListDocument";
+import ListDocument from "components/DocumentList";
 import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
 
