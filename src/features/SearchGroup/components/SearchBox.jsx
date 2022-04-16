@@ -4,8 +4,8 @@ import React from "react";
 
 const plainOptions = [
   {
-    label: "Tất cả",
-    value: "all",
+    label: "Cả hai",
+    value: "both",
   },
   {
     label: "Tiêu đề",
@@ -24,7 +24,7 @@ export default function SearchBox(props) {
   const handleRadioChange = (e) => {
     const value = e.target.value;
     setSearchType(value.toLowerCase());
-    if (value === "Tất cả") {
+    if (value === "Cả hai") {
       setPlaceholder("Tìm theo tiêu đề, số hiệu văn bản");
     } else {
       setPlaceholder(`Tìm theo ${value.toLowerCase()}`);
@@ -52,9 +52,6 @@ export default function SearchBox(props) {
             }}
           >
             <Input allowClear placeholder={placeholder} size="large" />
-            <Button type="primary" htmlType="submit" size="large" icon={<SearchOutlined />}>
-              Tìm kiếm
-            </Button>
           </Input.Group>
         </Form.Item>
       </Col>
