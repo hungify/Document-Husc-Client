@@ -21,7 +21,7 @@ export default function SearchTime(props) {
   };
   return (
     <Row align="middle">
-      <Col span={7}>
+      <Col span={6}>
         <Form.Item name="time-type">
           <Radio.Group
             value={selectedDateType}
@@ -38,7 +38,7 @@ export default function SearchTime(props) {
           </Radio.Group>
         </Form.Item>
       </Col>
-      <Col span={7}>
+      <Col span={8}>
         <Form.Item name="startDate">
           <DatePicker
             size="large"
@@ -49,12 +49,12 @@ export default function SearchTime(props) {
           />
         </Form.Item>
       </Col>
-      <Col span={2} offset={1}>
+      <Col span={1}>
         <Form.Item>
           <ArrowRightOutlined />
         </Form.Item>
       </Col>
-      <Col span={7}>
+      <Col span={8}>
         <Form.Item name="endDate">
           <DatePicker
             placeholder="Đến ngày"

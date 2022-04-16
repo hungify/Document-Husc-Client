@@ -42,11 +42,11 @@ export default function SearchGroup() {
               </Col>
               <Col span={24}>
                 <Form form={form} name="lookup text" onFinish={handleFormSearchSubmit}>
-                  <Row gutter={[10, 10]}>
-                    <Col span={12}>
+                  <Row>
+                    <Col span={11}>
                       <SearchTime />
                     </Col>
-                    <Col span={12}>
+                    <Col span={13}>
                       <SearchBox />
                     </Col>
                   </Row>
