@@ -1,5 +1,5 @@
-import { CaretRightOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Collapse, Form, Row, Typography } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
+import { Card, Col, Collapse, Form, Row, Typography } from "antd";
 import SearchBox from "features/SearchGroup/components/SearchBox";
 import SearchFilter from "features/SearchGroup/components/SearchFilter";
 import SearchTime from "features/SearchGroup/components/SearchTime";
@@ -10,8 +10,6 @@ const CardAnt = styled(Card)`
   background-color: rgba(248, 250, 252, 1);
 `;
 
-const CardFilter = styled(CardAnt)``;
-
 const CardForm = styled(CardAnt)``;
 
 const CollapseAnt = styled(Collapse)`
@@ -20,7 +18,6 @@ const CollapseAnt = styled(Collapse)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   .ant-collapse-header {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    margin-bottom: 10px;
   }
 `;
 const CollapsePanelAnt = styled(Collapse.Panel)``;
@@ -32,31 +29,33 @@ export default function SearchGroup() {
   };
   return (
     <Wrapper>
-      <CardForm border={false}>
+      <CardForm bordered={false}>
         <CollapseAnt
           bordered={false}
           expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         >
-          <CollapsePanelAnt header={<Typography.Text strong>Tìm kiếm</Typography.Text>}>
-            <Form form={form} name="lookup text" onFinish={handleFormSearchSubmit}>
-              <SearchTime />
-              <SearchBox />
-              <Row justify="center">
-                <Col>
-                  <Form.Item>
-                    <Button type="primary" htmlType="submit" size="large" icon={<SearchOutlined />}>
-                      Tìm kiếm
-                    </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
+          <CollapsePanelAnt header={<Typography.Text strong>Lọc và tìm kiếm</Typography.Text>}>
+            <SearchFilter />
+            <Row gutter={[0, 10]} style={{ marginTop: 5 }}>
+              <Col span={24}>
+                <Typography.Text strong>Tìm theo</Typography.Text>
+              </Col>
+              <Col>
+                <Form form={form} name="lookup text" onFinish={handleFormSearchSubmit}>
+                  <Row gutter={[10, 10]}>
+                    <Col span={12}>
+                      <SearchTime />
+                    </Col>
+                    <Col span={12}>
+                      <SearchBox />
+                    </Col>
+                  </Row>
+                </Form>
+              </Col>
+            </Row>
           </CollapsePanelAnt>
         </CollapseAnt>
       </CardForm>
-      <CardFilter border={false}>
-        <SearchFilter />
-      </CardFilter>
     </Wrapper>
   );
 }

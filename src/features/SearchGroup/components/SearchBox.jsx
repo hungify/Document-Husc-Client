@@ -1,15 +1,20 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, Radio, Row } from "antd";
+import { Button, Col, Form, Input, Radio, Row, Space } from "antd";
+import _ from "lodash";
 import React from "react";
+import styled from "styled-components";
 
+const SpaceAnt = styled(Space)`
+  margin-bottom: 5px;
+`;
 const plainOptions = [
-  {
-    label: "Cả hai",
-    value: "both",
-  },
   {
     label: "Tiêu đề",
     value: "title",
+  },
+  {
+    label: "Cả hai",
+    value: "both",
   },
   {
     label: "Số hiệu văn bản",
@@ -23,27 +28,34 @@ export default function SearchBox(props) {
 
   const handleRadioChange = (e) => {
     const value = e.target.value;
-    setSearchType(value.toLowerCase());
-    if (value === "Cả hai") {
+    setSearchType(value);
+    if (value === "both") {
       setPlaceholder("Tìm theo tiêu đề, số hiệu văn bản");
     } else {
-      setPlaceholder(`Tìm theo ${value.toLowerCase()}`);
+      const findBy = _.find(plainOptions, ["value", value]).label.toLowerCase();
+      setPlaceholder(`Tìm theo ${findBy}`);
     }
   };
 
   return (
-    <Row gutter={[20, 5]} align="middle">
+    <Row align="middle">
       <Col span={8}>
         <Form.Item name="check-type">
           <Radio.Group
-            options={plainOptions}
+            size="large"
             value={searchType}
-            defaultValue={searchType}
             onChange={handleRadioChange}
-          />
+            defaultValue={searchType}
+          >
+            {plainOptions.map((option) => (
+              <SpaceAnt key={option.value} direction="vertical">
+                <Radio value={option.value}>{option.label}</Radio>
+              </SpaceAnt>
+            ))}
+          </Radio.Group>
         </Form.Item>
       </Col>
-      <Col span={16}>
+      <Col flex="auto">
         <Form.Item name="search-term">
           <Input.Group
             compact
@@ -52,6 +64,9 @@ export default function SearchBox(props) {
             }}
           >
             <Input allowClear placeholder={placeholder} size="large" />
+            <Button type="primary" htmlType="submit" size="large" icon={<SearchOutlined />}>
+              Tìm kiếm
+            </Button>
           </Input.Group>
         </Form.Item>
       </Col>
