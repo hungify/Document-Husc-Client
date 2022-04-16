@@ -24,7 +24,7 @@ export default function SearchTime(props) {
     <>
       <Row gutter={[20, 15]}>
         <Col span={24}>
-          <Typography.Text strong>Tìm theo ngày phát hành trong khoảng thời gian</Typography.Text>
+          <Typography.Text strong>Tìm trong khoảng thời gian</Typography.Text>
         </Col>
         <Col span={8}>
           <Form.Item name="time-type">

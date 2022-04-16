@@ -1,5 +1,5 @@
 import { DownOutlined } from "@ant-design/icons";
-import { Card, Space, Tree, Typography } from "antd";
+import { Card, Divider, Space, Tree, Typography } from "antd";
 import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
 import BroadcastIcon from "components/Icons/BroadcastIcon";
 import { treeReceiver } from "mocks/treeReceiver";
@@ -71,13 +71,22 @@ export default function TreeProcessing() {
                   <SpaceAnt size="small">
                     <Typography.Title level={5}>{item.title}</Typography.Title>
                     <BadgeCheckIcon style={{ color: "#30AADD" }} />
-                    <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
-                      Xử lý:
-                      {" " +
-                        new Date().toLocaleTimeString() +
-                        " " +
-                        new Date().toLocaleDateString()}
-                    </Typography.Text>
+                    <Space direction="horizontal" split={<Divider type="vertical" />}>
+                      <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+                        Xử lý:
+                        {" " +
+                          new Date().toLocaleTimeString() +
+                          " " +
+                          new Date().toLocaleDateString()}
+                      </Typography.Text>
+                      <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+                        Chuyển tiếp:
+                        {" " +
+                          new Date().toLocaleTimeString() +
+                          " " +
+                          new Date().toLocaleDateString()}
+                      </Typography.Text>
+                    </Space>
                   </SpaceAnt>
                 ) : (
                   <SpaceAnt size="small">

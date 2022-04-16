@@ -78,12 +78,4 @@ export const menuConfig = {
       icon: <SendOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
     },
   ],
-  GUEST: [
-    {
-      title: "Tra cứu văn bản",
-      key: "lookup",
-      value: "lookup",
-      icon: <FileSearchOutlined style={{ fontSize: 22 }} />,
-    },
-  ],
 };
