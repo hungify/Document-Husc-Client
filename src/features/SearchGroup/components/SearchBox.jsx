@@ -39,7 +39,7 @@ export default function SearchBox(props) {
 
   return (
     <Row align="middle">
-      <Col span={8}>
+      <Col span={7}>
         <Form.Item name="check-type">
           <Radio.Group
             size="large"
@@ -55,7 +55,7 @@ export default function SearchBox(props) {
           </Radio.Group>
         </Form.Item>
       </Col>
-      <Col span={16}>
+      <Col span={17}>
         <Form.Item name="search-term">
           <Input.Group
             compact
