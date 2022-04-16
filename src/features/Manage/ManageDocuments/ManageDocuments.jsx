@@ -1,6 +1,6 @@
 import { InfoCircleOutlined, PlusCircleTwoTone } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import ListDocument from "components/ListDocument";
+import ListDocument from "components/DocumentList";
 import ModalForm from "components/ModalForm";
 import HeaderListDocument from "components/HeaderListDocument";
 import SearchGroup from "features/SearchGroup/SearchGroup";

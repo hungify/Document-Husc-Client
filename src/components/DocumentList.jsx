@@ -1,5 +1,11 @@
-import { DeleteTwoTone, DownloadOutlined, EditTwoTone, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, List, Row, Space, Typography } from "antd";
+import {
+  ClockCircleOutlined,
+  DeleteTwoTone,
+  DownloadOutlined,
+  EditTwoTone,
+  ExpandOutlined,
+} from "@ant-design/icons";
+import { Avatar, Badge, Button, Card, Col, List, Row, Space, Tag, Typography } from "antd";
 import { getRole } from "app/selectors/authSelector";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonFlexible from "components/ButtonFlexible";
@@ -128,9 +134,11 @@ export default function ListDocument(props) {
                       </Typography.Title>
                     </>
                   ) : role === ROLES.USER ? (
-                    <>
-                      <Typography.Title level={5}>Văn bản chờ được xử lý</Typography.Title>
-                    </>
+                    <Typography.Text strong>
+                      <Tag icon={<ClockCircleOutlined />} color="processing">
+                        Chờ xử lý
+                      </Tag>
+                    </Typography.Text>
                   ) : null}
                 </Col>
               </Row>

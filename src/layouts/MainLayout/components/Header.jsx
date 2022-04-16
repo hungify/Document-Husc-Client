@@ -1,12 +1,8 @@
-import {
-  LogoutOutlined,
-  NotificationOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Badge, Button, Dropdown, Layout, Menu, Space, Typography } from "antd";
+import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Badge, Button, Layout, Menu, Space, Typography } from "antd";
 import { getToken, isAuthenticated } from "app/selectors/authSelector";
 import LogoHusc from "assets/images/logo/logo.svg";
+import BellIcon from "components/Icons/BellIcon";
 import { getLogout } from "features/Auth/authSlice";
 import useScrollPosition from "hooks/useScrollPosition";
 import React from "react";
@@ -44,7 +40,28 @@ const Title = styled.h1`
 const Flex = styled.div`
   flex: 1 1 0%;
 `;
+const MenuSubMenuAnt = styled(Menu.SubMenu)`
+  & .ant-menu-submenu-title {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+const MenuItemAnt = styled(Menu.Item)`
+  &:hover {
+    background-color: #efefef;
+  }
+`;
 
+const ButtonAnt = styled(Button)`
+  &:focus,
+  &:hover {
+    background-color: transparent;
+    color: #1890ff;
+  }
+`;
 export default function Header({ shouldFixedHeader }) {
   const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
@@ -55,48 +72,6 @@ export default function Header({ shouldFixedHeader }) {
     dispatch(getLogout(refreshToken));
     if (!isAuth) navigate("/");
   };
-
-  const profile = (
-    <Menu>
-      <Menu.Item key="update-profile" icon={<SettingOutlined />}>
-        <Link to="/update">Cập nhật tài khoản</Link>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="logout" icon={<LogoutOutlined />}>
-        <Button type="text" onClick={handleLogout}>
-          Đăng xuất
-        </Button>
-      </Menu.Item>
-    </Menu>
-  );
-
-  const notifications = (
-    <Menu>
-      <Menu.Item key="1">
-        <Link to="a">
-          <Typography.Text strong>Nguyễn Văn Hưng</Typography.Text> đã gửi cho bạn một văn bản.
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Link to="a">
-          <Typography.Text strong>Nguyễn Kim Toàn</Typography.Text> đã chuyển tiếp văn bản mà bạn
-          đang theo dõi.
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <Link to="a">
-          <Typography.Text strong>Nguyễn Văn Linh</Typography.Text> đã phản hồi về văn bản mà bạn
-          đang theo dõi
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="4">
-        <Link to="a">
-          <Typography.Text strong>Nguyễn Lý Thịnh</Typography.Text> đã xử lý văn bản mà bạn đang
-          theo dõi.
-        </Link>
-      </Menu.Item>
-    </Menu>
-  );
 
   return (
     <HeaderAnt theme="light" shouldFixedHeader={shouldFixedHeader} scrollPosition={scrollPosition}>
@@ -112,34 +87,68 @@ export default function Header({ shouldFixedHeader }) {
         <Flex />
         {isAuth ? (
           <Menu mode="horizontal">
-            <Menu.Item key="notification">
-              <Dropdown overlay={notifications} trigger="hover" placement="bottomRight">
-                <Button type="text">
-                  <Badge dot>
-                    <NotificationOutlined />
-                  </Badge>
-                </Button>
-              </Dropdown>
-            </Menu.Item>
-            <Menu.Item key="profile">
-              <Dropdown overlay={profile}>
-                <Space>
-                  <Avatar>N</Avatar>
-                  <Typography.Text>Nguyễn Mạnh Hùng</Typography.Text>
-                </Space>
-              </Dropdown>
-            </Menu.Item>
+            <MenuSubMenuAnt
+              key="notification"
+              icon={
+                <Badge dot>
+                  <BellIcon />
+                </Badge>
+              }
+            >
+              <MenuItemAnt key="1">
+                <Link to="a">
+                  <Typography.Text strong>Nguyễn Văn Hưng</Typography.Text> đã gửi cho bạn một văn
+                  bản.
+                </Link>
+              </MenuItemAnt>
+              <MenuItemAnt key="2">
+                <Link to="a">
+                  <Typography.Text strong>Nguyễn Kim Toàn</Typography.Text> đã chuyển tiếp văn bản
+                  mà bạn đang theo dõi.
+                </Link>
+              </MenuItemAnt>
+              <MenuItemAnt key="3">
+                <Link to="a">
+                  <Typography.Text strong>Nguyễn Văn Linh</Typography.Text> đã phản hồi về văn bản
+                  mà bạn đang theo dõi
+                </Link>
+              </MenuItemAnt>
+              <MenuItemAnt key="4">
+                <Link to="a">
+                  <Typography.Text strong>Nguyễn Lý Thịnh</Typography.Text> đã xử lý văn bản mà bạn
+                  đang theo dõi.
+                </Link>
+              </MenuItemAnt>
+            </MenuSubMenuAnt>
+
+            <Menu.SubMenu
+              key="profile"
+              icon={<Avatar>N</Avatar>}
+              title={<Typography.Text>Nguyễn Mạnh Hùng</Typography.Text>}
+            >
+              <MenuItemAnt key="update-profile" icon={<SettingOutlined />}>
+                <ButtonAnt type="text" onClick={() => navigate("login")}>
+                  Cập nhật tài khoản
+                </ButtonAnt>
+              </MenuItemAnt>
+              <Menu.Divider />
+              <MenuItemAnt key="logout" icon={<LogoutOutlined />}>
+                <ButtonAnt type="text" onClick={handleLogout}>
+                  Đăng xuất
+                </ButtonAnt>
+              </MenuItemAnt>
+            </Menu.SubMenu>
           </Menu>
         ) : (
           <Space>
-            <Button
+            <ButtonAnt
               type="text"
               size="large"
               icon={<UserOutlined />}
               onClick={() => navigate("login")}
             >
               Tài khoản
-            </Button>
+            </ButtonAnt>
           </Space>
         )}
       </WrapHeader>
