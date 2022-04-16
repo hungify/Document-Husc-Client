@@ -55,7 +55,7 @@ export default function SearchBox(props) {
           </Radio.Group>
         </Form.Item>
       </Col>
-      <Col flex="auto">
+      <Col span={16}>
         <Form.Item name="search-term">
           <Input.Group
             compact
