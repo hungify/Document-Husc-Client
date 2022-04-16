@@ -2,11 +2,7 @@ import HeaderListDocument from "components/HeaderListDocument";
 import ListDocument from "components/ListDocument";
 import SearchGroup from "features/SearchGroup/SearchGroup";
 import React from "react";
-import styled from "styled-components";
 
-const Wrapper = styled.section`
-  background-color: rgba(248, 250, 252, 1);
-`;
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
@@ -24,11 +20,11 @@ for (let i = 0; i < 23; i++) {
 }
 export default function Home() {
   return (
-    <Wrapper>
+    <>
       <SearchGroup />
       <HeaderListDocument>
         <ListDocument dataRender={listData} />
       </HeaderListDocument>
-    </Wrapper>
+    </>
   );
 }

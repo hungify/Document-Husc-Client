@@ -1,5 +1,5 @@
-import { CaretRightOutlined } from "@ant-design/icons";
-import { Card, Collapse, Form, Typography } from "antd";
+import { CaretRightOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Card, Col, Collapse, Form, Row, Typography } from "antd";
 import SearchBox from "features/SearchGroup/components/SearchBox";
 import SearchFilter from "features/SearchGroup/components/SearchFilter";
 import SearchTime from "features/SearchGroup/components/SearchTime";
@@ -41,6 +41,15 @@ export default function SearchGroup() {
             <Form form={form} name="lookup text" onFinish={handleFormSearchSubmit}>
               <SearchTime />
               <SearchBox />
+              <Row justify="center">
+                <Col>
+                  <Form.Item>
+                    <Button type="primary" htmlType="submit" size="large" icon={<SearchOutlined />}>
+                      Tìm kiếm
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
             </Form>
           </CollapsePanelAnt>
         </CollapseAnt>

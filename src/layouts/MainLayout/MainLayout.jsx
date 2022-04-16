@@ -1,6 +1,5 @@
 import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/authSelector";
-import Footer from "components/Footer";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
 import BreadcrumbTrail from "layouts/MainLayout/components/BreadcrumbTrail";
@@ -14,11 +13,11 @@ import styled from "styled-components";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
+  padding: ${(props) => (props.isAuth ? "0" : "0 60px")};
 `;
 
 const LayoutWrapContent = styled(Layout)`
-  margin-left: ${(props) => (props.collapsed ? "80px" : props.isAdmin ? "250px" : "200px")};
-  margin-top: 5px;
+  margin-left: ${(props) => (props.collapsed ? "80px" : props.isAuth ? "250px" : "0")};
 `;
 
 const ContentAnt = styled(Layout.Content)`
@@ -37,16 +36,6 @@ export default function MainLayout({ children }) {
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
 
   React.useEffect(() => {
-    if (path.length === 0) {
-      if (isAuth && role === ROLES.ADMIN) {
-        navigate("dashboard");
-      } else {
-        navigate("lookup");
-      }
-    }
-  }, [isAuth, navigate, role, path]);
-
-  React.useEffect(() => {
     if (path.length > 2) {
       setActiveKey(path[0]);
     } else {
@@ -55,14 +44,11 @@ export default function MainLayout({ children }) {
   }, [path]);
 
   React.useEffect(() => {
-    const menuGuest = menuConfig.GUEST;
     const menuUser = menuConfig.USER;
     if (isAuth && role === ROLES.ADMIN) {
       setMenuItems([...menuUser, ...menuConfig[role]]);
     } else if (role === ROLES.USER) {
-      setMenuItems([...menuGuest, ...menuUser]);
-    } else {
-      setMenuItems(menuGuest);
+      setMenuItems([...menuUser]);
     }
   }, [role, isAuth]);
 
@@ -81,31 +67,27 @@ export default function MainLayout({ children }) {
     setCollapsed(collapsed);
   };
 
-  const handleOnSubmit = (values) => {
-    console.log(values);
-  };
-
   return (
     <Layout>
       <Header shouldFixedHeader={1} />
-      <LayoutMain hasSider>
-        <Sidebar
-          width={isAuth && role === ROLES.ADMIN ? 250 : 200}
-          collapsible
-          collapsed={collapsed}
-          onCollapse={handleOnCollapse}
-          theme="light"
-        >
-          <MenuNavigation
-            mode="inline"
-            onMenuSelect={handleMenuSelect}
-            selectedKeys={activeKey}
-            // dataMenuSub={menuConfig.GUEST}
-            dataMenuItem={menuItems}
-            hasSubMenu={1}
-          />
-        </Sidebar>
-        <LayoutWrapContent collapsed={collapsed ? 1 : 0} isAdmin={isAuth && role === ROLES.ADMIN}>
+      <LayoutMain hasSider isAuth={isAuth}>
+        {isAuth && (
+          <Sidebar
+            width={250}
+            collapsible
+            collapsed={collapsed}
+            onCollapse={handleOnCollapse}
+            theme="light"
+          >
+            <MenuNavigation
+              mode="inline"
+              onMenuSelect={handleMenuSelect}
+              selectedKeys={activeKey}
+              dataMenuItem={menuItems}
+            />
+          </Sidebar>
+        )}
+        <LayoutWrapContent collapsed={collapsed ? 1 : 0} isAuth={isAuth}>
           <ContentAnt>
             <BreadcrumbTrail />
             {children}
@@ -113,7 +95,6 @@ export default function MainLayout({ children }) {
           </ContentAnt>
         </LayoutWrapContent>
       </LayoutMain>
-      <Footer />
     </Layout>
   );
 }

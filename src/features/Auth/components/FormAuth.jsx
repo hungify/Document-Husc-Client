@@ -42,13 +42,11 @@ const FormAnt = styled(Form)`
   height: 100%;
 `;
 const Title = styled(Typography.Title)`
-  margin-bottom: 30px;
   color: #333333;
   font-family: "Josefin Sans", sans-serif;
   font-size: 42px;
   font-weight: bold;
   line-height: 1;
-  margin-bottom: 0;
 `;
 const TitleDesc = styled(Typography.Paragraph)`
   margin-bottom: 30px;

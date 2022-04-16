@@ -79,14 +79,20 @@ export default function Header({ shouldFixedHeader }) {
       </Menu.Item>
       <Menu.Item key="2">
         <Link to="a">
-          <Typography.Text strong>Nguyễn Kim Toàn</Typography.Text> đã chuyển tiếp văn bản mà bản
+          <Typography.Text strong>Nguyễn Kim Toàn</Typography.Text> đã chuyển tiếp văn bản mà bạn
           đang theo dõi.
         </Link>
       </Menu.Item>
       <Menu.Item key="3">
         <Link to="a">
-          <Typography.Text strong>Nguyễn Văn Linh</Typography.Text> đã phản hồi một văn bản mà bản
+          <Typography.Text strong>Nguyễn Văn Linh</Typography.Text> đã phản hồi về văn bản mà bạn
           đang theo dõi
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <Link to="a">
+          <Typography.Text strong>Nguyễn Lý Thịnh</Typography.Text> đã xử lý văn bản mà bạn đang
+          theo dõi.
         </Link>
       </Menu.Item>
     </Menu>
