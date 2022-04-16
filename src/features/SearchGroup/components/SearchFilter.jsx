@@ -13,9 +13,9 @@ export default function SearchFilter(props) {
   const [dataAgency, setDataAgency] = React.useState(agencies.data);
 
   return (
-    <Row gutter={[20, 15]}>
+    <Row gutter={[20, 10]} style={{ marginTop: 5 }}>
       <Col span={24}>
-        <Typography.Text strong>Lọc danh sách theo</Typography.Text>
+        <Typography.Text strong>Lọc theo</Typography.Text>
       </Col>
       <Col span={7}>
         <Select
@@ -26,7 +26,6 @@ export default function SearchFilter(props) {
           notFoundContent={true}
           allowClear={true}
           showSearch={true}
-          // onSearch={handleSearchDocument}
           onChange={onDocumentChange}
           style={{ width: "100%" }}
           placeholder="Chọn loại văn bản"
