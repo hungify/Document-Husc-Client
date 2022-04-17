@@ -50,7 +50,12 @@ const dataRadio = [
   },
 ];
 
-export default function CreateDocument({ form, onSubmitForm, formValues }) {
+export default function PreviewIssueDocument({ form, onSubmitForm, formValues }) {
+  const onFinish = (values) => {};
+  React.useEffect(() => {
+    form.setFieldsValue(formValues);
+  }, [formValues, form]);
+
   const [treeData, setTreeData] = React.useState(treePeople);
   const [receiverSelected, setReceiverSelected] = React.useState(
     formValues?.receiver ? [formValues?.receiver] : []
@@ -99,10 +104,6 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
     setUrgencySelected(value);
   };
 
-  const onFinish = (values) => {
-    onSubmitForm(values);
-  };
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -149,7 +150,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
     >
       <Card>
         <Row>
-          <Col span={7}>
+          <Col span={12}>
             <FormItemAnt
               label={<Typography.Text strong>Loại văn bản</Typography.Text>}
               name="documentType"
@@ -171,29 +172,8 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
               />
             </FormItemAnt>
           </Col>
-          <Col span={10}>
-            <FormItemAnt
-              label={<Typography.Text strong>Chuyên mục</Typography.Text>}
-              name="categories"
-              rules={[{ required: true, message: "Trường này là bắt buộc" }]}
-              tooltip={{
-                title: "Chuyên mục văn bản của bạn?",
-                icon: <InfoCircleOutlined />,
-              }}
-            >
-              <TreeSelectForm
-                treeData={categories.data}
-                onTreeSelect={handleCategoriesSelect}
-                onTreeDeSelect={handleCategoriesDeSelect}
-                placeholder="Chọn chuyên mục"
-                allowClear
-                size="large"
-                showCheckedStrategy={TreeSelect.SHOW_PARENT}
-              />
-            </FormItemAnt>
-          </Col>
-          <Col span={7}>
-            {" "}
+
+          <Col span={12}>
             <FormItemAnt
               label={<Typography.Text strong>Cơ quan ban hành</Typography.Text>}
               name="agencies"
@@ -212,6 +192,30 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
                 filterOption={false}
                 notFoundContent={true}
                 allowClear
+              />
+            </FormItemAnt>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <FormItemAnt
+              label={<Typography.Text strong>Chuyên mục</Typography.Text>}
+              name="categories"
+              rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+              tooltip={{
+                title: "Chuyên mục văn bản của bạn?",
+                icon: <InfoCircleOutlined />,
+              }}
+            >
+              <TreeSelectForm
+                treeData={categories.data}
+                onTreeSelect={handleCategoriesSelect}
+                onTreeDeSelect={handleCategoriesDeSelect}
+                placeholder="Chọn chuyên mục"
+                allowClear
+                size="large"
+                showCheckedStrategy={TreeSelect.SHOW_PARENT}
+                treeCheckable={true}
               />
             </FormItemAnt>
           </Col>

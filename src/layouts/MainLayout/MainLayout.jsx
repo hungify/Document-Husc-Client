@@ -21,7 +21,7 @@ const LayoutWrapContent = styled(Layout)`
 `;
 
 const ContentAnt = styled(Layout.Content)`
-  padding: 0 20px;
+  padding: 0 15px;
 `;
 
 export default function MainLayout({ children }) {
@@ -61,13 +61,10 @@ export default function MainLayout({ children }) {
   }, [role, isAuth]);
 
   const handleMenuSelect = ({ key }, isUser) => {
-    const shouldAddPrefixKey = ["dashboard", "inbox", "sent", "forward"];
+    if (key === "issue") {
+      setCollapsed(true);
+    }
     setActiveKey(key);
-    // if (isAuth && role === ROLES.ADMIN) {
-    //   if (!shouldAddPrefixKey.includes(key)) {
-    //     return navigate(`m/${key}`);
-    //   }
-    // }
     return navigate(`${key}`);
   };
 

@@ -7,6 +7,7 @@ import DashBoard from "features/Dashboard/Dashboard";
 import DetailDocument from "features/DocumentDetails/DocumentDetails";
 import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
+import IssueDocument from "features/IssueDocument/IssueDocument";
 import ManageAgencies from "features/Manage/ManageAgencies/ManageAgencies";
 import ManageCategories from "features/Manage/ManageCategories/ManageCategories";
 import AddEditDocument from "features/Manage/ManageDocuments/AddEditDocument";
@@ -111,7 +112,7 @@ export const routePathDefinition = [
         children: [
           {
             path: "issue",
-            element: <AddEditDocument />,
+            element: <IssueDocument />,
             breadcrumb: "Ban hành văn bản",
           },
           {
