@@ -23,8 +23,8 @@ export const routePathDefinition = [
     element: <MainLayout />,
     children: [
       {
-        index: true,
         breadcrumb: "Trang chủ",
+        index: true,
         element: <Home />,
       },
       {
@@ -106,10 +106,14 @@ export const routePathDefinition = [
         ],
       },
       {
-        path: "m",
         element: <RequireAuth allowedRoles={[ROLES.ADMIN]} />,
         breadcrumb: "Quản lý",
         children: [
+          {
+            path: "issue",
+            element: <AddEditDocument />,
+            breadcrumb: "Ban hành văn bản",
+          },
           {
             path: "draft",
             breadcrumb: "Văn bản nháp",
@@ -122,11 +126,6 @@ export const routePathDefinition = [
               {
                 index: true,
                 element: <ManageDocuments />,
-              },
-              {
-                path: "post",
-                element: <AddEditDocument />,
-                breadcrumb: "Ban hành",
               },
               {
                 path: "edit",
