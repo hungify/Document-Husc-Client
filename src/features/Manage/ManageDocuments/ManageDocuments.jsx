@@ -84,16 +84,6 @@ export default function ManageDocuments() {
         </Form.Item>
       </ModalForm>
       <SearchGroup />
-      <WrapButton>
-        <Button
-          icon={<PlusCircleTwoTone />}
-          size="large"
-          type="primary"
-          onClick={handleCreateDocumentClick}
-        >
-          Ban hành văn bản
-        </Button>
-      </WrapButton>
       <HeaderListDocument>
         <ListDocument
           dataRender={listData}

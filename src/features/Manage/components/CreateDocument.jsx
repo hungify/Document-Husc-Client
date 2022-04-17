@@ -141,7 +141,7 @@ export default function CreateDocument({ form, onSubmitForm, formValues }) {
 
   return (
     <Form
-      name="issued-document"
+      name="issue-document"
       form={form}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}

@@ -46,20 +46,28 @@ export default function MainLayout({ children }) {
   React.useEffect(() => {
     const menuUser = menuConfig.USER;
     if (isAuth && role === ROLES.ADMIN) {
-      setMenuItems([...menuUser, ...menuConfig[role]]);
+      const menuAdmin = menuConfig.ADMIN;
+      const menuAdminGroup = menuAdmin.map((item) => {
+        if (item.key === "lookup-operates") {
+          const newGroup = [...menuUser, ...item.children];
+          return { ...item, children: newGroup };
+        }
+        return item;
+      });
+      setMenuItems(menuAdminGroup);
     } else if (role === ROLES.USER) {
-      setMenuItems([...menuUser]);
+      setMenuItems(menuUser);
     }
   }, [role, isAuth]);
 
   const handleMenuSelect = ({ key }, isUser) => {
-    const shouldAddPrefixPath = ["dashboard", "lookup", "inbox", "sent", "forward"];
+    const shouldAddPrefixKey = ["dashboard", "inbox", "sent", "forward"];
     setActiveKey(key);
-    if (isAuth && role === ROLES.ADMIN) {
-      if (!shouldAddPrefixPath.includes(key)) {
-        return navigate(`m/${key}`);
-      }
-    }
+    // if (isAuth && role === ROLES.ADMIN) {
+    //   if (!shouldAddPrefixKey.includes(key)) {
+    //     return navigate(`m/${key}`);
+    //   }
+    // }
     return navigate(`${key}`);
   };
 
@@ -83,7 +91,7 @@ export default function MainLayout({ children }) {
               mode="inline"
               onMenuSelect={handleMenuSelect}
               selectedKeys={activeKey}
-              dataMenuItem={menuItems}
+              menuList={menuItems}
             />
           </Sidebar>
         )}

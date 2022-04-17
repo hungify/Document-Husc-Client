@@ -1,61 +1,71 @@
 import {
   AppstoreTwoTone,
   AuditOutlined,
-  BankTwoTone,
-  CarryOutTwoTone,
   DashboardOutlined,
-  DashboardTwoTone,
-  DeleteTwoTone,
-  FileDoneOutlined,
-  FileOutlined,
-  FileSearchOutlined,
-  FileTextTwoTone,
   FileTwoTone,
   FileUnknownTwoTone,
   InboxOutlined,
-  MedicineBoxTwoTone,
   SendOutlined,
   SnippetsTwoTone,
 } from "@ant-design/icons";
 import ArchiveInIcon from "components/Icons/ArchiveInIcon";
+import RocketIcon from "components/Icons/RocketIcon";
 
 export const menuConfig = {
   ADMIN: [
     {
-      title: "Văn bản nháp",
-      key: "draft",
-      value: "draft",
-      icon: <FileTwoTone style={{ fontSize: 22 }} />,
+      key: "lookup-operates",
+      title: "Tra cứu và điều hành",
+      children: [
+        {
+          title: "Ban hành văn bản",
+          key: "issue",
+          value: "issue",
+          icon: <RocketIcon style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
+        },
+        {
+          title: "Văn bản nháp",
+          key: "draft",
+          value: "draft",
+          icon: <FileTwoTone style={{ fontSize: 22 }} />,
+        },
+      ],
     },
     {
-      title: "Quản lý văn bản",
-      key: "documents",
-      value: "documents",
-      icon: <SnippetsTwoTone style={{ fontSize: 22 }} />,
-    },
-    {
-      title: "Quản lý loại văn bản",
-      key: "types-of-documents",
-      value: "types-of-documents",
-      icon: <FileUnknownTwoTone style={{ fontSize: 22 }} />,
-    },
-    {
-      title: "Quản lý chuyên mục",
-      key: "categories",
-      value: "categories",
-      icon: <AppstoreTwoTone style={{ fontSize: 22 }} />,
-    },
-    {
-      title: "Quản lý cơ quan ban hành",
-      key: "agencies",
-      value: "agency",
-      icon: <AuditOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
-    },
-    {
-      title: "Quản lý văn bản thu hồi",
-      key: "revoke-documents",
-      value: "revoke-documents",
-      icon: <ArchiveInIcon style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
+      key: "system-manager ",
+      title: "Quản trị hệ thống",
+      children: [
+        {
+          title: "Quản lý văn bản",
+          key: "documents",
+          value: "documents",
+          icon: <SnippetsTwoTone style={{ fontSize: 22 }} />,
+        },
+        {
+          title: "Quản lý loại văn bản",
+          key: "types-of-documents",
+          value: "types-of-documents",
+          icon: <FileUnknownTwoTone style={{ fontSize: 22 }} />,
+        },
+        {
+          title: "Quản lý chuyên mục",
+          key: "categories",
+          value: "categories",
+          icon: <AppstoreTwoTone style={{ fontSize: 22 }} />,
+        },
+        {
+          title: "Quản lý cơ quan ban hành",
+          key: "agencies",
+          value: "agency",
+          icon: <AuditOutlined style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
+        },
+        {
+          title: "Quản lý văn bản thu hồi",
+          key: "revoke-documents",
+          value: "revoke-documents",
+          icon: <ArchiveInIcon style={{ fontSize: 22, color: "rgba(24, 144, 255, 0.9)" }} />,
+        },
+      ],
     },
   ],
   USER: [
