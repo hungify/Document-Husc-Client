@@ -45,10 +45,6 @@ export default function ManageDocuments() {
     navigate(`edit/${item.id}`);
   };
 
-  const handleCreateDocumentClick = () => {
-    navigate("post");
-  };
-
   const handleOnSubmit = (values) => {
     console.log(values);
     setVisible(false);

@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const HeaderAnt = styled(Layout.Header)`
   position: ${(props) => (props.shouldFixedHeader ? "fixed" : "relative")};
-  z-index: 1;
+  z-index: 5;
   width: 100%;
   transition: all 0.3s ease-in-out;
   box-shadow: ${(props) =>
