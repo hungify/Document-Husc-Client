@@ -1,6 +1,6 @@
 import { Button, Tooltip } from "antd";
 
-export default function ButtonFlexible(props) {
+export default function ButtonTooltip(props) {
   const { document, type, icon, onButtonClick, title, disabled, loading, children, ...rest } =
     props;
   return (

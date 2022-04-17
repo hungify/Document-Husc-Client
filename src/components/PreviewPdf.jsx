@@ -1,7 +1,7 @@
 import { DownloadOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Drawer, Space } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
-import ButtonFlexible from "components/ButtonFlexible";
+import ButtonFlexible from "components/ButtonTooltip";
 import { saveAs } from "file-saver";
 import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";

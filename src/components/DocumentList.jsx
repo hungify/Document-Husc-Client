@@ -8,7 +8,7 @@ import {
 import { Avatar, Badge, Button, Card, Col, List, Row, Space, Tag, Typography } from "antd";
 import { getRole } from "app/selectors/authSelector";
 import pdfFile from "assets/pdf/test.pdf";
-import ButtonFlexible from "components/ButtonFlexible";
+import ButtonFlexible from "components/ButtonTooltip";
 import { ROLES } from "configs/roles";
 import { saveAs } from "file-saver";
 import React from "react";

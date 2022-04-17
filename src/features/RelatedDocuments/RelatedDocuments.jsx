@@ -1,6 +1,6 @@
 import { DownloadOutlined, ExpandOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Card, Col, List, Row, Typography } from "antd";
-import ButtonFlexible from "components/ButtonFlexible";
+import ButtonFlexible from "components/ButtonTooltip";
 import { saveAs } from "file-saver";
 import React from "react";
 import { Link } from "react-router-dom";
