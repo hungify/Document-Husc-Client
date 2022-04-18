@@ -1,14 +1,45 @@
-import { Transfer } from "antd";
-import RecipientTable from "features/IssueDocument/components/RecipientTable";
+import { Table, Transfer } from "antd";
+import { difference } from "lodash";
 
 export default function TransferTable({ leftColumns, rightColumns, ...restProps }) {
   return (
-    <Transfer {...restProps} showSelectAll={false}>
-      {(props) => {
-        const { direction } = props;
+    <Transfer {...restProps}>
+      {({
+        direction,
+        filteredItems,
+        onItemSelectAll,
+        onItemSelect,
+        selectedKeys: listSelectedKeys,
+        disabled: listDisabled,
+      }) => {
         const columns = direction === "left" ? leftColumns : rightColumns;
 
-        return <RecipientTable {...props} columns={columns} />;
+        const rowSelection = {
+          getCheckboxProps: (item) => ({ disabled: listDisabled || item.disabled }),
+          onSelectAll(selected, selectedRows) {
+            const treeSelectedKeys = selectedRows
+              .filter((item) => !item.disabled)
+              .map(({ key }) => key);
+            const diffKeys = selected
+              ? difference(treeSelectedKeys, listSelectedKeys)
+              : difference(listSelectedKeys, treeSelectedKeys);
+            onItemSelectAll(diffKeys, selected);
+          },
+          onSelect({ key }, selected) {
+            onItemSelect(key, selected);
+          },
+          selectedRowKeys: listSelectedKeys,
+        };
+
+        return (
+          <Table
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={filteredItems}
+            size="small"
+            style={{ pointerEvents: listDisabled ? "none" : null }}
+          />
+        );
       }}
     </Transfer>
   );

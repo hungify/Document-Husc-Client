@@ -36,7 +36,6 @@ const SpaceAnt = styled(Space)`
 
 export default function TreeProcessing() {
   const [selectedNode, setSelectedNode] = React.useState();
-
   const handleOnSelect = (selectedKeys, nodeInfo) => {
     setSelectedNode(nodeInfo.selectedNodes[0]);
   };
@@ -73,62 +72,55 @@ export default function TreeProcessing() {
         defaultExpandAll={true}
         onSelect={handleOnSelect}
         treeData={treeReceiver}
-        titleRender={(item) => (
+        titleRender={(tree) => (
           <Overlay>
-            {item.key === "root" ? (
+            {tree.key === "root" ? (
               <SpaceAnt size="small">
-                <Typography.Title level={4}>{item.title}</Typography.Title>
+                <Typography.Title level={4}>{tree.name}</Typography.Title>
                 <BroadcastIcon style={{ color: "rgb(255, 77, 79)" }} />
                 <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
-                  Ban hành:
-                  {" " + new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString()}
+                  Ban hành: {tree.publishDate}
                 </Typography.Text>
               </SpaceAnt>
             ) : (
-              <>
-                {item?.children?.length > 0 ? (
-                  <SpaceAnt size="small">
-                    <Typography.Title level={5}>{item.title}</Typography.Title>
-                    <BadgeCheckIcon style={{ color: "#30AADD" }} />
-                    <Space direction="horizontal" split={<Divider type="vertical" />}>
-                      <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
-                        Xử lý:
-                        {" " +
-                          new Date().toLocaleTimeString() +
-                          " " +
-                          new Date().toLocaleDateString()}
-                      </Typography.Text>
-                      <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
-                        Chuyển tiếp:
-                        {" " +
-                          new Date().toLocaleTimeString() +
-                          " " +
-                          new Date().toLocaleDateString()}
-                      </Typography.Text>
-                    </Space>
-                  </SpaceAnt>
-                ) : (
-                  <SpaceAnt size="small">
-                    <Typography.Text>{item.title}</Typography.Text>
-                    {item.title.charAt(0) === "N" && (
-                      <>
-                        <BadgeCheckIcon style={{ color: "#30AADD" }} />
-                        <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
-                          Xử lý:
-                          {" " +
-                            new Date().toLocaleTimeString() +
-                            " " +
-                            new Date().toLocaleDateString()}
-                        </Typography.Text>
-                      </>
-                    )}
-                  </SpaceAnt>
-                )}
-              </>
+              <TreeItem node={tree} />
             )}
           </Overlay>
         )}
       />
     </Card>
+  );
+}
+
+function TreeItem({ node }) {
+  return node.children.length > 0 ? (
+    <SpaceAnt size="small">
+      <Typography.Title level={5}>{node.name}</Typography.Title>
+      <BadgeCheckIcon style={{ color: "#30AADD" }} />
+      <Space direction="horizontal" split={<Divider type="vertical" />}>
+        {node.readDate && (
+          <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
+            Xử lý: {node.readDate}
+          </Typography.Text>
+        )}
+        {node.forwardDate && (
+          <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+            Chuyển tiếp: {node.forwardDate}
+          </Typography.Text>
+        )}
+      </Space>
+    </SpaceAnt>
+  ) : (
+    <SpaceAnt size="small">
+      <Typography.Text>{node.name}</Typography.Text>
+      {node?.readDate && (
+        <>
+          <BadgeCheckIcon style={{ color: "#30AADD" }} />
+          <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
+            Xử lý: {node.readDate}
+          </Typography.Text>
+        </>
+      )}
+    </SpaceAnt>
   );
 }

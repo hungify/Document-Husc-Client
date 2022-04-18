@@ -1,12 +1,8 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Tabs } from "antd";
+import { Col, Row } from "antd";
 import ButtonTooltip from "components/ButtonTooltip";
-import DrawerCustom from "components/DrawerCustom";
 import TableTransfer from "components/TransferTable";
-import ViewPDF from "components/ViewPDF";
 import React from "react";
-import SummaryTable from "components/SummaryTable";
-import pdfFile from "assets/pdf/test.pdf";
 
 const mockData = [];
 for (let i = 0; i < 100; i++) {
@@ -24,7 +20,7 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-export default function RelatedDocumentsTable() {
+export default function RecipientDocument() {
   const [visible, setVisible] = React.useState(false);
   const [documentsClicked, setDocumentsClicked] = React.useState([]);
 
@@ -74,62 +70,29 @@ export default function RelatedDocumentsTable() {
   const handleTableTransferChange = (nextTargetKeys) => {
     setTargetKeys(nextTargetKeys);
   };
-  const handleLoadFileSuccess = (numPages) => {
-    setTotalPage(numPages);
-  };
-
-  const handlePreviousClick = () => {
-    if (pageNumber === 1) return;
-    setPageNumber(pageNumber - 1);
-  };
-  const handleNextClick = () => {
-    if (pageNumber === totalPage) return;
-    setPageNumber(pageNumber + 1);
-  };
 
   return (
-    <>
-      <DrawerCustom
-        title="Thông tin văn bản"
-        placement="top"
-        onCloseDrawer={() => setVisible(false)}
-        visible={visible}
-        size="large"
-      >
-        <Tabs defaultActiveKey="1">
-          <Tabs.TabPane tab="Thông tin văn bản" key="documents-detail">
-            <SummaryTable documentData={documentsClicked} />
-          </Tabs.TabPane>
-
-          <Tabs.TabPane tab="Văn bản gốc" key="original-document">
-            <ViewPDF
-              pdfFile={pdfFile}
-              pageNumber={pageNumber}
-              onPreviousClick={handlePreviousClick}
-              onNextClick={handleNextClick}
-              onLoadFileSuccess={handleLoadFileSuccess}
-            />
-          </Tabs.TabPane>
-        </Tabs>
-      </DrawerCustom>
-      <TableTransfer
-        titles={["Tất cả văn bản", "Văn bản được chọn"]}
-        dataSource={mockData}
-        targetKeys={targetKeys}
-        pagination={{
-          pageSize: 20,
-          showSizeChanger: true,
-          simple: true,
-          showLessItems: true,
-        }}
-        render={(item) => item.title}
-        onChange={handleTableTransferChange}
-        filterOption={(inputValue, item) =>
-          item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
-        }
-        leftColumns={TableColumns}
-        rightColumns={TableColumns}
-      />
-    </>
+    <Row>
+      <Col span={24}>
+        <TableTransfer
+          titles={["Tất cả người nhận", "Người nhận đã chọn"]}
+          dataSource={mockData}
+          targetKeys={targetKeys}
+          pagination={{
+            pageSize: 20,
+            showSizeChanger: true,
+            simple: true,
+            showLessItems: true,
+          }}
+          render={(item) => item.title}
+          onChange={handleTableTransferChange}
+          filterOption={(inputValue, item) =>
+            item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
+          }
+          leftColumns={TableColumns}
+          rightColumns={TableColumns}
+        />
+      </Col>
+    </Row>
   );
 }

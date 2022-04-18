@@ -1,5 +1,6 @@
 import { BulbFilled } from "@ant-design/icons";
 import { Avatar, Badge, Card, Col, Divider, List, Radio, Row, Tag, Typography } from "antd";
+import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
 import _ from "lodash";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -80,10 +81,7 @@ export default function SentDocuments() {
         }}
         dataSource={listInboxData}
         renderItem={(item) => (
-          <Badge.Ribbon
-            text={item.urgentLevel}
-            color={item.urgentLevel === "Bình thường" ? "green" : "red"}
-          >
+          <BadgeRibbonUrgent text={item.urgentLevel}>
             <CardAnt>
               <Row
                 align="middle"
@@ -128,7 +126,7 @@ export default function SentDocuments() {
                 </Col>
               </Row>
             </CardAnt>
-          </Badge.Ribbon>
+          </BadgeRibbonUrgent>
         )}
       />
     </Card>

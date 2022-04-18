@@ -2,12 +2,12 @@ import { Select, Tag } from "antd";
 import React from "react";
 
 export default function SelectForm(props) {
-  const { selectData, onSelectChange, hasTag, selectedKey } = props;
+  const { selectData, onSelect, hasTag, selectedKey } = props;
 
   const [searchSelect, setSearchSelect] = React.useState(selectData);
 
-  const handleSelectChange = (value) => {
-    onSelectChange(value);
+  const handleSelect = (value) => {
+    onSelect(value);
   };
   const handleSelectSearch = (value) => {
     if (value) {
@@ -24,9 +24,8 @@ export default function SelectForm(props) {
     <Select
       {...props}
       value={selectedKey}
-      onSelect={handleSelectChange}
+      onSelect={handleSelect}
       onSearch={handleSelectSearch}
-      showSearch
       size="large"
     >
       {searchSelect?.map((item) => (

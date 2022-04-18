@@ -1,9 +1,9 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, SaveOutlined } from "@ant-design/icons";
-import { Alert, Button, Col, Form, Row, Space, Steps } from "antd";
+import { Alert, Button, Col, Form, message, Row, Space, Steps } from "antd";
 import PlaneIcon from "components/Icons/PlaneIcon";
-import FormIssueDocument from "features/IssueDocument/components/FormIssueDocument";
-import PreviewIssueDocument from "features/IssueDocument/components/PreviewIssueDocument";
-import ResultMessage from "features/IssueDocument/components/ResultMessage";
+import FormIssuedDocument from "features/IssueDocument/FormStep/FormIssueDocument";
+import PreviewIssueDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
+import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
 import React from "react";
 import styled from "styled-components";
 const steps = [
@@ -50,13 +50,19 @@ const ButtonReverse = styled(Button)`
 export default function IssueDocument({ visible, onCreate, onCancel, agencyId }) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
+  const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState([]);
   const [formValuesDraft, setFormValuesDraft] = React.useState();
-  const [required, setRequired] = React.useState(true);
   const [modeSave, setModeSave] = React.useState("official");
 
   const [form] = Form.useForm();
+
+  const handleSubmitFailed = (error) => {
+    if (error) {
+      message.error("Vui lòng không để trống các trường có dấu *");
+    }
+  };
+
   const handleSubmitForm = (values) => {
-    console.log("🚀 :: values", values);
     if (values) {
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
@@ -68,20 +74,17 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
           }
           return item;
         });
-
         setFormValues([...newFormValues, { ...values }]);
       } else {
         setFormValues([{ ...values }]);
       }
       setCurrentStep(currentStep + 1);
     }
-    //Test mode
-    setCurrentStep(currentStep + 1);
   };
 
   const nextStep = () => {
-    form.submit();
-    handleSubmitForm();
+    // form.submit();
+    // handleSubmitForm();
     setModeSave("official");
     setCurrentStep(currentStep + 1);
   };
@@ -98,8 +101,8 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
     setCurrentStep(steps[steps.length - 1].key);
   };
   const handleIssuanceDocumentClick = () => {
-    // form.submit();
-    // handleSubmitForm();
+    form.submit();
+    handleSubmitForm();
     setModeSave("official");
     setFormValuesDraft(formValues);
     setCurrentStep(steps[steps.length - 1].key);
@@ -124,19 +127,24 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
                 />
               </WrapAlert>
               <WrapForm>
-                <FormIssueDocument
+                <FormIssuedDocument
                   form={form}
                   onSubmitForm={handleSubmitForm}
+                  onSubmitFailed={handleSubmitFailed}
                   formValues={formValues}
                   currentStep={currentStep}
                   nextStep={nextStep}
-                  required={required}
+                  onSelectRelatedDocument={(data) => setSelectedRelatedDocument(data)}
+                  selectedRelatedDocument={selectedRelatedDocument}
                 />
               </WrapForm>
             </Col>
           ) : steps[currentStep].key === 1 ? (
             <Col span={24}>
-              <PreviewIssueDocument formValues={formValues} form={form} />
+              <PreviewIssueDocument
+                formValues={formValues}
+                selectedRelatedDocument={selectedRelatedDocument}
+              />
             </Col>
           ) : (
             <Col span={24}>
