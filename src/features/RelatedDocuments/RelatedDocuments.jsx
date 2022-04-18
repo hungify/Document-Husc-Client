@@ -1,11 +1,12 @@
 import { DownloadOutlined, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Col, List, Row, Typography } from "antd";
+import { Avatar, Card, Col, List, Row, Typography } from "antd";
+import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonFlexible from "components/ButtonTooltip";
 import { saveAs } from "file-saver";
+import { mockRelatedDocument } from "mocks/relatedDocument";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import pdfFile from "assets/pdf/test.pdf";
 
 const WrapCard = styled(Card)`
   background-color: rgba(248, 250, 252, 1);
@@ -15,22 +16,6 @@ const CardItemAnt = styled(Card)`
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
 `;
-
-const listData = [];
-for (let i = 0; i < 10; i++) {
-  listData.push({
-    id: new Date().getTime() + i,
-    title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
-    avatar: "Admin",
-    textNumber: "21/NQ-HĐĐH",
-    signer: "Nguyễn Vũ Quốc Huy",
-    dateIssued: "2020-05-01",
-    authorityIssuing: "Đại Học Huế",
-    urgency: "Bình thường",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  });
-}
 
 export default function RelatedDocuments() {
   const handlePreviewFileClick = (item) => {
@@ -56,22 +41,22 @@ export default function RelatedDocuments() {
             console.log(page);
           },
         }}
-        dataSource={listData}
+        dataSource={mockRelatedDocument}
         renderItem={(item) => (
           <List.Item>
-            <Badge.Ribbon text="Bình thường" color="green" key={item.id}>
+            <BadgeRibbonUrgency text={item.urgentLevel} key={item.key}>
               <CardItemAnt bordered={false}>
                 <Row align="middle" justify="space-between">
                   <Col span={24}>
                     <List.Item.Meta
                       avatar={<Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>}
-                      title={<Link to={`/detail/${item.id}`}>{item.title}</Link>}
+                      title={<Link to={`/detail/${item.key}`}>{item.title}</Link>}
                     />
                   </Col>
                   <Col span={7}>
                     <Typography.Title level={5}>
                       Số hiệu văn bản:
-                      <Typography.Text keyboard>{item.textNumber}</Typography.Text>
+                      <Typography.Text keyboard>{item.documentNumber}</Typography.Text>
                     </Typography.Title>
                   </Col>
                   <Col span={7}>
@@ -91,7 +76,7 @@ export default function RelatedDocuments() {
                         shape="round"
                         icon={<ExpandOutlined />}
                         onButtonClick={handlePreviewFileClick}
-                        document={pdfFile}
+                        document={item.fileUrl}
                       />
                     </Typography.Title>
                   </Col>
@@ -102,13 +87,13 @@ export default function RelatedDocuments() {
                         shape="round"
                         icon={<DownloadOutlined />}
                         onButtonClick={handleSaveFileClick}
-                        document={pdfFile}
+                        document={item.fileUrl}
                       />
                     </Typography.Title>
                   </Col>
                 </Row>
               </CardItemAnt>
-            </Badge.Ribbon>
+            </BadgeRibbonUrgency>
           </List.Item>
         )}
       />
