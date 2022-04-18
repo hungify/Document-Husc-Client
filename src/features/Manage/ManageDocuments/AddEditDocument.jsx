@@ -1,8 +1,8 @@
 import { Alert, Button, Col, Form, Row, Space, Steps } from "antd";
 import ButtonFlexible from "components/ButtonTooltip";
-import CreateDocument from "features/IssueDocument/components/FormIssueDocument";
-import PreviewDocument from "features/IssueDocument/components/PreviewIssueDocument";
-import ResultMessage from "features/IssueDocument/components/ResultMessage";
+import PreviewDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
+import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
+import FirstStep from "features/IssueDocument/FormStep/FormIssueDocument";
 import React from "react";
 import styled from "styled-components";
 const steps = [
@@ -113,7 +113,7 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
                 />
               </WrapAlert>
               <WrapForm>
-                <CreateDocument
+                <FirstStep
                   form={form}
                   onSubmitForm={handleSubmitForm}
                   formValues={formValues}
