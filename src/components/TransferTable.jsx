@@ -1,7 +1,7 @@
 import { Transfer } from "antd";
 import RecipientTable from "features/IssueDocument/components/RecipientTable";
 
-export default function TableTransfer({ leftColumns, rightColumns, ...restProps }) {
+export default function TransferTable({ leftColumns, rightColumns, ...restProps }) {
   return (
     <Transfer {...restProps} showSelectAll={false}>
       {(props) => {
