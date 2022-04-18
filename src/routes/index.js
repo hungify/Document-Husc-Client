@@ -33,7 +33,7 @@ export const routePathDefinition = [
         breadcrumb: null,
         children: [
           {
-            path: ":documentId",
+            path: ":slug",
             element: <DetailDocument />,
             breadcrumb: "Chi tiết văn bản",
           },
@@ -75,7 +75,7 @@ export const routePathDefinition = [
                 breadcrumb: null,
                 children: [
                   {
-                    path: ":inboxId",
+                    path: ":slug",
                     element: <DetailDocument />,
                     breadcrumb: "Thông tin chi tiết",
                   },
@@ -96,7 +96,7 @@ export const routePathDefinition = [
                 breadcrumb: null,
                 children: [
                   {
-                    path: ":forwardId",
+                    path: ":slug",
                     element: <DetailDocument />,
                     breadcrumb: "Thông tin chi tiết",
                   },
@@ -133,7 +133,7 @@ export const routePathDefinition = [
                 breadcrumb: null,
                 children: [
                   {
-                    path: ":documentId",
+                    path: ":slug",
                     element: <AddEditDocument />,
                     breadcrumb: "Chỉnh sửa văn bản",
                   },
