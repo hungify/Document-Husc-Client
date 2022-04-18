@@ -18,7 +18,7 @@ import {
 } from "antd";
 import RichEditor from "components/RichEditor";
 import SelectForm from "components/SelectForm";
-import TableTransfer from "components/TableTransfer";
+import TableTransfer from "components/TransferTable";
 import TreeSelectForm from "components/TreeSelectForm";
 import { selectConfig } from "configs/select";
 import { categories } from "configs/sidebar";
