@@ -11,8 +11,8 @@ const RowAnt = styled(Row)`
 const columns = [
   {
     title: "Cơ quan ban hành",
-    dataIndex: "agency",
-    key: "agency",
+    dataIndex: "agencyIssued",
+    key: "agencyIssued",
   },
   {
     title: "Số hiệu văn bản",
@@ -45,8 +45,8 @@ const columns = [
   },
   {
     title: "Loại văn bản",
-    key: "documentType",
-    dataIndex: "documentType",
+    key: "typeOfDocument",
+    dataIndex: "typeOfDocument",
     render: (documentType) => (
       <>
         {documentType.map((tag) => {
