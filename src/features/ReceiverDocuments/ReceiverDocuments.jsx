@@ -47,7 +47,7 @@ export default function ReceiverDocuments() {
               <Row
                 align="middle"
                 justify="space-between"
-                onClick={() => navigate(`detail/${item.key}`)}
+                onClick={() => navigate(`${item.key}`)}
               >
                 <Col span={24}>
                   <List.Item>

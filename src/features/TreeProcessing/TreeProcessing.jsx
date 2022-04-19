@@ -2,7 +2,6 @@ import { DownOutlined } from "@ant-design/icons";
 import { Alert, Card, Divider, Space, Tree, Typography } from "antd";
 import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
 import BroadcastIcon from "components/Icons/BroadcastIcon";
-import { treeReceiver } from "mocks/treeReceiver";
 import React from "react";
 import styled from "styled-components";
 
@@ -34,7 +33,7 @@ const SpaceAnt = styled(Space)`
   }
 `;
 
-export default function TreeProcessing() {
+export default function TreeProcessing({ treeReceiver }) {
   const [selectedNode, setSelectedNode] = React.useState();
   const handleOnSelect = (selectedKeys, nodeInfo) => {
     setSelectedNode(nodeInfo.selectedNodes[0]);
@@ -93,7 +92,7 @@ export default function TreeProcessing() {
 }
 
 function TreeItem({ node }) {
-  return node.children.length > 0 ? (
+  return node?.children?.length > 0 ? (
     <SpaceAnt size="small">
       <Typography.Title level={5}>{node.name}</Typography.Title>
       <BadgeCheckIcon style={{ color: "#30AADD" }} />
