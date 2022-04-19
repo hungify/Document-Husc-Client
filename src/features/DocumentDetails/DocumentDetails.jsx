@@ -27,29 +27,18 @@ const ButtonAnt = styled(Button)`
 export default function DetailDocument() {
   const [visible, setVisible] = React.useState(false);
   const [document, setDocument] = React.useState();
-
   const isAuth = useSelector(isAuthenticated);
+  const { slug } = useParams();
+
   React.useEffect(() => {
-    if (paths[0] === "inbox") {
-      const document = _.find(mockDocumentListInbox, { key: slug });
+    if (isAuth) {
+      const document = _.find(mockDocumentListProtect, { key: slug });
       setDocument(document);
     } else {
-      if (isAuth) {
-        const document = _.find(mockDocumentListProtect, { key: slug });
-        setDocument(document);
-      } else {
-        const document = _.find(mockDocumentListPublic, { key: slug });
-        setDocument(document);
-      }
+      const document = _.find(mockDocumentListPublic, { key: slug });
+      setDocument(document);
     }
-  }, []);
-
-  const { pathname } = useLocation();
-  const paths = pathname.split("/").filter((item) => item);
-  if (paths[0] === "inbox") {
-  } else {
-  }
-  const { slug } = useParams();
+  }, [isAuth, slug]);
 
   const [treeReceiver, setTreeReceiver] = React.useState();
 
@@ -133,7 +122,8 @@ export default function DetailDocument() {
       <Card
         title="Nội dung văn bản"
         extra={
-          (role === ROLES.ADMIN || role === ROLES.USER) && (
+          (role === ROLES.ADMIN || role === ROLES.USER) &&
+          document?.isProtect && (
             <Space split={<Divider type="vertical" />}>
               <Button
                 type="primary"
@@ -161,13 +151,13 @@ export default function DetailDocument() {
               <Tabs.TabPane tab="Văn bản liên quan" key="related">
                 <RelatedDocument />
               </Tabs.TabPane>
-              {(role === ROLES.ADMIN || role === ROLES.USER) && (
+              <Tabs.TabPane tab="Cây xử lý" key="tree">
+                <TreeProcessing treeReceiver={document?.treeProcessing} />
+              </Tabs.TabPane>
+              {(role === ROLES.ADMIN || role === ROLES.USER) && document?.isProtect && (
                 <>
                   <Tabs.TabPane tab="Phân tích" key="analytics">
                     <ChartReceiver />
-                  </Tabs.TabPane>
-                  <Tabs.TabPane tab="Cây xử lý" key="tree">
-                    <TreeProcessing treeReceiver={document?.treeProcessing} />
                   </Tabs.TabPane>
                   <Tabs.TabPane tab="Phản hồi" key="feedback">
                     <ChatRoom />
