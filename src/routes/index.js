@@ -71,15 +71,9 @@ export const routePathDefinition = [
                 element: <ReceiverDocuments />,
               },
               {
-                path: "detail",
-                breadcrumb: null,
-                children: [
-                  {
-                    path: ":slug",
-                    element: <DetailDocument />,
-                    breadcrumb: "Thông tin chi tiết",
-                  },
-                ],
+                path: ":slug",
+                element: <DetailDocument />,
+                breadcrumb: "Thông tin chi tiết",
               },
             ],
           },
@@ -92,15 +86,9 @@ export const routePathDefinition = [
                 breadcrumb: "Văn bản đã gửi",
               },
               {
-                path: "detail",
-                breadcrumb: null,
-                children: [
-                  {
-                    path: ":slug",
-                    element: <DetailDocument />,
-                    breadcrumb: "Thông tin chi tiết",
-                  },
-                ],
+                path: ":slug",
+                element: <DetailDocument />,
+                breadcrumb: "Thông tin chi tiết",
               },
             ],
           },
