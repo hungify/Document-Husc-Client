@@ -247,36 +247,6 @@ for (let i = 0; i < 1; i++) {
 }
 
 export const mockDocumentListLatest = [];
-
-for (let i = 0; i < 23; i++) {
-  mockDocumentListLatest.push({
-    key: uuidv4(),
-    typesOfDocument: "Nghị quyết",
-    documentNumber: "21/NQ-HĐĐH",
-    signer: "Nguyễn Vũ Quốc Huy",
-    dateIssued: "2020-05-01",
-    authorityIssued: "Đại Học Huế",
-    validityStatus: "Đang có hiệu lực",
-    urgentLevel: "Bình thường",
-    title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
-    summary:
-      "Căn cứ Nghị định số 30/CP ngày 04 tháng 4 năm 1994 của Chính phủ về việc thành lập Đại học Huế; Căn cứ Thông tư số 10/2020/TT-BGDĐT ngày 14 tháng 5 năm 2020 của Bộ trưởng Bộ Giáo dục và Đào tạo ban hành Quy chế tổ chức và hoạt động của đại học vùng và các cơ sở giáo dục đại học thành viên; Căn cứ Quyết định số 20/QĐ-HĐĐH ngày 31 tháng 7 năm 2020 của Hội đồng Đại học Huế ban hành Quy chế tổ chức và hoạt động của Đại học Huế",
-    fileList: [
-      {
-        fileName: "test.pdf",
-        fileUrl: pdfFile1,
-      },
-      {
-        fileName: "test2.pdf",
-        fileUrl: pdfFile2,
-      },
-    ],
-    publisher: {
-      name: "Nguyễn Vũ Quốc Huy",
-      position: "Trưởng khoa",
-      organization: "Đại học Huế",
-      avatar: "https://via.placeholder.com/150",
-      publishDate: "2020-05-01",
-    },
-  });
+for (let i = 0; i < mockDocumentListProtect.length - 3; i++) {
+  mockDocumentListLatest.push(mockDocumentListProtect[i]);
 }
