@@ -83,11 +83,7 @@ export default function SentDocuments() {
         renderItem={(item) => (
           <BadgeRibbonUrgent text={item.urgentLevel}>
             <CardAnt>
-              <Row
-                align="middle"
-                justify="space-between"
-                onClick={() => navigate(`detail/${item.id}`)}
-              >
+              <Row align="middle" justify="space-between" onClick={() => navigate(`${item.id}`)}>
                 <Col span={24}>
                   <List.Item>
                     <List.Item.Meta

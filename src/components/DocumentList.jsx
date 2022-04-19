@@ -54,7 +54,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                   <List.Item.Meta
                     avatar={
                       <Avatar size="large">
-                        {item.treeProcessing?.name.charAt(0).toUpperCase() ?? "?"}
+                        {item.treeProcessing[0]?.name.charAt(0).toUpperCase() ?? "?"}
                       </Avatar>
                     }
                     title={<Link to={`/detail/${item.key}`}>{item.title}</Link>}
