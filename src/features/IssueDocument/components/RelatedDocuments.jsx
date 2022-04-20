@@ -108,11 +108,7 @@ export default function RelatedDocuments({ relatedDocuments }) {
 
       <Row>
         <ColFull span={24}>
-          <Form.Item
-            name="relatedDocuments"
-            initialValue="empty"
-            label={<Typography.Text strong>Văn bản liên quan</Typography.Text>}
-          >
+          <Form.Item name="relatedDocuments" initialValue="empty">
             <TableTransfer
               titles={["Tất cả văn bản", "Văn bản được chọn"]}
               dataSource={mockDocumentListProtect}

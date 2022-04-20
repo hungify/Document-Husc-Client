@@ -14,7 +14,7 @@ export default function ResultMessage({ modeSave }) {
       subTitle={
         modeSave === "official"
           ? "Bạn có thể vào văn bản đã phát hành để xem công tác xử lý của các bên liên quan"
-          : "Bạn có thể vào văn bản nháp để tiếp tục phát hành văn bản này"
+          : "Bạn có thể vào văn bản nháp để tiếp tục ban hành văn bản này"
       }
       extra={[
         <Button type="primary" onClick={() => navigate("/")} size="large">
