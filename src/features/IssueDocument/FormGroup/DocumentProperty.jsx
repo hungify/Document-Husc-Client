@@ -8,29 +8,44 @@ const FormItemAnt = styled(Form.Item)`
   padding-left: 20px;
 `;
 export default function DocumentProperty(props) {
-  const { onUrgencySelect, urgencySelected } = props;
-  
+  const {
+    onUrgentLevelSelect,
+    urgentLevelSelected,
+    issuedDate,
+    onIssuedDateChange,
+    signerDocument,
+    onSignerDocumentChange,
+    documentNumber,
+    onDocumentNumberChange,
+    required,
+  } = props;
+
   return (
     <>
       <Row justify="space-between">
         <Col span={10}>
           <FormItemAnt
-            name="textNumber"
+            name="documentNumber"
             label={<Typography.Text strong>Số hiệu văn bản</Typography.Text>}
-            rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+            rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Số hiệu văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
           >
-            <Input placeholder="Nhập vào số hiệu văn bản" size="large" />
+            <Input
+              placeholder="Nhập vào số hiệu văn bản"
+              size="large"
+              value={documentNumber}
+              onChange={onDocumentNumberChange}
+            />
           </FormItemAnt>
         </Col>
         <Col span={6}>
           <FormItemAnt
             label={<Typography.Text strong>Độ khẩn</Typography.Text>}
-            name="level"
-            rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+            name="urgentLevel"
+            rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Độ khẩn cấp của văn bản của bạn?",
               icon: <InfoCircleOutlined />,
@@ -38,9 +53,9 @@ export default function DocumentProperty(props) {
           >
             <SelectForm
               hasTag={1}
-              selectedKey={urgencySelected}
-              onSelect={onUrgencySelect}
-              selectData={selectConfig.urgency}
+              selectedKey={urgentLevelSelected}
+              onSelect={onUrgentLevelSelect}
+              selectData={selectConfig.urgentLevel}
               size="large"
               placeholder="Chọn đổ khẩn của văn bản"
             />
@@ -50,8 +65,8 @@ export default function DocumentProperty(props) {
         <Col span={8}>
           <FormItemAnt
             label={<Typography.Text strong>Ngày ban hành</Typography.Text>}
-            name="publishDate"
-            rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+            name="dateIssued"
+            rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Ngày ban hành văn bản của bạn?",
               icon: <InfoCircleOutlined />,
@@ -59,9 +74,10 @@ export default function DocumentProperty(props) {
           >
             <DatePicker
               format="DD/MM/YYYY"
+              onChange={onIssuedDateChange}
               placeholder="Chọn ngày ban hành"
               size="large"
-              value={new Date()}
+              value={issuedDate}
               style={{ width: "100%" }}
             />
           </FormItemAnt>
@@ -72,13 +88,18 @@ export default function DocumentProperty(props) {
           <FormItemAnt
             label={<Typography.Text strong>Người ký</Typography.Text>}
             name="signer"
-            rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+            rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Người kí văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
           >
-            <Input placeholder="Nhập vào người kí văn bản" size="large" />
+            <Input
+              placeholder="Nhập vào người kí văn bản"
+              size="large"
+              value={signerDocument}
+              onChange={onSignerDocumentChange}
+            />
           </FormItemAnt>
         </Col>
       </Row>

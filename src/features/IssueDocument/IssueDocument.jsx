@@ -1,11 +1,13 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, SaveOutlined } from "@ant-design/icons";
-import { Alert, Button, Col, Form, message, Row, Space, Steps } from "antd";
+import { Alert, Button, Col, Form, message, Row, Space, Steps, Typography } from "antd";
 import PlaneIcon from "components/Icons/PlaneIcon";
 import FormIssuedDocument from "features/IssueDocument/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
 import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
 import React from "react";
 import styled from "styled-components";
+import RecipientDocument from "features/IssueDocument/FormStep/RecipientDocument";
+
 const steps = [
   {
     key: 0,
@@ -17,6 +19,10 @@ const steps = [
   },
   {
     key: 2,
+    title: "Chọn người nhận",
+  },
+  {
+    key: 3,
     title: "Kết thúc",
   },
 ];
@@ -47,12 +53,13 @@ const ButtonReverse = styled(Button)`
     margin-left: 0;
   }
 `;
-export default function IssueDocument({ visible, onCreate, onCancel, agencyId }) {
+
+export default function IssueDocument() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
-  const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState([]);
-  const [formValuesDraft, setFormValuesDraft] = React.useState();
   const [modeSave, setModeSave] = React.useState("official");
+  const [required, setRequired] = React.useState(true);
+  const [selectedRecipient, setSelectedRecipient] = React.useState([]);
 
   const [form] = Form.useForm();
 
@@ -78,35 +85,49 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
       } else {
         setFormValues([{ ...values }]);
       }
+      if (modeSave === "official") {
+        setCurrentStep(currentStep + 1);
+      } else {
+        setCurrentStep(steps[steps.length - 1].key);
+      }
+    }
+  };
+
+  const nextStep = (currentStep) => {
+    if (currentStep === 0) {
+      setRequired(true);
+      form.submit();
+      handleSubmitForm();
+    } else {
       setCurrentStep(currentStep + 1);
     }
   };
 
-  const nextStep = () => {
-    // form.submit();
-    // handleSubmitForm();
-    setModeSave("official");
-    setCurrentStep(currentStep + 1);
+  const prevStep = (currentStep) => {
+    setCurrentStep(+currentStep - 1);
   };
 
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1);
+  const handleIssuedDocument = (values) => {
+    if (values) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   const handleSaveDraftDocumentClick = () => {
-    // form.submit();
-    // handleSubmitForm();
+    setRequired(false);
     setModeSave("draft");
-    setFormValuesDraft(formValues);
-    setCurrentStep(steps[steps.length - 1].key);
+    form.submit();
+    // save draft
   };
+
   const handleIssuanceDocumentClick = () => {
     form.submit();
     handleSubmitForm();
+
     setModeSave("official");
-    setFormValuesDraft(formValues);
-    setCurrentStep(steps[steps.length - 1].key);
+    // save official
   };
+
   return (
     <>
       <Steps current={currentStep}>
@@ -129,23 +150,43 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
               <WrapForm>
                 <FormIssuedDocument
                   form={form}
+                  required={required}
                   onSubmitForm={handleSubmitForm}
                   onSubmitFailed={handleSubmitFailed}
-                  formValues={formValues}
                   currentStep={currentStep}
                   nextStep={nextStep}
-                  onSelectRelatedDocument={(data) => setSelectedRelatedDocument(data)}
-                  selectedRelatedDocument={selectedRelatedDocument}
+                  formValues={formValues[formValues.length - 1]}
                 />
               </WrapForm>
             </Col>
           ) : steps[currentStep].key === 1 ? (
             <Col span={24}>
-              <PreviewIssueDocument
-                formValues={formValues}
-                selectedRelatedDocument={selectedRelatedDocument}
-              />
+              <PreviewIssueDocument formValues={formValues[formValues.length - 1]} />
             </Col>
+          ) : steps[currentStep].key === 2 ? (
+            <>
+              <Col span={24}>
+                <WrapAlert>
+                  <Alert
+                    message={
+                      <Typography.Text strong>
+                        Văn bản sẽ được ban hành công khai nếu danh sách người nhận trống
+                      </Typography.Text>
+                    }
+                    type="warning"
+                    showIcon
+                  />
+                </WrapAlert>
+                <WrapForm>
+                  <RecipientDocument
+                    form={form}
+                    onSubmitForm={handleIssuedDocument}
+                    onSelectRelatedRecipient={(data) => setSelectedRecipient(data)}
+                    selectedRecipient={selectedRecipient}
+                  />
+                </WrapForm>
+              </Col>
+            </>
           ) : (
             <Col span={24}>
               <ResultMessage modeSave={modeSave} />
@@ -167,7 +208,7 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
             <ButtonReverse
               type="primary"
               size="large"
-              onClick={() => nextStep()}
+              onClick={() => nextStep(currentStep)}
               icon={<ArrowRightOutlined />}
             >
               Tiếp theo
@@ -175,7 +216,21 @@ export default function IssueDocument({ visible, onCreate, onCancel, agencyId })
           </Space>
         ) : currentStep === 1 ? (
           <Space size="large">
-            <Button size="large" onClick={() => prevStep()} icon={<ArrowLeftOutlined />}>
+            <Button size="large" onClick={() => prevStep(currentStep)} icon={<ArrowLeftOutlined />}>
+              Quay lại
+            </Button>
+            <ButtonReverse
+              type="primary"
+              size="large"
+              onClick={() => nextStep(currentStep)}
+              icon={<ArrowRightOutlined />}
+            >
+              Tiếp theo
+            </ButtonReverse>
+          </Space>
+        ) : currentStep === 2 ? (
+          <Space size="large">
+            <Button size="large" onClick={() => prevStep(currentStep)} icon={<ArrowLeftOutlined />}>
               Quay lại
             </Button>
             <ButtonReverse

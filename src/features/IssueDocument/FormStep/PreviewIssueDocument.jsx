@@ -1,11 +1,16 @@
-import { Avatar, Badge, Card, Col, List, Row, Space, Table, Tag, Typography } from "antd";
+import { Avatar, Card, Col, List, Row, Table, Tag, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
+import pdfFile2 from "assets/pdf/test2.pdf";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
-import ListDocument from "components/DocumentList";
-import DocumentSummary from "components/DocumentSummary";
+import { selectConfig } from "configs/select";
 import ListUploaded from "features/IssueDocument/components/ListUploaded";
+import _ from "lodash";
+import { mockDocumentListProtect } from "mocks/documents";
 import React from "react";
 import styled from "styled-components";
+import { findElementInTwoArray } from "utils/table";
+import { findNodeByKey } from "utils/tree";
+import { v4 as uuidv4 } from "uuid";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -35,13 +40,13 @@ const CardItemAnt = styled(Card)`
 const columnsClassification = [
   {
     title: "Loại văn bản",
-    key: "typeOfDocument",
-    dataIndex: "typeOfDocument",
+    key: "typesOfDocument",
+    dataIndex: "typesOfDocument",
   },
   {
     title: "Cơ quan ban hành",
-    dataIndex: "agencyIssued",
-    key: "agencyIssued",
+    dataIndex: "authorityIssued",
+    key: "authorityIssued",
   },
   {
     title: "Chuyên mục",
@@ -50,20 +55,11 @@ const columnsClassification = [
   },
 ];
 
-const dataClassification = [
-  {
-    key: "1",
-    typesOfDocument: "Văn bản chính",
-    agencyIssued: "Đại Học Huế",
-    category: "Đạo tạo đại học",
-  },
-];
-
 const columnsProperty = [
   {
     title: "Số hiệu văn bản",
-    dataIndex: "textNumber",
-    key: "textNumber",
+    dataIndex: "documentNumber",
+    key: "documentNumber",
   },
   {
     title: "Ngày ban hành",
@@ -79,8 +75,8 @@ const columnsProperty = [
 
   {
     title: "Mức độ khẩn",
-    dataIndex: "degreeOfUrgency",
-    key: "degreeOfUrgency",
+    dataIndex: "urgentLevel",
+    key: "urgentLevel",
     render: (text) => {
       if (text === "Bình thường") return <Tag color="green">Bình thường</Tag>;
       else if (text === "Khẩn cấp") return <Tag color="red">Khẩn</Tag>;
@@ -88,48 +84,16 @@ const columnsProperty = [
   },
 ];
 
-const dataProperty = [
-  {
-    key: "1",
-    textNumber: "21/NQ-HĐĐH",
-    dateIssued: "01/01/2020",
-    signer: "Nguyễn Quỳnh Chương",
-    degreeOfUrgency: "Bình thường",
-  },
-];
-
-const dataContent = [
-  {
-    title: "Ant Design Title 1",
-    content:
-      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-    fileList: [
-      {
-        fileName: "name1.pdf",
-        fileUrl: pdfFile,
-      },
-      {
-        fileName: "name1.pdf",
-        fileUrl: pdfFile,
-      },
-      {
-        fileName: "name1.pdf",
-        fileUrl: pdfFile,
-      },
-    ],
-  },
-];
-
 const columnsRelatedDocument = [
   {
     title: "Cơ quan ban hành",
-    dataIndex: "agencyIssued",
-    key: "agencyIssued",
+    dataIndex: "authorityIssued",
+    key: "authorityIssued",
   },
   {
     title: "Số hiệu văn bản",
-    dataIndex: "textNumber",
-    key: "textNumber",
+    dataIndex: "documentNumber",
+    key: "documentNumber",
   },
   {
     title: "Ngày ban hành",
@@ -148,29 +112,56 @@ const columnsRelatedDocument = [
   },
   {
     title: "Loại văn bản",
-    key: "typeOfDocument",
-    dataIndex: "typeOfDocument",
+    key: "typesOfDocument",
+    dataIndex: "typesOfDocument",
   },
+  {},
 ];
-const dataRelatedDocument = [];
-for (let i = 0; i < 2; i++) {
-  dataRelatedDocument.push({
-    id: new Date().getTime() + i,
-    title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
-    avatar: "Admin",
-    textNumber: "21/NQ-HĐĐH",
-    typeOfDocument: "Nghị quuyết",
-    signer: "Nguyễn Vũ Quốc Huy",
-    dateIssued: "2020-05-01",
-    category: "Đạo tạo đại học",
-    agencyIssued: "Đại Học Huế",
-    urgency: i % 2 === 0 ? "Bình thường" : "Khẩn",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  });
-}
 
-export default function PreviewIssueDocument({ form, onSubmitForm, formValues }) {
+export default function PreviewIssueDocument({ formValues }) {
+  const dataClassification = [
+    {
+      key: uuidv4(),
+      typesOfDocument: _.find(selectConfig.typesOfDocuments, {
+        value: formValues.typesOfDocuments,
+      }).label,
+      authorityIssued: _.find(selectConfig.authorityIssued, { value: formValues.authorityIssued })
+        .label,
+      category: findNodeByKey(selectConfig.categories, { value: formValues.category }).title,
+    },
+  ];
+
+  const dataProperty = [
+    {
+      key: uuidv4(),
+      urgentLevel: _.find(selectConfig.urgentLevel, { value: formValues.urgentLevel }).label,
+      signer: formValues.signer,
+      documentNumber: formValues.documentNumber,
+      dateIssued: new Date(formValues.dateIssued).toLocaleDateString(),
+    },
+  ];
+
+  const dataContent = [
+    {
+      title: formValues.title,
+      content: formValues?.content,
+      fileList: [
+        {
+          fileName: "name1.pdf",
+          fileUrl: pdfFile,
+        },
+        {
+          fileName: "name2.pdf",
+          fileUrl: pdfFile2,
+        },
+      ],
+    },
+  ];
+  const relatedDocuments = findElementInTwoArray(
+    mockDocumentListProtect,
+    formValues.relatedDocuments
+  );
+
   return (
     <Container>
       <Row>
@@ -181,25 +172,39 @@ export default function PreviewIssueDocument({ form, onSubmitForm, formValues })
                 columns={columnsClassification}
                 dataSource={dataClassification}
                 pagination={false}
+                bordered={true}
               />
             </CardAnt>
             <CardAnt title={<Typography.Text strong>Thuộc tính của văn bản</Typography.Text>}>
-              <Table columns={columnsProperty} dataSource={dataProperty} pagination={false} />
+              <Table
+                columns={columnsProperty}
+                dataSource={dataProperty}
+                pagination={false}
+                bordered={true}
+              />
             </CardAnt>
 
             <CardAnt title={<Typography.Text strong>Nội dung của văn bản</Typography.Text>}>
               <Row>
-                {dataContent.map((item, index) => (
-                  <>
-                    <Col span={18}>
+                {dataContent.map((item) => (
+                  <React.Fragment key={item.key}>
+                    <Col span={formValues.documentFrom === "input" ? 24 : 18}>
                       <Typography.Title level={5}>{item.title}</Typography.Title>
-                      <Typography.Paragraph>{item.content}</Typography.Paragraph>
+                      {formValues.documentFrom === "input" ? (
+                        <>
+                          <Typography.Paragraph>{item.content}</Typography.Paragraph>
+                        </>
+                      ) : (
+                        <Typography.Paragraph>{item.summary}</Typography.Paragraph>
+                      )}
                     </Col>
-                    <Col span={6}>
-                      <Typography.Title level={5}>Danh sách tệp</Typography.Title>
-                      <ListUploaded fileList={item.fileList} />
-                    </Col>
-                  </>
+                    {formValues.documentFrom === "attach" && (
+                      <Col span={6}>
+                        <Typography.Title level={5}>Danh sách tệp</Typography.Title>
+                        <ListUploaded fileList={item.fileList} />
+                      </Col>
+                    )}
+                  </React.Fragment>
                 ))}
               </Row>
             </CardAnt>
@@ -212,16 +217,18 @@ export default function PreviewIssueDocument({ form, onSubmitForm, formValues })
                   defaultCurrent: 1,
                   hideOnSinglePage: true,
                 }}
-                dataSource={dataRelatedDocument}
+                dataSource={relatedDocuments}
                 renderItem={(item) => (
-                  <CardItemAnt>
-                    <List.Item key={item.id}>
-                      <BadgeRibbonAgency text={item.urgency} key={item.id}>
+                  <BadgeRibbonAgency text={item.urgentLevel} key={item.key}>
+                    <CardItemAnt>
+                      <List.Item key={item.key}>
                         <Row align="middle" justify="space-between">
                           <Col span={24}>
                             <List.Item.Meta
                               avatar={
-                                <Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>
+                                <Avatar size="large">
+                                  {item?.avatar?.charAt(0)?.toUpperCase() ?? "?"}
+                                </Avatar>
                               }
                               title={item.title}
                             />
@@ -235,9 +242,9 @@ export default function PreviewIssueDocument({ form, onSubmitForm, formValues })
                             />
                           </Col>
                         </Row>
-                      </BadgeRibbonAgency>
-                    </List.Item>
-                  </CardItemAnt>
+                      </List.Item>
+                    </CardItemAnt>
+                  </BadgeRibbonAgency>
                 )}
               />
             </CardAnt>

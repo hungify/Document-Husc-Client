@@ -1,8 +1,7 @@
 import { Card, Form, message, Typography } from "antd";
-import { treePeople } from "configs/trees";
 import RelatedDocuments from "features/IssueDocument/components/RelatedDocuments";
-import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";
 import DocumentClassification from "features/IssueDocument/FormGroup/DocumentClassification";
+import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";
 import DocumentProperty from "features/IssueDocument/FormGroup/DocumentProperty";
 import React from "react";
 import styled from "styled-components";
@@ -14,18 +13,6 @@ const CardAnt = styled(Card)`
     margin-bottom: 20px;
   }
 `;
-
-async function fetchUserList(username) {
-  console.log("fetching user", username);
-  return fetch("https://randomuser.me/api/?results=5")
-    .then((response) => response.json())
-    .then((body) =>
-      body.results.map((user) => ({
-        label: `${user.name.first} ${user.name.last}`,
-        value: user.login.username,
-      }))
-    );
-}
 
 const dataRadio = [
   {
@@ -43,116 +30,152 @@ export default function FormIssuedDocument({
   onSubmitForm,
   formValues,
   onSubmitFailed,
-  onSelectRelatedDocument,
-  selectedRelatedDocument,
+  required,
 }) {
-  const [treeData, setTreeData] = React.useState(treePeople);
-  const [receiverSelected, setReceiverSelected] = React.useState(
-    formValues?.receiver ? [formValues?.receiver] : []
-  );
+  // React.useEffect(() => {
+  //   form.setFieldsValue({
+  //     ...formValues,
+  //   });
+  // }, [formValues]);
 
-  const [documentFrom, setDocumentFrom] = React.useState(dataRadio[0].value);
+  // Document Classification
+  const [typesOfDocuments, setTypesOfDocuments] = React.useState();
+  const [categoryOfDocument, setCategoryOfDocument] = React.useState();
+  const [agencyIssueDocument, setAgencyIssueDocument] = React.useState();
+  // Document Classification
 
-  const [urgencySelected, setUrgencySelected] = React.useState(formValues?.urgency);
+  // Document Property
+  const [documentNumber, setDocumentNumber] = React.useState();
+  const [urgentLevel, setUrgentLevel] = React.useState();
+  const [issuedDate, setIssuedDate] = React.useState();
+  const [signerDocument, setSignerDocument] = React.useState();
+  // Document Property
 
-  const [agenciesSelected, setAgencySelected] = React.useState();
-  const [documentType, setDocumentType] = React.useState("");
-  const [categoriesSelected, setCategoriesSelected] = React.useState([]);
-
-  const [summaryValue, setSummaryValue] = React.useState("");
+  // Document Content
+  const [documentFrom, setDocumentFrom] = React.useState(dataRadio[1].value);
+  // const [titleDocument, setTitleDocument] = React.useState();
+  //option one
   const [fileList, setFileList] = React.useState([]);
-  const [value, setValue] = React.useState([]);
+  // const [summaryDocument, setSummaryDocument] = React.useState();
+  //option two
+  // const [contentDocument, setContentDocument] = React.useState();
 
-  const handleTreeReceiverSelect = (value, info) => {
-    if (receiverSelected.length > 0) {
-      setReceiverSelected([...receiverSelected, value]);
-    } else {
-      setReceiverSelected([value]);
-    }
+  // Document Classification
+  const handleTypesOfDocumentSelect = (value) => {
+    setTypesOfDocuments(value);
   };
 
-  const handleTreeReceiverDeSelect = (value, info) => {
-    if (value) {
-      setReceiverSelected(receiverSelected.filter((item) => item !== value));
-    }
+  const handleCategoryOfDocumentSelect = (value) => {
+    setCategoryOfDocument(value);
   };
 
-  const handleUrgencySelect = (value) => {
-    setUrgencySelected(value);
+  const handleCategoryOfDocumentDeSelect = () => {};
+
+  const handleAgencyIssueDocumentSelect = (value) => {
+    setAgencyIssueDocument(value);
+  };
+  // Document Classification
+
+  // Document Property
+  const handleUrgentLevelSelect = (value) => {
+    setUrgentLevel(value);
   };
 
-  const onFinish = (values) => {
-    onSubmitForm(values);
+  const handleIssuedDateChange = (value) => {
+    setIssuedDate(value);
   };
 
-  const handleSelectTypesOfDocument = (value) => {
-    setDocumentType(value);
+  const handleSignerDocumentChange = (value) => {
+    setSignerDocument(value);
   };
 
-  const handleSelectAgency = (value) => {
-    setAgencySelected(value);
+  const handleDocumentNumberChange = (value) => {
+    setDocumentNumber(value);
   };
+  // Document Property
 
-  const handleSummaryChange = (value) => {
-    setSummaryValue(value);
-  };
-
-  const handleUploadFileChange = (info) => {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  };
-
-  const handleBeforeUploadFile = (file) => {
-    console.log("🚀 :: file", file);
-  };
-
-  const handleRadioDocumentFromChange = (e) => {
+  // Document Content
+  const handleDocumentFromChange = (e) => {
     setDocumentFrom(e.target.value);
   };
+
+  // const handleTitleDocumentChange = (e) => {
+  //   setTitleDocument(e.target.value);
+  // };
+
+  // const handleContentDocumentChange = (e) => {
+  //   setContentDocument(e.target.value);
+  // }
+  // Document Content
+
+  // const handleSummaryDocumentChange = (value) => {
+  //   setSummaryDocument(value);
+  // };
+
+  // const handleUploadFileChange = (info) => {
+  //   const { status } = info.file;
+  //   if (status !== "uploading") {
+  //     console.log(info.file, info.fileList);
+  //   }
+  //   if (status === "done") {
+  //     message.success(`${info.file.name} file uploaded successfully.`);
+  //   } else if (status === "error") {
+  //     message.error(`${info.file.name} file upload failed.`);
+  //   }
+  // };
 
   return (
     <Form
       name="issue-document"
       form={form}
-      onFinish={onFinish}
+      onFinish={onSubmitForm}
       onFinishFailed={onSubmitFailed}
       layout="vertical"
     >
       <CardAnt title={<Typography.Text strong>Thông tin phân loại văn bản</Typography.Text>}>
         <DocumentClassification
-          onTreeDeSelect={handleTreeReceiverDeSelect}
-          onTreeSelect={handleTreeReceiverSelect}
-          onSelectTypesOfDocument={handleSelectTypesOfDocument}
-          onAgencySelect={handleSelectAgency}
-          agenciesSelected={agenciesSelected}
+          typesOfDocuments={typesOfDocuments}
+          onTypesOfDocumentSelect={handleTypesOfDocumentSelect}
+          categoryOfDocument={categoryOfDocument}
+          onCategoryOfDocumentSelect={handleCategoryOfDocumentSelect}
+          onCategoryOfDocumentDeSelect={handleCategoryOfDocumentDeSelect}
+          agencyIssueDocument={agencyIssueDocument}
+          onAgencyIssueDocumentSelect={handleAgencyIssueDocumentSelect}
+          required={required}
         />
       </CardAnt>
 
       <CardAnt title={<Typography.Text strong>Thuộc tính của văn bản</Typography.Text>}>
-        <DocumentProperty onUrgencySelect={handleUrgencySelect} urgencySelected={urgencySelected} />
+        <DocumentProperty
+          urgentLevelSelected={urgentLevel}
+          onUrgentLevelSelect={handleUrgentLevelSelect}
+          issuedDate={issuedDate}
+          onIssuedDateChange={handleIssuedDateChange}
+          signerDocument={signerDocument}
+          onSignerDocumentChange={handleSignerDocumentChange}
+          documentNumber={documentNumber}
+          onDocumentNumberChange={handleDocumentNumberChange}
+          required={required}
+        />
       </CardAnt>
 
       <CardAnt title={<Typography.Text strong>Nội dung của văn bản</Typography.Text>}>
         <DocumentContent
           documentFrom={documentFrom}
           dataRadio={dataRadio}
-          onRadioDocumentFromChange={handleRadioDocumentFromChange}
-          summaryValue={summaryValue}
-          onSummaryChange={handleSummaryChange}
+          onDocumentFromChange={handleDocumentFromChange}
+          // summaryValue={summaryDocument}
+          // onSummaryChange={handleSummaryDocumentChange}
+          // titleDocument={titleDocument}
+          // onTitleDocumentChange={handleTitleDocumentChange}
+          // contentDocument={contentDocument}
+          // onContentDocumentChange={handleContentDocumentChange}
+
+          required={required}
         />
       </CardAnt>
       <CardAnt title={<Typography.Text strong>Văn bản liên quan</Typography.Text>}>
-        <RelatedDocuments
-          onSelectRelatedDocument={onSelectRelatedDocument}
-          selectedRelatedDocument={selectedRelatedDocument}
-        />
+        <RelatedDocuments relatedDocuments={formValues?.relatedDocuments} />
       </CardAnt>
     </Form>
   );

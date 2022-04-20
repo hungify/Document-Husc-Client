@@ -135,7 +135,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                         </ButtonTooltip>
                       </Typography.Title>
                     </>
-                  ) : role === ROLES.USER ? (
+                  ) : role === ROLES.USER && !item.isRead ? (
                     <Typography.Text strong>
                       <Tag icon={<ClockCircleOutlined />} color="processing">
                         Chờ xử lý

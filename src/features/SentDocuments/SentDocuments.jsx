@@ -19,15 +19,14 @@ const CardAnt = styled(Card)`
 
 export default function SentDocuments() {
   const navigate = useNavigate();
-  console.log(mockDocumentListSent);
   return (
     <Card size="small">
       <List
         size="small"
         pagination={{
-          onChange: (page) => {
-            console.log(page);
-          },
+          onChange: (page) => {},
+          showTotal: true,
+          hideOnSinglePage: true,
           pageSize: 10,
         }}
         dataSource={mockDocumentListSent}

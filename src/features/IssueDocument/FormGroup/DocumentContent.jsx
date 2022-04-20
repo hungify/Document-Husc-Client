@@ -1,7 +1,6 @@
 import { InfoCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Radio, Row, Typography, Upload } from "antd";
 import RadioGroup from "components/RadioGroup";
-import RichEditor from "components/RichEditor";
 import React from "react";
 import styled from "styled-components";
 
@@ -29,8 +28,18 @@ const defaultFileList = [
 ];
 
 export default function DocumentContent(props) {
-  const { documentFrom, dataRadio, onRadioDocumentFromChange, summaryValue, handleSummaryChange } =
-    props;
+  const {
+    dataRadio,
+    documentFrom,
+    onDocumentFromChange,
+    // titleDocument,
+    // onTitleDocumentChange,
+    // summaryValue,
+    // handleSummaryChange,
+    // onContentDocumentChange,
+    // contentDocument,
+    required,
+  } = props;
 
   const [fileList, setFileList] = React.useState(defaultFileList);
   const handleUploadFileChange = (info) => {};
@@ -44,17 +53,17 @@ export default function DocumentContent(props) {
           <FormItemAnt
             label={<Typography.Text strong>Văn bản tải lên</Typography.Text>}
             name="documentFrom"
-            initialValue={documentFrom}
-            rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+            rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Văn bản của bạn được tải lên từ đâu?",
               icon: <InfoCircleOutlined />,
             }}
+            initialValue={documentFrom} // must have
           >
             <RadioGroup
               dataRadio={dataRadio}
-              onRadioChange={onRadioDocumentFromChange}
-              valueRadio={documentFrom}
+              onChange={onDocumentFromChange}
+              value={documentFrom}
             />
           </FormItemAnt>
         </Col>
@@ -62,13 +71,18 @@ export default function DocumentContent(props) {
           <FormItemAnt
             name="title"
             label={<Typography.Text strong>Tiêu đề</Typography.Text>}
-            rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+            rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Tiêu đề văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
           >
-            <Input placeholder="Nhập vào tiêu đề của văn bản" size="large" />
+            <Input
+              placeholder="Nhập vào tiêu đề của văn bản"
+              size="large"
+              // value={titleDocument}
+              // onChange={onTitleDocumentChange}
+            />
           </FormItemAnt>
         </Col>
       </Row>
@@ -79,7 +93,7 @@ export default function DocumentContent(props) {
               <FormItemAnt
                 label={<Typography.Text strong>Văn bản đính kèm</Typography.Text>}
                 name="files"
-                rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+                rules={[{ required: required, message: "Trường này là bắt buộc" }]}
                 tooltip={{
                   title: "Các tệp văn bản của bạn?",
                   icon: <InfoCircleOutlined />,
@@ -91,8 +105,8 @@ export default function DocumentContent(props) {
                   fileList={fileList}
                   defaultFileList={fileList}
                   showUploadList={{
-                    previewIcon: true,
-                    showPreviewIcon: true,
+                    previewIcon: required,
+                    showPreviewIcon: required,
                   }}
                   onChange={handleUploadFileChange}
                   beforeUpload={handleBeforeUploadFile}
@@ -112,8 +126,8 @@ export default function DocumentContent(props) {
                   }}
                 >
                   <Input.TextArea
-                    value={summaryValue}
-                    onChange={handleSummaryChange}
+                    // value={summaryValue}
+                    // onChange={handleSummaryChange}
                     placeholder="Nhập vào tóm tắt của văn bản"
                     autoSize={{ minRows: 3, maxRows: 6 }}
                   />
@@ -126,12 +140,12 @@ export default function DocumentContent(props) {
             <FormItemAnt
               label={<Typography.Text strong>Nội dung</Typography.Text>}
               name="content"
-              rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+              rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             >
               <Input.TextArea
-                value={summaryValue}
-                onChange={handleSummaryChange}
-                placeholder="Nhập vào tóm tắt của văn bản"
+                // value={contentDocument}
+                // onChange={onContentDocumentChange}
+                placeholder="Nhập vào nội dung của văn bản"
                 autoSize={{ minRows: 3, maxRows: 6 }}
               />
             </FormItemAnt>

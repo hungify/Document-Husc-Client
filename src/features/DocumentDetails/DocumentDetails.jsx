@@ -14,10 +14,9 @@ import RelatedDocument from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import _ from "lodash";
 import { mockDocumentListProtect, mockDocumentListPublic } from "mocks/documents";
-import { mockDocumentListInbox } from "mocks/inboxDocuments";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const ButtonAnt = styled(Button)`
@@ -132,7 +131,12 @@ export default function DetailDocument() {
               >
                 Báo cáo đã xứ lý
               </Button>
-              <ButtonAnt type="primary" icon={<ForwardIcon />} size="large">
+              <ButtonAnt
+                type="primary"
+                icon={<ForwardIcon />}
+                size="large"
+                onClick={() => handleForwardClick(document.key)}
+              >
                 Chuyển tiếp
               </ButtonAnt>
             </Space>
