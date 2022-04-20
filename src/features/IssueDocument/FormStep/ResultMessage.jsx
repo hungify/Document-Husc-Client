@@ -17,10 +17,12 @@ export default function ResultMessage({ modeSave }) {
           : "Bạn có thể vào văn bản nháp để tiếp tục phát hành văn bản này"
       }
       extra={[
-        <Button type="primary" onClick={() => navigate("/")}>
+        <Button type="primary" onClick={() => navigate("/")} size="large">
           Quay lại bảng điều khiển
         </Button>,
-        <Button onClick={() => navigate("..")}>Phát hành văn bản khác</Button>,
+        <Button onClick={() => navigate("..")} size="large">
+          Phát hành văn bản khác
+        </Button>,
       ]}
     />
   );

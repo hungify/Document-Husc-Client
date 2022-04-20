@@ -12,11 +12,14 @@ const FormItemAnt = styled(Form.Item)`
 
 export default function DocumentClassification(props) {
   const {
-    onTreeDeSelect,
-    onTreeSelect,
-    onSelectTypesOfDocument,
-    onAgencySelect,
-    agenciesSelected,
+    typesOfDocument,
+    onTypesOfDocumentSelect,
+    categoryOfDocument,
+    onCategoryOfDocumentSelect,
+    onCategoryOfDocumentDeSelect,
+    agencyIssueDocument,
+    onAgencyIssueDocumentSelect,
+    required,
   } = props;
 
   return (
@@ -24,8 +27,8 @@ export default function DocumentClassification(props) {
       <Col span={7}>
         <FormItemAnt
           label={<Typography.Text strong>Loại văn bản</Typography.Text>}
-          name="typesOfDocument"
-          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+          name="typesOfDocuments"
+          rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Loại văn bản của bạn?",
             icon: <InfoCircleOutlined />,
@@ -33,29 +36,31 @@ export default function DocumentClassification(props) {
         >
           <SelectForm
             selectData={selectConfig.typesOfDocuments}
-            onSelect={onSelectTypesOfDocument}
+            onSelect={onTypesOfDocumentSelect}
+            value={typesOfDocument}
             placeholder="Chọn loại văn bản"
             size="large"
             allowClear
             filterOption={false}
-            notFoundContent={true}
+            notFoundContent={required}
           />
         </FormItemAnt>
       </Col>
       <Col span={10}>
         <FormItemAnt
           label={<Typography.Text strong>Chuyên mục</Typography.Text>}
-          name="categories"
-          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+          name="category"
+          rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Chuyên mục văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
         >
           <TreeSelectForm
+            value={categoryOfDocument}
             treeData={categories.data}
-            onTreeSelect={onTreeSelect}
-            onTreeDeSelect={onTreeDeSelect}
+            onTreeSelect={onCategoryOfDocumentSelect}
+            onTreeDeSelect={onCategoryOfDocumentDeSelect}
             placeholder="Chọn chuyên mục"
             allowClear
             size="large"
@@ -66,21 +71,21 @@ export default function DocumentClassification(props) {
       <Col span={7}>
         <FormItemAnt
           label={<Typography.Text strong>Cơ quan ban hành</Typography.Text>}
-          name="agencies"
-          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
+          name="authorityIssued"
+          rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Cơ quan ban hành văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
         >
           <SelectForm
-            selectData={selectConfig.agencies}
-            onSelect={onAgencySelect}
-            selectedKeys={agenciesSelected}
+            selectData={selectConfig.authorityIssued}
+            value={agencyIssueDocument}
+            onSelect={onAgencyIssueDocumentSelect}
             placeholder="Chọn cơ quan ban hành"
             size="large"
             filterOption={false}
-            notFoundContent={true}
+            notFoundContent={required}
             allowClear
           />
         </FormItemAnt>
