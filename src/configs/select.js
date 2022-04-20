@@ -98,60 +98,50 @@ export const selectConfig = {
   categories: [
     {
       key: "category-1",
-      value: "category-1",
       title: "Khoa học công nghệ",
       children: [],
     },
     {
       key: "category-2",
-      value: "category-2",
       title: "Hợp tác quốc tế",
       children: [],
     },
     {
       key: "category-3",
-      value: "category-3",
       title: "Công tác học sinh sinh viên",
       children: [],
     },
     {
       key: "category-4",
-      value: "category-4",
       title: "Đạo tạo đại học",
       children: [
         {
           key: "category-4.1",
-          value: "category-4.1",
           title: "Thông tin các học phần lý luận chính trị",
           children: [],
         },
         {
           key: "category-4.2",
-          value: "category-4.2",
           title: "Các mẫu giấy tờ khác",
           children: [],
         },
         {
           key: "category-4.3",
-          value: "category-4.3",
           title: "Các mẫu đơn liên quan đến điểm, học phần",
           children: [],
         },
         {
           key: "category-4.4",
-          value: "category-4.4",
           title: "Các mẫu đơn liên quan đến thực tập, thực tế",
           children: [],
         },
         {
           key: "category-4.5",
-          value: "category-4.5",
           title: "Các mẫu đơn liên quan đến tốt nghiệp",
           children: [],
         },
         {
           key: "category-4.6",
-          value: "category-4.6",
           title: "Các mẫu đơn liên quan đăng ký học phần",
           children: [],
         },
@@ -159,47 +149,39 @@ export const selectConfig = {
     },
     {
       key: "category-5",
-      value: "category-5",
       title: "Đào tạo sau đại học",
       children: [],
     },
     {
       key: "category-6",
-      value: "category-6",
       title: "Kế hoạch tài chính, cơ sở vật chất",
       children: [],
     },
     {
       key: "category-7",
-      value: "category-7",
       title: "Đảng ủy công đoàn",
       children: [],
     },
     {
       key: "category-8",
-      value: "category-8",
       title: "Hành chính tổng hợp",
       children: [],
     },
     {
       key: "category-9",
-      value: "category-9",
       title: "Khảo thí, đảm bảo chất lượng giáo dục",
       children: [
         {
           key: "category-9.1",
-          value: "category-9.1",
           title: "Biểu mẫu phúc khảo",
           children: [],
         },
         {
           key: "category-9.2",
-          value: "category-9.2",
           title: "Biểu mẫu chấm thi kết thúc học phần",
           children: [
             {
               key: "category-9.2.1",
-              value: "category-9.2.1",
               title: "Biểu mẫu tiểu luận",
               children: [],
             },
@@ -207,12 +189,10 @@ export const selectConfig = {
         },
         {
           key: "category-9.3",
-          value: "category-9.3",
           title: "Biểu mẫu đề/đáp án thi kết thúc học phần",
           children: [
             {
               key: "category-9.3.1",
-              value: "category-9.3.1",
               title: "Biểu mẫu trắc nghiệm",
               children: [],
             },
@@ -220,25 +200,21 @@ export const selectConfig = {
         },
         {
           key: "category-9.4",
-          value: "category-9.4",
           title: "Biểu mẫu ngân hàng câu hỏi thi/đề thi",
           children: [],
         },
         {
           key: "category-9.5",
-          value: "category-9.5",
           title: "Văn bản pháp quy",
           children: [],
         },
         {
           key: "category-9.6",
-          value: "category-9.6",
           title: "Lịch thị SDH",
           children: [],
         },
         {
           key: "category-9.7",
-          value: "category-9.7",
           title: "Lịch thi DH",
           children: [],
         },
@@ -246,13 +222,11 @@ export const selectConfig = {
     },
     {
       key: "category-10",
-      value: "category-10",
       title: "Tạp chí khoa học và công nghệ",
       children: [],
     },
     {
       key: "category-11",
-      value: "category-11",
       title: "Sở hữu trí tuệ",
       children: [],
     },
