@@ -12,6 +12,7 @@ for (let i = 0; i < 10; i++) {
     dateIssued: "2020-05-01",
     authorityIssued: "Đại Học Huế",
     validityStatus: "Đang có hiệu lực",
+    category: "Khoa học công nghệ",
     urgentLevel: "Bình thường",
     title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
     summary:
@@ -49,6 +50,7 @@ for (let i = 0; i < 1; i++) {
     dateIssued: "2020-05-01",
     authorityIssued: "Đại Học Huế",
     validityStatus: "Đang có hiệu lực",
+    category: "Khoa học công nghệ",
     urgentLevel: "Bình thường",
     isRead: false,
     isProtect: true,

@@ -35,20 +35,16 @@ export default function ReceiverDocuments() {
       <List
         size="small"
         pagination={{
-          onChange: (page) => {
-            console.log(page);
-          },
+          onChange: (page) => {},
           pageSize: 10,
+          showTotal: true,
+          hideOnSinglePage: true,
         }}
         dataSource={mockDocumentListInbox}
         renderItem={(item) => (
           <BadgeRibbonUrgent text={item.urgentLevel} key={item.key}>
             <CardAnt isRead={item.isRead}>
-              <Row
-                align="middle"
-                justify="space-between"
-                onClick={() => navigate(`${item.key}`)}
-              >
+              <Row align="middle" justify="space-between" onClick={() => navigate(`${item.key}`)}>
                 <Col span={24}>
                   <List.Item>
                     <List.Item.Meta

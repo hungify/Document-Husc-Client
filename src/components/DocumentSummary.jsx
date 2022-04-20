@@ -34,6 +34,10 @@ export default function DocumentSummary({ documentData }) {
       key: "authorityIssued",
       title: "Cơ quan ban hành",
     },
+    {
+      key: "category",
+      title: "Chuyên mục",
+    },
   ];
 
   const columns = keyShouldShow.map((item) => {
