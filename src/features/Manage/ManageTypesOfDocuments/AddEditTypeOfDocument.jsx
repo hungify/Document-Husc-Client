@@ -27,7 +27,7 @@ export default function AddEditTypeOfDocument({ visible, onSubmit, onCancel, doc
       }}
     >
       <Form.Item
-        name="document_type_name"
+        name="typesOfDocument"
         label="Tên loại văn bản"
         tooltip={{ title: "Tên loại văn bản của bạn?", icon: <InfoCircleOutlined /> }}
         rules={[{ required: true, message: "Trường này là bắt buộc" }]}
