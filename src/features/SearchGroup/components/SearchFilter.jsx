@@ -27,6 +27,7 @@ export default function SearchFilter({
           size="large"
           allowClear
           filterOption={false}
+          style={{ width: "100%" }}
         />
       </Col>
       <Col span={10}>
@@ -39,6 +40,7 @@ export default function SearchFilter({
           allowClear
           size="large"
           showCheckedStrategy={TreeSelect.SHOW_PARENT}
+          style={{ width: "100%" }}
         />
       </Col>
       <Col span={7}>
@@ -51,6 +53,7 @@ export default function SearchFilter({
           size="large"
           filterOption={false}
           allowClear
+          style={{ width: "100%" }}
         />
       </Col>
     </Row>
