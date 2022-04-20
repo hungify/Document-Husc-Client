@@ -44,7 +44,7 @@ const ListItemAnt = styled(List.Item)``;
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
-    id: new Date().getTime() + i,
+    key: new Date().getTime() + i,
     title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
     avatar: "Admin",
     textNumber: "21/NQ-HĐĐH",
@@ -93,7 +93,7 @@ export default function DraftDocuments(props) {
     setCheckAll(currentCheckAll);
     if (currentCheckAll) {
       setTitleCheckAll("Bỏ chọn tất cả");
-      setCheckedDraft(listData.map((item) => item.id));
+      setCheckedDraft(listData.map((item) => item.key));
     } else {
       setTitleCheckAll("Chọn tất cả");
       setCheckedDraft([]);
@@ -128,29 +128,26 @@ export default function DraftDocuments(props) {
             dataSource={listData}
             renderItem={(item) => (
               <ListItemAnt>
-                <Badge.Ribbon text="Bản nháp" key={item.id}>
-                  <CardItemAnt bordered={false}>
+                <Badge.Ribbon text="Bản nháp" key={item.key}>
+                  <CardItemAnt bordered={false} onClick={() => navigate("/issue")}>
                     <List.Item.Meta
                       avatar={
                         <Space size="large">
                           <Checkbox
-                            value={item.id}
+                            value={item.key}
                             onChange={handleCheckedSingleDraft}
-                            checked={checkedDraft.includes(item.id)}
+                            checked={checkedDraft.includes(item.key)}
                           />
                           <Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>
                         </Space>
                       }
                       title={
-                        <Typography.Text strong onClick={() => navigate("/m/documents/post")}>
-                          {item.id % 2 === 0 ? item.title : "Không có tiêu đề"}
+                        <Typography.Text strong>
+                          {item.key % 2 === 0 ? item.title : "Không có tiêu đề"}
                         </Typography.Text>
                       }
                       description={
-                        <Typography.Text
-                          type="secondary"
-                          onClick={() => navigate("/m/documents/post")}
-                        >
+                        <Typography.Text type="secondary">
                           Chỉnh sửa lần cuối lúc: 10:10 24/5/2022
                         </Typography.Text>
                       }
