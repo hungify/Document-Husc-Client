@@ -25,7 +25,6 @@ export default function SearchFilter(props) {
           filterOption={false}
           notFoundContent={true}
           allowClear={true}
-          showSearch={true}
           onChange={onDocumentChange}
           style={{ width: "100%" }}
           placeholder="Chọn loại văn bản"

@@ -1,4 +1,4 @@
-import { Table, Transfer } from "antd";
+import { Empty, Table, Transfer } from "antd";
 import { difference } from "lodash";
 
 export default function TransferTable({ leftColumns, rightColumns, ...restProps }) {
@@ -36,6 +36,13 @@ export default function TransferTable({ leftColumns, rightColumns, ...restProps 
             rowSelection={rowSelection}
             columns={columns}
             dataSource={filteredItems}
+            locale={{
+              emptyText: (
+                <span>
+                  <Empty description="Danh sách trống"/>
+                </span>
+              ),
+            }}
             size="small"
             style={{ pointerEvents: listDisabled ? "none" : null }}
           />
