@@ -1,12 +1,11 @@
 import {
-  AppstoreOutlined,
   AuditOutlined,
   ExperimentOutlined,
   FieldTimeOutlined,
   FileDoneOutlined,
   FormOutlined,
   SendOutlined,
-  SnippetsOutlined,
+  SnippetsOutlined
 } from "@ant-design/icons";
 import CategoryIcon from "components/Icons/CategoryIcon";
 

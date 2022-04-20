@@ -1,22 +1,12 @@
 import { TreeSelect } from "antd";
 import React from "react";
-export default function TreeSelectForm(props) {
-  const { onTreeSelect, onTreeDeSelect, treeData } = props;
-
-  const handleTreeSelect = (value, info) => {
-    onTreeSelect(value, info);
-  };
-
-  const handleTreeDeSelect = (value, info) => {
-    onTreeDeSelect(value, info);
-  };
-
+export default function TreeSelectForm({ onTreeSelect, onTreeDeSelect, treeData, ...restProps }) {
   return (
     <TreeSelect
-      {...props}
+      {...restProps}
       treeData={treeData}
-      onSelect={handleTreeSelect}
-      onDeselect={handleTreeDeSelect}
+      onSelect={onTreeSelect}
+      onDeselect={onTreeSelect}
     />
   );
 }

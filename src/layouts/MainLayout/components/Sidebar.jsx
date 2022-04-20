@@ -36,18 +36,15 @@ const SiderAnt = styled(Layout.Sider)`
   }
 `;
 
-export default function Sidebar(props) {
-  const { collapsed, onCollapse, shouldFixedHeader } = props;
-
+export default function Sidebar({ collapsed, onCollapse, children, ...restProps }) {
   return (
     <SiderAnt
-      {...props}
+      {...restProps}
       collapsible
       collapsed={collapsed}
       onCollapse={(collapsed) => onCollapse(collapsed)}
-      shouldFixedHeader={shouldFixedHeader}
     >
-      {props.children}
+      {children}
     </SiderAnt>
   );
 }

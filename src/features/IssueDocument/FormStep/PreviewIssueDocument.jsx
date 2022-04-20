@@ -40,18 +40,16 @@ const CardItemAnt = styled(Card)`
 const columnsClassification = [
   {
     title: "Loại văn bản",
-    key: "typesOfDocument",
+
     dataIndex: "typesOfDocument",
   },
   {
     title: "Cơ quan ban hành",
     dataIndex: "authorityIssued",
-    key: "authorityIssued",
   },
   {
     title: "Chuyên mục",
     dataIndex: "category",
-    key: "category",
   },
 ];
 
@@ -59,24 +57,21 @@ const columnsProperty = [
   {
     title: "Số hiệu văn bản",
     dataIndex: "documentNumber",
-    key: "documentNumber",
   },
   {
     title: "Ngày ban hành",
     dataIndex: "dateIssued",
-    key: "dateIssued",
   },
 
   {
     title: "Người ký",
     dataIndex: "signer",
-    key: "signer",
   },
 
   {
     title: "Mức độ khẩn",
     dataIndex: "urgentLevel",
-    key: "urgentLevel",
+
     render: (text) => {
       if (text === "Bình thường") return <Tag color="green">Bình thường</Tag>;
       else if (text === "Khẩn cấp") return <Tag color="red">Khẩn</Tag>;
@@ -88,34 +83,28 @@ const columnsRelatedDocument = [
   {
     title: "Cơ quan ban hành",
     dataIndex: "authorityIssued",
-    key: "authorityIssued",
   },
   {
     title: "Số hiệu văn bản",
     dataIndex: "documentNumber",
-    key: "documentNumber",
   },
   {
     title: "Ngày ban hành",
     dataIndex: "dateIssued",
-    key: "dateIssued",
   },
   {
     title: "Chuyên mục",
     dataIndex: "category",
-    key: "category",
   },
   {
     title: "Người ký",
     dataIndex: "signer",
-    key: "signer",
   },
   {
     title: "Loại văn bản",
-    key: "typesOfDocument",
+
     dataIndex: "typesOfDocument",
   },
-  {},
 ];
 
 export default function PreviewIssueDocument({ formValues }) {
@@ -143,6 +132,7 @@ export default function PreviewIssueDocument({ formValues }) {
 
   const dataContent = [
     {
+      key: uuidv4(),
       title: formValues.title,
       content: formValues?.content,
       fileList: [

@@ -3,7 +3,6 @@ import { Col, Form, Row, TreeSelect, Typography } from "antd";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import { selectConfig } from "configs/select";
-import { categories } from "configs/sidebar";
 import styled from "styled-components";
 
 const FormItemAnt = styled(Form.Item)`
@@ -37,6 +36,7 @@ export default function DocumentClassification(props) {
           <SelectForm
             selectData={selectConfig.typesOfDocuments}
             onSelect={onTypesOfDocumentSelect}
+            showSearch={true}
             value={typesOfDocument}
             placeholder="Chọn loại văn bản"
             size="large"
@@ -58,7 +58,7 @@ export default function DocumentClassification(props) {
         >
           <TreeSelectForm
             value={categoryOfDocument}
-            treeData={categories.data}
+            treeData={selectConfig.categories}
             onTreeSelect={onCategoryOfDocumentSelect}
             onTreeDeSelect={onCategoryOfDocumentDeSelect}
             placeholder="Chọn chuyên mục"
@@ -82,6 +82,7 @@ export default function DocumentClassification(props) {
             selectData={selectConfig.authorityIssued}
             value={agencyIssueDocument}
             onSelect={onAgencyIssueDocumentSelect}
+            showSearch={true}
             placeholder="Chọn cơ quan ban hành"
             size="large"
             filterOption={false}

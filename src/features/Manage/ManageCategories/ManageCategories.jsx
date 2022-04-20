@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
 import DrawerCustom from "components/DrawerCustom";
-import { categories } from "configs/sidebar";
+import { selectConfig } from "configs/select";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ const treeData = [
   {
     title: "root",
     key: "root",
-    children: categories.data,
+    children: selectConfig.categories,
   },
 ];
 
@@ -51,20 +51,20 @@ export default function ManageCategories() {
   const [isAddMode, setIsAddMode] = React.useState(false);
 
   React.useEffect(() => {
-    if (!isAddMode) {
-      form.setFieldsValue({
-        categoryName: selectedNode?.title,
-      });
-    } else {
-      form.setFieldsValue({
-        categoryName: "",
-      });
+    if (showDrawer) {
+      if (!isAddMode) {
+        form.setFieldsValue({
+          categoryName: selectedNode?.title,
+        });
+      } else {
+        form.setFieldsValue({
+          categoryName: "",
+        });
+      }
     }
-  }, [selectedNode, isAddMode]);
+  }, [selectedNode, showDrawer]);
 
-  const handleFieldsChange = (allFields) => {
-    const value = allFields[0].value;
-  };
+  const handleFieldsChange = (allFields) => {};
 
   const handleOnSubmit = (values) => {
     console.log("🚀 :: values", values);

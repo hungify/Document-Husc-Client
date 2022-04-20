@@ -3,6 +3,7 @@ import { Card, Col, Collapse, Form, Row, Typography } from "antd";
 import SearchBox from "features/SearchGroup/components/SearchBox";
 import SearchFilter from "features/SearchGroup/components/SearchFilter";
 import SearchTime from "features/SearchGroup/components/SearchTime";
+import React from "react";
 import styled from "styled-components";
 const Wrapper = styled.div``;
 
@@ -23,10 +24,29 @@ const CollapseAnt = styled(Collapse)`
 const CollapsePanelAnt = styled(Collapse.Panel)``;
 
 export default function SearchGroup() {
+  const [typesOfDocument, setTypesOfDocument] = React.useState([]);
+  const [categoryOfDocument, setCategoryOfDocument] = React.useState([]);
+  const [agencyOfDocument, setAgencyDocument] = React.useState([]);
+
   const [form] = Form.useForm();
+
   const handleFormSearchSubmit = (values) => {
     console.log("🚀 :: values", values);
   };
+
+  const handleTypesOfDocumentSelect = (value) => {
+    setTypesOfDocument(value);
+  };
+  const handleAgencySelect = (value) => {
+    setAgencyDocument(value);
+  };
+  const handleCategorySelect = (value) => {
+    setCategoryOfDocument(value);
+  };
+  const handleCategoryDeSelect = (value) => {
+    setCategoryOfDocument(value);
+  };
+
   return (
     <Wrapper>
       <CardForm bordered={false}>
@@ -35,13 +55,21 @@ export default function SearchGroup() {
           expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         >
           <CollapsePanelAnt header={<Typography.Text strong>Lọc và tìm kiếm</Typography.Text>}>
-            <SearchFilter />
+            <SearchFilter
+              typesOfDocument={typesOfDocument}
+              onTypesOfDocumentSelect={handleTypesOfDocumentSelect}
+              categoryOfDocument={categoryOfDocument}
+              onCategoryDeSelect={handleCategoryDeSelect}
+              onCategorySelect={handleCategorySelect}
+              agencyOfDocument={agencyOfDocument}
+              onAgencySelect={handleAgencySelect}
+            />
             <Row gutter={[0, 10]} style={{ marginTop: 5 }}>
               <Col span={24}>
                 <Typography.Text strong>Tìm theo</Typography.Text>
               </Col>
               <Col span={24}>
-                <Form form={form} name="lookup text" onFinish={handleFormSearchSubmit}>
+                <Form form={form} name="lookupDocument" onFinish={handleFormSearchSubmit}>
                   <Row>
                     <Col span={11}>
                       <SearchTime />
