@@ -25,6 +25,10 @@ const SiderAnt = styled(Layout.Sider)`
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    & .ant-menu-item-icon {
+      font-size: 22px !important;
+    }
   }
 
   & .ant-menu-light .ant-menu-item:hover,
