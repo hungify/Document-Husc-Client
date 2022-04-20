@@ -1,16 +1,10 @@
 import { Menu } from "antd";
 import React from "react";
 
-export default function MenuNavigation(props) {
-  const { menuList, onMenuSelect, selectedKeys } = props;
-
-  const handleMenuSelect = (keysSelected) => {
-    onMenuSelect(keysSelected);
-  };
-
+export default function MenuNavigation({ menuItems, onSelect, selectedKeys, ...restProps }) {
   return (
-    <Menu {...props} selectedKeys={selectedKeys} onSelect={handleMenuSelect}>
-      {menuList?.map((item) =>
+    <Menu {...restProps} selectedKeys={selectedKeys} onSelect={onSelect}>
+      {menuItems?.map((item) =>
         item.children ? (
           <Menu.ItemGroup key={item.key} title={item.title}>
             {item.children?.map((c) => (

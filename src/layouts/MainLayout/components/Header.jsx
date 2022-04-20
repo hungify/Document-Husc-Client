@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const HeaderAnt = styled(Layout.Header)`
-  position: ${(props) => (props.shouldFixedHeader ? "fixed" : "relative")};
+  position: ${(props) => (props.$shouldFixed ? "fixed" : "relative")};
   z-index: 5;
   width: 100%;
   transition: all 0.3s ease-in-out;
-  box-shadow: ${(props) =>
-    props.scrollPosition > 40 ? "rgba(0, 0, 0, 0.1) 0px 10px 50px" : "none"};
-  background-color: ${(props) => (props.scrollPosition > 40 ? "rgba(248, 251, 250, 1)" : "#fff")};
+  box-shadow: ${(props) => (props.$positionY > 40 ? "rgba(0, 0, 0, 0.1) 0px 10px 50px" : "none")};
+  background-color: ${(props) => (props.$positionY > 40 ? "rgba(248, 251, 250, 1)" : "#fff")};
 `;
 const WrapHeader = styled.div`
   position: relative;
@@ -62,7 +61,7 @@ const ButtonAnt = styled(Button)`
     color: #1890ff;
   }
 `;
-export default function Header({ shouldFixedHeader }) {
+export default function Header({ shouldFixed }) {
   const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const refreshToken = useSelector(getToken)?.refreshToken;
@@ -74,7 +73,7 @@ export default function Header({ shouldFixedHeader }) {
   };
 
   return (
-    <HeaderAnt theme="light" shouldFixedHeader={shouldFixedHeader} scrollPosition={scrollPosition}>
+    <HeaderAnt theme="light" $shouldFixed={shouldFixed} $positionY={scrollPosition}>
       <WrapHeader>
         <div>
           <Link to="/">

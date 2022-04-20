@@ -40,13 +40,8 @@ export default function SearchBox(props) {
   return (
     <Row align="middle">
       <Col span={7}>
-        <Form.Item name="check-type">
-          <Radio.Group
-            size="large"
-            value={searchType}
-            onChange={handleRadioChange}
-            defaultValue={searchType}
-          >
+        <Form.Item name="findBy" initialValue={searchType}>
+          <Radio.Group size="large" value={searchType} onChange={handleRadioChange}>
             {plainOptions.map((option) => (
               <SpaceAnt key={option.value} direction="vertical">
                 <Radio value={option.value}>{option.label}</Radio>
@@ -56,7 +51,7 @@ export default function SearchBox(props) {
         </Form.Item>
       </Col>
       <Col span={17}>
-        <Form.Item name="search-term">
+        <Form.Item name="searchTerm">
           <Input.Group
             compact
             style={{

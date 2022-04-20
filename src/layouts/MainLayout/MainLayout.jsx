@@ -13,11 +13,11 @@ import styled from "styled-components";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
-  padding: ${(props) => (props.isAuth ? "0" : "0 60px")};
+  padding: ${(props) => (props.$isAuth ? "0" : "0 60px")};
 `;
 
 const LayoutWrapContent = styled(Layout)`
-  margin-left: ${(props) => (props.collapsed ? "80px" : props.isAuth ? "250px" : "0")};
+  margin-left: ${(props) => (props.$collapsed ? "80px" : props.$isAuth ? "250px" : "0")};
 `;
 
 const ContentAnt = styled(Layout.Content)`
@@ -74,8 +74,8 @@ export default function MainLayout({ children }) {
 
   return (
     <Layout>
-      <Header shouldFixedHeader={1} />
-      <LayoutMain hasSider isAuth={isAuth}>
+      <Header shouldFixed={1} />
+      <LayoutMain hasSider $isAuth={isAuth}>
         {isAuth && (
           <Sidebar
             width={250}
@@ -86,13 +86,13 @@ export default function MainLayout({ children }) {
           >
             <MenuNavigation
               mode="inline"
-              onMenuSelect={handleMenuSelect}
+              onSelect={handleMenuSelect}
               selectedKeys={activeKey}
-              menuList={menuItems}
+              menuItems={menuItems}
             />
           </Sidebar>
         )}
-        <LayoutWrapContent collapsed={collapsed ? 1 : 0} isAuth={isAuth}>
+        <LayoutWrapContent $collapsed={collapsed ? 1 : 0} $isAuth={isAuth}>
           <ContentAnt>
             <BreadcrumbTrail />
             {children}

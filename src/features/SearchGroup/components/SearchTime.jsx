@@ -22,12 +22,8 @@ export default function SearchTime(props) {
   return (
     <Row align="middle">
       <Col span={6}>
-        <Form.Item name="time-type">
-          <Radio.Group
-            value={selectedDateType}
-            onChange={handleRadioChange}
-            defaultValue={selectedDateType}
-          >
+        <Form.Item name="timeType" initialValue={selectedDateType}>
+          <Radio.Group value={selectedDateType} onChange={handleRadioChange}>
             <Space direction="vertical">
               {options.map((option) => (
                 <Radio value={option.value} key={option.value}>

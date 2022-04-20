@@ -1,11 +1,10 @@
 import { Button, Drawer, Space } from "antd";
 import React from "react";
 
-export default function DrawerCustom(props) {
-  const { visible, onCloseDrawer } = props;
+export default function DrawerCustom({ visible, onCloseDrawer, children, ...restProps }) {
   return (
     <Drawer
-      {...props}
+      {...restProps}
       onClose={() => onCloseDrawer()}
       visible={visible}
       extra={
@@ -14,7 +13,7 @@ export default function DrawerCustom(props) {
         </Space>
       }
     >
-      {props.children}
+      {children}
     </Drawer>
   );
 }

@@ -2,8 +2,9 @@ import { Col, Row, Table } from "antd";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from "react";
 import { Pie } from "react-chartjs-2";
-
+import { v4 as uuidV4 } from "uuid";
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 export const data = {
   labels: ["Đã xử lý", "Chưa xử lý"],
   datasets: [
@@ -21,25 +22,25 @@ export const data = {
   ],
 };
 const dataProcessed = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 10; i++) {
   dataProcessed.push(
     {
-      id: i,
+      key: uuidV4(),
       fullName: "Nguyễn Dũng",
       processedDate: "",
     },
     {
-      id: i + 1,
+      key: uuidV4(),
       fullName: "Nguyễn Thị Phương",
       processedDate: `10:10 AM ${i + 9}/10/2020`,
     },
     {
-      id: i + 2,
+      key: uuidV4(),
       fullName: "Đoàn Thị Hằng",
       processedDate: "10:10 AM 10/10/2020",
     },
     {
-      id: i + 3,
+      key: uuidV4(),
       fullName: "Đinh Văn Hải",
       processedDate: "10:10 AM 12/10/2022",
     }
