@@ -1,20 +1,26 @@
 import { Form, message, Modal } from "antd";
 import React from "react";
 
-export default function ModalForm(props) {
-  const { visible, onSubmit, onCancel, children } = props;
+export default function ModalForm({
+  initialValues,
+  visible,
+  onSubmit,
+  onCancel,
+  children,
+  ...restProps
+}) {
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (visible) {
-      form.setFieldsValue(props.initialValues);
+      form.setFieldsValue(initialValues);
     }
-  }, [visible]);
+  }, [visible, form, initialValues]);
 
   return (
     <Modal
-      {...props}
+      {...restProps}
       visible={visible}
       confirmLoading={confirmLoading}
       onCancel={onCancel}
@@ -38,10 +44,10 @@ export default function ModalForm(props) {
     >
       <Form
         form={form}
-        size={props.size}
-        layout={props.layout}
-        name={props.name}
-        wrapperCol={props.wrapperCol}
+        size={restProps.size}
+        layout={restProps.layout}
+        name={restProps.name}
+        wrapperCol={restProps.wrapperCol}
       >
         {children}
       </Form>

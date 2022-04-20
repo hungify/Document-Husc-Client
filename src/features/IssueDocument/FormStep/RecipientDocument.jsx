@@ -1,8 +1,8 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Alert, Card, Col, Form, Input, Row, Typography } from "antd";
+import { Card, Col, Form, Input, Row, Typography } from "antd";
 import TableTransfer from "components/TransferTable";
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidV4 } from "uuid";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -17,65 +17,64 @@ const CardAnt = styled(Card)`
 `;
 
 const mockData = [];
-let i = 0;
 mockData.push(
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Nguyễn Ngọc Thủy",
     department: `Khoa Công nghệ thông tin`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Hoàng Quang",
     department: `Khoa Công nghệ thông tin`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Trần Nguyên Phong",
     department: `Khoa Công nghệ thông tin`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Nguyễn Dũng",
     department: `Khoa Công nghệ thông tin`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Đoàn Thị Hồng Phước",
     department: `Khoa Công nghệ thông tin`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Nguyễn Trần Hoàn",
     department: `Khoa Toán`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Trần Thị Thúy",
     department: `Khoa Toán`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Trần Văn Tuấn",
     department: `Khoa Toán`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Trần Đình Trình",
     department: `Khoa Ngữ Văn`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Trần Đình Tùng",
     department: `Khoa Báo Chí`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Đinh Mạnh Cường",
     department: `Khoa Điện tử viễn thông`,
   },
   {
-    key: i++,
+    key: uuidV4(),
     fullName: "Nguyễn Thị Hồng Hải",
     department: `Khoa Vật Lý`,
   }
@@ -141,7 +140,6 @@ export default function RecipientDocument({
                   titles={["Danh sách cán bộ/giảng viên", "Người nhận đã chọn"]}
                   dataSource={mockData}
                   targetKeys={selectedRecipient}
-                  showSearch={true}
                   pagination={{
                     pageSize: 20,
                     showSizeChanger: true,

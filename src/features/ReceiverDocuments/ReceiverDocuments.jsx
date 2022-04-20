@@ -12,7 +12,7 @@ const CardAnt = styled(Card)`
   padding-left: 0;
   padding-right: 0;
   border: 1px solid rgba(0, 0, 0, 0.24);
-  background-color: ${(props) => (props.isRead ? "white" : "rgba(65, 132, 228, 0.15)")};
+  background-color: ${(props) => (props.$isRead ? "white" : "rgba(65, 132, 228, 0.15)")};
   &:hover {
     filter: grayscale(0);
     cursor: pointer;
@@ -43,7 +43,7 @@ export default function ReceiverDocuments() {
         dataSource={mockDocumentListInbox}
         renderItem={(item) => (
           <BadgeRibbonUrgent text={item.urgentLevel} key={item.key}>
-            <CardAnt isRead={item.isRead}>
+            <CardAnt $isRead={item.isRead}>
               <Row align="middle" justify="space-between" onClick={() => navigate(`${item.key}`)}>
                 <Col span={24}>
                   <List.Item>

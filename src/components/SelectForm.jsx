@@ -1,9 +1,7 @@
 import { Select, Tag } from "antd";
 import React from "react";
 
-export default function SelectForm(props) {
-  const { selectData, onSelect, hasTag } = props;
-
+export default function SelectForm({ selectData, onSelect, hasTag, ...restProps }) {
   const [searchSelect, setSearchSelect] = React.useState(selectData);
 
   const handleSelect = (value) => {
@@ -13,15 +11,15 @@ export default function SelectForm(props) {
     if (value) {
       setSearchSelect(searchSelect.filter((item) => item.value.includes(value)));
     } else {
-      setSearchSelect(props.data);
+      setSearchSelect(selectData);
     }
     if (searchSelect.length === 0) {
-      setSearchSelect(props.data);
+      setSearchSelect(selectData);
     }
   };
 
   return (
-    <Select {...props} onSelect={handleSelect} onSearch={handleSelectSearch} size="large">
+    <Select {...restProps} onSelect={handleSelect} onSearch={handleSelectSearch} size="large">
       {searchSelect?.map((item) => (
         <Select.Option value={item.value} key={item.value}>
           {hasTag ? (

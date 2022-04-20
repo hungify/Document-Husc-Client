@@ -53,7 +53,7 @@ export default function DocumentProperty(props) {
           >
             <SelectForm
               hasTag={1}
-              selectedKey={urgentLevelSelected}
+              showSearch={true}
               onSelect={onUrgentLevelSelect}
               selectData={selectConfig.urgentLevel}
               size="large"
