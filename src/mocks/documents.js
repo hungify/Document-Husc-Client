@@ -41,7 +41,7 @@ for (let i = 0; i < 10; i++) {
 }
 
 export const mockDocumentListProtect = [...mockDocumentListPublic];
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 5; i++) {
   mockDocumentListProtect.push({
     key: uuidv4(),
     typesOfDocument: "Nghị quyết",
@@ -52,7 +52,7 @@ for (let i = 0; i < 1; i++) {
     validityStatus: "Đang có hiệu lực",
     category: "Khoa học công nghệ",
     urgentLevel: "Bình thường",
-    isRead: false,
+    isRead: i % 2 === 0,
     isProtect: true,
     title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
     summary:
