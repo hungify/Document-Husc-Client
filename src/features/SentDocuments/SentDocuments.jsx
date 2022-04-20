@@ -13,7 +13,7 @@ const CardAnt = styled(Card)`
   &:hover {
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: rgba(65, 132, 228, 0.15);
+    background-color: rgba(223, 223, 222, 0.4);
   }
 `;
 
