@@ -27,23 +27,12 @@ export default function AddEditAgencies({ visible, onSubmit, onCancel, agencyId 
       }}
     >
       <Form.Item
-        name="agency_name"
+        name="agencyName"
         label="Tên cơ quan"
         tooltip={{ title: "Tên cơ quan ban hành của bạn?", icon: <InfoCircleOutlined /> }}
         rules={[{ required: true, message: "Trường này là bắt buộc" }]}
       >
         <Input placeholder="Vui lòng nhập vào cơ quan ban hành" />
-      </Form.Item>
-      <Form.Item
-        name="agency_description"
-        label="Mô tả"
-        tooltip={{ title: "Mô tả về cơ quan ban hành của ban?", icon: <InfoCircleOutlined /> }}
-      >
-        <Input.TextArea
-          placeholder="Vui lòng nhập vào mô tả cơ quan ban hành"
-          requiredMark={"optional"}
-          autoSize={{ minRows: 3, maxRows: 5 }}
-        />
       </Form.Item>
     </ModalForm>
   );
