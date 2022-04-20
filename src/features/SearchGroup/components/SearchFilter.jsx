@@ -64,7 +64,7 @@ export default function SearchFilter(props) {
           placeholder="Chọn cơ quan ban hành"
         >
           {dataAgency.map((agency) => (
-            <Select.Option key={agency.id} value={agency.value}>
+            <Select.Option key={agency.key} value={agency.value}>
               {agency.title}
             </Select.Option>
           ))}

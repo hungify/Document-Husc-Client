@@ -53,11 +53,11 @@ export default function ManageCategories() {
   React.useEffect(() => {
     if (!isAddMode) {
       form.setFieldsValue({
-        category_name: selectedNode?.title,
+        categoryName: selectedNode?.title,
       });
     } else {
       form.setFieldsValue({
-        category_name: "",
+        categoryName: "",
       });
     }
   }, [selectedNode, isAddMode]);
@@ -193,14 +193,14 @@ export default function ManageCategories() {
         size="large"
       >
         <Form
-          name="basic"
+          name="addNewCategory"
           form={form}
           onFinish={handleOnSubmit}
           autoComplete="off"
           onFieldsChange={handleFieldsChange}
         >
           <Form.Item
-            name="category_name"
+            name="categoryName"
             label="Tên chuyên mục"
             rules={[{ required: true, message: "Vui lòng nhập vào tên chuyên mục!" }]}
           >

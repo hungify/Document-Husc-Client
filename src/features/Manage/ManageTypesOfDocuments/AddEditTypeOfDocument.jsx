@@ -34,17 +34,6 @@ export default function AddEditTypeOfDocument({ visible, onSubmit, onCancel, doc
       >
         <Input placeholder="Vui lòng nhập vào tên loại văn bản" />
       </Form.Item>
-      <Form.Item
-        name="document_type_description"
-        label="Mô tả"
-        tooltip={{ title: "Mô tả về cơ loại văn bản của ban?", icon: <InfoCircleOutlined /> }}
-      >
-        <Input.TextArea
-          placeholder="Vui lòng nhập vào mô tả loại văn bản"
-          requiredMark={"optional"}
-          autoSize={{ minRows: 3, maxRows: 5 }}
-        />
-      </Form.Item>
     </ModalForm>
   );
 }
