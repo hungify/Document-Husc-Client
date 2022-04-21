@@ -7,7 +7,7 @@ for (let i = 0; i < 10; i++) {
   mockDocumentListPublic.push({
     key: uuidv4(),
     typesOfDocument: "Nghị quyết",
-    documentNumber: "21/NQ-HĐĐH",
+    documentNumber: `${i}/NQ-HĐĐH`,
     signer: "Nguyễn Vũ Quốc Huy",
     dateIssued: "2020-05-01",
     authorityIssued: "Đại Học Huế",
@@ -44,7 +44,7 @@ for (let i = 0; i < 5; i++) {
   mockDocumentListProtect.push({
     key: uuidv4(),
     typesOfDocument: "Nghị quyết",
-    documentNumber: "21/NQ-HĐĐH",
+    documentNumber: `${i}/NQ-DHH`,
     signer: "Nguyễn Vũ Quốc Huy",
     dateIssued: "2020-05-01",
     authorityIssued: "Đại Học Huế",
@@ -53,7 +53,10 @@ for (let i = 0; i < 5; i++) {
     urgentLevel: "Bình thường",
     isRead: i % 2 === 0,
     isProtect: true,
-    title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
+    title:
+      i % 2 === 0
+        ? `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`
+        : `Thành lập Hội đồng Ban Giám khảo chấm sơ khảo Cuộc thi Ý tưởng sáng tạo khoa học và khởi nghiệp nông nghiệp lần thứ IV năm 2022`,
     summary:
       "Căn cứ Nghị định số 30/CP ngày 04 tháng 4 năm 1994 của Chính phủ về việc thành lập Đại học Huế; Căn cứ Thông tư số 10/2020/TT-BGDĐT ngày 14 tháng 5 năm 2020 của Bộ trưởng Bộ Giáo dục và Đào tạo ban hành Quy chế tổ chức và hoạt động của đại học vùng và các cơ sở giáo dục đại học thành viên",
     fileList: [
