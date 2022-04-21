@@ -1,4 +1,4 @@
-import { Avatar, Card, Col, List, Row, Table, Tag, Typography } from "antd";
+import { Avatar, Card, Col, Empty, List, Row, Table, Tag, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import pdfFile2 from "assets/pdf/test2.pdf";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
@@ -150,6 +150,7 @@ export default function PreviewIssueDocument({ formValues }) {
     mockDocumentListProtect,
     formValues.relatedDocuments
   );
+  console.log("🚀 :: relatedDocuments", relatedDocuments);
 
   return (
     <Container>
@@ -206,8 +207,15 @@ export default function PreviewIssueDocument({ formValues }) {
                   defaultCurrent: 1,
                   hideOnSinglePage: true,
                 }}
+                locale={{
+                  emptyText: (
+                    <span>
+                      <Empty description="Danh sách trống" />
+                    </span>
+                  ),
+                }}
                 dataSource={relatedDocuments}
-                renderItem={(item) => (
+                renderItem={(item) => {
                   <BadgeRibbonAgency text={item.urgentLevel} key={item.key}>
                     <CardItemAnt>
                       <List.Item key={item.key}>
@@ -233,8 +241,8 @@ export default function PreviewIssueDocument({ formValues }) {
                         </Row>
                       </List.Item>
                     </CardItemAnt>
-                  </BadgeRibbonAgency>
-                )}
+                  </BadgeRibbonAgency>;
+                }}
               />
             </CardAnt>
           </WrapForm>
