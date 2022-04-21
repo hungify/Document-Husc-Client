@@ -140,6 +140,9 @@ export default function RecipientDocument({
                   titles={["Danh sách cán bộ/giảng viên", "Người nhận đã chọn"]}
                   dataSource={mockData}
                   targetKeys={selectedRecipient}
+                  locale={{
+                    searchPlaceholder: "Nhập vào tên của cán bộ/giảng viên",
+                  }}
                   pagination={{
                     pageSize: 20,
                     showSizeChanger: true,
@@ -147,7 +150,6 @@ export default function RecipientDocument({
                     showLessItems: true,
                   }}
                   showSearch={true}
-                  onSearch={(record, value) => record.fullName.includes(value)}
                   render={(item) => item.title}
                   onChange={handleTableTransferChange}
                   filterOption={(inputValue, item) =>

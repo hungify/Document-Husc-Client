@@ -67,7 +67,18 @@ export default function DocumentSummary({ documentData }) {
           <Table columns={columns} dataSource={[documentData]} pagination={false} bordered />
         </Col>
       </RowAnt>
-      <RowAnt>
+      <RowAnt gutter={[0, 10]}>
+        <Col span={24}>
+          <Typography.Title level={4}>Tiêu đề</Typography.Title>
+          <Typography.Text
+            style={{
+              fontSize: "17px",
+              lineHeight: "1.5",
+            }}
+          >
+            {documentData.title}
+          </Typography.Text>
+        </Col>
         <Col span={24}>
           <Typography.Title level={4}>Tóm tắt văn bản</Typography.Title>
           <Typography.Paragraph

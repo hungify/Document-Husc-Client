@@ -1,5 +1,5 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Col, Form, Row, Tabs } from "antd";
+import { Col, Form, Row, Tabs, Typography } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonTooltip from "components/ButtonTooltip";
 import DocumentSummary from "components/DocumentSummary";
@@ -31,19 +31,23 @@ export default function RelatedDocuments({ relatedDocuments }) {
       title: "Số hiệu văn bản",
     },
     {
+      dataIndex: "title",
+      title: "Tiều đề",
+      render: (text) => {
+        return (
+          <Typography.Paragraph ellipsis={{ rows: 2, expandable: true, symbol: "more" }}>
+            {text}
+          </Typography.Paragraph>
+        );
+      },
+    },
+    {
       dataIndex: "signer",
       title: "Người ký",
     },
     {
-      dataIndex: "authorityIssued",
-      title: "Cơ quan ban hành",
-    },
-    {
-      dataIndex: "typesOfDocument",
-      title: "Loại văn bản",
-    },
-    {
       key: "operation",
+      width: 40,
       fixed: "right",
       onCell: (record) => ({
         onClick: (e) => {
@@ -117,11 +121,13 @@ export default function RelatedDocuments({ relatedDocuments }) {
                 simple: true,
                 showLessItems: true,
               }}
+              locale={{
+                searchPlaceholder: "Nhập vào tiêu đề hoặc số hiệu văn bản",
+              }}
               render={(item) => item.title}
               onChange={handleTableTransferChange}
-              filterOption={(inputValue, item) =>
-                item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
-              }
+              showSearch={true}
+              filterOption={(searchTerm, record) => record.documentNumber.includes(searchTerm)}
               leftColumns={TableColumns}
               rightColumns={TableColumns}
             />
