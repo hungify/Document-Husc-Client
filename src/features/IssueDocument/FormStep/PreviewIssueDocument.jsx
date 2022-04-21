@@ -150,7 +150,6 @@ export default function PreviewIssueDocument({ formValues }) {
     mockDocumentListProtect,
     formValues.relatedDocuments
   );
-  console.log("🚀 :: relatedDocuments", relatedDocuments);
 
   return (
     <Container>
@@ -215,7 +214,7 @@ export default function PreviewIssueDocument({ formValues }) {
                   ),
                 }}
                 dataSource={relatedDocuments}
-                renderItem={(item) => {
+                renderItem={(item) => (
                   <BadgeRibbonAgency text={item.urgentLevel} key={item.key}>
                     <CardItemAnt>
                       <List.Item key={item.key}>
@@ -241,8 +240,8 @@ export default function PreviewIssueDocument({ formValues }) {
                         </Row>
                       </List.Item>
                     </CardItemAnt>
-                  </BadgeRibbonAgency>;
-                }}
+                  </BadgeRibbonAgency>
+                )}
               />
             </CardAnt>
           </WrapForm>
