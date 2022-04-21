@@ -1,5 +1,6 @@
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { Col, DatePicker, Form, Radio, Row, Space } from "antd";
+import { Col, Form, Radio, Row, Space } from "antd";
+import { DatePicker } from "components/customs";
 import React from "react";
 
 const options = [
