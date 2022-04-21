@@ -102,7 +102,6 @@ const columnsRelatedDocument = [
   },
   {
     title: "Loại văn bản",
-
     dataIndex: "typesOfDocument",
   },
 ];

@@ -146,6 +146,8 @@ export default function RecipientDocument({
                     simple: true,
                     showLessItems: true,
                   }}
+                  showSearch={true}
+                  onSearch={(record, value) => record.fullName.includes(value)}
                   render={(item) => item.title}
                   onChange={handleTableTransferChange}
                   filterOption={(inputValue, item) =>

@@ -1,4 +1,4 @@
-import { Card, Form, message, Typography } from "antd";
+import { Card, Form, Typography } from "antd";
 import RelatedDocuments from "features/IssueDocument/components/RelatedDocuments";
 import DocumentClassification from "features/IssueDocument/FormGroup/DocumentClassification";
 import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";

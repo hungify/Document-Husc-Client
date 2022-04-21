@@ -25,7 +25,7 @@ const CollapsePanelAnt = styled(Collapse.Panel)``;
 
 export default function SearchGroup() {
   const [typesOfDocument, setTypesOfDocument] = React.useState([]);
-  const [categoryOfDocument, setCategoryOfDocument] = React.useState([]);
+  const [categoryOfDocument, setCategoryOfDocument] = React.useState();
   const [agencyOfDocument, setAgencyDocument] = React.useState([]);
 
   const [form] = Form.useForm();
