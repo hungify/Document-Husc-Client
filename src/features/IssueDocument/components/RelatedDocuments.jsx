@@ -1,14 +1,14 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Col, Form, Row, Tabs, Typography } from "antd";
+import { Col, Form, Row, Tabs } from "antd";
 import pdfFile from "assets/pdf/test.pdf";
 import ButtonTooltip from "components/ButtonTooltip";
-import DrawerCustom from "components/DrawerCustom";
 import DocumentSummary from "components/DocumentSummary";
+import DrawerCustom from "components/DrawerCustom";
 import TableTransfer from "components/TransferTable";
 import ViewPDF from "components/ViewPDF";
+import { mockDocumentListProtect } from "mocks/documents";
 import React from "react";
 import styled from "styled-components";
-import { mockDocumentListProtect } from "mocks/documents";
 
 const ColFull = styled(Col)`
   & .ant-form-item-control {
@@ -18,7 +18,7 @@ const ColFull = styled(Col)`
 
 export default function RelatedDocuments({ relatedDocuments }) {
   const [visible, setVisible] = React.useState(false);
-  const [documentsClicked, setDocumentsClicked] = React.useState([]);
+  const [documentsClicked, setDocumentsClicked] = React.useState();
 
   const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(relatedDocuments);
 
@@ -43,15 +43,13 @@ export default function RelatedDocuments({ relatedDocuments }) {
       title: "Loại văn bản",
     },
     {
-      title: "Action",
       key: "operation",
       fixed: "right",
       onCell: (record) => ({
         onClick: (e) => {
-          setDocumentsClicked([record]);
+          setDocumentsClicked(record);
         },
       }),
-
       render: () => (
         <ButtonTooltip
           icon={<EyeOutlined />}
