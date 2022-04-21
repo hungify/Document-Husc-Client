@@ -57,6 +57,7 @@ const ButtonReverse = styled(Button)`
 export default function IssueDocument() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
+  console.log("🚀 :: formValues", formValues);
   const [modeSave, setModeSave] = React.useState("official");
   const [required, setRequired] = React.useState(true);
   const [selectedRecipient, setSelectedRecipient] = React.useState([]);

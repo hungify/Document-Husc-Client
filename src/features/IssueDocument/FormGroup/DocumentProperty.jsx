@@ -1,5 +1,7 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Col, DatePicker, Form, Input, Row, Typography } from "antd";
+import { Col, Form, Input, Row, Typography } from "antd";
+import { DatePicker } from "components/customs";
+
 import SelectForm from "components/SelectForm";
 import { selectConfig } from "configs/select";
 import styled from "styled-components";
@@ -54,6 +56,7 @@ export default function DocumentProperty(props) {
             <SelectForm
               hasTag={1}
               showSearch={true}
+              value={urgentLevelSelected}
               onSelect={onUrgentLevelSelect}
               selectData={selectConfig.urgentLevel}
               size="large"
