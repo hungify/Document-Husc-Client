@@ -26,7 +26,7 @@ export default function DocumentClassification(props) {
       <Col span={7}>
         <FormItemAnt
           label={<Typography.Text strong>Loại văn bản</Typography.Text>}
-          name="typesOfDocuments"
+          name="typesOfDocument"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           initialValue="quyet-dinh"
           tooltip={{
