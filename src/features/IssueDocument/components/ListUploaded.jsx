@@ -24,18 +24,19 @@ const ButtonLink = styled(Button)`
 `;
 
 export default function ListUploaded({ fileList }) {
-  const handlePreviewFileClick = (fileUrl) => {
-    window.open(fileUrl, {
+  const handlePreviewFileClick = (file) => {
+    const blob = URL.createObjectURL(file.originFileObj);
+    window.open(blob, {
       target: "_blank",
       rel: "noopener noreferrer",
     });
   };
   return (
     <Wrapper>
-      {fileList.map((file, index) => (
-        <WrapLink key={index}>
-          <ButtonLink type="link" onClick={() => handlePreviewFileClick(file.fileUrl)}>
-            {file.fileName}
+      {fileList.map((file) => (
+        <WrapLink key={file.uid}>
+          <ButtonLink type="link" onClick={() => handlePreviewFileClick(file)}>
+            {file.name}
           </ButtonLink>
         </WrapLink>
       ))}

@@ -55,7 +55,6 @@ export default function FormIssuedDocument({
   const [documentFrom, setDocumentFrom] = React.useState(dataRadio[1].value);
   // const [titleDocument, setTitleDocument] = React.useState();
   //option one
-  const [fileList, setFileList] = React.useState([]);
   // const [summaryDocument, setSummaryDocument] = React.useState();
   //option two
   // const [contentDocument, setContentDocument] = React.useState();

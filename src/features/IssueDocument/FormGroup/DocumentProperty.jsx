@@ -30,6 +30,7 @@ export default function DocumentProperty(props) {
             name="documentNumber"
             label={<Typography.Text strong>Số hiệu văn bản</Typography.Text>}
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
+            initialValue="015/NQ-HĐĐH"
             tooltip={{
               title: "Số hiệu văn bản của bạn?",
               icon: <InfoCircleOutlined />,
@@ -47,6 +48,7 @@ export default function DocumentProperty(props) {
           <FormItemAnt
             label={<Typography.Text strong>Độ khẩn</Typography.Text>}
             name="urgentLevel"
+            initialValue={"binh-thuong"}
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Độ khẩn cấp của văn bản của bạn?",
@@ -68,7 +70,7 @@ export default function DocumentProperty(props) {
         <Col span={8}>
           <FormItemAnt
             label={<Typography.Text strong>Ngày ban hành</Typography.Text>}
-            name="dateIssued"
+            name="issueDate"
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Ngày ban hành văn bản của bạn?",
@@ -80,7 +82,7 @@ export default function DocumentProperty(props) {
               onChange={onIssuedDateChange}
               placeholder="Chọn ngày ban hành"
               size="large"
-              value={issuedDate}
+              value={new Date(issuedDate)}
               style={{ width: "100%" }}
             />
           </FormItemAnt>
@@ -91,6 +93,7 @@ export default function DocumentProperty(props) {
           <FormItemAnt
             label={<Typography.Text strong>Người ký</Typography.Text>}
             name="signer"
+            initialValue="Nguyễn Vũ Quốc Huy"
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Người kí văn bản của bạn?",
