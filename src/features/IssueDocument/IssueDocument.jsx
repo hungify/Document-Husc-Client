@@ -7,6 +7,7 @@ import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
 import React from "react";
 import styled from "styled-components";
 import RecipientDocument from "features/IssueDocument/FormStep/RecipientDocument";
+import axios from "axios";
 
 const steps = [
   {
@@ -70,6 +71,7 @@ export default function IssueDocument() {
   };
 
   const handleSubmitForm = (values) => {
+    console.log("🚀 :: values", values);
     if (values) {
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
@@ -120,11 +122,35 @@ export default function IssueDocument() {
     // save draft
   };
 
-  const handleIssuanceDocumentClick = () => {
+  const handleIssuanceDocumentClick = async () => {
     form.submit();
     handleSubmitForm();
 
     setModeSave("official");
+
+    const data = formValues[formValues.length - 1];
+
+    const formData = new FormData();
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (key === "files") {
+          data[key].fileList.forEach((file) => {
+            formData.append(key, file.originFileObj);
+          });
+        } else {
+          formData.append(key, data[key]);
+        }
+      }
+    }
+    formData.append("publisherId", "6262d3736129d8ca00aa894d");
+    formData.append("publishDate", new Date());
+
+    const res = await axios.post("http://localhost:8000/api/v1/documents/", formData, {
+      headers: {
+        ContentType: "multipart/form-data",
+      },
+    });
+
     // save official
   };
 

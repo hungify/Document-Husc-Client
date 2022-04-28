@@ -28,6 +28,7 @@ export default function DocumentClassification(props) {
           label={<Typography.Text strong>Loại văn bản</Typography.Text>}
           name="typesOfDocuments"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
+          initialValue="quyet-dinh"
           tooltip={{
             title: "Loại văn bản của bạn?",
             icon: <InfoCircleOutlined />,
@@ -50,6 +51,7 @@ export default function DocumentClassification(props) {
         <FormItemAnt
           label={<Typography.Text strong>Chuyên mục</Typography.Text>}
           name="category"
+          initialValue="khoa-hoc-cong-nghe"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Chuyên mục văn bản của bạn?",
@@ -71,7 +73,8 @@ export default function DocumentClassification(props) {
       <Col span={7}>
         <FormItemAnt
           label={<Typography.Text strong>Cơ quan ban hành</Typography.Text>}
-          name="authorityIssued"
+          name="agency"
+          initialValue="dai-hoc-hue"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Cơ quan ban hành văn bản của bạn?",
@@ -79,7 +82,7 @@ export default function DocumentClassification(props) {
           }}
         >
           <SelectForm
-            selectData={selectConfig.authorityIssued}
+            selectData={selectConfig.agency}
             value={agencyIssueDocument}
             onSelect={onAgencyIssueDocumentSelect}
             showSearch={true}

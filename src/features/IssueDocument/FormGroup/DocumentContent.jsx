@@ -1,5 +1,5 @@
-import { InfoCircleOutlined, UploadOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, Radio, Row, Typography, Upload } from "antd";
+import { InboxOutlined, InfoCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, Col, Form, Input, message, Radio, Row, Typography, Upload } from "antd";
 import RadioGroup from "components/RadioGroup";
 import React from "react";
 import styled from "styled-components";
@@ -7,25 +7,6 @@ import styled from "styled-components";
 const FormItemAnt = styled(Form.Item)`
   padding-left: 20px;
 `;
-const defaultFileList = [
-  {
-    uid: "1",
-    name: "xxx.pdf",
-    status: "done",
-    response: "Server Error 500", // custom error message to show
-  },
-  {
-    uid: "2",
-    name: "yyy.pdf",
-    status: "done",
-  },
-  {
-    uid: "3",
-    name: "zzz.pdf",
-    status: "error",
-    response: "Server Error 500", // custom error message to show
-  },
-];
 
 export default function DocumentContent(props) {
   const {
@@ -41,11 +22,7 @@ export default function DocumentContent(props) {
     required,
   } = props;
 
-  const [fileList, setFileList] = React.useState(defaultFileList);
-  const handleUploadFileChange = (info) => {};
-  const handleBeforeUploadFile = (file) => {
-    return true;
-  };
+  const [fileList, setFileList] = React.useState([]);
   return (
     <>
       <Row>
@@ -70,6 +47,7 @@ export default function DocumentContent(props) {
         <Col span={20}>
           <FormItemAnt
             name="title"
+            initialValue="Test title"
             label={<Typography.Text strong>Tiêu đề</Typography.Text>}
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
@@ -99,20 +77,43 @@ export default function DocumentContent(props) {
                   icon: <InfoCircleOutlined />,
                 }}
               >
-                <Upload
+                <Upload.Dragger
                   multiple
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  fileList={fileList}
-                  defaultFileList={fileList}
-                  showUploadList={{
-                    previewIcon: required,
-                    showPreviewIcon: required,
+                  beforeUpload={(file, fileList) => {
+                    setFileList([...fileList, file]);
+                    return false;
                   }}
-                  onChange={handleUploadFileChange}
-                  beforeUpload={handleBeforeUploadFile}
+                  onRemove={(file) => {
+                    const index = fileList.indexOf(file);
+                    const newFileList = fileList.slice();
+                    newFileList.splice(index, 1);
+                    setFileList(newFileList);
+                  }}
                 >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload>
+                  <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                  </p>
+                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                  <p className="ant-upload-hint">
+                    Support for a single or bulk upload. Strictly prohibit from uploading company
+                    data or other band files
+                  </p>
+                </Upload.Dragger>
+                {/* <Upload
+                  multiple
+                  beforeUpload={(file, fileList) => {
+                    setFileList([...fileList, file]);
+                    return false;
+                  }}
+                  onRemove={(file) => {
+                    const index = fileList.indexOf(file);
+                    const newFileList = fileList.slice();
+                    newFileList.splice(index, 1);
+                    setFileList(newFileList);
+                  }}
+                >
+                  <Button icon={<UploadOutlined />}>Select File</Button>
+                </Upload> */}
               </FormItemAnt>
             </Col>
             <Col span={20}>
@@ -120,6 +121,7 @@ export default function DocumentContent(props) {
                 <FormItemAnt
                   label={<Typography.Text strong>Tóm tắt</Typography.Text>}
                   name="summary"
+                  initialValue="Test summary"
                   tooltip={{
                     title: "Tóm tắt nhanh văn bản của bạn?",
                     icon: <InfoCircleOutlined />,
@@ -139,6 +141,7 @@ export default function DocumentContent(props) {
           <Col span={24}>
             <FormItemAnt
               label={<Typography.Text strong>Nội dung</Typography.Text>}
+              initialValue="Test content"
               name="content"
               rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             >
