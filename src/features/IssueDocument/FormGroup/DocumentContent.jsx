@@ -1,5 +1,5 @@
-import { InboxOutlined, InfoCircleOutlined, UploadOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, message, Radio, Row, Typography, Upload } from "antd";
+import { InboxOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { Col, Form, Input, message, Row, Typography, Upload } from "antd";
 import RadioGroup from "components/RadioGroup";
 import React from "react";
 import styled from "styled-components";
@@ -78,11 +78,23 @@ export default function DocumentContent(props) {
                 }}
               >
                 <Upload.Dragger
+                  name="files"
                   multiple
-                  beforeUpload={(file, fileList) => {
-                    setFileList([...fileList, file]);
+                  fileList={fileList}
+                  beforeUpload={(file) => {
+                    const typesShouldBe = /application\/pdf|application\/doc|application\/docx/;
+                    const isMatch = typesShouldBe.test(file.type);
+
+                    if (!isMatch) {
+                      message.error(
+                        `${file.name} không đúng định dạng, vui lòng chọn tệp văn bản có định dạng là .pdf, .doc, .docx`
+                      );
+                    } else {
+                      setFileList([...fileList, file]);
+                    }
                     return false;
                   }}
+                  accept=".pdf,.doc,.docx"
                   onRemove={(file) => {
                     const index = fileList.indexOf(file);
                     const newFileList = fileList.slice();
@@ -93,11 +105,8 @@ export default function DocumentContent(props) {
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                   </p>
-                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company
-                    data or other band files
-                  </p>
+                  <p className="ant-upload-text">Kéo thả hoặc click để tải lên</p>
+                  <p className="ant-upload-hint">Hỗ trợ định dạng: .pdf, .doc, .docx</p>
                 </Upload.Dragger>
                 {/* <Upload
                   multiple

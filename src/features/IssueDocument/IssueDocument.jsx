@@ -145,11 +145,8 @@ export default function IssueDocument() {
     formData.append("publisherId", "6262d3736129d8ca00aa894d");
     formData.append("publishDate", new Date());
 
-    const res = await axios.post("http://localhost:8000/api/v1/documents/", formData, {
-      headers: {
-        ContentType: "multipart/form-data",
-      },
-    });
+    const res = await axios.post("http://localhost:8000/api/v1/documents/", formData);
+    console.log("🚀 :: res", res);
 
     // save official
   };
