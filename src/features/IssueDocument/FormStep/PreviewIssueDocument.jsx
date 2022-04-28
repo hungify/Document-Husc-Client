@@ -40,12 +40,11 @@ const CardItemAnt = styled(Card)`
 const columnsClassification = [
   {
     title: "Loại văn bản",
-
-    dataIndex: "typesOfDocument",
+    dataIndex: "typesOfDocuments",
   },
   {
     title: "Cơ quan ban hành",
-    dataIndex: "authorityIssued",
+    dataIndex: "agency",
   },
   {
     title: "Chuyên mục",
@@ -60,7 +59,7 @@ const columnsProperty = [
   },
   {
     title: "Ngày ban hành",
-    dataIndex: "dateIssued",
+    dataIndex: "dateIssue",
   },
 
   {
@@ -82,7 +81,7 @@ const columnsProperty = [
 const columnsRelatedDocument = [
   {
     title: "Cơ quan ban hành",
-    dataIndex: "authorityIssued",
+    dataIndex: "agecy",
   },
   {
     title: "Số hiệu văn bản",
@@ -90,7 +89,7 @@ const columnsRelatedDocument = [
   },
   {
     title: "Ngày ban hành",
-    dataIndex: "dateIssued",
+    dataIndex: "dateIssue",
   },
   {
     title: "Chuyên mục",
@@ -110,11 +109,10 @@ export default function PreviewIssueDocument({ formValues }) {
   const dataClassification = [
     {
       key: uuidv4(),
-      typesOfDocument: _.find(selectConfig.typesOfDocuments, {
+      typesOfDocuments: _.find(selectConfig.typesOfDocuments, {
         value: formValues.typesOfDocuments,
-      }).label,
-      authorityIssued: _.find(selectConfig.authorityIssued, { value: formValues.authorityIssued })
-        .label,
+      })?.label,
+      agency: _.find(selectConfig.agency, { value: formValues.agency }).label,
       category: findNodeByKey(selectConfig.categories, { value: formValues.category }).title,
     },
   ];
@@ -125,7 +123,7 @@ export default function PreviewIssueDocument({ formValues }) {
       urgentLevel: _.find(selectConfig.urgentLevel, { value: formValues.urgentLevel }).label,
       signer: formValues.signer,
       documentNumber: formValues.documentNumber,
-      dateIssued: new Date(formValues.dateIssued).toLocaleDateString(),
+      dateIssue: new Date(formValues.dateIssue).toLocaleDateString(),
     },
   ];
 
@@ -134,16 +132,7 @@ export default function PreviewIssueDocument({ formValues }) {
       key: uuidv4(),
       title: formValues.title,
       content: formValues?.content,
-      fileList: [
-        {
-          fileName: "name1.pdf",
-          fileUrl: pdfFile,
-        },
-        {
-          fileName: "name2.pdf",
-          fileUrl: pdfFile2,
-        },
-      ],
+      fileList: formValues?.files?.fileList,
     },
   ];
   const relatedDocuments = findElementInTwoArray(

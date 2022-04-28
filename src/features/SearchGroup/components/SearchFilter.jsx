@@ -45,7 +45,7 @@ export default function SearchFilter({
       </Col>
       <Col span={7}>
         <SelectForm
-          selectData={selectConfig.authorityIssued}
+          selectData={selectConfig.agency}
           value={agencyOfDocument}
           onSelect={onAgencySelect}
           showSearch={true}
