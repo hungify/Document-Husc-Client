@@ -1,6 +1,6 @@
 import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs, TreeSelect } from "antd";
-import { getRole, isAuthenticated } from "app/selectors/authSelector";
+import { getRole, isAuthenticated } from "app/selectors/auth";
 import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import ModalForm from "components/ModalForm";
@@ -13,11 +13,17 @@ import ChatRoom from "features/ChatRoom/ChatRoom";
 import RelatedDocument from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import _ from "lodash";
-import { mockDocumentListProtect, mockDocumentListPublic } from "mocks/documents";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
+import {
+  getProperty,
+  getFiles,
+  getRelatedDocument,
+  getParticipants,
+} from "app/selectors/documentDetails";
 
 const ButtonAnt = styled(Button)`
   display: flex;
@@ -28,21 +34,21 @@ export default function DetailDocument() {
   const [document, setDocument] = React.useState();
   const isAuth = useSelector(isAuthenticated);
   const { slug } = useParams();
-
-  React.useEffect(() => {
-    if (isAuth) {
-      const document = _.find(mockDocumentListProtect, { key: slug });
-      setDocument(document);
-    } else {
-      const document = _.find(mockDocumentListPublic, { key: slug });
-      setDocument(document);
-    }
-  }, [isAuth, slug]);
-
+  const dispatch = useDispatch();
+  const property = useSelector(getProperty);
+  const files = useSelector(getFiles);
+  const relatedDocuments = useSelector(getRelatedDocument);
+  const participants = useSelector(getParticipants);
   const [treeReceiver, setTreeReceiver] = React.useState();
-
   const [activeTab, setActiveTab] = React.useState("property");
   const role = useSelector(getRole);
+  const [previewVisible, setPreviewVisible] = React.useState(false);
+  const [previewFile, setPreviewFile] = React.useState();
+
+  React.useEffect(() => {
+    dispatch(fetchDocumentDetails(slug));
+  }, [isAuth, slug]);
+
   const handleTabChangeClick = (key) => {
     setActiveTab(key);
   };
@@ -147,15 +153,32 @@ export default function DetailDocument() {
           <Col flex="auto">
             <Tabs activeKey={activeTab} type="card" size="large" onTabClick={handleTabChangeClick}>
               <Tabs.TabPane tab="Thuộc tính" key="property">
-                {document && <DocumentSummary documentData={document} />}
+                {!_.isEmpty(property) && <DocumentSummary dataSource={property} />}
               </Tabs.TabPane>
               <Tabs.TabPane tab="Văn bản gốc" key="preview">
-                <PreviewPdf activeTab={activeTab} onClosePreview={onClosePreview} />
+                {files.map((file) => (
+                  <Button
+                    key={file.originalName}
+                    onClick={() => {
+                      setPreviewVisible(true);
+                      setPreviewFile(file);
+                    }}
+                  >
+                    {file.originalName}
+                  </Button>
+                ))}
+                {previewVisible && (
+                  <PreviewPdf
+                    previewFile={previewFile}
+                    previewVisible={previewVisible}
+                    setPreviewVisible={setPreviewVisible}
+                  />
+                )}
               </Tabs.TabPane>
               <Tabs.TabPane tab="Văn bản liên quan" key="related">
-                <RelatedDocument />
+                <RelatedDocument dataSource={relatedDocuments} />
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Cây xử lý" key="tree">
+              {/* <Tabs.TabPane tab="Cây xử lý" key="tree">
                 <TreeProcessing treeReceiver={document?.treeProcessing} />
               </Tabs.TabPane>
               {(role === ROLES.ADMIN || role === ROLES.USER) && document?.isProtect && (
@@ -167,7 +190,7 @@ export default function DetailDocument() {
                     <ChatRoom />
                   </Tabs.TabPane>
                 </>
-              )}
+              )} */}
             </Tabs>
           </Col>
         </Row>

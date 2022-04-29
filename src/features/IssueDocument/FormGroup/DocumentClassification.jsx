@@ -28,17 +28,16 @@ export default function DocumentClassification(props) {
           label={<Typography.Text strong>Loại văn bản</Typography.Text>}
           name="typesOfDocument"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
-          initialValue="quyet-dinh"
           tooltip={{
             title: "Loại văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
+          initialValue={typesOfDocument}
         >
           <SelectForm
             selectData={selectConfig.typesOfDocuments}
             onSelect={onTypesOfDocumentSelect}
             showSearch={true}
-            value={typesOfDocument}
             placeholder="Chọn loại văn bản"
             size="large"
             allowClear
@@ -51,15 +50,14 @@ export default function DocumentClassification(props) {
         <FormItemAnt
           label={<Typography.Text strong>Chuyên mục</Typography.Text>}
           name="category"
-          initialValue="khoa-hoc-cong-nghe"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Chuyên mục văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
+          initialValue={categoryOfDocument}
         >
           <TreeSelectForm
-            value={categoryOfDocument}
             treeData={selectConfig.categories}
             onTreeSelect={onCategoryOfDocumentSelect}
             onTreeDeSelect={onCategoryOfDocumentDeSelect}
@@ -74,16 +72,15 @@ export default function DocumentClassification(props) {
         <FormItemAnt
           label={<Typography.Text strong>Cơ quan ban hành</Typography.Text>}
           name="agency"
-          initialValue="dai-hoc-hue"
           rules={[{ required: required, message: "Trường này là bắt buộc" }]}
           tooltip={{
             title: "Cơ quan ban hành văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
+          initialValue={agencyIssueDocument}
         >
           <SelectForm
             selectData={selectConfig.agency}
-            value={agencyIssueDocument}
             onSelect={onAgencyIssueDocumentSelect}
             showSearch={true}
             placeholder="Chọn cơ quan ban hành"

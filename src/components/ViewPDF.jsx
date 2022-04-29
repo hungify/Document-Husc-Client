@@ -29,12 +29,15 @@ const Wrapper = styled.div`
 `;
 
 export default function PreviewPDF(props) {
-  const { pdfFile, onLoadFileSuccess, onPreviousClick, onNextClick, pageNumber } = props;
+  const { fileLocation, onLoadFileSuccess, onPreviousClick, onNextClick, pageNumber } = props;
 
   return (
     <>
       <Wrapper>
-        <Document file={pdfFile} onLoadSuccess={(e) => onLoadFileSuccess(e._pdfInfo.numPages)}>
+        <Document
+          file={fileLocation}
+          onLoadSuccess={(e) => onLoadFileSuccess(e._pdfInfo.numPages)}
+        >
           <Page pageNumber={pageNumber} scale={1.2} />
         </Document>
       </Wrapper>

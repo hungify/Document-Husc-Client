@@ -1,9 +1,8 @@
 import { DownloadOutlined, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Card, Col, List, Row, Typography } from "antd";
+import { Avatar, Card, Col, Empty, List, Row, Typography } from "antd";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonFlexible from "components/ButtonTooltip";
 import { saveAs } from "file-saver";
-import { mockRelatedDocument } from "mocks/relatedDocument";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -17,7 +16,7 @@ const CardItemAnt = styled(Card)`
   border-radius: 10px;
 `;
 
-export default function RelatedDocuments() {
+export default function RelatedDocuments({ dataSource }) {
   const handlePreviewFileClick = (item) => {
     window.open(item, {
       target: "_blank",
@@ -41,7 +40,14 @@ export default function RelatedDocuments() {
             console.log(page);
           },
         }}
-        dataSource={mockRelatedDocument}
+        locale={{
+          emptyText: (
+            <span>
+              <Empty description="Danh sách trống" />
+            </span>
+          ),
+        }}
+        dataSource={dataSource}
         renderItem={(item) => (
           <List.Item>
             <BadgeRibbonUrgency text={item.urgentLevel} key={item.key}>

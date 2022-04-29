@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const requestConfig = {
-  baseURL: process.env.REACT_APP_ENDPOINT_URL,
+  baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
   timeout: 5000,
   showSpinner: false,
 };

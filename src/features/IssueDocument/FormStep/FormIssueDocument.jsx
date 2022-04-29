@@ -1,4 +1,5 @@
 import { Card, Form, Typography } from "antd";
+import dayjs from "dayjs";
 import RelatedDocuments from "features/IssueDocument/components/RelatedDocuments";
 import DocumentClassification from "features/IssueDocument/FormGroup/DocumentClassification";
 import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";
@@ -39,29 +40,31 @@ export default function FormIssuedDocument({
   // }, [formValues]);
 
   // Document Classification
-  const [typesOfDocuments, setTypesOfDocuments] = React.useState();
-  const [categoryOfDocument, setCategoryOfDocument] = React.useState();
-  const [agencyIssueDocument, setAgencyIssueDocument] = React.useState();
+  const [typesOfDocument, setTypesOfDocument] = React.useState("quyet-dinh");
+  const [categoryOfDocument, setCategoryOfDocument] = React.useState("khoa-hoc-cong-nghe");
+  const [agencyIssueDocument, setAgencyIssueDocument] = React.useState("dai-hoc-hue");
   // Document Classification
 
   // Document Property
-  const [documentNumber, setDocumentNumber] = React.useState();
-  const [urgentLevel, setUrgentLevel] = React.useState();
-  const [issuedDate, setIssuedDate] = React.useState();
-  const [signerDocument, setSignerDocument] = React.useState();
+  const [documentNumber, setDocumentNumber] = React.useState("015/NQ-HĐĐH");
+  const [urgentLevel, setUrgentLevel] = React.useState("binh-thuong");
+  const [issuedDate, setIssuedDate] = React.useState(dayjs(new Date()));
+  const [signerDocument, setSignerDocument] = React.useState("Nguyễn Vũ Quốc Huy");
   // Document Property
 
   // Document Content
-  const [documentFrom, setDocumentFrom] = React.useState(dataRadio[1].value);
-  // const [titleDocument, setTitleDocument] = React.useState();
+  const [documentFrom, setDocumentFrom] = React.useState(dataRadio[0].value);
+  const [titleDocument, setTitleDocument] = React.useState("This is my title");
   //option one
-  // const [summaryDocument, setSummaryDocument] = React.useState();
+  const [summaryDocument, setSummaryDocument] = React.useState("This is my summary");
   //option two
-  // const [contentDocument, setContentDocument] = React.useState();
+  const [contentDocument, setContentDocument] = React.useState("This is my content");
+
+  const [fileList, setFileList] = React.useState([]);
 
   // Document Classification
   const handleTypesOfDocumentSelect = (value) => {
-    setTypesOfDocuments(value);
+    setTypesOfDocument(value);
   };
 
   const handleCategoryOfDocumentSelect = (value) => {
@@ -98,9 +101,9 @@ export default function FormIssuedDocument({
     setDocumentFrom(e.target.value);
   };
 
-  // const handleTitleDocumentChange = (e) => {
-  //   setTitleDocument(e.target.value);
-  // };
+  const handleTitleDocumentChange = (e) => {
+    setTitleDocument(e.target.value);
+  };
 
   // const handleContentDocumentChange = (e) => {
   //   setContentDocument(e.target.value);
@@ -109,18 +112,6 @@ export default function FormIssuedDocument({
 
   // const handleSummaryDocumentChange = (value) => {
   //   setSummaryDocument(value);
-  // };
-
-  // const handleUploadFileChange = (info) => {
-  //   const { status } = info.file;
-  //   if (status !== "uploading") {
-  //     console.log(info.file, info.fileList);
-  //   }
-  //   if (status === "done") {
-  //     message.success(`${info.file.name} file uploaded successfully.`);
-  //   } else if (status === "error") {
-  //     message.error(`${info.file.name} file upload failed.`);
-  //   }
   // };
 
   return (
@@ -133,7 +124,7 @@ export default function FormIssuedDocument({
     >
       <CardAnt title={<Typography.Text strong>Thông tin phân loại văn bản</Typography.Text>}>
         <DocumentClassification
-          typesOfDocuments={typesOfDocuments}
+          typesOfDocument={typesOfDocument}
           onTypesOfDocumentSelect={handleTypesOfDocumentSelect}
           categoryOfDocument={categoryOfDocument}
           onCategoryOfDocumentSelect={handleCategoryOfDocumentSelect}
@@ -162,14 +153,15 @@ export default function FormIssuedDocument({
         <DocumentContent
           documentFrom={documentFrom}
           dataRadio={dataRadio}
-          onDocumentFromChange={handleDocumentFromChange}
-          // summaryValue={summaryDocument}
+          // onDocumentFromChange={handleDocumentFromChange}
+          summaryValue={summaryDocument}
           // onSummaryChange={handleSummaryDocumentChange}
-          // titleDocument={titleDocument}
-          // onTitleDocumentChange={handleTitleDocumentChange}
-          // contentDocument={contentDocument}
+          titleDocument={titleDocument}
+          onTitleDocumentChange={handleTitleDocumentChange}
+          contentDocument={contentDocument}
           // onContentDocumentChange={handleContentDocumentChange}
-
+          fileList={fileList}
+          setFileList={setFileList}
           required={required}
         />
       </CardAnt>

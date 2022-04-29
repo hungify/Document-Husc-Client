@@ -6,16 +6,18 @@ import {
   ExpandOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card, Col, List, Row, Space, Tag, Typography } from "antd";
-import { getRole } from "app/selectors/authSelector";
+import { getRole } from "app/selectors/auth";
 import pdfFile from "assets/pdf/test.pdf";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
 import { ROLES } from "configs/roles";
 import { saveAs } from "file-saver";
+import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 const CardItemAnt = styled(Card)`
   background-color: rgb(255, 255, 255);
@@ -34,7 +36,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
   const handleSaveFileClick = (item) => {
     saveAs(item, "name_cua_file.pdf");
   };
-  return (
+  return !_.isEmpty(dataRender) ? (
     <List
       itemLayout="vertical"
       size="default"
@@ -46,18 +48,18 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
       }}
       dataSource={dataRender}
       renderItem={(item) => (
-        <List.Item key={item.key}>
-          <BadgeRibbonUrgency text={item.urgentLevel} key={item.key}>
+        <List.Item key={item._id}>
+          <BadgeRibbonUrgency text={item.urgentLevel.label}>
             <CardItemAnt bordered={false}>
               <Row align="middle" justify="space-between">
                 <Col span={24}>
                   <List.Item.Meta
                     avatar={
                       <Avatar size="large">
-                        {item.treeProcessing[0]?.name?.charAt(0)?.toUpperCase() ?? "?"}
+                        {item.publisher?.username?.charAt(0)?.toUpperCase() ?? "?"}
                       </Avatar>
                     }
-                    title={<Link to={`/detail/${item.key}`}>{item.title}</Link>}
+                    title={<Link to={`/detail/${item._id}`}>{item.title}</Link>}
                   />
                 </Col>
                 <Col span={8}>
@@ -76,11 +78,13 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                   <Space direction="vertical">
                     <Typography.Text>
                       Ngày Ban hành:&nbsp;
-                      <Typography.Text strong>{item.dateIssued}</Typography.Text>
+                      <Typography.Text strong>
+                        {dayjs(item.issueDate).format("DD/MM/YYYY")}
+                      </Typography.Text>
                     </Typography.Text>
                     <Typography.Text>
                       Cơ quan ban hành:&nbsp;
-                      <Typography.Text strong>{item.authorityIssued}</Typography.Text>
+                      <Typography.Text strong>{item.agency.label}</Typography.Text>
                     </Typography.Text>
                   </Space>
                 </Col>
@@ -149,5 +153,5 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
         </List.Item>
       )}
     />
-  );
+  ) : null;
 }

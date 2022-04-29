@@ -1,28 +1,20 @@
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Drawer, Space } from "antd";
-import pdfFile from "assets/pdf/test.pdf";
 import ButtonFlexible from "components/ButtonTooltip";
 import ViewPDF from "components/ViewPDF";
 import { saveAs } from "file-saver";
 import React from "react";
 
-export default function PreviewPdf({ activeTab, onClosePreview }) {
+export default function PreviewPdf({ previewFile, setPreviewVisible, previewVisible }) {
   const [totalPage, setTotalPage] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    if (activeTab === "preview") setVisible(true);
-    else setVisible(false);
-  }, [activeTab]);
 
   const onClose = () => {
-    setVisible(false);
-    onClosePreview(true);
+    setPreviewVisible(false);
   };
 
   const handleSaveFileClick = () => {
-    saveAs(pdfFile, "name_cua_file.pdf");
+    saveAs(previewFile.location, previewFile.originalName);
   };
 
   const handleLoadFileSuccess = (numPages) => {
@@ -44,7 +36,7 @@ export default function PreviewPdf({ activeTab, onClosePreview }) {
         placement="top"
         size="large"
         onClose={onClose}
-        visible={visible}
+        visible={previewVisible}
         extra={
           <Space>
             <Button onClick={onClose}>Ẩn</Button>
@@ -53,7 +45,7 @@ export default function PreviewPdf({ activeTab, onClosePreview }) {
               shape="round"
               icon={<DownloadOutlined />}
               onButtonClick={handleSaveFileClick}
-              document={pdfFile}
+              document={previewFile}
             >
               Tải xuống
             </ButtonFlexible>
@@ -61,7 +53,7 @@ export default function PreviewPdf({ activeTab, onClosePreview }) {
         }
       >
         <ViewPDF
-          pdfFile={pdfFile}
+          fileLocation={previewFile.location}
           onPreviousClick={handlePreviousClick}
           onNextClick={handleNextClick}
           onLoadFileSuccess={handleLoadFileSuccess}

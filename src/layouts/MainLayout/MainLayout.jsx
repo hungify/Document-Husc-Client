@@ -1,5 +1,5 @@
 import { Layout } from "antd";
-import { getRole, isAuthenticated } from "app/selectors/authSelector";
+import { getRole, isAuthenticated } from "app/selectors/auth";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
 import BreadcrumbTrail from "layouts/MainLayout/components/BreadcrumbTrail";
