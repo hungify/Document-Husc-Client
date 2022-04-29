@@ -1,7 +1,6 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Input, Row, Typography } from "antd";
 import { DatePicker } from "components/customs";
-
 import SelectForm from "components/SelectForm";
 import { selectConfig } from "configs/select";
 import styled from "styled-components";
@@ -30,16 +29,15 @@ export default function DocumentProperty(props) {
             name="documentNumber"
             label={<Typography.Text strong>Số hiệu văn bản</Typography.Text>}
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
-            initialValue="015/NQ-HĐĐH"
             tooltip={{
               title: "Số hiệu văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
+            initialValue={documentNumber}
           >
             <Input
               placeholder="Nhập vào số hiệu văn bản"
               size="large"
-              value={documentNumber}
               onChange={onDocumentNumberChange}
             />
           </FormItemAnt>
@@ -48,12 +46,12 @@ export default function DocumentProperty(props) {
           <FormItemAnt
             label={<Typography.Text strong>Độ khẩn</Typography.Text>}
             name="urgentLevel"
-            initialValue={"binh-thuong"}
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Độ khẩn cấp của văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
+            initialValue={urgentLevelSelected}
           >
             <SelectForm
               hasTag={1}
@@ -76,13 +74,13 @@ export default function DocumentProperty(props) {
               title: "Ngày ban hành văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
+            initialValue={issuedDate}
           >
             <DatePicker
               format="DD/MM/YYYY"
               onChange={onIssuedDateChange}
               placeholder="Chọn ngày ban hành"
               size="large"
-              value={new Date(issuedDate)}
               style={{ width: "100%" }}
             />
           </FormItemAnt>
@@ -93,17 +91,16 @@ export default function DocumentProperty(props) {
           <FormItemAnt
             label={<Typography.Text strong>Người ký</Typography.Text>}
             name="signer"
-            initialValue="Nguyễn Vũ Quốc Huy"
             rules={[{ required: required, message: "Trường này là bắt buộc" }]}
             tooltip={{
               title: "Người kí văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
+            initialValue={signerDocument}
           >
             <Input
               placeholder="Nhập vào người kí văn bản"
               size="large"
-              value={signerDocument}
               onChange={onSignerDocumentChange}
             />
           </FormItemAnt>

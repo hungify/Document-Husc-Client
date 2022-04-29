@@ -1,13 +1,16 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, SaveOutlined } from "@ant-design/icons";
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Typography } from "antd";
+import { getLoadingIssueDocument, getSuccessIssueDocument } from "app/selectors/issueDocument";
 import PlaneIcon from "components/Icons/PlaneIcon";
+import LoadingOverlay from "components/LoadingOverlay";
 import FormIssuedDocument from "features/IssueDocument/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
-import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
-import React from "react";
-import styled from "styled-components";
 import RecipientDocument from "features/IssueDocument/FormStep/RecipientDocument";
-import axios from "axios";
+import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
+import { issueDocumentOfficial } from "features/IssueDocument/issueDocumentSlice";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
 const steps = [
   {
@@ -58,9 +61,18 @@ const ButtonReverse = styled(Button)`
 export default function IssueDocument() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
-  const [modeSave, setModeSave] = React.useState("official");
+  const [modeSave, setModeSave] = React.useState(null);
   const [required, setRequired] = React.useState(true);
   const [selectedRecipient, setSelectedRecipient] = React.useState([]);
+  const dispatch = useDispatch();
+  const hasSuccess = useSelector(getSuccessIssueDocument);
+  const isLoading = useSelector(getLoadingIssueDocument);
+
+  React.useEffect(() => {
+    if (hasSuccess && !isLoading && currentStep === 2) {
+      setCurrentStep(currentStep + 1);
+    }
+  }, [hasSuccess, isLoading]);
 
   const [form] = Form.useForm();
 
@@ -71,8 +83,8 @@ export default function IssueDocument() {
   };
 
   const handleSubmitForm = (values) => {
-    console.log("🚀 :: values", values);
     if (values) {
+      console.log("🚀 :: values", values);
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
           if (item.step === values.step) {
@@ -87,10 +99,10 @@ export default function IssueDocument() {
       } else {
         setFormValues([{ ...values }]);
       }
-      if (modeSave === "official") {
-        setCurrentStep(currentStep + 1);
-      } else {
+      if (modeSave === "draft") {
         setCurrentStep(steps[steps.length - 1].key);
+      } else {
+        setCurrentStep(currentStep + 1);
       }
     }
   };
@@ -99,7 +111,6 @@ export default function IssueDocument() {
     if (currentStep === 0) {
       setRequired(true);
       form.submit();
-      handleSubmitForm();
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -123,11 +134,7 @@ export default function IssueDocument() {
   };
 
   const handleIssuanceDocumentClick = async () => {
-    form.submit();
-    handleSubmitForm();
-
     setModeSave("official");
-
     const data = formValues[formValues.length - 1];
 
     const formData = new FormData();
@@ -142,13 +149,11 @@ export default function IssueDocument() {
         }
       }
     }
-    formData.append("publisherId", "6262d3736129d8ca00aa894d");
+    formData.append("publisher", "6262d3736129d8ca00aa894d");
     formData.append("publishDate", new Date());
 
-    const res = await axios.post("http://localhost:8000/api/v1/documents/", formData);
-    console.log("🚀 :: res", res);
-
-    // save official
+    dispatch(issueDocumentOfficial(formData));
+    // if don't go to next step
   };
 
   return (
@@ -187,29 +192,29 @@ export default function IssueDocument() {
               <PreviewIssueDocument formValues={formValues[formValues.length - 1]} />
             </Col>
           ) : steps[currentStep].key === 2 ? (
-            <>
-              <Col span={24}>
-                <WrapAlert>
-                  <Alert
-                    message={
-                      <Typography.Text strong>
-                        Văn bản sẽ được ban hành công khai nếu danh sách người nhận trống
-                      </Typography.Text>
-                    }
-                    type="warning"
-                    showIcon
-                  />
-                </WrapAlert>
-                <WrapForm>
+            <Col span={24}>
+              <WrapAlert>
+                <Alert
+                  message={
+                    <Typography.Text strong>
+                      Văn bản sẽ được ban hành công khai nếu danh sách người nhận trống
+                    </Typography.Text>
+                  }
+                  type="warning"
+                  showIcon
+                />
+              </WrapAlert>
+              <WrapForm>
+                <LoadingOverlay active={isLoading}>
                   <RecipientDocument
                     form={form}
                     onSubmitForm={handleIssuedDocument}
                     onSelectRelatedRecipient={(data) => setSelectedRecipient(data)}
                     selectedRecipient={selectedRecipient}
                   />
-                </WrapForm>
-              </Col>
-            </>
+                </LoadingOverlay>
+              </WrapForm>
+            </Col>
           ) : (
             <Col span={24}>
               <ResultMessage modeSave={modeSave} />

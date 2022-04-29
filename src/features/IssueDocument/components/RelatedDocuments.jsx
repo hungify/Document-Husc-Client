@@ -1,14 +1,14 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Col, Form, Row, Tabs, Typography } from "antd";
-import pdfFile from "assets/pdf/test.pdf";
+import { Button, Col, Form, Row, Tabs, Typography } from "antd";
 import ButtonTooltip from "components/ButtonTooltip";
 import DocumentSummary from "components/DocumentSummary";
 import DrawerCustom from "components/DrawerCustom";
 import TableTransfer from "components/TransferTable";
 import ViewPDF from "components/ViewPDF";
-import { mockDocumentListProtect } from "mocks/documents";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { getDocuments } from "app/selectors/documents";
 
 const ColFull = styled(Col)`
   & .ant-form-item-control {
@@ -19,11 +19,12 @@ const ColFull = styled(Col)`
 export default function RelatedDocuments({ relatedDocuments }) {
   const [visible, setVisible] = React.useState(false);
   const [documentsClicked, setDocumentsClicked] = React.useState();
-
   const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(relatedDocuments);
-
   const [pageNumber, setPageNumber] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(null);
+  const [previewVisible, setPreviewVisible] = React.useState(false);
+  const [previewFile, setPreviewFile] = React.useState();
+  const documents = useSelector(getDocuments);
 
   const TableColumns = [
     {
@@ -93,17 +94,30 @@ export default function RelatedDocuments({ relatedDocuments }) {
       >
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="Thông tin văn bản" key="documents-detail">
-            <DocumentSummary documentData={documentsClicked} />
+            <DocumentSummary dataSource={documentsClicked} />
           </Tabs.TabPane>
 
           <Tabs.TabPane tab="Văn bản gốc" key="original-document">
-            <ViewPDF
-              pdfFile={pdfFile}
-              pageNumber={pageNumber}
-              onPreviousClick={handlePreviousClick}
-              onNextClick={handleNextClick}
-              onLoadFileSuccess={handleLoadFileSuccess}
-            />
+            {documentsClicked?.fileList.map((file) => (
+              <Button
+                key={file.originalName}
+                onClick={() => {
+                  setPreviewFile(file);
+                  setPreviewVisible(true);
+                }}
+              >
+                {file.originalName}
+              </Button>
+            ))}
+            {previewVisible && (
+              <ViewPDF
+                fileLocation={previewFile.location}
+                pageNumber={pageNumber}
+                onPreviousClick={handlePreviousClick}
+                onNextClick={handleNextClick}
+                onLoadFileSuccess={handleLoadFileSuccess}
+              />
+            )}
           </Tabs.TabPane>
         </Tabs>
       </DrawerCustom>
@@ -113,7 +127,7 @@ export default function RelatedDocuments({ relatedDocuments }) {
           <Form.Item name="relatedDocuments" initialValue={relatedDocuments || []}>
             <TableTransfer
               titles={["Tất cả văn bản", "Văn bản được chọn"]}
-              dataSource={mockDocumentListProtect}
+              dataSource={documents}
               targetKeys={selectedRelatedDocument}
               pagination={{
                 pageSize: 20,
@@ -130,6 +144,7 @@ export default function RelatedDocuments({ relatedDocuments }) {
               filterOption={(searchTerm, record) => record.documentNumber.includes(searchTerm)}
               leftColumns={TableColumns}
               rightColumns={TableColumns}
+              rowKey={(record) => record._id}
             />
           </Form.Item>
         </ColFull>

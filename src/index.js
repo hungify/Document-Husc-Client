@@ -14,28 +14,27 @@ import "react-toastify/dist/ReactToastify.css";
 const persistor = persistStore(store);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <BrowserRouter>
-        <GlobalStyle />
-        <ToastContainer
-          autoClose={5000}
-          position="bottom-right"
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <App />
-      </BrowserRouter>
-      {/* </PersistGate> */}
-    </Provider>
-    ,
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
+    <BrowserRouter>
+      <GlobalStyle />
+      <ToastContainer
+        autoClose={5000}
+        position="bottom-right"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <App />
+    </BrowserRouter>
+    {/* </PersistGate> */}
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

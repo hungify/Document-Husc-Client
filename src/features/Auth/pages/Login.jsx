@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import { isAuthenticated } from "app/selectors/authSelector";
+import { isAuthenticated } from "app/selectors/auth";
 import { getLogin } from "features/Auth/authSlice";
 import FormAuth from "features/Auth/components/FormAuth";
 import React from "react";

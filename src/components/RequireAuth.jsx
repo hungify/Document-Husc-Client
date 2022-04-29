@@ -1,4 +1,4 @@
-import { getRole, isAuthenticated } from "app/selectors/authSelector";
+import { getRole, isAuthenticated } from "app/selectors/auth";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 

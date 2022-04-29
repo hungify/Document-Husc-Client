@@ -150,7 +150,6 @@ export default function RecipientDocument({
                     showLessItems: true,
                   }}
                   showSearch={true}
-                  render={(item) => item.title}
                   onChange={handleTableTransferChange}
                   filterOption={(inputValue, item) =>
                     item.fullName.toLowerCase().includes(inputValue.toLowerCase())

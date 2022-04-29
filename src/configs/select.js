@@ -6,7 +6,7 @@ export const selectConfig = {
       colorTag: "green",
     },
     {
-      value: "emergency",
+      value: "khan-cap",
       label: "Khần cấp",
       colorTag: "red",
     },
