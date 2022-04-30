@@ -1,7 +1,7 @@
 import documentsService from "services/documentsService";
 import showToast, { toastPosition } from "configs/toast";
 
-const { createSlice, createAsyncThunk, createAction } = require("@reduxjs/toolkit");
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 
 const create = createAction("issueDocument/issue");
 export const issueDocumentOfficial = createAsyncThunk(create.type, async (formData, thunkAPI) => {

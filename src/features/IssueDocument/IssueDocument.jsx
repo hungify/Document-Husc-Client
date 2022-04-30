@@ -5,12 +5,13 @@ import PlaneIcon from "components/Icons/PlaneIcon";
 import LoadingOverlay from "components/LoadingOverlay";
 import FormIssuedDocument from "features/IssueDocument/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
-import RecipientDocument from "features/IssueDocument/FormStep/RecipientDocument";
+import RecipientDocument from "features/Recipients/RecipientsDocument";
 import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
 import { issueDocumentOfficial } from "features/IssueDocument/issueDocumentSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 const steps = [
   {
@@ -84,7 +85,6 @@ export default function IssueDocument() {
 
   const handleSubmitForm = (values) => {
     if (values) {
-      console.log("🚀 :: values", values);
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
           if (item.step === values.step) {
@@ -120,9 +120,42 @@ export default function IssueDocument() {
     setCurrentStep(+currentStep - 1);
   };
 
-  const handleIssuedDocument = (values) => {
+  const handleIssueOfficialDocument = (values) => {
+    const myUserId = "626bdadfdb0a4ecf6f4cf652";
     if (values) {
-      setCurrentStep(currentStep + 1);
+      const dataSubmit = formValues[formValues.length - 1];
+
+      const participants = {
+        senderId: myUserId,
+        sendDate: new Date(dataSubmit.issueDate).getTime(),
+        receivers:
+          values.recipients.length > 0
+            ? values.recipients.map((item) => {
+                return {
+                  receiverId: item,
+                };
+              })
+            : values.recipients, //Empty array
+      };
+      dataSubmit.publisher = myUserId;
+      dataSubmit.issueDate = new Date(dataSubmit.issueDate).getTime();
+      dataSubmit.participants = participants;
+
+      const formData = new FormData();
+      for (const key in dataSubmit) {
+        if (dataSubmit.hasOwnProperty(key)) {
+          if (key === "files") {
+            dataSubmit[key].fileList.forEach((file) => {
+              formData.append(key, file.originFileObj);
+            });
+          } else if (key === "participants") {
+            formData.append(key, JSON.stringify(dataSubmit[key]));
+          } else {
+            formData.append(key, dataSubmit[key]);
+          }
+        }
+      }
+      dispatch(issueDocumentOfficial(formData));
     }
   };
 
@@ -133,27 +166,9 @@ export default function IssueDocument() {
     // save draft
   };
 
-  const handleIssuanceDocumentClick = async () => {
+  const handleIssueDocumentClick = () => {
     setModeSave("official");
-    const data = formValues[formValues.length - 1];
-
-    const formData = new FormData();
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        if (key === "files") {
-          data[key].fileList.forEach((file) => {
-            formData.append(key, file.originFileObj);
-          });
-        } else {
-          formData.append(key, data[key]);
-        }
-      }
-    }
-    formData.append("publisher", "6262d3736129d8ca00aa894d");
-    formData.append("publishDate", new Date());
-
-    dispatch(issueDocumentOfficial(formData));
-    // if don't go to next step
+    form.submit();
   };
 
   return (
@@ -208,7 +223,7 @@ export default function IssueDocument() {
                 <LoadingOverlay active={isLoading}>
                   <RecipientDocument
                     form={form}
-                    onSubmitForm={handleIssuedDocument}
+                    onSubmitForm={handleIssueOfficialDocument}
                     onSelectRelatedRecipient={(data) => setSelectedRecipient(data)}
                     selectedRecipient={selectedRecipient}
                   />
@@ -264,7 +279,7 @@ export default function IssueDocument() {
             <ButtonReverse
               size="large"
               type="primary"
-              onClick={handleIssuanceDocumentClick}
+              onClick={handleIssueDocumentClick}
               icon={<PlaneIcon />}
             >
               Ban hành ngay

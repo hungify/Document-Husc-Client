@@ -12,14 +12,14 @@ export default function DocumentContent(props) {
   const {
     dataRadio,
     documentFrom,
-    // onDocumentFromChange,
+    onDocumentFromChange,
 
     titleDocument,
     onTitleDocumentChange,
     summaryValue,
-    // handleSummaryChange,
+    onSummaryChange,
     contentDocument,
-    // onContentDocumentChange,
+    onContentDocumentChange,
     fileList,
     setFileList,
     required,
@@ -41,7 +41,7 @@ export default function DocumentContent(props) {
           >
             <RadioGroup
               dataRadio={dataRadio}
-              // onChange={onDocumentFromChange}
+              onChange={onDocumentFromChange}
               value={documentFrom}
             />
           </FormItemAnt>
@@ -69,7 +69,7 @@ export default function DocumentContent(props) {
       <Row>
         {documentFrom === "attach" ? (
           <>
-            <Col span={4}>
+            <Col span={9}>
               <FormItemAnt
                 label={<Typography.Text strong>Văn bản đính kèm</Typography.Text>}
                 name="files"
@@ -114,7 +114,7 @@ export default function DocumentContent(props) {
                 </Upload.Dragger>
               </FormItemAnt>
             </Col>
-            <Col span={20}>
+            <Col span={15}>
               {documentFrom === "attach" && (
                 <FormItemAnt
                   label={<Typography.Text strong>Tóm tắt</Typography.Text>}
@@ -127,9 +127,9 @@ export default function DocumentContent(props) {
                 >
                   <Input.TextArea
                     value={summaryValue}
-                    // onChange={handleSummaryChange}
+                    onChange={onSummaryChange}
                     placeholder="Nhập vào tóm tắt của văn bản"
-                    autoSize={{ minRows: 3, maxRows: 6 }}
+                    autoSize={{ minRows: 6, maxRows: 6 }}
                   />
                 </FormItemAnt>
               )}
@@ -145,9 +145,9 @@ export default function DocumentContent(props) {
             >
               <Input.TextArea
                 value={contentDocument}
-                // onChange={onContentDocumentChange}
+                onChange={onContentDocumentChange}
                 placeholder="Nhập vào nội dung của văn bản"
-                autoSize={{ minRows: 3, maxRows: 6 }}
+                autoSize={{ minRows: 6, maxRows: 6 }}
               />
             </FormItemAnt>
           </Col>
