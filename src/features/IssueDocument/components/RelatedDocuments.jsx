@@ -16,10 +16,9 @@ const ColFull = styled(Col)`
   }
 `;
 
-export default function RelatedDocuments({ relatedDocuments }) {
+export default function RelatedDocuments({ selectedRelatedDocument, setSelectedRelatedDocument }) {
   const [visible, setVisible] = React.useState(false);
   const [documentsClicked, setDocumentsClicked] = React.useState();
-  const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(relatedDocuments);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(null);
   const [previewVisible, setPreviewVisible] = React.useState(false);
@@ -124,7 +123,7 @@ export default function RelatedDocuments({ relatedDocuments }) {
 
       <Row>
         <ColFull span={24}>
-          <Form.Item name="relatedDocuments" initialValue={relatedDocuments || []}>
+          <Form.Item name="relatedDocuments" initialValue={selectedRelatedDocument || []}>
             <TableTransfer
               titles={["Tất cả văn bản", "Văn bản được chọn"]}
               dataSource={documents}

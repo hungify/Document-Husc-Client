@@ -4,6 +4,7 @@ import RelatedDocuments from "features/IssueDocument/components/RelatedDocuments
 import DocumentClassification from "features/IssueDocument/FormGroup/DocumentClassification";
 import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";
 import DocumentProperty from "features/IssueDocument/FormGroup/DocumentProperty";
+import RecipientDocument from "features/Recipients/RecipientsDocument";
 import React from "react";
 import styled from "styled-components";
 
@@ -33,12 +34,6 @@ export default function FormIssuedDocument({
   onSubmitFailed,
   required,
 }) {
-  // React.useEffect(() => {
-  //   form.setFieldsValue({
-  //     ...formValues,
-  //   });
-  // }, [formValues]);
-
   // Document Classification
   const [typesOfDocument, setTypesOfDocument] = React.useState("quyet-dinh");
   const [categoryOfDocument, setCategoryOfDocument] = React.useState("khoa-hoc-cong-nghe");
@@ -53,14 +48,20 @@ export default function FormIssuedDocument({
   // Document Property
 
   // Document Content
-  const [documentFrom, setDocumentFrom] = React.useState(dataRadio[0].value);
+  const [documentFrom, setDocumentFrom] = React.useState(
+    formValues?.documentFrom || dataRadio[0].value
+  );
   const [titleDocument, setTitleDocument] = React.useState("This is my title");
   //option one
   const [summaryDocument, setSummaryDocument] = React.useState("This is my summary");
   //option two
   const [contentDocument, setContentDocument] = React.useState("This is my content");
 
-  const [fileList, setFileList] = React.useState([]);
+  const [fileList, setFileList] = React.useState(formValues?.files?.fileList || []);
+
+  const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(
+    formValues?.relatedDocuments || []
+  );
 
   // Document Classification
   const handleTypesOfDocumentSelect = (value) => {
@@ -105,14 +106,14 @@ export default function FormIssuedDocument({
     setTitleDocument(e.target.value);
   };
 
-  // const handleContentDocumentChange = (e) => {
-  //   setContentDocument(e.target.value);
-  // }
-  // Document Content
+  const handleContentDocumentChange = (e) => {
+    setContentDocument(e.target.value);
+  };
 
-  // const handleSummaryDocumentChange = (value) => {
-  //   setSummaryDocument(value);
-  // };
+  const handleSummaryDocumentChange = (value) => {
+    setSummaryDocument(value);
+  };
+  // Document Content
 
   return (
     <Form
@@ -153,20 +154,23 @@ export default function FormIssuedDocument({
         <DocumentContent
           documentFrom={documentFrom}
           dataRadio={dataRadio}
-          // onDocumentFromChange={handleDocumentFromChange}
+          onDocumentFromChange={handleDocumentFromChange}
           summaryValue={summaryDocument}
-          // onSummaryChange={handleSummaryDocumentChange}
+          onSummaryChange={handleSummaryDocumentChange}
           titleDocument={titleDocument}
           onTitleDocumentChange={handleTitleDocumentChange}
           contentDocument={contentDocument}
-          // onContentDocumentChange={handleContentDocumentChange}
+          onContentDocumentChange={handleContentDocumentChange}
           fileList={fileList}
           setFileList={setFileList}
           required={required}
         />
       </CardAnt>
       <CardAnt title={<Typography.Text strong>Văn bản liên quan</Typography.Text>}>
-        <RelatedDocuments relatedDocuments={formValues?.relatedDocuments} />
+        <RelatedDocuments
+          selectedRelatedDocument={selectedRelatedDocument}
+          setSelectedRelatedDocument={setSelectedRelatedDocument}
+        />
       </CardAnt>
     </Form>
   );
