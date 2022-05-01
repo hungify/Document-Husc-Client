@@ -1,19 +1,23 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import documentsService from "services/documentsService";
 
-const documents = createAction("documents/getDocuments");
-const relatedDocuments = createAction("documents/getRelatedDocuments");
+const getAll = createAction("documents/getDocuments");
+const getRelated = createAction("documents/getRelatedDocuments");
+const getFilterDateRange = createAction("documents/filterDateRange");
 
-export const fetchDocuments = createAsyncThunk(documents.type, async (arg, thunkAPI) => {
+export const fetchDocuments = createAsyncThunk(getAll.type, async (arg, thunkAPI) => {
   try {
-    const data = await documentsService.getDocuments();
+    const { getState } = thunkAPI;
+    const { searchGroup } = getState();
+
+    const data = await documentsService.getDocuments(searchGroup);
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
 
-export const fetchDocumentByIds = createAsyncThunk(relatedDocuments.type, async (ids, thunkAPI) => {
+export const fetchDocumentByIds = createAsyncThunk(getRelated.type, async (ids, thunkAPI) => {
   try {
     const data = await documentsService.getDocumentsByIds(ids);
     return data;
@@ -21,6 +25,18 @@ export const fetchDocumentByIds = createAsyncThunk(relatedDocuments.type, async 
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const fetchFilterDateRange = createAsyncThunk(
+  getFilterDateRange.type,
+  async (filterKeys, thunkAPI) => {
+    try {
+      const data = await documentsService.getDocumentsByFilter(filterKeys);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const initialState = {
   loading: false,
@@ -60,6 +76,7 @@ const initialState = {
 const homeSlice = createSlice({
   name: "home",
   initialState,
+
   extraReducers: (builder) => {
     builder.addCase(fetchDocuments.pending, (state, action) => {
       state.loading = true;
@@ -67,7 +84,7 @@ const homeSlice = createSlice({
     builder.addCase(fetchDocuments.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
-      state.documents = action.payload.documents;
+      state.documents = action.payload.data;
       state.total = action.payload.total;
       state.totalMatch = action.payload.totalMatch;
     });

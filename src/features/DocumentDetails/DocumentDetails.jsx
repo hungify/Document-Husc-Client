@@ -32,18 +32,20 @@ const ButtonAnt = styled(Button)`
 export default function DetailDocument() {
   const [visible, setVisible] = React.useState(false);
   const [document, setDocument] = React.useState();
-  const isAuth = useSelector(isAuthenticated);
-  const { slug } = useParams();
+
+  const [treeReceiver, setTreeReceiver] = React.useState();
+  const [activeTab, setActiveTab] = React.useState("property");
+  const [previewVisible, setPreviewVisible] = React.useState(false);
+  const [previewFile, setPreviewFile] = React.useState();
+
   const dispatch = useDispatch();
+  const { slug } = useParams();
+
+  const role = useSelector(getRole);
+  const isAuth = useSelector(isAuthenticated);
   const property = useSelector(getProperty);
   const files = useSelector(getFiles);
   const relatedDocuments = useSelector(getRelatedDocument);
-  const participants = useSelector(getParticipants);
-  const [treeReceiver, setTreeReceiver] = React.useState();
-  const [activeTab, setActiveTab] = React.useState("property");
-  const role = useSelector(getRole);
-  const [previewVisible, setPreviewVisible] = React.useState(false);
-  const [previewFile, setPreviewFile] = React.useState();
 
   React.useEffect(() => {
     dispatch(fetchDocumentDetails(slug));
@@ -107,6 +109,7 @@ export default function DetailDocument() {
         }}
       >
         <Form.Item
+          key={slug}
           name="to"
           label="Người nhận"
           tooltip={{ title: "Người nhận văn bản của bạn?", icon: <InfoCircleOutlined /> }}
@@ -155,33 +158,36 @@ export default function DetailDocument() {
               <Tabs.TabPane tab="Thuộc tính" key="property">
                 {!_.isEmpty(property) && <DocumentSummary dataSource={property} />}
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Văn bản gốc" key="preview">
-                {files.map((file) => (
-                  <Button
-                    key={file.originalName}
-                    onClick={() => {
-                      setPreviewVisible(true);
-                      setPreviewFile(file);
-                    }}
-                  >
-                    {file.originalName}
-                  </Button>
-                ))}
-                {previewVisible && (
-                  <PreviewPdf
-                    previewFile={previewFile}
-                    previewVisible={previewVisible}
-                    setPreviewVisible={setPreviewVisible}
-                  />
-                )}
-              </Tabs.TabPane>
+              {!_.isEmpty(files) && (
+                <Tabs.TabPane tab="Văn bản gốc" key="preview">
+                  {files.map((file) => (
+                    <Button
+                      key={file.originalName}
+                      onClick={() => {
+                        setPreviewVisible(true);
+                        setPreviewFile(file);
+                      }}
+                    >
+                      {file.originalName}
+                    </Button>
+                  ))}
+                  {previewVisible && (
+                    <PreviewPdf
+                      previewFile={previewFile}
+                      previewVisible={previewVisible}
+                      setPreviewVisible={setPreviewVisible}
+                    />
+                  )}
+                </Tabs.TabPane>
+              )}
+
               <Tabs.TabPane tab="Văn bản liên quan" key="related">
                 <RelatedDocument dataSource={relatedDocuments} />
               </Tabs.TabPane>
-              {/* <Tabs.TabPane tab="Cây xử lý" key="tree">
-                <TreeProcessing treeReceiver={document?.treeProcessing} />
+              <Tabs.TabPane tab="Cây xử lý" key="tree">
+                <TreeProcessing />
               </Tabs.TabPane>
-              {(role === ROLES.ADMIN || role === ROLES.USER) && document?.isProtect && (
+              {/* {(role === ROLES.ADMIN || role === ROLES.USER) && document?.isProtect && (
                 <>
                   <Tabs.TabPane tab="Phân tích" key="analytics">
                     <ChartReceiver />

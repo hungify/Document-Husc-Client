@@ -3,14 +3,16 @@ import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import { selectConfig } from "configs/select";
 import React from "react";
+
 export default function SearchFilter({
   typesOfDocument,
   onTypesOfDocumentSelect,
-  agencyOfDocument,
+  onTypesOfDocumentDeselect,
+  agency,
   onAgencySelect,
-  categoryOfDocument,
+  onAgencyDeselect,
+  category,
   onCategorySelect,
-  onCategoryDeSelect,
 }) {
   return (
     <Row gutter={[20, 10]} style={{ marginTop: 5 }}>
@@ -21,8 +23,9 @@ export default function SearchFilter({
         <SelectForm
           selectData={selectConfig.typesOfDocuments}
           onSelect={onTypesOfDocumentSelect}
-          showSearch={true}
           value={typesOfDocument}
+          onDeselect={onTypesOfDocumentDeselect}
+          showSearch={true}
           placeholder="Chọn loại văn bản"
           size="large"
           allowClear
@@ -32,12 +35,11 @@ export default function SearchFilter({
       </Col>
       <Col span={10}>
         <TreeSelectForm
-          value={categoryOfDocument}
           treeData={selectConfig.categories}
-          onTreeSelect={onCategorySelect}
-          onTreeDeSelect={onCategoryDeSelect}
+          onChange={onCategorySelect}
           placeholder="Chọn chuyên mục"
           allowClear
+          autoClearSearchValue
           size="large"
           showCheckedStrategy={TreeSelect.SHOW_PARENT}
           style={{ width: "100%" }}
@@ -46,9 +48,10 @@ export default function SearchFilter({
       <Col span={7}>
         <SelectForm
           selectData={selectConfig.agency}
-          value={agencyOfDocument}
           onSelect={onAgencySelect}
+          onDeselect={onAgencyDeselect}
           showSearch={true}
+          value={agency}
           placeholder="Chọn cơ quan ban hành"
           size="large"
           filterOption={false}

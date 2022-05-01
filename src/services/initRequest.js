@@ -1,9 +1,10 @@
 import axios from "axios";
+import queryString from "query-string";
+import QueryString from "qs";
 
 const requestConfig = {
   baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
   timeout: 5000,
-  showSpinner: false,
 };
 
 export const axiosInstance = axios.create(requestConfig);

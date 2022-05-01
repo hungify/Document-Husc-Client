@@ -1,8 +1,11 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Alert, Card, Divider, Space, Tree, Typography } from "antd";
+import { getParticipants } from "app/selectors/documentDetails";
 import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
 import BroadcastIcon from "components/Icons/BroadcastIcon";
+import dayjs from "dayjs";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const TreeAnt = styled(Tree)`
@@ -38,6 +41,7 @@ export default function TreeProcessing({ treeReceiver }) {
   const handleOnSelect = (selectedKeys, nodeInfo) => {
     setSelectedNode(nodeInfo.selectedNodes[0]);
   };
+  const participants = useSelector(getParticipants);
 
   return (
     <Card>
@@ -70,20 +74,19 @@ export default function TreeProcessing({ treeReceiver }) {
         }}
         defaultExpandAll={true}
         onSelect={handleOnSelect}
-        treeData={treeReceiver}
+        treeData={participants}
         titleRender={(tree) => (
           <Overlay>
-            {tree.key === "root" ? (
+            {tree.root && (
               <SpaceAnt size="small">
-                <Typography.Title level={4}>{tree.name}</Typography.Title>
+                <Typography.Title level={4}>{tree.senderId.username}</Typography.Title>
                 <BroadcastIcon style={{ color: "rgb(255, 77, 79)" }} />
                 <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
-                  Ban hành: {tree.publishDate}
+                  Ban hành: {dayjs(tree.sendDate).format("DD/MM/YYYY HH:mm")}
                 </Typography.Text>
               </SpaceAnt>
-            ) : (
-              <TreeItem node={tree} />
             )}
+            {tree?.receivers && <TreeItem node={tree.receivers} />}
           </Overlay>
         )}
       />
@@ -92,26 +95,27 @@ export default function TreeProcessing({ treeReceiver }) {
 }
 
 function TreeItem({ node }) {
-  return node?.children?.length > 0 ? (
-    <SpaceAnt size="small">
-      <Typography.Title level={5}>{node.name}</Typography.Title>
-      <BadgeCheckIcon style={{ color: "#30AADD" }} />
-      <Space direction="horizontal" split={<Divider type="vertical" />}>
-        {node.readDate && (
-          <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
-            Xử lý: {node.readDate}
-          </Typography.Text>
-        )}
-        {node.forwardDate && (
-          <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
-            Chuyển tiếp: {node.forwardDate}
-          </Typography.Text>
-        )}
-      </Space>
-    </SpaceAnt>
+  console.log("🚀 :: node", node);
+  return node ? (
+    <>
+      {node.map((receiver) => (
+        <SpaceAnt size="small">
+          {console.log("🚀 :: receiver", receiver)}
+          <Typography.Title level={5}>{receiver?.receiverId.username}</Typography.Title>
+          <BadgeCheckIcon style={{ color: "#30AADD" }} />
+          <Space direction="horizontal" split={<Divider type="vertical" />}>
+            {node.readDate && (
+              <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
+                Xử lý: {receiver.readDate}
+              </Typography.Text>
+            )}
+          </Space>
+        </SpaceAnt>
+      ))}
+    </>
   ) : (
     <SpaceAnt size="small">
-      <Typography.Text>{node.name}</Typography.Text>
+      {/* <Typography.Text>{node.name}</Typography.Text>
       {node?.readDate && (
         <>
           <BadgeCheckIcon style={{ color: "#30AADD" }} />
@@ -119,7 +123,7 @@ function TreeItem({ node }) {
             Xử lý: {node.readDate}
           </Typography.Text>
         </>
-      )}
+      )} */}
     </SpaceAnt>
   );
 }
