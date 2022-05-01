@@ -1,5 +1,7 @@
 import { Card, Col, Divider, Row, Typography } from "antd";
 import SortFilter from "components/SortFilter";
+import { setSortBy } from "features/SearchGroup/searchGroupSlice";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 const CardAnt = styled(Card)`
@@ -9,15 +11,19 @@ const CardAnt = styled(Card)`
 const dataRadio = [
   {
     label: "Ngày ban hành",
-    value: "issuedDate",
+    value: "createdAt",
   },
   {
     label: "Ngày cập nhật",
-    value: "updatedDate",
+    value: "updatedAt",
   },
 ];
 export default function HeaderListDocument({ children }) {
-  const handleRadioDateChange = (value) => {};
+  const dispatch = useDispatch();
+
+  const handleRadioDateChange = (value) => {
+    dispatch(setSortBy(value));
+  };
 
   return (
     <>

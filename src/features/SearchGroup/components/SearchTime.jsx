@@ -6,11 +6,11 @@ import React from "react";
 const options = [
   {
     label: "Ngày ban hành",
-    value: "date_issued",
+    value: "createdAt",
   },
   {
     label: "Ngày cập nhật",
-    value: "date_updated",
+    value: "updatedAt",
   },
 ];
 
@@ -23,7 +23,7 @@ export default function SearchTime(props) {
   return (
     <Row align="middle">
       <Col span={6}>
-        <Form.Item name="timeType" initialValue={selectedDateType}>
+        <Form.Item name="orderBy" initialValue={selectedDateType}>
           <Radio.Group value={selectedDateType} onChange={handleRadioChange}>
             <Space direction="vertical">
               {options.map((option) => (
@@ -36,7 +36,7 @@ export default function SearchTime(props) {
         </Form.Item>
       </Col>
       <Col span={8}>
-        <Form.Item name="startDate">
+        <Form.Item name="start">
           <DatePicker
             size="large"
             placeholder="Từ ngày"
@@ -52,7 +52,7 @@ export default function SearchTime(props) {
         </Form.Item>
       </Col>
       <Col span={8}>
-        <Form.Item name="endDate">
+        <Form.Item name="end">
           <DatePicker
             placeholder="Đến ngày"
             size="large"

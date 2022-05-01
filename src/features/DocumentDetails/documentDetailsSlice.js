@@ -6,7 +6,7 @@ export const fetchDocumentDetails = createAsyncThunk(
   documentDetail.type,
   async (documentId, thunkAPI) => {
     try {
-      const data = await documentsService.getDocumentDetail(documentId);
+      const { data } = await documentsService.getDocumentDetail(documentId);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

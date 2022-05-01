@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import documentListenerMiddleware from "app/middlewares/documents";
 import { rootReducer } from "app/reducers";
 import logger from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
@@ -9,6 +10,8 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["auth", "home", "searchGroup", "recipients", "issueDocument"],
+  // whitelist: ["auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -20,7 +23,9 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(logger),
+    })
+      .prepend(documentListenerMiddleware.middleware)
+      .concat(logger),
   devTools: process.env.NODE_ENV !== "production",
 });
 
