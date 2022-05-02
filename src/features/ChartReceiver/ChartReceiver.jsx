@@ -1,24 +1,23 @@
 import { Col, Row, Table } from "antd";
-import { getDatasets } from "app/selectors/documentDetails";
+import { getDatasets, getReadAndUnread } from "app/selectors/documentDetails";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { v4 as uuidV4 } from "uuid";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const columns = [
   {
     title: "Họ và tên",
-    dataIndex: "fullName",
-    sorter: (a, b) => a.fullName.length - b.fullName.length,
+    dataIndex: "username",
+    sorter: (a, b) => a.username.length - b.username.length,
     sortDirections: ["descend"],
   },
   {
     title: "Thời gian xử lý",
-    dataIndex: "processedDate",
+    dataIndex: "readDate",
     defaultSortOrder: "descend",
-    sorter: (a, b) => a.processedDate - b.processedDate,
+    sorter: (a, b) => a.readDate - b.readDate,
   },
 ];
 
@@ -38,47 +37,20 @@ const dataChart = {
   ],
 };
 
-const dataProcessed = [];
-for (let i = 0; i < 10; i++) {
-  dataProcessed.push(
-    {
-      key: uuidV4(),
-      fullName: "Nguyễn Dũng",
-      processedDate: "",
-    },
-    {
-      key: uuidV4(),
-      fullName: "Nguyễn Thị Phương",
-      processedDate: `10:10 AM ${i + 9}/10/2020`,
-    },
-    {
-      key: uuidV4(),
-      fullName: "Đoàn Thị Hằng",
-      processedDate: "10:10 AM 10/10/2020",
-    },
-    {
-      key: uuidV4(),
-      fullName: "Đinh Văn Hải",
-      processedDate: "10:10 AM 12/10/2022",
-    }
-  );
-}
-
 export default function ChartReceiver() {
   const dataPie = useSelector(getDatasets);
+  const readAndUnread = useSelector(getReadAndUnread);
 
-  dataChart.datasets[0].data = [dataPie.read || 0, dataPie.unread || 0];
+  dataChart.datasets[0].data = dataPie;
 
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange = (pagination, filters, sorter, extra) => {};
   return (
     <Row gutter={[0, 20]}>
       <Col span={24}>
         <Pie data={dataChart} width={420} height={420} options={{ maintainAspectRatio: false }} />
       </Col>
       <Col span={24}>
-        <Table columns={columns} dataSource={dataProcessed} onChange={onChange} />
+        <Table columns={columns} dataSource={readAndUnread} onChange={onChange} />
       </Col>
     </Row>
   );
