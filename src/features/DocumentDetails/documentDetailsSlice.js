@@ -22,7 +22,14 @@ const initialState = {
   relatedDocument: [],
   participants: [],
   analytics: {
-    datasets: [],
+    read: {
+      count: 0,
+      users: [],
+    },
+    unread: {
+      count: 0,
+      users: [],
+    },
   },
 };
 
@@ -35,7 +42,7 @@ const documentDetailsSlice = createSlice({
       state.files = action.payload.key === "files" ? action.payload.data : [];
       state.relatedDocuments = action.payload.key === "relatedDocuments" ? action.payload.data : [];
       state.participants = action.payload.key === "participants" ? action.payload.data : [];
-      state.analytics.datasets = action.payload.key === "analytics" ? action.payload.data : {};
+      state.analytics = action.payload.key === "analytics" ? action.payload.data : {};
     });
     builder.addCase(fetchDocumentDetails.rejected, (state, action) => {
       state.error = action.payload;
