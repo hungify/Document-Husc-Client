@@ -36,7 +36,7 @@ const SpaceAnt = styled(Space)`
   }
 `;
 
-export default function TreeProcessing({ treeReceiver }) {
+export default function TreeProcessing() {
   const [selectedNode, setSelectedNode] = React.useState();
   const handleOnSelect = (selectedKeys, nodeInfo) => {
     setSelectedNode(nodeInfo.selectedNodes[0]);
@@ -77,16 +77,17 @@ export default function TreeProcessing({ treeReceiver }) {
         treeData={participants}
         titleRender={(tree) => (
           <Overlay>
-            {tree.root && (
+            {tree.root ? (
               <SpaceAnt size="small">
-                <Typography.Title level={4}>{tree.senderId.username}</Typography.Title>
+                <Typography.Title level={4}>{tree?.receiver?.username}</Typography.Title>
                 <BroadcastIcon style={{ color: "rgb(255, 77, 79)" }} />
                 <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
                   Ban hành: {dayjs(tree.sendDate).format("DD/MM/YYYY HH:mm")}
                 </Typography.Text>
               </SpaceAnt>
+            ) : (
+              <TreeItem node={tree} />
             )}
-            {tree?.receivers && <TreeItem node={tree.receivers} />}
           </Overlay>
         )}
       />
@@ -95,35 +96,34 @@ export default function TreeProcessing({ treeReceiver }) {
 }
 
 function TreeItem({ node }) {
-  console.log("🚀 :: node", node);
-  return node ? (
-    <>
-      {node.map((receiver) => (
-        <SpaceAnt size="small">
-          {console.log("🚀 :: receiver", receiver)}
-          <Typography.Title level={5}>{receiver?.receiverId.username}</Typography.Title>
-          <BadgeCheckIcon style={{ color: "#30AADD" }} />
-          <Space direction="horizontal" split={<Divider type="vertical" />}>
-            {node.readDate && (
-              <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
-                Xử lý: {receiver.readDate}
-              </Typography.Text>
-            )}
-          </Space>
-        </SpaceAnt>
-      ))}
-    </>
+  return node?.children?.length > 0 ? (
+    <SpaceAnt size="small">
+      <Typography.Title level={5}>{node?.receiver?.username}</Typography.Title>
+      <BadgeCheckIcon style={{ color: "#30AADD" }} />
+      <Space direction="horizontal" split={<Divider type="vertical" />}>
+        {node.readDate && (
+          <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
+            Xử lý: {dayjs(node.readDate).format("DD/MM/YYYY HH:mm")}
+          </Typography.Text>
+        )}
+        {node.sendDate && (
+          <Typography.Text type="secondary" italic style={{ fontSize: "15px" }}>
+            Chuyển tiếp: {dayjs(node.sendDate).format("DD/MM/YYYY HH:mm")}
+          </Typography.Text>
+        )}
+      </Space>
+    </SpaceAnt>
   ) : (
     <SpaceAnt size="small">
-      {/* <Typography.Text>{node.name}</Typography.Text>
+      <Typography.Text>{node.receiver.username}</Typography.Text>
       {node?.readDate && (
         <>
           <BadgeCheckIcon style={{ color: "#30AADD" }} />
           <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
-            Xử lý: {node.readDate}
+            Xử lý: {dayjs(node.sendDate).format("DD/MM/YYYY HH:mm")}
           </Typography.Text>
         </>
-      )} */}
+      )}
     </SpaceAnt>
   );
 }
