@@ -1,29 +1,25 @@
 import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs, TreeSelect } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
+import { getFiles, getParticipants, getProperty } from "app/selectors/documentDetails";
+import { getRelatedDocuments } from "app/selectors/documents";
 import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import ModalForm from "components/ModalForm";
-import PreviewPdf from "components/PreviewPDF";
 import TreeSelectForm from "components/TreeSelectForm";
 import { ROLES } from "configs/roles";
 import { treePeople } from "configs/trees";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
-import RelatedDocument from "features/RelatedDocuments/RelatedDocuments";
+import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
+import FileList from "features/FileList/FileList";
+import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
-import {
-  getProperty,
-  getFiles,
-  getRelatedDocument,
-  getParticipants,
-} from "app/selectors/documentDetails";
 
 const ButtonAnt = styled(Button)`
   display: flex;
@@ -34,9 +30,6 @@ export default function DetailDocument() {
   const [document, setDocument] = React.useState();
 
   const [treeReceiver, setTreeReceiver] = React.useState();
-  const [activeTab, setActiveTab] = React.useState("property");
-  const [previewVisible, setPreviewVisible] = React.useState(false);
-  const [previewFile, setPreviewFile] = React.useState();
 
   const dispatch = useDispatch();
   const { slug } = useParams();
@@ -45,17 +38,19 @@ export default function DetailDocument() {
   const isAuth = useSelector(isAuthenticated);
   const property = useSelector(getProperty);
   const files = useSelector(getFiles);
-  const relatedDocuments = useSelector(getRelatedDocument);
+  const relatedDocuments = useSelector(getRelatedDocuments);
+  const participants = useSelector(getParticipants);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab");
 
   React.useEffect(() => {
-    dispatch(fetchDocumentDetails(slug));
-  }, [isAuth, slug]);
+    dispatch(fetchDocumentDetails({ slug, key: activeTab }));
+  }, [isAuth, slug, dispatch, activeTab]);
 
   const handleTabChangeClick = (key) => {
-    setActiveTab(key);
-  };
-  const onClosePreview = (visible) => {
-    if (visible) setActiveTab("property");
+    navigate(`?tab=${key}`);
+    dispatch(fetchDocumentDetails({ slug, key }));
   };
 
   const handleTreeReceiverSelect = (value) => {
@@ -158,45 +153,25 @@ export default function DetailDocument() {
               <Tabs.TabPane tab="Thuộc tính" key="property">
                 {!_.isEmpty(property) && <DocumentSummary dataSource={property} />}
               </Tabs.TabPane>
-              {!_.isEmpty(files) && (
-                <Tabs.TabPane tab="Văn bản gốc" key="preview">
-                  {files.map((file) => (
-                    <Button
-                      key={file.originalName}
-                      onClick={() => {
-                        setPreviewVisible(true);
-                        setPreviewFile(file);
-                      }}
-                    >
-                      {file.originalName}
-                    </Button>
-                  ))}
-                  {previewVisible && (
-                    <PreviewPdf
-                      previewFile={previewFile}
-                      previewVisible={previewVisible}
-                      setPreviewVisible={setPreviewVisible}
-                    />
-                  )}
-                </Tabs.TabPane>
-              )}
-
-              <Tabs.TabPane tab="Văn bản liên quan" key="related">
-                <RelatedDocument dataSource={relatedDocuments} />
+              <Tabs.TabPane tab="Danh sách văn bản" key="files">
+                <FileList files={files} />
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Cây xử lý" key="tree">
-                <TreeProcessing />
+              <Tabs.TabPane tab="Văn bản liên quan" key="relatedDocuments">
+                <RelatedDocuments dataSource={relatedDocuments} />
               </Tabs.TabPane>
-              {/* {(role === ROLES.ADMIN || role === ROLES.USER) && document?.isProtect && (
+              <Tabs.TabPane tab="Cây xử lý" key="participants">
+                {!_.isEmpty(participants) && <TreeProcessing treeData={participants} />}
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Phân tích" key="analytics">
+                <ChartReceiver />
+              </Tabs.TabPane>
+              {(role === ROLES.ADMIN || role === ROLES.USER) && !property.isPublic && (
                 <>
-                  <Tabs.TabPane tab="Phân tích" key="analytics">
-                    <ChartReceiver />
-                  </Tabs.TabPane>
                   <Tabs.TabPane tab="Phản hồi" key="feedback">
                     <ChatRoom />
                   </Tabs.TabPane>
                 </>
-              )} */}
+              )}
             </Tabs>
           </Col>
         </Row>
