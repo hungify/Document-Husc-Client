@@ -1,6 +1,6 @@
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Layout, Menu, Space, Typography } from "antd";
-import { getToken, isAuthenticated } from "app/selectors/authSelector";
+import { getToken, isAuthenticated } from "app/selectors/auth";
 import LogoHusc from "assets/images/logo/logo.svg";
 import BellIcon from "components/Icons/BellIcon";
 import { getLogout } from "features/Auth/authSlice";

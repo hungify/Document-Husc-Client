@@ -1,9 +1,10 @@
 import { Card, Col, Form, Input, Row, Typography } from "antd";
 import TableTransfer from "components/TransferTable";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { v4 as uuidV4 } from "uuid";
-
+import { getRecipients } from "app/selectors/recipients";
+import { fetchRecipients } from "features/Recipients/recipientsSlice";
 const Container = styled.div`
   padding: 10px 20px;
 `;
@@ -16,86 +17,25 @@ const CardAnt = styled(Card)`
   }
 `;
 
-const mockData = [];
-mockData.push(
-  {
-    key: uuidV4(),
-    fullName: "Nguyễn Ngọc Thủy",
-    department: `Khoa Công nghệ thông tin`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Hoàng Quang",
-    department: `Khoa Công nghệ thông tin`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Trần Nguyên Phong",
-    department: `Khoa Công nghệ thông tin`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Nguyễn Dũng",
-    department: `Khoa Công nghệ thông tin`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Đoàn Thị Hồng Phước",
-    department: `Khoa Công nghệ thông tin`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Nguyễn Trần Hoàn",
-    department: `Khoa Toán`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Trần Thị Thúy",
-    department: `Khoa Toán`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Trần Văn Tuấn",
-    department: `Khoa Toán`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Trần Đình Trình",
-    department: `Khoa Ngữ Văn`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Trần Đình Tùng",
-    department: `Khoa Báo Chí`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Đinh Mạnh Cường",
-    department: `Khoa Điện tử viễn thông`,
-  },
-  {
-    key: uuidV4(),
-    fullName: "Nguyễn Thị Hồng Hải",
-    department: `Khoa Vật Lý`,
-  }
-);
-
 const TableColumns = [
   {
-    dataIndex: "fullName",
+    dataIndex: "username",
     title: "Họ và tên",
   },
   {
     dataIndex: "department",
     title: "Phòng ban",
+    render: (text) => {
+      return text.label;
+    },
     filters: [
       {
-        text: "Khoa Công nghệ thông tin",
-        value: "Khoa Công nghệ thông tin",
+        text: "Khoa Công nghệ Thông tin",
+        value: "Khoa Công nghệ Thông tin",
       },
       {
-        text: "Khoa Điện tử viễn thông",
-        value: "Khoa Điện tử viễn thông",
+        text: "Khoa Điện tử Viễn thông",
+        value: "Khoa Điện tử Viễn thông",
       },
       {
         text: "Khoa Ngữ Văn",
@@ -114,8 +54,12 @@ const TableColumns = [
         value: "Khoa Báo chí",
       },
     ],
-    onFilter: (value, record) => record.department.startsWith(value),
-    filterSearch: (input, record) => record.value.includes(input),
+    onFilter: (value, record) => {
+      return record.department.label.indexOf(value) === 0;
+    },
+    filterSearch: (input, record) => {
+      return record.text.includes(input);
+    },
   },
 ];
 
@@ -125,6 +69,13 @@ export default function RecipientDocument({
   onSelectRelatedRecipient,
   selectedRecipient,
 }) {
+  const dispatch = useDispatch();
+  const recipients = useSelector(getRecipients);
+
+  React.useEffect(() => {
+    dispatch(fetchRecipients());
+  }, [dispatch]);
+
   const handleTableTransferChange = (nextTargetKeys) => {
     onSelectRelatedRecipient(nextTargetKeys);
   };
@@ -135,10 +86,10 @@ export default function RecipientDocument({
         <CardAnt title={<Typography.Text strong>Danh sách người nhận</Typography.Text>}>
           <Row>
             <Col span={24}>
-              <Form.Item name="recipient" initialValue="all">
+              <Form.Item name="recipients" initialValue={[]}>
                 <TableTransfer
                   titles={["Danh sách cán bộ/giảng viên", "Người nhận đã chọn"]}
-                  dataSource={mockData}
+                  dataSource={recipients}
                   targetKeys={selectedRecipient}
                   locale={{
                     searchPlaceholder: "Nhập vào tên của cán bộ/giảng viên",
@@ -150,13 +101,13 @@ export default function RecipientDocument({
                     showLessItems: true,
                   }}
                   showSearch={true}
-                  render={(item) => item.title}
                   onChange={handleTableTransferChange}
                   filterOption={(inputValue, item) =>
-                    item.fullName.toLowerCase().includes(inputValue.toLowerCase())
+                    item.username.toLowerCase().includes(inputValue.toLowerCase())
                   }
                   leftColumns={TableColumns}
                   rightColumns={TableColumns}
+                  rowKey={(record) => record._id}
                 />
               </Form.Item>
             </Col>

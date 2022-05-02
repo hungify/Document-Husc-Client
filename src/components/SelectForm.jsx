@@ -19,7 +19,7 @@ export default function SelectForm({ selectData, onSelect, hasTag, ...restProps 
   };
 
   return (
-    <Select {...restProps} onSelect={handleSelect} onSearch={handleSelectSearch} size="large">
+    <Select {...restProps} onSelect={handleSelect} onSearch={handleSelectSearch} size="large" >
       {searchSelect?.map((item) => (
         <Select.Option value={item.value} key={item.value}>
           {hasTag ? (

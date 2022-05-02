@@ -19,14 +19,14 @@ export default function TransferTable({ leftColumns, rightColumns, ...restProps 
           onSelectAll(selected, selectedRows) {
             const treeSelectedKeys = selectedRows
               .filter((item) => !item.disabled)
-              .map(({ key }) => key);
+              .map(({ _id }) => _id);
             const diffKeys = selected
               ? difference(treeSelectedKeys, listSelectedKeys)
               : difference(listSelectedKeys, treeSelectedKeys);
             onItemSelectAll(diffKeys, selected);
           },
-          onSelect({ key }, selected) {
-            onItemSelect(key, selected);
+          onSelect({ _id }, selected) {
+            onItemSelect(_id, selected);
           },
           selectedRowKeys: listSelectedKeys,
         };
@@ -36,6 +36,7 @@ export default function TransferTable({ leftColumns, rightColumns, ...restProps 
             rowSelection={rowSelection}
             columns={columns}
             dataSource={filteredItems}
+            rowKey={(record) => record._id}
             locale={{
               emptyText: (
                 <span>

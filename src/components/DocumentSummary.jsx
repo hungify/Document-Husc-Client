@@ -1,4 +1,5 @@
 import { Col, Row, Table, Tag, Typography } from "antd";
+import dayjs from "dayjs";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,7 +9,7 @@ const RowAnt = styled(Row)`
   }
 `;
 
-export default function DocumentSummary({ documentData }) {
+export default function DocumentSummary({ dataSource }) {
   const keyShouldShow = [
     {
       key: "documentNumber",
@@ -27,11 +28,11 @@ export default function DocumentSummary({ documentData }) {
       title: "Độ khẩn cấp",
     },
     {
-      key: "dateIssued",
+      key: "issueDate",
       title: "Ngày ban hành",
     },
     {
-      key: "authorityIssued",
+      key: "agency",
       title: "Cơ quan ban hành",
     },
     {
@@ -41,7 +42,7 @@ export default function DocumentSummary({ documentData }) {
   ];
 
   const columns = keyShouldShow.map((item) => {
-    if (documentData.hasOwnProperty(item.key)) {
+    if (dataSource.hasOwnProperty(item.key)) {
       return {
         title: item.title,
         dataIndex: item.key,
@@ -49,12 +50,16 @@ export default function DocumentSummary({ documentData }) {
         render: (text) => {
           if (item.key === "urgentLevel") {
             return (
-              <Tag color={text === "Bình thường" ? "green" : "red"} key={text}>
-                {text}
+              <Tag color={text.colorTag} key={text.value}>
+                {text.label}
               </Tag>
             );
+          } else if (item.key === "issueDate") {
+            return dayjs(text).format("DD/MM/YYYY");
+          } else if (item.key === "category") {
+            return text.title;
           }
-          return text;
+          return text.label || text;
         },
       };
     }
@@ -64,7 +69,7 @@ export default function DocumentSummary({ documentData }) {
     <>
       <RowAnt>
         <Col span={24}>
-          <Table columns={columns} dataSource={[documentData]} pagination={false} bordered />
+          <Table columns={columns} dataSource={[dataSource]} pagination={false} bordered />
         </Col>
       </RowAnt>
       <RowAnt gutter={[0, 10]}>
@@ -76,7 +81,7 @@ export default function DocumentSummary({ documentData }) {
               lineHeight: "1.5",
             }}
           >
-            {documentData.title}
+            {dataSource.title}
           </Typography.Text>
         </Col>
         <Col span={24}>
@@ -87,7 +92,7 @@ export default function DocumentSummary({ documentData }) {
               lineHeight: "1.5",
             }}
           >
-            {documentData.summary}
+            {dataSource.summary}
           </Typography.Paragraph>
         </Col>
       </RowAnt>

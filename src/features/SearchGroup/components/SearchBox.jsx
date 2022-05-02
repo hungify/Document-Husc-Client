@@ -18,7 +18,7 @@ const plainOptions = [
   },
   {
     label: "Số hiệu văn bản",
-    value: "document_number",
+    value: "documentNumber",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function SearchBox(props) {
   return (
     <Row align="middle">
       <Col span={7}>
-        <Form.Item name="findBy" initialValue={searchType}>
+        <Form.Item name="searchBy" initialValue={searchType}>
           <Radio.Group size="large" value={searchType} onChange={handleRadioChange}>
             {plainOptions.map((option) => (
               <SpaceAnt key={option.value} direction="vertical">
@@ -51,9 +51,8 @@ export default function SearchBox(props) {
         </Form.Item>
       </Col>
       <Col span={17}>
-        <Form.Item name="searchTerm">
-          <Input.Group
-            compact
+        <Form.Item name="searchText">
+          <div
             style={{
               display: "flex",
             }}
@@ -62,7 +61,7 @@ export default function SearchBox(props) {
             <Button type="primary" htmlType="submit" size="large" icon={<SearchOutlined />}>
               Tìm kiếm
             </Button>
-          </Input.Group>
+          </div>
         </Form.Item>
       </Col>
     </Row>

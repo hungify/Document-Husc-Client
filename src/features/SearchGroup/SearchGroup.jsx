@@ -3,8 +3,12 @@ import { Card, Col, Collapse, Form, Row, Typography } from "antd";
 import SearchBox from "features/SearchGroup/components/SearchBox";
 import SearchFilter from "features/SearchGroup/components/SearchFilter";
 import SearchTime from "features/SearchGroup/components/SearchTime";
+import { setFiltersBy, setSearchForm } from "features/SearchGroup/searchGroupSlice";
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import dayjs from "dayjs";
+
 const Wrapper = styled.div``;
 
 const CardAnt = styled(Card)`
@@ -24,27 +28,46 @@ const CollapseAnt = styled(Collapse)`
 const CollapsePanelAnt = styled(Collapse.Panel)``;
 
 export default function SearchGroup() {
-  const [typesOfDocument, setTypesOfDocument] = React.useState([]);
-  const [categoryOfDocument, setCategoryOfDocument] = React.useState();
-  const [agencyOfDocument, setAgencyDocument] = React.useState([]);
-
-  const [form] = Form.useForm();
+  const [typesOfDocument, setTypesOfDocument] = React.useState(null);
+  const [category, setCategory] = React.useState();
+  const [agency, setAgency] = React.useState(null);
+  const dispatch = useDispatch();
 
   const handleFormSearchSubmit = (values) => {
-    console.log("🚀 :: values", values);
+    const { start, end, orderBy, searchText, searchBy } = values;
+    const startDate = start && dayjs(start).format("YYYY/MM/DD");
+    const endDate = end && dayjs(end).format("YYYY/MM/DD");
+    dispatch(setSearchForm({ start: startDate, end: endDate, orderBy, searchText, searchBy }));
   };
 
   const handleTypesOfDocumentSelect = (value) => {
+    dispatch(setFiltersBy({ typesOfDocument: value }));
     setTypesOfDocument(value);
   };
+  const handleTypesOfDocumentDeselect = (value) => {
+    if (typesOfDocument === value) {
+      dispatch(setFiltersBy({ typesOfDocument: null }));
+      setTypesOfDocument(null);
+    }
+  };
   const handleAgencySelect = (value) => {
-    setAgencyDocument(value);
+    dispatch(setFiltersBy({ agency: value }));
+    setAgency(value);
+  };
+  const handleAgencyDeselect = (value) => {
+    if (value === agency) {
+      dispatch(setFiltersBy({ agency: null }));
+      setAgency(null);
+    }
   };
   const handleCategorySelect = (value) => {
-    setCategoryOfDocument(value);
-  };
-  const handleCategoryDeSelect = (value) => {
-    setCategoryOfDocument(value);
+    if (value) {
+      dispatch(setFiltersBy({ category: value }));
+      setCategory(value);
+    } else {
+      dispatch(setFiltersBy({ category: null }));
+      setCategory(null);
+    }
   };
 
   return (
@@ -58,18 +81,19 @@ export default function SearchGroup() {
             <SearchFilter
               typesOfDocument={typesOfDocument}
               onTypesOfDocumentSelect={handleTypesOfDocumentSelect}
-              categoryOfDocument={categoryOfDocument}
-              onCategoryDeSelect={handleCategoryDeSelect}
+              onTypesOfDocumentDeselect={handleTypesOfDocumentDeselect}
+              category={category}
               onCategorySelect={handleCategorySelect}
-              agencyOfDocument={agencyOfDocument}
+              agency={agency}
               onAgencySelect={handleAgencySelect}
+              onAgencyDeselect={handleAgencyDeselect}
             />
             <Row gutter={[0, 10]} style={{ marginTop: 5 }}>
               <Col span={24}>
                 <Typography.Text strong>Tìm theo</Typography.Text>
               </Col>
               <Col span={24}>
-                <Form form={form} name="lookupDocument" onFinish={handleFormSearchSubmit}>
+                <Form name="lookupDocument" onFinish={handleFormSearchSubmit}>
                   <Row>
                     <Col span={11}>
                       <SearchTime />

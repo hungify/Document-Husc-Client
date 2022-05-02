@@ -5,12 +5,14 @@ import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
 import { selectConfig } from "configs/select";
 import ListUploaded from "features/IssueDocument/components/ListUploaded";
 import _ from "lodash";
-import { mockDocumentListProtect } from "mocks/documents";
 import React from "react";
 import styled from "styled-components";
-import { findElementInTwoArray } from "utils/table";
 import { findNodeByKey } from "utils/tree";
 import { v4 as uuidv4 } from "uuid";
+import dayjs from "dayjs";
+import { fetchDocumentByIds } from "features/Home/homeSlice";
+import { getRelatedDocuments } from "app/selectors/documents";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -37,93 +39,89 @@ const CardItemAnt = styled(Card)`
   }
 `;
 
-const columnsClassification = [
+const keysPropertyShouldBe = [
   {
-    title: "Loại văn bản",
-    dataIndex: "typesOfDocuments",
+    key: "signer",
+    label: "Người ký",
   },
   {
-    title: "Cơ quan ban hành",
-    dataIndex: "agency",
+    key: "documentNumber",
+    label: "Số văn bản",
   },
   {
-    title: "Chuyên mục",
-    dataIndex: "category",
+    key: "issueDate",
+    label: "Ngày ban hành",
+  },
+];
+const keysClassificationShouldBe = [
+  {
+    key: "typesOfDocument",
+    label: "Loại văn bản",
+  },
+  {
+    key: "agency",
+    label: "Cơ quan ban hành",
+  },
+  {
+    key: "category",
+    label: "Chuyên mục",
   },
 ];
 
-const columnsProperty = [
-  {
-    title: "Số hiệu văn bản",
-    dataIndex: "documentNumber",
-  },
-  {
-    title: "Ngày ban hành",
-    dataIndex: "dateIssue",
-  },
+const generateColumns = (formValues) => {
+  const columnsProperty = [];
+  const columnsClassification = [];
+  const keysProperty = keysPropertyShouldBe.map((item) => item.key);
+  const keysClassification = keysClassificationShouldBe.map((item) => item.key);
 
-  {
-    title: "Người ký",
-    dataIndex: "signer",
-  },
-
-  {
-    title: "Mức độ khẩn",
-    dataIndex: "urgentLevel",
-
-    render: (text) => {
-      if (text === "Bình thường") return <Tag color="green">Bình thường</Tag>;
-      else if (text === "Khẩn cấp") return <Tag color="red">Khẩn</Tag>;
-    },
-  },
-];
-
-const columnsRelatedDocument = [
-  {
-    title: "Cơ quan ban hành",
-    dataIndex: "agecy",
-  },
-  {
-    title: "Số hiệu văn bản",
-    dataIndex: "documentNumber",
-  },
-  {
-    title: "Ngày ban hành",
-    dataIndex: "dateIssue",
-  },
-  {
-    title: "Chuyên mục",
-    dataIndex: "category",
-  },
-  {
-    title: "Người ký",
-    dataIndex: "signer",
-  },
-  {
-    title: "Loại văn bản",
-    dataIndex: "typesOfDocument",
-  },
-];
+  const keys = Object.keys(formValues);
+  keys.forEach((key) => {
+    if (keysProperty.includes(key)) {
+      columnsProperty.push({
+        title: keysPropertyShouldBe.find((item) => item.key === key).label,
+        dataIndex: key,
+        render: (text) => (key === "issueDate" ? dayjs(text).format("DD/MM/YYYY") : text),
+      });
+    } else if (keysClassification.includes(key)) {
+      columnsClassification.push({
+        title: keysClassificationShouldBe.find((item) => item.key === key).label,
+        dataIndex: key,
+        render: (text) => text.title || text.label,
+      });
+    }
+  });
+  return {
+    columnsClassification,
+    columnsProperty,
+  };
+};
 
 export default function PreviewIssueDocument({ formValues }) {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchDocumentByIds(formValues.relatedDocuments));
+  }, []);
+
+  const columns = generateColumns(formValues);
+
   const dataClassification = [
     {
       key: uuidv4(),
-      typesOfDocuments: _.find(selectConfig.typesOfDocuments, {
-        value: formValues.typesOfDocuments,
-      })?.label,
-      agency: _.find(selectConfig.agency, { value: formValues.agency }).label,
-      category: findNodeByKey(selectConfig.categories, { value: formValues.category }).title,
+      typesOfDocument: _.find(selectConfig.typesOfDocuments, {
+        value: formValues.typesOfDocument,
+      }),
+      agency: _.find(selectConfig.agency, { value: formValues.agency }),
+      category: findNodeByKey(selectConfig.categories, { value: formValues.category }),
     },
   ];
 
   const dataProperty = [
     {
       key: uuidv4(),
-      urgentLevel: _.find(selectConfig.urgentLevel, { value: formValues.urgentLevel }).label,
+      urgentLevel: _.find(selectConfig.urgentLevel, { value: formValues.urgentLevel }),
       signer: formValues.signer,
       documentNumber: formValues.documentNumber,
-      dateIssue: new Date(formValues.dateIssue).toLocaleDateString(),
+      issueDate: formValues.issueDate,
     },
   ];
 
@@ -132,13 +130,11 @@ export default function PreviewIssueDocument({ formValues }) {
       key: uuidv4(),
       title: formValues.title,
       content: formValues?.content,
+      summary: formValues?.summary,
       fileList: formValues?.files?.fileList,
     },
   ];
-  const relatedDocuments = findElementInTwoArray(
-    mockDocumentListProtect,
-    formValues.relatedDocuments
-  );
+  const relatedDocuments = useSelector(getRelatedDocuments);
 
   return (
     <Container>
@@ -147,7 +143,7 @@ export default function PreviewIssueDocument({ formValues }) {
           <WrapForm>
             <CardAnt title={<Typography.Text strong>Thông tin phân loại văn bản</Typography.Text>}>
               <Table
-                columns={columnsClassification}
+                columns={columns.columnsClassification}
                 dataSource={dataClassification}
                 pagination={false}
                 bordered={true}
@@ -155,7 +151,7 @@ export default function PreviewIssueDocument({ formValues }) {
             </CardAnt>
             <CardAnt title={<Typography.Text strong>Thuộc tính của văn bản</Typography.Text>}>
               <Table
-                columns={columnsProperty}
+                columns={columns.columnsProperty}
                 dataSource={dataProperty}
                 pagination={false}
                 bordered={true}
@@ -170,10 +166,10 @@ export default function PreviewIssueDocument({ formValues }) {
                       <Typography.Title level={5}>{item.title}</Typography.Title>
                       {formValues.documentFrom === "input" ? (
                         <>
-                          <Typography.Paragraph>{item.content}</Typography.Paragraph>
+                          <Typography.Paragraph>{item?.content}</Typography.Paragraph>
                         </>
                       ) : (
-                        <Typography.Paragraph>{item.summary}</Typography.Paragraph>
+                        <Typography.Paragraph>{item?.summary}</Typography.Paragraph>
                       )}
                     </Col>
                     {formValues.documentFrom === "attach" && (
@@ -204,15 +200,15 @@ export default function PreviewIssueDocument({ formValues }) {
                 }}
                 dataSource={relatedDocuments}
                 renderItem={(item) => (
-                  <BadgeRibbonAgency text={item.urgentLevel} key={item.key}>
+                  <BadgeRibbonAgency text={item.urgentLevel.label} key={item._id}>
                     <CardItemAnt>
-                      <List.Item key={item.key}>
+                      <List.Item>
                         <Row align="middle" justify="space-between">
                           <Col span={24}>
                             <List.Item.Meta
                               avatar={
                                 <Avatar size="large">
-                                  {item?.avatar?.charAt(0)?.toUpperCase() ?? "?"}
+                                  {item?.publisher?.username?.charAt(0)?.toUpperCase() ?? "?"}
                                 </Avatar>
                               }
                               title={item.title}
@@ -220,7 +216,10 @@ export default function PreviewIssueDocument({ formValues }) {
                           </Col>
                           <Col span={24}>
                             <Table
-                              columns={columnsRelatedDocument}
+                              columns={[
+                                ...columns.columnsClassification,
+                                ...columns.columnsProperty,
+                              ]}
                               dataSource={[item]}
                               pagination={false}
                               bordered
