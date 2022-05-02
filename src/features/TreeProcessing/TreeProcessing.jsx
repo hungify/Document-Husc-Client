@@ -4,6 +4,7 @@ import { getParticipants } from "app/selectors/documentDetails";
 import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
 import BroadcastIcon from "components/Icons/BroadcastIcon";
 import dayjs from "dayjs";
+import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -36,12 +37,11 @@ const SpaceAnt = styled(Space)`
   }
 `;
 
-export default function TreeProcessing() {
+export default function TreeProcessing({ treeData }) {
   const [selectedNode, setSelectedNode] = React.useState();
   const handleOnSelect = (selectedKeys, nodeInfo) => {
     setSelectedNode(nodeInfo.selectedNodes[0]);
   };
-  const participants = useSelector(getParticipants);
 
   return (
     <Card>
@@ -74,12 +74,12 @@ export default function TreeProcessing() {
         }}
         defaultExpandAll={true}
         onSelect={handleOnSelect}
-        treeData={participants}
+        treeData={treeData}
         titleRender={(tree) => (
           <Overlay>
             {tree.root ? (
               <SpaceAnt size="small">
-                <Typography.Title level={4}>{tree?.receiver?.username}</Typography.Title>
+                <Typography.Title level={4}>{tree.receiver.username}</Typography.Title>
                 <BroadcastIcon style={{ color: "rgb(255, 77, 79)" }} />
                 <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
                   Ban hành: {dayjs(tree.sendDate).format("DD/MM/YYYY HH:mm")}
@@ -96,9 +96,9 @@ export default function TreeProcessing() {
 }
 
 function TreeItem({ node }) {
-  return node?.children?.length > 0 ? (
+  return !_.isEmpty(node.children) ? (
     <SpaceAnt size="small">
-      <Typography.Title level={5}>{node?.receiver?.username}</Typography.Title>
+      <Typography.Title level={5}>{node.receiver.username}</Typography.Title>
       <BadgeCheckIcon style={{ color: "#30AADD" }} />
       <Space direction="horizontal" split={<Divider type="vertical" />}>
         {node.readDate && (
@@ -115,8 +115,8 @@ function TreeItem({ node }) {
     </SpaceAnt>
   ) : (
     <SpaceAnt size="small">
-      <Typography.Text>{node.receiver.username}</Typography.Text>
-      {node?.readDate && (
+      <Typography.Text>{node?.receiver?.username}</Typography.Text>
+      {node.readDate && (
         <>
           <BadgeCheckIcon style={{ color: "#30AADD" }} />
           <Typography.Text type="success" italic style={{ fontSize: "15px" }}>

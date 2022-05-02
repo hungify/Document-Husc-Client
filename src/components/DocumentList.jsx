@@ -81,7 +81,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                         {item.publisher?.username?.charAt(0)?.toUpperCase() ?? "?"}
                       </Avatar>
                     }
-                    title={<Link to={`/detail/${item._id}`}>{item.title}</Link>}
+                    title={<Link to={`/detail/${item._id}?tab=property`}>{item.title}</Link>}
                   />
                 </Col>
                 <Col span={8}>

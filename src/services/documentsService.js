@@ -36,8 +36,8 @@ const documentsService = {
       params: query,
     });
   },
-  getDocumentDetail: (documentId) => {
-    const url = `/documents/${documentId}`;
+  getDocumentDetail: ({ slug, key }) => {
+    const url = `/documents/${slug}?tab=${key}`;
     return axiosInstance.get(url);
   },
   getDocumentsByIds: (ids) => {
