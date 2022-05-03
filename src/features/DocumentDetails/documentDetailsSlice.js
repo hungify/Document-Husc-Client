@@ -1,18 +1,27 @@
 import documentsService from "services/documentsService";
-const { createSlice, createAsyncThunk, createAction } = require("@reduxjs/toolkit");
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import showToast, { toastPosition } from "configs/toast";
 
-const documentDetail = createAction("documentDetails/getDocumentDetails");
-export const fetchDocumentDetails = createAsyncThunk(
-  documentDetail.type,
-  async (query, thunkAPI) => {
-    try {
-      const { data } = await documentsService.getDocumentDetail(query);
-      return { data, key: query.key };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+const fetch = createAction("documentDetails/fetch");
+export const fetchDocumentDetails = createAsyncThunk(fetch.type, async (query, thunkAPI) => {
+  try {
+    const { data } = await documentsService.getDocumentDetail(query);
+    return { data, key: query.key };
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
+});
+const updateRead = createAction("documentDetails/update/read");
+export const updateReadDocument = createAsyncThunk(updateRead.type, async (query, thunkAPI) => {
+  try {
+    const userId = "626bdbf7f302b3be8e1d4ffe";
+    const { data } = await documentsService.updateReadDocument({ ...query, userId });
+    return data;
+  } catch (error) {
+    const { message, status } = error.response.data;
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 const initialState = {
   loading: false,
@@ -49,6 +58,16 @@ const documentDetailsSlice = createSlice({
     });
     builder.addCase(fetchDocumentDetails.pending, (state, action) => {
       state.loading = true;
+    });
+    builder.addCase(updateReadDocument.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateReadDocument.fulfilled, (state, action) => {
+      showToast("success", "Xử lý văn bản thành công", toastPosition.bottomRight);
+    });
+    builder.addCase(updateReadDocument.rejected, (state, action) => {
+      state.error = true;
+      showToast("error", action.payload, toastPosition.topRight);
     });
   },
 });

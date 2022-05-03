@@ -41,11 +41,7 @@ export default function RelatedDocuments({ dataSource }) {
           },
         }}
         locale={{
-          emptyText: (
-            <span>
-              <Empty description="Danh sách trống" />
-            </span>
-          ),
+          emptyText: <Empty description="Danh sách trống" />,
         }}
         dataSource={dataSource}
         renderItem={(item) => (

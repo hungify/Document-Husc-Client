@@ -11,7 +11,10 @@ import { ROLES } from "configs/roles";
 import { treePeople } from "configs/trees";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
-import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
+import {
+  fetchDocumentDetails,
+  updateReadDocument,
+} from "features/DocumentDetails/documentDetailsSlice";
 import FileList from "features/FileList/FileList";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
@@ -27,22 +30,20 @@ const ButtonAnt = styled(Button)`
 
 export default function DetailDocument() {
   const [visible, setVisible] = React.useState(false);
-  const [document, setDocument] = React.useState();
-
   const [treeReceiver, setTreeReceiver] = React.useState();
 
-  const dispatch = useDispatch();
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab");
+  const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const role = useSelector(getRole);
   const isAuth = useSelector(isAuthenticated);
   const property = useSelector(getProperty);
   const files = useSelector(getFiles);
   const relatedDocuments = useSelector(getRelatedDocuments);
   const participants = useSelector(getParticipants);
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab");
 
   React.useEffect(() => {
     if (activeTab) {
@@ -73,9 +74,7 @@ export default function DetailDocument() {
       okText: "Hoàn thành",
       cancelText: "Hủy",
       onOk() {
-        return new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log("Oops errors!"));
+        dispatch(updateReadDocument({ documentId: slug }));
       },
       onCancel() {},
     });
@@ -130,11 +129,11 @@ export default function DetailDocument() {
         title="Nội dung văn bản"
         extra={
           (role === ROLES.ADMIN || role === ROLES.USER) &&
-          document?.isProtect && (
+          property?.isPublic && (
             <Space split={<Divider type="vertical" />}>
               <Button
                 type="primary"
-                onClick={() => handleFinishProcessed(document.key)}
+                onClick={() => handleFinishProcessed(property._id)}
                 size="large"
               >
                 Báo cáo đã xứ lý
@@ -143,7 +142,7 @@ export default function DetailDocument() {
                 type="primary"
                 icon={<ForwardIcon />}
                 size="large"
-                onClick={() => handleForwardClick(document.key)}
+                onClick={() => handleForwardClick(property._id)}
               >
                 Chuyển tiếp
               </ButtonAnt>
