@@ -1,10 +1,10 @@
 import { Card, Col, Form, Input, Row, Typography } from "antd";
+import { getFilterRecipients } from "app/selectors/recipients";
 import TableTransfer from "components/TransferTable";
+import { fetchExcludedRecipients, fetchRecipients } from "features/Recipients/recipientsSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getRecipients } from "app/selectors/recipients";
-import { fetchRecipients } from "features/Recipients/recipientsSlice";
 const Container = styled.div`
   padding: 10px 20px;
 `;
@@ -68,13 +68,19 @@ export default function RecipientDocument({
   onSubmitForm,
   onSelectRelatedRecipient,
   selectedRecipient,
+  required,
+  documentId,
 }) {
   const dispatch = useDispatch();
-  const recipients = useSelector(getRecipients);
+
+  const filterRecipients = useSelector(getFilterRecipients);
 
   React.useEffect(() => {
     dispatch(fetchRecipients());
-  }, [dispatch]);
+    if (documentId) {
+      dispatch(fetchExcludedRecipients(documentId));
+    }
+  }, [dispatch, documentId]);
 
   const handleTableTransferChange = (nextTargetKeys) => {
     onSelectRelatedRecipient(nextTargetKeys);
@@ -86,10 +92,14 @@ export default function RecipientDocument({
         <CardAnt title={<Typography.Text strong>Danh sách người nhận</Typography.Text>}>
           <Row>
             <Col span={24}>
-              <Form.Item name="recipients" initialValue={[]}>
+              <Form.Item
+                name="recipients"
+                initialValue={[]}
+                rules={required ? [{ required, message: "Vui lòng chọn người nhận" }] : []}
+              >
                 <TableTransfer
                   titles={["Danh sách cán bộ/giảng viên", "Người nhận đã chọn"]}
-                  dataSource={recipients}
+                  dataSource={filterRecipients}
                   targetKeys={selectedRecipient}
                   locale={{
                     searchPlaceholder: "Nhập vào tên của cán bộ/giảng viên",
