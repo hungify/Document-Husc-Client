@@ -14,7 +14,7 @@ import AddEditDocument from "features/Manage/ManageDocuments/AddEditDocument";
 import ManageDocuments from "features/Manage/ManageDocuments/ManageDocuments";
 import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";
 import ManageTypesOfDocuments from "features/Manage/ManageTypesOfDocuments/ManageTypesOfDocuments";
-import ReceiverDocuments from "features/ReceiverDocuments/ReceiverDocuments";
+import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
 import SentDocuments from "features/SentDocuments/SentDocuments";
 import MainLayout from "layouts/MainLayout/MainLayout";
 

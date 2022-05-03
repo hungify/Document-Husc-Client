@@ -6,7 +6,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 const create = createAction("issueDocument/issue");
 export const issueDocumentOfficial = createAsyncThunk(create.type, async (formData, thunkAPI) => {
   try {
-    const data = await documentsService.issueDocument(formData);
+    const data = await documentsService.createDocument(formData);
     return data.message;
   } catch (error) {
     const { message } = error.response.data;

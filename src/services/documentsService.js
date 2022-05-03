@@ -44,9 +44,13 @@ const documentsService = {
     const url = "/documents?ids=".concat(ids.join(","));
     return axiosInstance.get(url);
   },
-  issueDocument: (formData) => {
+  createDocument: (formData) => {
     const url = "/documents";
     return axiosInstance.post(url, formData);
+  },
+  updateReadDocument: ({ documentId, userId }) => {
+    const url = `/documents/${documentId}/receiver/${userId}/read`;
+    return axiosInstance.patch(url);
   },
 };
 
