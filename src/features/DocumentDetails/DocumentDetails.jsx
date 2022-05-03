@@ -1,14 +1,11 @@
 import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs, TreeSelect } from "antd";
+import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
 import { getFiles, getParticipants, getProperty } from "app/selectors/documentDetails";
 import { getRelatedDocuments } from "app/selectors/documentDetails";
 import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
-import ModalForm from "components/ModalForm";
-import TreeSelectForm from "components/TreeSelectForm";
 import { ROLES } from "configs/roles";
-import { treePeople } from "configs/trees";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
 import {
@@ -16,6 +13,7 @@ import {
   updateReadDocument,
 } from "features/DocumentDetails/documentDetailsSlice";
 import FileList from "features/FileList/FileList";
+import RecipientDocument from "features/Recipients/RecipientsDocument";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import _ from "lodash";
@@ -30,7 +28,9 @@ const ButtonAnt = styled(Button)`
 
 export default function DetailDocument() {
   const [visible, setVisible] = React.useState(false);
-  const [treeReceiver, setTreeReceiver] = React.useState();
+  const [selectedRecipient, setSelectedRecipient] = React.useState([]);
+
+  const [form] = Form.useForm();
 
   const { slug } = useParams();
   const [searchParams] = useSearchParams();
@@ -58,15 +58,11 @@ export default function DetailDocument() {
     dispatch(fetchDocumentDetails({ slug, key }));
   };
 
-  const handleTreeReceiverSelect = (value) => {
-    setTreeReceiver([...treeReceiver, value]);
-  };
-
   const handleForwardClick = (forwardId) => {
     setVisible(true);
   };
 
-  const handleFinishProcessed = () => {
+  const handleReadDocument = () => {
     Modal.confirm({
       title: "Lưu ý",
       icon: <ExclamationCircleOutlined />,
@@ -80,23 +76,29 @@ export default function DetailDocument() {
     });
   };
 
-  const handleOnSubmit = (values) => {
-    setVisible(false);
+  const handleOnSubmit = () => {
+    // console.log("🚀 :: values", values);
+    form.submit();
+    // setVisible(false);
   };
   const handleOnCancel = () => {
     setVisible(false);
   };
 
+  const handleRecipientsSubmit = (values) => {
+    console.log("🚀 :: values", values);
+  };
+
   return (
     <>
-      <ModalForm
+      <Modal
         visible={visible}
-        onSubmit={handleOnSubmit}
+        onOk={handleOnSubmit}
         onCancel={handleOnCancel}
         size="large"
-        title={"Chuyển tiếp văn bản"}
-        okText={"Chuyển tiếp"}
-        cancelText={"Hủy"}
+        title="Chuyển tiếp văn bản"
+        okText="Chuyển tiếp"
+        cancelText="Hủy"
         layout="vertical"
         name="forward"
         width={1000}
@@ -106,36 +108,23 @@ export default function DetailDocument() {
           md: { span: 20, offset: 2 },
         }}
       >
-        <Form.Item
-          key={slug}
-          name="to"
-          label="Người nhận"
-          tooltip={{ title: "Người nhận văn bản của bạn?", icon: <InfoCircleOutlined /> }}
-          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
-        >
-          <TreeSelectForm
-            treeData={treePeople}
-            onTreeSelect={handleTreeReceiverSelect}
-            placeholder="Chọn người nhận"
-            allowClear
-            size="large"
-            showCheckedStrategy={TreeSelect.SHOW_PARENT}
-            treeCheckable={true}
-          />
-        </Form.Item>
-      </ModalForm>
+        <RecipientDocument
+          form={form}
+          onSubmitForm={handleRecipientsSubmit}
+          onSelectRelatedRecipient={(data) => setSelectedRecipient(data)}
+          selectedRecipient={selectedRecipient}
+          required={true}
+          documentId={slug}
+        />
+      </Modal>
 
       <Card
         title="Nội dung văn bản"
         extra={
           (role === ROLES.ADMIN || role === ROLES.USER) &&
-          property?.isPublic && (
+          !property?.isPublic && (
             <Space split={<Divider type="vertical" />}>
-              <Button
-                type="primary"
-                onClick={() => handleFinishProcessed(property._id)}
-                size="large"
-              >
+              <Button type="primary" onClick={() => handleReadDocument(property._id)} size="large">
                 Báo cáo đã xứ lý
               </Button>
               <ButtonAnt
