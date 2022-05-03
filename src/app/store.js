@@ -5,7 +5,6 @@ import logger from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { initRequest } from "services/initRequest";
-import inboxListenerMiddleware from "app/middlewares/inbox";
 
 const persistConfig = {
   key: "root",
@@ -25,7 +24,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-      .prepend(documentListenerMiddleware, inboxListenerMiddleware)
+      .prepend(documentListenerMiddleware)
       .concat(logger),
   devTools: process.env.NODE_ENV !== "production",
 });

@@ -2,11 +2,7 @@ import { Avatar, Card, Col, Divider, Empty, List, Row, Typography } from "antd";
 import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
 import SortFilter from "components/SortFilter";
 import { dataSortFilterRadio } from "configs/sortFilter";
-import {
-  fetchInboxDocuments,
-  setOrderBy,
-  setPage,
-} from "features/InboxDocuments/inboxDocumentsSlice";
+import { fetchInboxDocuments } from "features/InboxDocuments/inboxDocumentsSlice";
 import { getInboxDocuments } from "app/selectors/inbox";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,16 +23,20 @@ const CardAnt = styled(Card)`
 `;
 
 export default function InboxDocuments() {
+  const [pageSize, setPageSize] = React.useState(10);
+  const [page, setPage] = React.useState(1);
+  const [orderBy, setOrderBy] = React.useState("all");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inboxDocuments = useSelector(getInboxDocuments);
 
   React.useEffect(() => {
-    dispatch(fetchInboxDocuments());
-  }, [dispatch]);
+    dispatch(fetchInboxDocuments({ page, pageSize, orderBy }));
+  }, [dispatch, page, pageSize,  orderBy]);
 
   const handleRadioReceiverDocumentChange = (value) => {
-    dispatch(setOrderBy(value));
+    setOrderBy(value);
   };
 
   return (
@@ -50,9 +50,12 @@ export default function InboxDocuments() {
         size="small"
         pagination={{
           onChange: (page) => {
-            dispatch(setPage(page));
+            setPage(page);
           },
-          pageSize: 10,
+          onShowSizeChange: (current, size) => {
+            setPageSize(size);
+          },
+          pageSize: pageSize,
           showTotal: true,
           hideOnSinglePage: true,
         }}
