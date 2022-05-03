@@ -2,7 +2,7 @@ import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs, TreeSelect } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
 import { getFiles, getParticipants, getProperty } from "app/selectors/documentDetails";
-import { getRelatedDocuments } from "app/selectors/documents";
+import { getRelatedDocuments } from "app/selectors/documentDetails";
 import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import ModalForm from "components/ModalForm";
@@ -45,8 +45,12 @@ export default function DetailDocument() {
   const activeTab = searchParams.get("tab");
 
   React.useEffect(() => {
-    dispatch(fetchDocumentDetails({ slug, key: activeTab }));
-  }, [isAuth, slug, dispatch, activeTab]);
+    if (activeTab) {
+      dispatch(fetchDocumentDetails({ slug, key: activeTab }));
+    } else {
+      navigate(`?tab=property`);
+    }
+  }, [isAuth, slug, dispatch, activeTab, navigate]);
 
   const handleTabChangeClick = (key) => {
     navigate(`?tab=${key}`);

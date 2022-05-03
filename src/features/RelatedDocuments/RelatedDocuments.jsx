@@ -50,13 +50,21 @@ export default function RelatedDocuments({ dataSource }) {
         dataSource={dataSource}
         renderItem={(item) => (
           <List.Item>
-            <BadgeRibbonUrgency text={item.urgentLevel} key={item.key}>
+            <BadgeRibbonUrgency
+              text={item.urgentLevel.label}
+              colorTag={item.urgentLevel.colorTag}
+              key={item._id}
+            >
               <CardItemAnt bordered={false}>
                 <Row align="middle" justify="space-between">
                   <Col span={24}>
                     <List.Item.Meta
-                      avatar={<Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>}
-                      title={<Link to={`/detail/${item.key}`}>{item.title}</Link>}
+                      avatar={
+                        <Avatar size="large">
+                          {item.publisher.username.charAt(0).toUpperCase()}
+                        </Avatar>
+                      }
+                      title={<Link to={`/detail/${item._id}`}>{item.title}</Link>}
                     />
                   </Col>
                   <Col span={7}>
@@ -72,7 +80,7 @@ export default function RelatedDocuments({ dataSource }) {
                   </Col>
                   <Col span={7}>
                     <Typography.Title level={5}>
-                      Ngày Ban hành: <Typography.Text keyboard>{item.dateIssued}</Typography.Text>
+                      Ngày Ban hành: <Typography.Text keyboard>{item.issueDate}</Typography.Text>
                     </Typography.Title>
                   </Col>
                   <Col span={1}>

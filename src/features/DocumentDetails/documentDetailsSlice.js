@@ -19,7 +19,7 @@ const initialState = {
   error: null,
   property: {},
   files: [],
-  relatedDocument: [],
+  relatedDocuments: [],
   participants: [],
   analytics: {
     read: {

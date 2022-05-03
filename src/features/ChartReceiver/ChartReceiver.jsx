@@ -21,25 +21,21 @@ const columns = [
   },
 ];
 
-const dataChart = {
-  labels: ["Đã xử lý", "Chưa xử lý"],
-  datasets: [
-    {
-      label: "Số lượng xử lý văn bản",
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-      ],
-      borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)"],
-      borderWidth: 1,
-    },
-  ],
-};
-
 export default function ChartReceiver() {
   const dataPie = useSelector(getDatasets);
   const readAndUnread = useSelector(getReadAndUnread);
+
+  const dataChart = {
+    labels: ["Đã xử lý", "Chưa xử lý"],
+    datasets: [
+      {
+        label: "Số lượng xử lý văn bản",
+        backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
+        borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   dataChart.datasets[0].data = dataPie;
 
