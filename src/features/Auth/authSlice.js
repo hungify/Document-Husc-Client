@@ -111,7 +111,7 @@ const authSlice = createSlice({
         state.accessToken = null;
         state.refreshToken = null;
         state.isAuthenticated = false;
-        showToast("error", "Session expired, please login again", toastPosition.bottomRight);
+        showToast("error", "Session expired, please login again", toastPosition.topRight);
       }
     });
 
