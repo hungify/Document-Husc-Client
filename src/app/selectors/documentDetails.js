@@ -2,7 +2,7 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export const getProperty = (state) => state.documentDetails?.property;
 export const getFiles = (state) => state.documentDetails?.files;
-export const relatedDocuments = (state) => state.documentDetails?.relatedDocuments;
+export const getRelatedDocuments = (state) => state.documentDetails?.relatedDocuments;
 export const getParticipants = (state) => state.documentDetails?.participants;
 const getAnalytics = (state) => state.documentDetails?.analytics;
 export const getDatasets = createSelector(getAnalytics, (a) => {
