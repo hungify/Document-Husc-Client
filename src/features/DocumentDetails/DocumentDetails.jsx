@@ -13,6 +13,7 @@ import {
   updateReadDocument,
 } from "features/DocumentDetails/documentDetailsSlice";
 import FileList from "features/FileList/FileList";
+import { forwardDocuments } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
@@ -77,16 +78,15 @@ export default function DetailDocument() {
   };
 
   const handleOnSubmit = () => {
-    // console.log("🚀 :: values", values);
     form.submit();
-    // setVisible(false);
+    setVisible(false);
   };
   const handleOnCancel = () => {
     setVisible(false);
   };
 
   const handleRecipientsSubmit = (values) => {
-    console.log("🚀 :: values", values);
+    dispatch(forwardDocuments({ documentId: slug, ids: values.recipients }));
   };
 
   return (
