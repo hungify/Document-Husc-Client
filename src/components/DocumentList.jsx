@@ -70,7 +70,6 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
       dataSource={dataRender}
       renderItem={(item) => (
         <List.Item key={item._id}>
-          {console.log(item)}
           <BadgeRibbonUrgency text={item.urgentLevel.label}>
             <CardItemAnt bordered={false}>
               <Row align="middle" justify="space-between">
