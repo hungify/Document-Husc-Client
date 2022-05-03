@@ -11,7 +11,6 @@ import { issueDocumentOfficial } from "features/IssueDocument/issueDocumentSlice
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import dayjs from "dayjs";
 
 const steps = [
   {
@@ -125,22 +124,24 @@ export default function IssueDocument() {
     if (values) {
       const dataSubmit = formValues[formValues.length - 1];
 
-      const participants = {
-        senderId: myUserId,
-        sendDate: new Date(dataSubmit.issueDate).getTime(),
-        receivers:
-          values.recipients.length > 0
-            ? values.recipients.map((item) => {
-                return {
-                  receiverId: item,
-                };
-              })
-            : values.recipients, //Empty array
-      };
+      const participants =
+        values.recipients.length > 0
+          ? values.recipients.map((item) => {
+              return {
+                receiver: item,
+                sender: myUserId,
+                sendDate: new Date(dataSubmit.issueDate).getTime(),
+              };
+            })
+          : {
+              sender: myUserId,
+              sendDate: new Date(dataSubmit.issueDate).getTime(),
+            };
       dataSubmit.publisher = myUserId;
       dataSubmit.issueDate = new Date(dataSubmit.issueDate).getTime();
       dataSubmit.participants = participants;
 
+      // dataSubmit.
       const formData = new FormData();
       for (const key in dataSubmit) {
         if (dataSubmit.hasOwnProperty(key)) {
