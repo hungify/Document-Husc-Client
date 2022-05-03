@@ -3,15 +3,14 @@ import showToast, { toastPosition } from "configs/toast";
 import inboxService from "services/inboxService";
 
 const inbox = createAction("inbox/fetch/inboxDocuments");
-
-export const fetchInboxDocuments = createAsyncThunk(inbox.type, async (arg, thunkAPI) => {
+export const fetchInboxDocuments = createAsyncThunk(inbox.type, async (query, thunkAPI) => {
   try {
-    const { getState } = thunkAPI;
-    const {
-      inbox: { page, pageSize, orderBy },
-    } = getState();
+    const page = query.page;
+    const pageSize = query.pageSize;
+    const orderBy = query.orderBy;
+
     const userId = "626bdc02f302b3be8e1d5001";
-    const data = await inboxService.getInbox({ userId, page, pageSize, orderBy });
+    const data = await inboxService.getInboxDocuments({ userId, page, pageSize, orderBy });
     return data;
   } catch (error) {
     const { message } = error.response.data;
@@ -43,26 +42,12 @@ const initialState = {
   error: false,
   message: "",
 
-  page: 1,
-  pageSize: 10,
-  orderBy: "all",
   inboxDocuments: [],
 };
 
 const inboxDocumentsSlice = createSlice({
   name: "inbox",
   initialState: initialState,
-  reducers: {
-    setPage: (state, action) => {
-      state.page = action.payload;
-    },
-    setPageSize: (state, action) => {
-      state.pageSize = action.payload;
-    },
-    setOrderBy: (state, action) => {
-      state.orderBy = action.payload;
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchInboxDocuments.pending, (state, action) => {
       state.loading = true;

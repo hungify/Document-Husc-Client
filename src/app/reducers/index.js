@@ -6,6 +6,7 @@ import inboxDocumentsSlice from "features/InboxDocuments/inboxDocumentsSlice";
 import issueDocumentSlice from "features/IssueDocument/issueDocumentSlice";
 import recipientsSlice from "features/Recipients/recipientsSlice";
 import searchGroupSlice from "features/SearchGroup/searchGroupSlice";
+import sentDocumentsSlice from "features/SentDocuments/sentDocumentsSlice";
 
 export const rootReducer = combineReducers({
   auth: authSlice,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   recipients: recipientsSlice,
   searchGroup: searchGroupSlice,
   inbox: inboxDocumentsSlice,
+  sent: sentDocumentsSlice,
 });

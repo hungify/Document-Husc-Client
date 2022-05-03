@@ -1,10 +1,10 @@
 import axiosInstance from "services/initRequest";
 
 const inboxService = {
-  getInbox: function ({ page, pageSize, orderBy, userId }) {
-    const url = "/inbox";
+  getInboxDocuments: function ({ page, pageSize, orderBy, userId }) {
+    const url = `/inbox/${userId}`;
     return axiosInstance.get(url, {
-      params: { userId, page, limit: pageSize, orderBy },
+      params: { page, limit: pageSize, orderBy },
     });
   },
   forwardDocuments: function (userId, documentId, receivers) {

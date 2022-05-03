@@ -1,8 +1,10 @@
 import { Avatar, Card, Col, List, Row, Typography } from "antd";
+import { getSentDocuments } from "app/selectors/sent";
 import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
+import { fetchSentDocuments } from "features/SentDocuments/sentDocumentsSlice";
 import _ from "lodash";
-import { mockDocumentListSent } from "mocks/sentDocument";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -18,22 +20,41 @@ const CardAnt = styled(Card)`
 `;
 
 export default function SentDocuments() {
+  const [pageSize, setPageSize] = React.useState(10);
+  const [page, setPage] = React.useState(1);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const sentDocuments = useSelector(getSentDocuments);
+
+  React.useEffect(() => {
+    dispatch(fetchSentDocuments({ page, pageSize }));
+  }, [dispatch, page, pageSize]);
+
   return (
     <Card size="small">
       <List
         size="small"
         pagination={{
-          onChange: (page) => {},
+          onChange: (page) => {
+            setPage(page);
+          },
+          onShowSizeChange: (current, size) => {
+            setPageSize(size);
+          },
           showTotal: true,
           hideOnSinglePage: true,
-          pageSize: 10,
+          pageSize: pageSize,
         }}
-        dataSource={mockDocumentListSent}
+        dataSource={sentDocuments}
         renderItem={(item) => (
-          <BadgeRibbonUrgent text={item.urgentLevel}>
+          <BadgeRibbonUrgent
+            text={item.urgentLevel.label}
+            colorTag={item.urgentLevel.colorTag}
+            key={item._id}
+          >
             <CardAnt>
-              <Row align="middle" justify="space-between" onClick={() => navigate(`${item.key}`)}>
+              <Row align="middle" justify="space-between" onClick={() => navigate(`${item._id}`)}>
                 <Col span={24}>
                   <List.Item>
                     <List.Item.Meta
@@ -48,11 +69,11 @@ export default function SentDocuments() {
                             cursor: "pointer",
                           }}
                         >
-                          <Avatar>K</Avatar>
+                          <Avatar>k</Avatar>
                         </Avatar.Group>
                       }
                       title={
-                        <Link to={`${item.key}`}>
+                        <Link to={`${item._id}`}>
                           <Typography.Text strong>{item.title}</Typography.Text>
                         </Link>
                       }
@@ -60,7 +81,9 @@ export default function SentDocuments() {
                         <Typography.Text type="secondary">
                           <Typography.Paragraph ellipsis={{ rows: 1 }}>
                             <Typography.Text type="secondary">Đến: </Typography.Text>
-                            {_.map(item.to, "name").join(", ")}
+                            {item.isPublic
+                              ? "Ban hành công khai"
+                              : _.map(item.to, "email").join(", ")}
                           </Typography.Paragraph>
                         </Typography.Text>
                       }
@@ -68,7 +91,9 @@ export default function SentDocuments() {
                   </List.Item>
                 </Col>
                 <Col span={24}>
-                  <Typography.Paragraph ellipsis={{ rows: 3 }}>{item.summary}</Typography.Paragraph>
+                  <Typography.Paragraph ellipsis={{ rows: 3 }}>
+                    {item.summary || item.content}
+                  </Typography.Paragraph>
                 </Col>
               </Row>
             </CardAnt>
