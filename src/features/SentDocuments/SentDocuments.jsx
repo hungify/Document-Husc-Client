@@ -1,4 +1,4 @@
-import { Avatar, Card, Col, List, Row, Typography } from "antd";
+import { Avatar, Card, Col, Empty, List, Row, Typography } from "antd";
 import { getSentDocuments } from "app/selectors/sent";
 import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
 import { fetchSentDocuments } from "features/SentDocuments/sentDocumentsSlice";
@@ -45,6 +45,9 @@ export default function SentDocuments() {
           showTotal: true,
           hideOnSinglePage: true,
           pageSize: pageSize,
+        }}
+        locale={{
+          emptyText: <Empty description="Danh sách trống" />,
         }}
         dataSource={sentDocuments}
         renderItem={(item) => (
