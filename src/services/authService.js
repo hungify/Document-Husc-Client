@@ -1,42 +1,12 @@
 import axiosInstance from "services/initRequest";
 
 const authService = {
-  login: ({ username, password }) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (username === "admin" && password === "admin") {
-          resolve({
-            accessToken: "1234",
-            refreshToken: "4321",
-            role: "ADMIN",
-            message: "Đăng nhập thành công",
-            status: 200,
-          });
-        } else if (username === "user" && password === "user") {
-          resolve({
-            accessToken: "123",
-            refreshToken: "321",
-            role: "USER",
-            message: "Đăng nhập thành công",
-            status: 200,
-          });
-        } else {
-          reject({
-            response: {
-              data: {
-                message: "Unauthorized",
-                status: 401,
-              },
-            },
-          });
-        }
-      }, 1000);
+  login: ({ email, password }) => {
+    const url = "auth/login";
+    return axiosInstance.post(url, {
+      email,
+      password,
     });
-    // const url = "auth/login";
-    // return axiosInstance.post(url, {
-    //   email: email,
-    //   password: password,
-    // });
   },
   register: ({ username, email, password }) => {
     const url = "auth/register";
