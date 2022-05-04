@@ -1,11 +1,12 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
+import { getDocuments } from "app/selectors/documents";
 import ListDocument from "components/DocumentList";
 import HeaderListDocument from "components/HeaderListDocument";
 import ModalForm from "components/ModalForm";
 import SearchGroup from "features/SearchGroup/SearchGroup";
-import { mockDocumentListProtect } from "mocks/documents";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,6 +16,7 @@ const Wrapper = styled.section`
 
 export default function ManageDocuments() {
   const [visible, setVisible] = React.useState(false);
+  const documents = useSelector(getDocuments);
 
   const navigate = useNavigate();
 
@@ -63,7 +65,7 @@ export default function ManageDocuments() {
       <SearchGroup />
       <HeaderListDocument>
         <ListDocument
-          dataRender={mockDocumentListProtect}
+          dataRender={documents}
           onEditDocument={handleEditDocumentClick}
           onRevokeDocument={handleRevokeDocumentClick}
         />

@@ -1,9 +1,13 @@
 import { Col, Row, TreeSelect, Typography } from "antd";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { selectConfig } from "configs/select";
 import React from "react";
-
+import { useSelector } from "react-redux";
+import {
+  getAgenciesConfig,
+  getCategoriesConfig,
+  getTypesOfDocumentsConfig,
+} from "app/selectors/config";
 export default function SearchFilter({
   typesOfDocument,
   onTypesOfDocumentSelect,
@@ -14,6 +18,10 @@ export default function SearchFilter({
   category,
   onCategorySelect,
 }) {
+  const agenciesConfig = useSelector(getAgenciesConfig);
+  const categoriesConfig = useSelector(getCategoriesConfig);
+  const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
+
   return (
     <Row gutter={[20, 10]} style={{ marginTop: 5 }}>
       <Col span={24}>
@@ -21,7 +29,7 @@ export default function SearchFilter({
       </Col>
       <Col span={7}>
         <SelectForm
-          selectData={selectConfig.typesOfDocuments}
+          selectData={typesOfDocumentsConfig}
           onSelect={onTypesOfDocumentSelect}
           value={typesOfDocument}
           onDeselect={onTypesOfDocumentDeselect}
@@ -35,7 +43,7 @@ export default function SearchFilter({
       </Col>
       <Col span={10}>
         <TreeSelectForm
-          treeData={selectConfig.categories}
+          treeData={categoriesConfig}
           onChange={onCategorySelect}
           placeholder="Chọn chuyên mục"
           allowClear
@@ -47,7 +55,7 @@ export default function SearchFilter({
       </Col>
       <Col span={7}>
         <SelectForm
-          selectData={selectConfig.agency}
+          selectData={agenciesConfig}
           onSelect={onAgencySelect}
           onDeselect={onAgencyDeselect}
           showSearch={true}

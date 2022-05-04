@@ -5,6 +5,9 @@ import QueryString from "qs";
 const requestConfig = {
   baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
   timeout: 5000,
+  // paramsSerializer: (params) => {
+  //   return queryString.stringify(params);
+  // },
 };
 
 export const axiosInstance = axios.create(requestConfig);

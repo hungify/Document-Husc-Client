@@ -1,8 +1,14 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Input, Row, Typography } from "antd";
+import {
+  getAgenciesConfig,
+  getCategoriesConfig,
+  getTypesOfDocumentsConfig,
+  getUrgentLevelsConfig,
+} from "app/selectors/config";
 import { DatePicker } from "components/customs";
 import SelectForm from "components/SelectForm";
-import { selectConfig } from "configs/select";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const FormItemAnt = styled(Form.Item)`
@@ -20,6 +26,7 @@ export default function DocumentProperty(props) {
     onDocumentNumberChange,
     required,
   } = props;
+  const urgentLevelsConfig = useSelector(getUrgentLevelsConfig);
 
   return (
     <>
@@ -58,7 +65,7 @@ export default function DocumentProperty(props) {
               showSearch={true}
               value={urgentLevelSelected}
               onSelect={onUrgentLevelSelect}
-              selectData={selectConfig.urgentLevel}
+              selectData={urgentLevelsConfig}
               size="large"
               placeholder="Chọn đổ khẩn của văn bản"
             />
