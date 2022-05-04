@@ -82,6 +82,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.userId = action.payload.userId;
       state.role = action.payload.role;
+      state.userId = action.payload.userId;
       showToast("success", action.payload.message, toastPosition.bottomRight, {
         pauseOnHover: false,
       });

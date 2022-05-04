@@ -62,7 +62,6 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
         onChange: (page) => {
           dispatch(setPage(page));
         },
-
         onShowSizeChange: (current, size) => {
           dispatch(setPageSize(size));
         },

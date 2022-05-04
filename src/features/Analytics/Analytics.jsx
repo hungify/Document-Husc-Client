@@ -1,5 +1,8 @@
 import { Card, Col, Row, Typography } from "antd";
+import { getAnalytics } from "app/selectors/dashboard";
+import { bindingAnalyticsConfig } from "configs/dashboard";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const RowAnt = styled(Row)`
@@ -26,11 +29,13 @@ const WrapTitle = styled.div`
   justify-content: space-between;
 `;
 
-export default function Analytics({ dataRender }) {
+export default function Analytics() {
+  const analyticsData = useSelector(getAnalytics);
+  const analytics = bindingAnalyticsConfig(analyticsData);
   return (
     <RowAnt gutter={[15, 0]}>
-      {dataRender.map((item) => (
-        <Col span={dataRender.length > 3 ? 6 : 8} key={item.key}>
+      {analytics?.map((item) => (
+        <Col span={analytics.length > 3 ? 6 : 8} key={item.name}>
           <CardAnt>
             <Row>
               <Col span={24}>

@@ -1,14 +1,16 @@
 import { EyeOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Row, Tabs, Typography } from "antd";
+import { getDocuments } from "app/selectors/documents";
 import ButtonTooltip from "components/ButtonTooltip";
 import DocumentSummary from "components/DocumentSummary";
 import DrawerCustom from "components/DrawerCustom";
 import TableTransfer from "components/TransferTable";
 import ViewPDF from "components/ViewPDF";
+import { fetchDocuments } from "features/Home/homeSlice";
+import { resetSearchAndFilters } from "features/SearchGroup/searchGroupSlice";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getDocuments } from "app/selectors/documents";
 
 const ColFull = styled(Col)`
   & .ant-form-item-control {
@@ -24,6 +26,12 @@ export default function RelatedDocuments({ selectedRelatedDocument, setSelectedR
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [previewFile, setPreviewFile] = React.useState();
   const documents = useSelector(getDocuments);
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    // dispatch(resetSearchAndFilters());
+    dispatch(fetchDocuments());
+  }, [dispatch]);
 
   const TableColumns = [
     {
@@ -128,12 +136,6 @@ export default function RelatedDocuments({ selectedRelatedDocument, setSelectedR
               titles={["Tất cả văn bản", "Văn bản được chọn"]}
               dataSource={documents}
               targetKeys={selectedRelatedDocument}
-              pagination={{
-                pageSize: 20,
-                showSizeChanger: true,
-                simple: true,
-                showLessItems: true,
-              }}
               locale={{
                 searchPlaceholder: "Nhập vào tiêu đề hoặc số hiệu văn bản",
               }}
