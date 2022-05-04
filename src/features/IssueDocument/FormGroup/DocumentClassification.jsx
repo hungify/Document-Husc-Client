@@ -1,8 +1,13 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Row, TreeSelect, Typography } from "antd";
+import {
+  getAgenciesConfig,
+  getCategoriesConfig,
+  getTypesOfDocumentsConfig,
+} from "app/selectors/config";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
-import { selectConfig } from "configs/select";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const FormItemAnt = styled(Form.Item)`
@@ -20,6 +25,9 @@ export default function DocumentClassification(props) {
     onAgencyIssueDocumentSelect,
     required,
   } = props;
+  const agenciesConfig = useSelector(getAgenciesConfig);
+  const categoriesConfig = useSelector(getCategoriesConfig);
+  const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
 
   return (
     <Row>
@@ -35,7 +43,7 @@ export default function DocumentClassification(props) {
           initialValue={typesOfDocument}
         >
           <SelectForm
-            selectData={selectConfig.typesOfDocuments}
+            selectData={typesOfDocumentsConfig}
             onSelect={onTypesOfDocumentSelect}
             showSearch={true}
             placeholder="Chọn loại văn bản"
@@ -58,7 +66,7 @@ export default function DocumentClassification(props) {
           initialValue={categoryOfDocument}
         >
           <TreeSelectForm
-            treeData={selectConfig.categories}
+            treeData={categoriesConfig}
             onTreeSelect={onCategoryOfDocumentSelect}
             onTreeDeSelect={onCategoryOfDocumentDeSelect}
             placeholder="Chọn chuyên mục"
@@ -80,7 +88,7 @@ export default function DocumentClassification(props) {
           initialValue={agencyIssueDocument}
         >
           <SelectForm
-            selectData={selectConfig.agency}
+            selectData={agenciesConfig}
             onSelect={onAgencyIssueDocumentSelect}
             showSearch={true}
             placeholder="Chọn cơ quan ban hành"
