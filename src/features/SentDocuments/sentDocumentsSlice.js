@@ -6,8 +6,7 @@ export const fetchSentDocuments = createAsyncThunk(sent.type, async (query, thun
   try {
     const page = query.page || 1;
     const pageSize = query.pageSize || 10;
-    const userId = "626bdadfdb0a4ecf6f4cf652";
-    const { data } = await sentService.getSentDocuments({ userId, page, pageSize });
+    const { data } = await sentService.getSentDocuments({ page, pageSize });
     return data;
   } catch (error) {
     const { message } = error.response.data;
@@ -20,23 +19,12 @@ export const initialState = {
   error: null,
   message: null,
 
-  page: 1,
-  pageSize: 10,
-
   sentDocuments: [],
 };
 
 const sentDocumentsSlice = createSlice({
   name: "sent",
   initialState,
-  reducers: {
-    setPage: (state, action) => {
-      state.page = action.payload;
-    },
-    setPageSize: (state, action) => {
-      state.pageSize = action.payload;
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchSentDocuments.pending, (state, action) => {
       state.loading = true;

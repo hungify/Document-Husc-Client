@@ -11,7 +11,7 @@ const persistConfig = {
   version: 1,
   storage,
   blacklist: ["auth", "home", "searchGroup", "recipients", "issueDocument"],
-  whitelist: ["auth"],
+  whitelist: ["config"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -67,8 +67,8 @@ export default function DocumentClassification(props) {
         >
           <TreeSelectForm
             treeData={categoriesConfig}
-            onTreeSelect={onCategoryOfDocumentSelect}
-            onTreeDeSelect={onCategoryOfDocumentDeSelect}
+            onSelect={onCategoryOfDocumentSelect}
+            onDeselect={onCategoryOfDocumentDeSelect}
             placeholder="Chọn chuyên mục"
             allowClear
             size="large"

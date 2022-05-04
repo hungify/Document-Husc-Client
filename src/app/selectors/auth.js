@@ -14,3 +14,5 @@ export const getToken = createSelector(
 export const getRole = (state) => state.auth.role;
 
 export const isAuthenticated = (state) => state.auth.isAuthenticated;
+
+export const getUserId = (state) => state.auth.userId;

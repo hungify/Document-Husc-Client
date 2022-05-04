@@ -1,5 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
+import configSlice from "app/reducers/configSlice";
 import authSlice from "features/Auth/authSlice";
+import dashboardSlice from "features/Dashboard/dashboardSlice";
 import documentDetailsSlice from "features/DocumentDetails/documentDetailsSlice";
 import homeSlice from "features/Home/homeSlice";
 import inboxDocumentsSlice from "features/InboxDocuments/inboxDocumentsSlice";
@@ -9,6 +11,7 @@ import searchGroupSlice from "features/SearchGroup/searchGroupSlice";
 import sentDocumentsSlice from "features/SentDocuments/sentDocumentsSlice";
 
 export const rootReducer = combineReducers({
+  config: configSlice,
   auth: authSlice,
   home: homeSlice,
   documentDetails: documentDetailsSlice,
@@ -17,4 +20,5 @@ export const rootReducer = combineReducers({
   searchGroup: searchGroupSlice,
   inbox: inboxDocumentsSlice,
   sent: sentDocumentsSlice,
+  dashboard: dashboardSlice
 });

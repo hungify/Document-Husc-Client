@@ -9,8 +9,7 @@ export const fetchInboxDocuments = createAsyncThunk(inbox.type, async (query, th
     const pageSize = query.pageSize;
     const orderBy = query.orderBy;
 
-    const userId = "626bdc02f302b3be8e1d5001";
-    const data = await inboxService.getInboxDocuments({ userId, page, pageSize, orderBy });
+    const data = await inboxService.getInboxDocuments({ page, pageSize, orderBy });
     return data;
   } catch (error) {
     const { message } = error.response.data;
@@ -21,14 +20,13 @@ export const fetchInboxDocuments = createAsyncThunk(inbox.type, async (query, th
 const forward = createAction("inbox/forward");
 export const forwardDocuments = createAsyncThunk(forward.type, async (query, thunkAPI) => {
   try {
-    const userId = "626fde6b97b08e1b81a7522a";
     const { documentId, ids } = query;
     const receivers = ids.map((id) => {
       return {
         receiverId: id,
       };
     });
-    const { message } = await inboxService.forwardDocuments(userId, documentId, receivers);
+    const { message } = await inboxService.forwardDocuments( documentId, receivers);
     return message;
   } catch (error) {
     const { message } = error.response.data;
@@ -80,6 +78,5 @@ const inboxDocumentsSlice = createSlice({
   },
 });
 
-export const { setPage, setPageSize, setOrderBy } = inboxDocumentsSlice.actions;
 
 export default inboxDocumentsSlice.reducer;
