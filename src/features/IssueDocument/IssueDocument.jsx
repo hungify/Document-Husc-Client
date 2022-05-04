@@ -11,6 +11,7 @@ import { issueDocumentOfficial } from "features/IssueDocument/issueDocumentSlice
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getUserId } from "app/selectors/auth";
 
 const steps = [
   {
@@ -67,6 +68,7 @@ export default function IssueDocument() {
   const dispatch = useDispatch();
   const hasSuccess = useSelector(getSuccessIssueDocument);
   const isLoading = useSelector(getLoadingIssueDocument);
+  const userId = useSelector(getUserId);
 
   React.useEffect(() => {
     if (hasSuccess && !isLoading && currentStep === 2) {
@@ -120,7 +122,6 @@ export default function IssueDocument() {
   };
 
   const handleIssueOfficialDocument = (values) => {
-    const myUserId = "626bdadfdb0a4ecf6f4cf652";
     if (values) {
       const dataSubmit = formValues[formValues.length - 1];
 
@@ -129,15 +130,15 @@ export default function IssueDocument() {
           ? values.recipients.map((item) => {
               return {
                 receiver: item,
-                sender: myUserId,
+                sender: userId,
                 sendDate: new Date(dataSubmit.issueDate).getTime(),
               };
             })
           : {
-              sender: myUserId,
+              sender: userId,
               sendDate: new Date(dataSubmit.issueDate).getTime(),
             };
-      dataSubmit.publisher = myUserId;
+      dataSubmit.publisher = userId;
       dataSubmit.issueDate = new Date(dataSubmit.issueDate).getTime();
       dataSubmit.participants = participants;
 

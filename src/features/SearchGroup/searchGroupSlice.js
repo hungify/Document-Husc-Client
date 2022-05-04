@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   page: 1,
-  pageSize: 10,
+  pageSize: 1,
   sort: "createAt",
 
   search: {
@@ -56,10 +56,34 @@ const searchGroupSlice = createSlice({
         }
       }
     },
+    resetSearchAndFilters: (state) => {
+      state.search = {
+        searchBy: null,
+        searchValue: null,
+      };
+      state.dateRange = {
+        orderBy: null,
+        start: null,
+        end: null,
+      };
+      state.filtersBy = {
+        typesOfDocument: null,
+        agency: null,
+        category: null,
+      };
+      state.page = 1;
+      state.pageSize = 10;
+    },
   },
 });
 
-export const { setSearchForm, setFiltersBy, setSortBy, setPage, setPageSize } =
-  searchGroupSlice.actions;
+export const {
+  setSearchForm,
+  setFiltersBy,
+  setSortBy,
+  setPage,
+  setPageSize,
+  resetSearchAndFilters,
+} = searchGroupSlice.actions;
 
 export default searchGroupSlice.reducer;

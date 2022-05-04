@@ -13,7 +13,9 @@ export const fetchDocuments = createAsyncThunk(getAll.type, async (arg, thunkAPI
     const data = await documentsService.getDocuments(searchGroup);
     return data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    const { message } = error.response.data;
+
+    return thunkAPI.rejectWithValue(message);
   }
 });
 
