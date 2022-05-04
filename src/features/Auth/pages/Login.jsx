@@ -1,6 +1,6 @@
 import { Form } from "antd";
 import { isAuthenticated } from "app/selectors/auth";
-import { getLogin } from "features/Auth/authSlice";
+import { fetchLogin } from "features/Auth/authSlice";
 import FormAuth from "features/Auth/components/FormAuth";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,8 +19,8 @@ export default function Login({ active }) {
   }, [isAuth, navigate]);
 
   const handleOnFinish = (values) => {
-    dispatch(getLogin(values));
-    form.resetFields(["username", "password"]);
+    dispatch(fetchLogin(values));
+    form.resetFields(["email", "password"]);
   };
 
   const handleOnFailed = (errorInfo) => {

@@ -1,8 +1,5 @@
 import { Avatar, Card, Col, Empty, List, Row, Table, Tag, Typography } from "antd";
-import pdfFile from "assets/pdf/test.pdf";
-import pdfFile2 from "assets/pdf/test2.pdf";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
-import { selectConfig } from "configs/select";
 import ListUploaded from "features/IssueDocument/components/ListUploaded";
 import _ from "lodash";
 import React from "react";
@@ -13,6 +10,12 @@ import dayjs from "dayjs";
 import { fetchDocumentByIds } from "features/Home/homeSlice";
 import { getRelatedDocuments } from "app/selectors/documents";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  getAgenciesConfig,
+  getCategoriesConfig,
+  getTypesOfDocumentsConfig,
+  getUrgentLevelsConfig,
+} from "app/selectors/config";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -98,27 +101,32 @@ const generateColumns = (formValues) => {
 
 export default function PreviewIssueDocument({ formValues }) {
   const dispatch = useDispatch();
+  const agenciesConfig = useSelector(getAgenciesConfig);
+  const categoriesConfig = useSelector(getCategoriesConfig);
+  const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
+  const urgentLevelsConfig = useSelector(getUrgentLevelsConfig);
+
   React.useEffect(() => {
     dispatch(fetchDocumentByIds(formValues.relatedDocuments));
-  }, []);
+  }, [dispatch, formValues]);
 
   const columns = generateColumns(formValues);
 
   const dataClassification = [
     {
       key: uuidv4(),
-      typesOfDocument: _.find(selectConfig.typesOfDocuments, {
+      typesOfDocument: _.find(typesOfDocumentsConfig, {
         value: formValues.typesOfDocument,
       }),
-      agency: _.find(selectConfig.agency, { value: formValues.agency }),
-      category: findNodeByKey(selectConfig.categories, { value: formValues.category }),
+      agency: _.find(agenciesConfig, { value: formValues.agency }),
+      category: findNodeByKey(categoriesConfig, { value: formValues.category }),
     },
   ];
 
   const dataProperty = [
     {
       key: uuidv4(),
-      urgentLevel: _.find(selectConfig.urgentLevel, { value: formValues.urgentLevel }),
+      urgentLevel: _.find(urgentLevelsConfig, { value: formValues.urgentLevel }),
       signer: formValues.signer,
       documentNumber: formValues.documentNumber,
       issueDate: formValues.issueDate,

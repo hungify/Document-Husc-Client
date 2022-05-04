@@ -6,18 +6,11 @@ import {
   PlusCircleTwoTone,
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
+import { getCategoriesConfig } from "app/selectors/config";
 import DrawerCustom from "components/DrawerCustom";
-import { selectConfig } from "configs/select";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-
-const treeData = [
-  {
-    title: "root",
-    key: "root",
-    children: selectConfig.categories,
-  },
-];
 
 const TreeAnt = styled(Tree)`
   &.ant-tree .ant-tree-treenode {
@@ -44,6 +37,16 @@ const ActionList = styled.div`
 `;
 
 export default function ManageCategories() {
+  const categoriesConfig = useSelector(getCategoriesConfig);
+
+  const treeData = [
+    {
+      title: "root",
+      key: "root",
+      children: categoriesConfig,
+    },
+  ];
+
   const [form] = Form.useForm();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showLayer, setShowLayer] = React.useState(false);
@@ -66,9 +69,7 @@ export default function ManageCategories() {
 
   const handleFieldsChange = (allFields) => {};
 
-  const handleOnSubmit = (values) => {
-    console.log("🚀 :: values", values);
-  };
+  const handleOnSubmit = (values) => {};
 
   const handleCloseDrawer = () => {
     setShowDrawer(false);

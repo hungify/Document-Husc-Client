@@ -60,6 +60,50 @@ const ButtonAnt = styled(Button)`
 const RowAnt = styled(Row)`
   width: 100%;
 `;
+const passwordRules = [
+  {
+    required: true,
+    message: "Vui lòng nhập vào mật khẩu!",
+  },
+  {
+    min: 6,
+    message: "Mật khẩu phải có ít nhất 6 ký tự!",
+  },
+  {
+    max: 30,
+    message: "Mật khẩu phải có tối đa 30 ký tự!",
+  },
+];
+
+const emailRules = [
+  {
+    required: true,
+    message: "Vui lòng nhập vào email!",
+  },
+  {
+    type: "email",
+    message: "Email không đúng định dạng!",
+  },
+];
+
+const usernameRules = [
+  {
+    required: true,
+    message: "Vui lòng nhập vào tên đăng nhập!",
+  },
+  {
+    min: 6,
+    message: "Tên đăng nhập phải có ít nhất 6 ký tự!",
+  },
+  {
+    max: 30,
+    message: "Tên đăng nhập phải có tối đa 30 ký tự!",
+  },
+  {
+    pattern: /^[a-zA-Z0-9_]+$/,
+    message: "Tên đăng nhập không được chứa ký tự đặc biệt!",
+  },
+];
 export default function FormAuth({ active, onFinish, onFailed, form }) {
   const onSubmit = (values) => {
     onFinish(values);
@@ -91,16 +135,10 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
                 >
                   <Title>Chào mừng quay trở lại </Title>
                   <TitleDesc>Đăng nhập vào hệ thống</TitleDesc>
-                  <Form.Item
-                    name="username"
-                    rules={[{ required: true, message: "Vui lòng nhập vào tên đăng nhập!" }]}
-                  >
-                    <Input placeholder="Tên đăng nhập" size="large" />
+                  <Form.Item name="email" rules={emailRules}>
+                    <Input placeholder="Email" size="large" spellCheck="false" />
                   </Form.Item>
-                  <Form.Item
-                    name="password"
-                    rules={[{ required: true, message: "Vui lòng nhập vào mật khẩu!" }]}
-                  >
+                  <Form.Item name="password" rules={passwordRules}>
                     <Input.Password placeholder="Mật khẩu" size="large" />
                   </Form.Item>
                   <Form.Item>
@@ -123,22 +161,13 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
                 >
                   <Title>Chào mừng đến với hệ thống</Title>
                   <TitleDesc>Đăng ký vào hệ thống</TitleDesc>
-                  <Form.Item
-                    name="username"
-                    rules={[{ required: true, message: "Vui lòng nhập vào tên đăng nhập!" }]}
-                  >
-                    <Input placeholder="Username" size="large" />
+                  <Form.Item name="username" rules={usernameRules}>
+                    <Input placeholder="Username" size="large" spellCheck="false" />
                   </Form.Item>
-                  <Form.Item
-                    name="email"
-                    rules={[{ required: true, message: "Vui lòng nhập vào email!" }]}
-                  >
+                  <Form.Item name="email" rules={emailRules}>
                     <Input placeholder="Email" size="large" />
                   </Form.Item>
-                  <Form.Item
-                    name="password"
-                    rules={[{ required: true, message: "Vui lòng nhập vào mật khẩu!" }]}
-                  >
+                  <Form.Item name="password" rules={passwordRules}>
                     <Input.Password placeholder="Password" size="large" />
                   </Form.Item>
                   <Form.Item
@@ -167,11 +196,8 @@ export default function FormAuth({ active, onFinish, onFailed, form }) {
                 >
                   <Title>Quên mật khẩu</Title>
                   <TitleDesc>Kiểm tra hộp thư email</TitleDesc>
-                  <Form.Item
-                    name="email"
-                    rules={[{ required: true, message: "Vui lòng nhập vào email!" }]}
-                  >
-                    <Input placeholder="Email" size="large" />
+                  <Form.Item name="email" rules={emailRules}>
+                    <Input placeholder="Email" size="large" spellCheck="false" />
                   </Form.Item>
                   <Form.Item>
                     <ButtonAnt type="primary" htmlType="submit">
