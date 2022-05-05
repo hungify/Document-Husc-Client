@@ -2,7 +2,7 @@ import axiosInstance from "services/initRequest";
 
 const sentService = {
   getSentDocuments: ({ page, pageSize }) => {
-    const url = `/sent`;
+    const url = `/send`;
     return axiosInstance.get(url, {
       params: { page, limit: pageSize },
     });
