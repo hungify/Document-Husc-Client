@@ -26,7 +26,6 @@ export default function SentDocuments() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sentDocuments = useSelector(getSentDocuments);
-  const totalSent = useSelector(getTotalSent)
 
   React.useEffect(() => {
     dispatch(fetchSentDocuments({ page, pageSize }));

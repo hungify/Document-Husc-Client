@@ -2,7 +2,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined, SaveOutlined } from "@ant-design
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Typography } from "antd";
 import { getLoadingIssueDocument, getSuccessIssueDocument } from "app/selectors/issueDocument";
 import PlaneIcon from "components/Icons/PlaneIcon";
-import LoadingOverlay from "components/LoadingOverlay";
+import LoadingOverlayApp from "components/LoadingOverlayApp";
 import FormIssuedDocument from "features/IssueDocument/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
@@ -12,6 +12,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getUserId } from "app/selectors/auth";
+import HashLoader from "react-spinners/HashLoader";
 
 const steps = [
   {
@@ -222,14 +223,17 @@ export default function IssueDocument() {
                 />
               </WrapAlert>
               <WrapForm>
-                <LoadingOverlay active={isLoading}>
+                <LoadingOverlayApp
+                  active={isLoading}
+                  spinner={<HashLoader size={50} color="#36D7B7" />}
+                >
                   <RecipientDocument
                     form={form}
                     onSubmitForm={handleIssueOfficialDocument}
                     onSelectRelatedRecipient={(data) => setSelectedRecipient(data)}
                     selectedRecipient={selectedRecipient}
                   />
-                </LoadingOverlay>
+                </LoadingOverlayApp>
               </WrapForm>
             </Col>
           ) : (

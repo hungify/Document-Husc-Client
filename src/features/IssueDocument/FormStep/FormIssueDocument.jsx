@@ -42,7 +42,7 @@ export default function FormIssuedDocument({
   // Document Property
   const [documentNumber, setDocumentNumber] = React.useState("015/NQ-HĐĐH");
   const [urgentLevel, setUrgentLevel] = React.useState("binh-thuong");
-  const [issuedDate, setIssuedDate] = React.useState(dayjs(new Date()));
+  const [issuedDate, setIssuedDate] = React.useState(dayjs());
   const [signerDocument, setSignerDocument] = React.useState("Nguyễn Vũ Quốc Huy");
   // Document Property
 

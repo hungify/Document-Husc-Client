@@ -1,24 +1,14 @@
-import documentsService from "services/documentsService";
-import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import showToast, { toastPosition } from "configs/toast";
+import documentsService from "services/documentsService";
 
 const fetch = createAction("documentDetails/fetch");
 export const fetchDocumentDetails = createAsyncThunk(fetch.type, async (query, thunkAPI) => {
   try {
-    const { data } = await documentsService.getDocumentDetail(query);
-    return { data, key: query.key };
+    const { data, myReadDate } = await documentsService.getDocumentDetail(query);
+    return { data, key: query.key, myReadDate };
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
-  }
-});
-const updateRead = createAction("documentDetails/update/read");
-export const updateReadDocument = createAsyncThunk(updateRead.type, async (query, thunkAPI) => {
-  try {
-    const userId = "626bdbf7f302b3be8e1d4ffe";
-    const { data } = await documentsService.updateReadDocument({ ...query, userId });
-    return data;
-  } catch (error) {
-    const { message, status } = error.response.data;
+    const { message } = error.response.data;
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -26,6 +16,7 @@ export const updateReadDocument = createAsyncThunk(updateRead.type, async (query
 const initialState = {
   loading: false,
   error: null,
+  myReadDate: null,
   property: {},
   files: [],
   relatedDocuments: [],
@@ -52,22 +43,13 @@ const documentDetailsSlice = createSlice({
       state.relatedDocuments = action.payload.key === "relatedDocuments" ? action.payload.data : [];
       state.participants = action.payload.key === "participants" ? action.payload.data : [];
       state.analytics = action.payload.key === "analytics" ? action.payload.data : {};
+      state.myReadDate = action.payload.myReadDate;
     });
     builder.addCase(fetchDocumentDetails.rejected, (state, action) => {
       state.error = action.payload;
     });
     builder.addCase(fetchDocumentDetails.pending, (state, action) => {
       state.loading = true;
-    });
-    builder.addCase(updateReadDocument.pending, (state, action) => {
-      state.loading = true;
-    });
-    builder.addCase(updateReadDocument.fulfilled, (state, action) => {
-      showToast("success", "Xử lý văn bản thành công", toastPosition.bottomRight);
-    });
-    builder.addCase(updateReadDocument.rejected, (state, action) => {
-      state.error = true;
-      showToast("error", action.payload, toastPosition.topRight);
     });
   },
 });

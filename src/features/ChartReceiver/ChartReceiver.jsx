@@ -1,6 +1,7 @@
 import { Col, Row, Table } from "antd";
 import { getDatasets, getReadAndUnread } from "app/selectors/documentDetails";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import dayjs from "dayjs";
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { useSelector } from "react-redux";
@@ -17,6 +18,7 @@ const columns = [
     title: "Thời gian xử lý",
     dataIndex: "readDate",
     defaultSortOrder: "descend",
+    render: (text, record) => (text ? dayjs(text).format("DD/MM/YYYY") : React.Fragment),
     sorter: (a, b) => a.readDate - b.readDate,
   },
 ];

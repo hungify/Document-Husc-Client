@@ -1,18 +1,22 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
-import { getFiles, getParticipants, getProperty, getRelatedDocuments } from "app/selectors/documentDetails";
+import {
+  getFiles,
+  getMyReadDate,
+  getParticipants,
+  getProperty,
+  getRelatedDocuments,
+} from "app/selectors/documentDetails";
+import { getForwardSuccess, getSuccessUpdateRead } from "app/selectors/inbox";
 import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import { ROLES } from "configs/roles";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
-import {
-  fetchDocumentDetails,
-  updateReadDocument
-} from "features/DocumentDetails/documentDetailsSlice";
+import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
 import FileList from "features/FileList/FileList";
-import { forwardDocuments } from "features/InboxDocuments/inboxDocumentsSlice";
+import { forwardDocuments, updateReadDocument } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
@@ -21,6 +25,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import LoadingOverlayApp from "components/LoadingOverlayApp";
+import HashLoader from "react-spinners/HashLoader";
 
 const ButtonAnt = styled(Button)`
   display: flex;
@@ -29,6 +35,7 @@ const ButtonAnt = styled(Button)`
 export default function DetailDocument() {
   const [visible, setVisible] = React.useState(false);
   const [selectedRecipient, setSelectedRecipient] = React.useState([]);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
 
   const [form] = Form.useForm();
 
@@ -44,6 +51,15 @@ export default function DetailDocument() {
   const files = useSelector(getFiles);
   const relatedDocuments = useSelector(getRelatedDocuments);
   const participants = useSelector(getParticipants);
+  const myReadDate = useSelector(getMyReadDate);
+
+  const isUpdateSuccess = useSelector(getSuccessUpdateRead);
+  const isForwardSuccess = useSelector(getForwardSuccess);
+  React.useEffect(() => {
+    if (isUpdateSuccess || isForwardSuccess) {
+      dispatch(fetchDocumentDetails({ slug, key: activeTab }));
+    }
+  }, [isUpdateSuccess, dispatch, slug, activeTab, isForwardSuccess]);
 
   React.useEffect(() => {
     if (activeTab) {
@@ -58,7 +74,7 @@ export default function DetailDocument() {
     dispatch(fetchDocumentDetails({ slug, key }));
   };
 
-  const handleForwardClick = (forwardId) => {
+  const handleForwardClick = () => {
     setVisible(true);
   };
 
@@ -70,7 +86,12 @@ export default function DetailDocument() {
       okText: "Hoàn thành",
       cancelText: "Hủy",
       onOk() {
-        dispatch(updateReadDocument({ documentId: slug }));
+        setConfirmLoading(true);
+        setTimeout(() => {
+          const readDate = new Date();
+          dispatch(updateReadDocument({ documentId: slug, readDate }));
+          setConfirmLoading(false);
+        }, 1000);
       },
       onCancel() {},
     });
@@ -78,19 +99,25 @@ export default function DetailDocument() {
 
   const handleOnSubmit = () => {
     form.submit();
-    setVisible(false);
   };
   const handleOnCancel = () => {
     setVisible(false);
   };
 
   const handleRecipientsSubmit = (values) => {
-    dispatch(forwardDocuments({ documentId: slug, ids: values.recipients }));
+    setConfirmLoading(true);
+    setTimeout(() => {
+      dispatch(forwardDocuments({ documentId: slug, ids: values.recipients }));
+      setSelectedRecipient([]);
+      setConfirmLoading(false);
+      setVisible(false);
+    }, 500);
   };
 
   return (
-    <>
+    <LoadingOverlayApp spinner={<HashLoader size={50} color="#36D7B7" />}>
       <Modal
+        confirmLoading={confirmLoading}
         visible={visible}
         onOk={handleOnSubmit}
         onCancel={handleOnCancel}
@@ -120,12 +147,19 @@ export default function DetailDocument() {
       <Card
         title="Nội dung văn bản"
         extra={
-          (role === ROLES.ADMIN || role === ROLES.USER) &&
-          !property?.isPublic && (
+          (role === ROLES.ADMIN || role === ROLES.USER) && (
             <Space split={<Divider type="vertical" />}>
-              <Button type="primary" onClick={() => handleReadDocument(property._id)} size="large">
-                Báo cáo đã xứ lý
-              </Button>
+              {!myReadDate ? (
+                <Button
+                  type="primary"
+                  onClick={() => handleReadDocument(property._id)}
+                  size="large"
+                >
+                  Báo cáo đã xứ lý
+                </Button>
+              ) : (
+                React.Fragment
+              )}
               <ButtonAnt
                 type="primary"
                 icon={<ForwardIcon />}
@@ -167,6 +201,6 @@ export default function DetailDocument() {
           </Col>
         </Row>
       </Card>
-    </>
+    </LoadingOverlayApp>
   );
 }

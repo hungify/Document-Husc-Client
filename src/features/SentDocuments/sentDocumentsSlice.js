@@ -32,8 +32,8 @@ const sentDocumentsSlice = createSlice({
     });
     builder.addCase(fetchSentDocuments.fulfilled, (state, action) => {
       state.loading = false;
-      state.sentDocuments = action.payload.data;
-      state.total = action.payload.total;
+      state.sentDocuments = action.payload.data || [];
+      state.total = action.payload.total || 0;
     });
     builder.addCase(fetchSentDocuments.rejected, (state, action) => {
       state.loading = false;
