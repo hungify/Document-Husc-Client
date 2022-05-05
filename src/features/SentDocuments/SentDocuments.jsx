@@ -1,5 +1,5 @@
 import { Avatar, Card, Col, Empty, List, Row, Typography } from "antd";
-import { getSentDocuments } from "app/selectors/sent";
+import { getSentDocuments, getTotalSent } from "app/selectors/sent";
 import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
 import { fetchSentDocuments } from "features/SentDocuments/sentDocumentsSlice";
 import _ from "lodash";
@@ -26,6 +26,7 @@ export default function SentDocuments() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sentDocuments = useSelector(getSentDocuments);
+  const totalSent = useSelector(getTotalSent)
 
   React.useEffect(() => {
     dispatch(fetchSentDocuments({ page, pageSize }));
@@ -42,9 +43,13 @@ export default function SentDocuments() {
           onShowSizeChange: (current, size) => {
             setPageSize(size);
           },
-          showTotal: true,
-          hideOnSinglePage: true,
-          pageSize: pageSize,
+          defaultCurrent: page,
+          showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,
+          showQuickJumper: true,
+          showSizeChanger: true,
+          pageSizeOptions: ["10", "20", "50", "100"],
+          showPrevNextJumpers: true,
+          showTitle: true,
         }}
         locale={{
           emptyText: <Empty description="Danh sách trống" />,
