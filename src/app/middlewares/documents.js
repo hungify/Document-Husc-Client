@@ -1,4 +1,5 @@
 import { fetchDocuments } from "features/Home/homeSlice";
+import { fetchRecipients } from "features/Recipients/recipientsSlice";
 
 const { createListenerMiddleware, isAnyOf } = require("@reduxjs/toolkit");
 const {
@@ -16,6 +17,7 @@ documentListenerMiddleware.startListening({
   effect: async (action, listenerApi) => {
     const { dispatch } = listenerApi;
     dispatch(fetchDocuments());
+    dispatch(fetchRecipients());
   },
 });
 

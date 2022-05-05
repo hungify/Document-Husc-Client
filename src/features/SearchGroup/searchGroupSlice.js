@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   page: 1,
-  pageSize: 1,
+  pageSize: 10,
   sort: "createAt",
 
   search: {
