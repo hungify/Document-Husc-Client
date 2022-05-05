@@ -32,6 +32,7 @@ export default function RelatedDocuments({ dataSource }) {
       <List
         itemLayout="vertical"
         size="default"
+        dataSource={dataSource}
         pagination={{
           pageSize: 10,
           defaultCurrent: 1,
@@ -43,14 +44,9 @@ export default function RelatedDocuments({ dataSource }) {
         locale={{
           emptyText: <Empty description="Danh sách trống" />,
         }}
-        dataSource={dataSource}
         renderItem={(item) => (
-          <List.Item>
-            <BadgeRibbonUrgency
-              text={item.urgentLevel.label}
-              colorTag={item.urgentLevel.colorTag}
-              key={item._id}
-            >
+          <List.Item key={item._id}>
+            <BadgeRibbonUrgency text={item.urgentLevel.label} colorTag={item.urgentLevel.colorTag}>
               <CardItemAnt bordered={false}>
                 <Row align="middle" justify="space-between">
                   <Col span={24}>
