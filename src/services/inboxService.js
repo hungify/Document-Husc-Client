@@ -8,8 +8,14 @@ const inboxService = {
     });
   },
   forwardDocuments: function (documentId, receivers) {
-    const url = `/documents/${documentId}/forward`;
+    const url = `/send/${documentId}/forward`;
     return axiosInstance.patch(url, { receivers });
+  },
+  updateReadDocument: (documentId, readDate) => {
+    const url = `/inbox/${documentId}/read`;
+    return axiosInstance.patch(url, {
+      readDate,
+    });
   },
 };
 

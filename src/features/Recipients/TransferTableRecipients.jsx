@@ -16,7 +16,7 @@ export default function TransferTableRecipients({
   const pageSize = useSelector(getPageSize);
   const dispatch = useDispatch();
   const [pageFilter, setPageFilter] = React.useState(1);
-  const [pageSizeFilter, setPageSizeFilter] = React.useState(1);
+  const [pageSizeFilter, setPageSizeFilter] = React.useState(10);
   const [dataRight, setDataRight] = React.useState([]);
 
   React.useEffect(() => {

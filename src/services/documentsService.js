@@ -48,10 +48,6 @@ const documentsService = {
     const url = "/documents";
     return axiosInstance.post(url, formData);
   },
-  updateReadDocument: ({ documentId, userId }) => {
-    const url = `/documents/${documentId}/receiver/${userId}/read`;
-    return axiosInstance.patch(url);
-  },
 };
 
 export default documentsService;

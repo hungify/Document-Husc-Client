@@ -75,7 +75,7 @@ export default function InboxDocuments() {
             key={item._id}
             colorTag={item.urgentLevel.colorTag}
           >
-            <CardAnt $isRead={item.isRead}>
+            <CardAnt $isRead={item.readDate}>
               <Row align="middle" justify="space-between" onClick={() => navigate(`${item._id}`)}>
                 <Col span={24}>
                   <List.Item>
@@ -91,7 +91,7 @@ export default function InboxDocuments() {
                             cursor: "pointer",
                           }}
                         >
-                          <Avatar>{item.from.username.charAt(0).toUpperCase()}</Avatar>
+                          <Avatar>{item.from.avatar}</Avatar>
                         </Avatar.Group>
                       }
                       title={

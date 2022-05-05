@@ -17,6 +17,17 @@ export const fetchInboxDocuments = createAsyncThunk(inbox.type, async (query, th
   }
 });
 
+const updateRead = createAction("inbox/read");
+export const updateReadDocument = createAsyncThunk(updateRead.type, async (query, thunkAPI) => {
+  try {
+    const { documentId, readDate } = query;
+    await inboxService.updateReadDocument(documentId, readDate);
+  } catch (error) {
+    const { message } = error.response.data;
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const forward = createAction("inbox/forward");
 export const forwardDocuments = createAsyncThunk(forward.type, async (query, thunkAPI) => {
   try {
@@ -24,6 +35,7 @@ export const forwardDocuments = createAsyncThunk(forward.type, async (query, thu
     const receivers = ids.map((id) => {
       return {
         receiverId: id,
+        sendDate: new Date(),
       };
     });
     const { message } = await inboxService.forwardDocuments(documentId, receivers);
@@ -39,7 +51,7 @@ const initialState = {
   success: false,
   error: false,
   message: "",
-  
+
   total: 0,
   inboxDocuments: [],
 };
@@ -50,26 +62,44 @@ const inboxDocumentsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchInboxDocuments.pending, (state, action) => {
       state.loading = true;
+      state.success = false;
     });
     builder.addCase(fetchInboxDocuments.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = true;
       state.inboxDocuments = action.payload.data;
       state.total = action.payload.total;
     });
     builder.addCase(fetchInboxDocuments.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
+      state.success = false;
       state.message = action.payload;
       showToast("error", action.payload, toastPosition.topRight);
     });
+
+    builder.addCase(updateReadDocument.pending, (state, action) => {
+      state.loading = true;
+      state.success = false;
+    });
+    builder.addCase(updateReadDocument.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      showToast("success", "Xử lý văn bản thành công", toastPosition.bottomRight);
+    });
+    builder.addCase(updateReadDocument.rejected, (state, action) => {
+      state.error = true;
+      state.success = false;
+      showToast("error", action.payload, toastPosition.topRight);
+    });
+
     builder.addCase(forwardDocuments.pending, (state, action) => {
       state.loading = true;
+      state.success = false;
     });
     builder.addCase(forwardDocuments.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
-      showToast("success", action.payload, toastPosition.topBottom);
+      showToast("success", "Chuyển tiếp văn bản thành công", toastPosition.topBottom);
     });
     builder.addCase(forwardDocuments.rejected, (state, action) => {
       state.loading = false;
