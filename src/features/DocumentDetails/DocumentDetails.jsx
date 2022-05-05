@@ -106,16 +106,16 @@ export default function DetailDocument() {
 
   const handleRecipientsSubmit = (values) => {
     setConfirmLoading(true);
+    setVisible(false);
     setTimeout(() => {
       dispatch(forwardDocuments({ documentId: slug, ids: values.recipients }));
       setSelectedRecipient([]);
       setConfirmLoading(false);
-      setVisible(false);
     }, 500);
   };
 
   return (
-    <LoadingOverlayApp spinner={<HashLoader size={50} color="#36D7B7" />}>
+    <LoadingOverlayApp spinner={<HashLoader size={50} color="#36D7B7" />} active={confirmLoading}>
       <Modal
         confirmLoading={confirmLoading}
         visible={visible}
