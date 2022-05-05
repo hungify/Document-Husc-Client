@@ -65,10 +65,10 @@ const passwordRules = [
     required: true,
     message: "Vui lòng nhập vào mật khẩu!",
   },
-  {
-    min: 6,
-    message: "Mật khẩu phải có ít nhất 6 ký tự!",
-  },
+  // {
+  //   min: 6,
+  //   message: "Mật khẩu phải có ít nhất 6 ký tự!",
+  // },
   {
     max: 30,
     message: "Mật khẩu phải có tối đa 30 ký tự!",

@@ -17,6 +17,7 @@ import ManageTypesOfDocuments from "features/Manage/ManageTypesOfDocuments/Manag
 import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
 import SentDocuments from "features/SentDocuments/SentDocuments";
 import MainLayout from "layouts/MainLayout/MainLayout";
+import Profile from "features/Profile/Profile";
 
 export const routePathDefinition = [
   {
@@ -57,6 +58,11 @@ export const routePathDefinition = [
       {
         element: <RequireAuth allowedRoles={[ROLES.USER, ROLES.ADMIN]} />,
         children: [
+          {
+            path: "profile",
+            breadcrumb: "Thông tin tài khoản",
+            element: <Profile />,
+          },
           {
             path: "dashboard",
             breadcrumb: "Bảng điều khiển",
