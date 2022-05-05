@@ -1,5 +1,4 @@
 import { Avatar, Button, Comment, Form, Input } from "antd";
-import Item from "antd/lib/list/Item";
 import CommentList from "features/ChatRoom/CommentList";
 import React from "react";
 import "./style.css";

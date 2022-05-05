@@ -6,6 +6,7 @@ import documentDetailsSlice from "features/DocumentDetails/documentDetailsSlice"
 import homeSlice from "features/Home/homeSlice";
 import inboxDocumentsSlice from "features/InboxDocuments/inboxDocumentsSlice";
 import issueDocumentSlice from "features/IssueDocument/issueDocumentSlice";
+import profileSlice from "features/Profile/profileSlice";
 import recipientsSlice from "features/Recipients/recipientsSlice";
 import searchGroupSlice from "features/SearchGroup/searchGroupSlice";
 import sentDocumentsSlice from "features/SentDocuments/sentDocumentsSlice";
@@ -20,5 +21,6 @@ export const rootReducer = combineReducers({
   searchGroup: searchGroupSlice,
   inbox: inboxDocumentsSlice,
   sent: sentDocumentsSlice,
-  dashboard: dashboardSlice
+  dashboard: dashboardSlice,
+  profile: profileSlice,
 });

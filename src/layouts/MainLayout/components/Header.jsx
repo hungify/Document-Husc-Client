@@ -9,6 +9,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getProfile } from "app/selectors/profile";
+
 const HeaderAnt = styled(Layout.Header)`
   position: ${(props) => (props.$shouldFixed ? "fixed" : "relative")};
   z-index: 5;
@@ -62,11 +64,14 @@ const ButtonAnt = styled(Button)`
   }
 `;
 export default function Header({ shouldFixed }) {
-  const isAuth = useSelector(isAuthenticated);
-  const dispatch = useDispatch();
-  const refreshToken = useSelector(getToken)?.refreshToken;
-  const scrollPosition = useScrollPosition();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const scrollPosition = useScrollPosition();
+
+  const isAuth = useSelector(isAuthenticated);
+  const refreshToken = useSelector(getToken)?.refreshToken;
+  const profile = useSelector(getProfile);
+
   const handleLogout = () => {
     dispatch(getLogout(refreshToken));
     if (!isAuth) navigate("/");
@@ -122,11 +127,11 @@ export default function Header({ shouldFixed }) {
 
             <Menu.SubMenu
               key="profile"
-              icon={<Avatar>N</Avatar>}
-              title={<Typography.Text>Nguyễn Mạnh Hùng</Typography.Text>}
+              icon={<Avatar>{profile.avatar}</Avatar>}
+              title={<Typography.Text>{profile.username}</Typography.Text>}
             >
               <MenuItemAnt key="update-profile" icon={<SettingOutlined />}>
-                <ButtonAnt type="text" onClick={() => navigate("login")}>
+                <ButtonAnt type="text" onClick={() => navigate("profile")}>
                   Cập nhật tài khoản
                 </ButtonAnt>
               </MenuItemAnt>
