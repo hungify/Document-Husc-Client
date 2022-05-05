@@ -1,8 +1,7 @@
-import { ExclamationCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
-import { getFiles, getParticipants, getProperty } from "app/selectors/documentDetails";
-import { getRelatedDocuments } from "app/selectors/documentDetails";
+import { getFiles, getParticipants, getProperty, getRelatedDocuments } from "app/selectors/documentDetails";
 import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import { ROLES } from "configs/roles";
@@ -10,7 +9,7 @@ import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
 import {
   fetchDocumentDetails,
-  updateReadDocument,
+  updateReadDocument
 } from "features/DocumentDetails/documentDetailsSlice";
 import FileList from "features/FileList/FileList";
 import { forwardDocuments } from "features/InboxDocuments/inboxDocumentsSlice";
