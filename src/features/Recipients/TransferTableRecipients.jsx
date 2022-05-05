@@ -1,23 +1,22 @@
 import { Empty, Table, Transfer } from "antd";
-import { getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
-import _ from "lodash";
+import { difference } from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function TransferTableRelated({
+export default function TransferTableRecipients({
   leftColumns,
   rightColumns,
-  targetKeys,
   dataSource,
+  targetKeys,
   ...restProps
 }) {
-  const dispatch = useDispatch();
   const page = useSelector(getPage);
   const pageSize = useSelector(getPageSize);
+  const dispatch = useDispatch();
   const [pageFilter, setPageFilter] = React.useState(1);
-  const [pageSizeFilter, setPageSizeFilter] = React.useState(10);
+  const [pageSizeFilter, setPageSizeFilter] = React.useState(1);
   const [dataRight, setDataRight] = React.useState([]);
 
   React.useEffect(() => {
@@ -46,12 +45,12 @@ export default function TransferTableRelated({
               .filter((item) => !item.disabled)
               .map(({ _id }) => _id);
             const diffKeys = selected
-              ? _.difference(treeSelectedKeys, listSelectedKeys)
-              : _.difference(listSelectedKeys, treeSelectedKeys);
+              ? difference(treeSelectedKeys, listSelectedKeys)
+              : difference(listSelectedKeys, treeSelectedKeys);
             onItemSelectAll(diffKeys, selected);
           },
-          onSelect(item, selected) {
-            onItemSelect(item._id, selected);
+          onSelect({ _id }, selected) {
+            onItemSelect(_id, selected);
           },
           selectedRowKeys: listSelectedKeys,
         };
@@ -63,6 +62,7 @@ export default function TransferTableRelated({
             dataSource={direction === "left" ? filteredItems : dataRight}
             rowKey={(record) => record._id}
             pagination={{
+              size: "small",
               pageSize: direction === "left" ? pageSize : pageSizeFilter,
               current: direction === "left" ? page : pageFilter,
               showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,
@@ -70,14 +70,14 @@ export default function TransferTableRelated({
               pageSizeOptions: ["10", "20", "50"],
               onChange: (page) => {
                 if (direction === "left") {
-                  dispatch(setPage({ page, triggerBy: "documents" }));
+                  dispatch(setPage({ page, triggerBy: "recipients" }));
                 } else {
                   setPageFilter(page);
                 }
               },
               onShowSizeChange: (current, size) => {
                 if (direction === "left") {
-                  dispatch(setPageSize({ size, triggerBy: "documents" }));
+                  dispatch(setPageSize({ size, triggerBy: "recipients" }));
                 } else {
                   setPageSizeFilter(size);
                 }

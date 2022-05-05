@@ -4,7 +4,6 @@ import RelatedDocuments from "features/IssueDocument/components/RelatedDocuments
 import DocumentClassification from "features/IssueDocument/FormGroup/DocumentClassification";
 import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";
 import DocumentProperty from "features/IssueDocument/FormGroup/DocumentProperty";
-import RecipientDocument from "features/Recipients/RecipientsDocument";
 import React from "react";
 import styled from "styled-components";
 

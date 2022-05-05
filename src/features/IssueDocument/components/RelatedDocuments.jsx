@@ -134,7 +134,6 @@ export default function RelatedDocuments({ selectedRelatedDocument, setSelectedR
           <Form.Item name="relatedDocuments" initialValue={selectedRelatedDocument || []}>
             <TransferTableRelated
               onChange={handleTableTransferChange}
-              // onChange={onChange}
               titles={["Tất cả văn bản", "Văn bản được chọn"]}
               dataSource={documents}
               targetKeys={selectedRelatedDocument}

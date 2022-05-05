@@ -22,7 +22,7 @@ export default function HeaderListDocument({ children }) {
   const dispatch = useDispatch();
 
   const handleRadioDateChange = (value) => {
-    dispatch(setSortBy(value));
+    dispatch(setSortBy({ sortBy: value, triggerBy: "documents" }));
   };
 
   return (
