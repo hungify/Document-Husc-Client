@@ -6,7 +6,7 @@ export const fetchSentDocuments = createAsyncThunk(sent.type, async (query, thun
   try {
     const page = query.page || 1;
     const pageSize = query.pageSize || 10;
-    const { data } = await sentService.getSentDocuments({ page, pageSize });
+    const data = await sentService.getSentDocuments({ page, pageSize });
     return data;
   } catch (error) {
     const { message } = error.response.data;
@@ -20,6 +20,7 @@ export const initialState = {
   message: null,
 
   sentDocuments: [],
+  total: 0,
 };
 
 const sentDocumentsSlice = createSlice({
@@ -31,7 +32,8 @@ const sentDocumentsSlice = createSlice({
     });
     builder.addCase(fetchSentDocuments.fulfilled, (state, action) => {
       state.loading = false;
-      state.sentDocuments = action.payload;
+      state.sentDocuments = action.payload.data;
+      state.total = action.payload.total;
     });
     builder.addCase(fetchSentDocuments.rejected, (state, action) => {
       state.loading = false;

@@ -2,6 +2,7 @@ import { Form } from "antd";
 import { isAuthenticated } from "app/selectors/auth";
 import { fetchLogin } from "features/Auth/authSlice";
 import FormAuth from "features/Auth/components/FormAuth";
+import { fetchProfile } from "features/Profile/profileSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +15,10 @@ export default function Login({ active }) {
 
   React.useEffect(() => {
     if (isAuth) {
+      dispatch(fetchProfile());
       navigate("/dashboard");
     }
-  }, [isAuth, navigate]);
+  }, [isAuth, navigate, dispatch]);
 
   const handleOnFinish = (values) => {
     dispatch(fetchLogin(values));

@@ -3,7 +3,7 @@ import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
 import SortFilter from "components/SortFilter";
 import { dataSortFilterRadio } from "configs/sortFilter";
 import { fetchInboxDocuments } from "features/InboxDocuments/inboxDocumentsSlice";
-import { getInboxDocuments } from "app/selectors/inbox";
+import { getInboxDocuments, getTotalInbox } from "app/selectors/inbox";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,10 +30,11 @@ export default function InboxDocuments() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inboxDocuments = useSelector(getInboxDocuments);
+  const totalInbox = useSelector(getTotalInbox);
 
   React.useEffect(() => {
     dispatch(fetchInboxDocuments({ page, pageSize, orderBy }));
-  }, [dispatch, page, pageSize,  orderBy]);
+  }, [dispatch, page, pageSize, orderBy]);
 
   const handleRadioReceiverDocumentChange = (value) => {
     setOrderBy(value);
@@ -55,9 +56,14 @@ export default function InboxDocuments() {
           onShowSizeChange: (current, size) => {
             setPageSize(size);
           },
-          pageSize: pageSize,
-          showTotal: true,
-          hideOnSinglePage: true,
+          defaultCurrent: page,
+          showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,
+          showQuickJumper: true,
+          showSizeChanger: true,
+          pageSizeOptions: ["10", "20", "50", "100"],
+          showPrevNextJumpers: true,
+          showTitle: true,
+          total: totalInbox,
         }}
         locale={{
           emptyText: <Empty description="Danh sách trống" />,
