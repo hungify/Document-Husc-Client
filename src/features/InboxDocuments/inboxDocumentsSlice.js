@@ -26,7 +26,7 @@ export const forwardDocuments = createAsyncThunk(forward.type, async (query, thu
         receiverId: id,
       };
     });
-    const { message } = await inboxService.forwardDocuments( documentId, receivers);
+    const { message } = await inboxService.forwardDocuments(documentId, receivers);
     return message;
   } catch (error) {
     const { message } = error.response.data;
@@ -39,7 +39,8 @@ const initialState = {
   success: false,
   error: false,
   message: "",
-
+  
+  total: 0,
   inboxDocuments: [],
 };
 
@@ -54,6 +55,7 @@ const inboxDocumentsSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.inboxDocuments = action.payload.data;
+      state.total = action.payload.total;
     });
     builder.addCase(fetchInboxDocuments.rejected, (state, action) => {
       state.loading = false;
@@ -77,6 +79,5 @@ const inboxDocumentsSlice = createSlice({
     });
   },
 });
-
 
 export default inboxDocumentsSlice.reducer;
