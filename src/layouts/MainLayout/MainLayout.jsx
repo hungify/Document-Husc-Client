@@ -1,5 +1,6 @@
 import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
+import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
 import BreadcrumbTrail from "layouts/MainLayout/components/BreadcrumbTrail";
@@ -10,6 +11,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import PulseLoader from "react-spinners/PulseLoader";
+import { getLoadingInitConfig } from "app/selectors/config";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
@@ -28,6 +31,8 @@ export default function MainLayout({ children }) {
   const navigate = useNavigate();
   const isAuth = useSelector(isAuthenticated);
   const role = useSelector(getRole);
+  const loadingApp = useSelector(getLoadingInitConfig);
+
   const { pathname } = useLocation();
   const path = pathname.split("/").filter((item) => item);
 
@@ -73,33 +78,35 @@ export default function MainLayout({ children }) {
   };
 
   return (
-    <Layout>
-      <Header shouldFixed={1} />
-      <LayoutMain hasSider $isAuth={isAuth}>
-        {isAuth && (
-          <Sidebar
-            width={250}
-            collapsible
-            collapsed={collapsed}
-            onCollapse={handleOnCollapse}
-            theme="light"
-          >
-            <MenuNavigation
-              mode="inline"
-              onSelect={handleMenuSelect}
-              selectedKeys={activeKey}
-              menuItems={menuItems}
-            />
-          </Sidebar>
-        )}
-        <LayoutWrapContent $collapsed={collapsed ? 1 : 0} $isAuth={isAuth}>
-          <ContentAnt>
-            <BreadcrumbTrail />
-            {children}
-            <Outlet />
-          </ContentAnt>
-        </LayoutWrapContent>
-      </LayoutMain>
-    </Layout>
+    <LoadingOverlayApp spinner={<PulseLoader size={15} color="#F5A623" />} active={loadingApp}>
+      <Layout>
+        <Header shouldFixed={1} />
+        <LayoutMain hasSider $isAuth={isAuth}>
+          {isAuth && (
+            <Sidebar
+              width={250}
+              collapsible
+              collapsed={collapsed}
+              onCollapse={handleOnCollapse}
+              theme="light"
+            >
+              <MenuNavigation
+                mode="inline"
+                onSelect={handleMenuSelect}
+                selectedKeys={activeKey}
+                menuItems={menuItems}
+              />
+            </Sidebar>
+          )}
+          <LayoutWrapContent $collapsed={collapsed ? 1 : 0} $isAuth={isAuth}>
+            <ContentAnt>
+              <BreadcrumbTrail />
+              {children}
+              <Outlet />
+            </ContentAnt>
+          </LayoutWrapContent>
+        </LayoutMain>
+      </Layout>
+    </LoadingOverlayApp>
   );
 }
