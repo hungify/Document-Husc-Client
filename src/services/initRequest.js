@@ -1,13 +1,13 @@
 import axios from "axios";
-import queryString from "query-string";
 import QueryString from "qs";
+import { getRefreshToken } from "features/Auth/authSlice";
 
 const requestConfig = {
   baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
   timeout: 5000,
-  // paramsSerializer: (params) => {
-  //   return queryString.stringify(params);
-  // },
+  paramsSerializer: (params) => {
+    return QueryString.stringify(params, { arrayFormat: "brackets" });
+  },
 };
 
 export const axiosInstance = axios.create(requestConfig);
@@ -40,7 +40,7 @@ export const initRequest = (store) => {
         // }
       } else if (status === 401 && message === "jwt expired") {
         if (refreshToken) {
-          // store.dispatch(getRefreshToken(refreshToken));
+          store.dispatch(getRefreshToken(refreshToken));
         }
       }
       return Promise.reject(error);

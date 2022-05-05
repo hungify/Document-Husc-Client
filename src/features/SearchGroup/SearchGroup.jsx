@@ -37,35 +37,44 @@ export default function SearchGroup() {
     const { start, end, orderBy, searchText, searchBy } = values;
     const startDate = start && dayjs(start).format("YYYY/MM/DD");
     const endDate = end && dayjs(end).format("YYYY/MM/DD");
-    dispatch(setSearchForm({ start: startDate, end: endDate, orderBy, searchText, searchBy }));
+    dispatch(
+      setSearchForm({
+        start: startDate,
+        end: endDate,
+        orderBy,
+        searchText,
+        searchBy,
+        triggerBy: "documents",
+      })
+    );
   };
 
   const handleTypesOfDocumentSelect = (value) => {
-    dispatch(setFiltersBy({ typesOfDocument: value }));
+    dispatch(setFiltersBy({ typesOfDocument: value, triggerBy: "documents", }));
     setTypesOfDocument(value);
   };
   const handleTypesOfDocumentDeselect = (value) => {
     if (typesOfDocument === value) {
-      dispatch(setFiltersBy({ typesOfDocument: null }));
+      dispatch(setFiltersBy({ typesOfDocument: null, triggerBy: "documents" }));
       setTypesOfDocument(null);
     }
   };
   const handleAgencySelect = (value) => {
-    dispatch(setFiltersBy({ agency: value }));
+    dispatch(setFiltersBy({ agency: value, triggerBy: "documents" }));
     setAgency(value);
   };
   const handleAgencyDeselect = (value) => {
     if (value === agency) {
-      dispatch(setFiltersBy({ agency: null }));
+      dispatch(setFiltersBy({ agency: null, triggerBy: "documents" }));
       setAgency(null);
     }
   };
   const handleCategorySelect = (value) => {
     if (value) {
-      dispatch(setFiltersBy({ category: value }));
+      dispatch(setFiltersBy({ category: value, triggerBy: "documents" }));
       setCategory(value);
     } else {
-      dispatch(setFiltersBy({ category: null }));
+      dispatch(setFiltersBy({ category: null, triggerBy: "documents" }));
       setCategory(null);
     }
   };

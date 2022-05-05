@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   page: 1,
-  pageSize: 1,
+  pageSize: 10,
   sort: "createAt",
 
   search: {
@@ -28,13 +28,13 @@ const searchGroupSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, action) => {
-      state.page = action.payload;
+      state.page = action.payload.page;
     },
     setPageSize: (state, action) => {
-      state.pageSize = action.payload;
+      state.pageSize = action.payload.pageSize;
     },
     setSortBy: (state, action) => {
-      state.sort = action.payload;
+      state.sort = action.payload.sortBy;
     },
     setSearchForm: (state, action) => {
       state.search = {
@@ -48,6 +48,7 @@ const searchGroupSlice = createSlice({
       };
     },
     setFiltersBy: (state, action) => {
+      delete action.payload["triggerBy"]; // key need to trigger in middleware
       for (const key in action.payload) {
         // check also if property is not inherited from prototype
         if (action.payload.hasOwnProperty(key)) {

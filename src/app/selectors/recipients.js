@@ -3,6 +3,8 @@ import _ from "lodash";
 
 const getRecipients = (state) => state?.recipients?.users;
 const getExcludedRecipients = (state) => state?.recipients?.excludedUsers;
+export const getTotalRecipients = (state) => state?.recipients?.total;
+
 export const getFilterRecipients = createSelector(
   getRecipients,
   getExcludedRecipients,

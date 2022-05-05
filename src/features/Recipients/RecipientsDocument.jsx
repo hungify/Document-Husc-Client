@@ -1,10 +1,11 @@
 import { Card, Col, Form, Input, Row, Typography } from "antd";
 import { getFilterRecipients } from "app/selectors/recipients";
-import TableTransfer from "components/TransferTable";
 import { fetchExcludedRecipients, fetchRecipients } from "features/Recipients/recipientsSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import TransferTableRecipients from "features/Recipients/TransferTableRecipients";
+
 const Container = styled.div`
   padding: 10px 20px;
 `;
@@ -63,7 +64,7 @@ const TableColumns = [
   },
 ];
 
-export default function RecipientDocument({
+export default function RecipientsDocument({
   form,
   onSubmitForm,
   onSelectRelatedRecipient,
@@ -97,18 +98,12 @@ export default function RecipientDocument({
                 initialValue={[]}
                 rules={required ? [{ required, message: "Vui lòng chọn người nhận" }] : []}
               >
-                <TableTransfer
+                <TransferTableRecipients
                   titles={["Danh sách cán bộ/giảng viên", "Người nhận đã chọn"]}
                   dataSource={filterRecipients}
                   targetKeys={selectedRecipient}
                   locale={{
                     searchPlaceholder: "Nhập vào tên của cán bộ/giảng viên",
-                  }}
-                  pagination={{
-                    pageSize: 20,
-                    showSizeChanger: true,
-                    simple: true,
-                    showLessItems: true,
                   }}
                   showSearch={true}
                   onChange={handleTableTransferChange}

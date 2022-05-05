@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import showToast, { toastPosition } from "configs/toast";
 import recipientsService from "services/recipientsService";
 
 const recipients = createAction("recipients/fetch/recipients");
@@ -22,7 +23,7 @@ export const fetchExcludedRecipients = createAsyncThunk(
       const publisherId = data.publisher._id;
       const excludedIds = participants.map((user) => user.receiver._id);
       excludedIds.push(publisherId);
-      
+
       return excludedIds;
     } catch (error) {
       const { message } = error.response.data;
@@ -36,6 +37,8 @@ const initialState = {
   error: null,
   success: null,
   message: null,
+  total: 0,
+
   users: [],
   excludedUsers: [],
 };
@@ -54,15 +57,17 @@ const recipientsSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.success = true;
-      state.message = action.payload.message;
       state.users = action.payload;
+      state.total = action.payload.length;
     });
     builder.addCase(fetchRecipients.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       state.success = false;
       state.message = action.payload;
+      showToast("error", action.payload, toastPosition.topRight);
     });
+
     builder.addCase(fetchExcludedRecipients.pending, (state, action) => {
       state.loading = true;
       state.error = null;
@@ -80,6 +85,7 @@ const recipientsSlice = createSlice({
       state.error = true;
       state.success = false;
       state.message = action.payload;
+      showToast("error", action.payload, toastPosition.topRight);
     });
   },
 });

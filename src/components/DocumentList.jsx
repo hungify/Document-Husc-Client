@@ -7,20 +7,20 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card, Col, List, Row, Space, Tag, Typography } from "antd";
 import { getRole } from "app/selectors/auth";
+import { getTotalDocuments, getTotalDocumentsMatch } from "app/selectors/documents";
+import { getPage, getPageSize } from "app/selectors/searchGroup";
 import pdfFile from "assets/pdf/test.pdf";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
 import { ROLES } from "configs/roles";
+import dayjs from "dayjs";
+import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
 import { saveAs } from "file-saver";
 import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import dayjs from "dayjs";
-import { getPage, getPageSize } from "app/selectors/searchGroup";
-import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
-import { getTotal, getTotalMatch } from "app/selectors/documents";
 
 const CardItemAnt = styled(Card)`
   background-color: rgb(255, 255, 255);
@@ -33,8 +33,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
   const role = useSelector(getRole);
   const page = useSelector(getPage);
   const pageSize = useSelector(getPageSize);
-  const total = useSelector(getTotal);
-  const totalMatch = useSelector(getTotalMatch);
+  const totalDocuments = useSelector(getTotalDocuments);
 
   const handlePreviewFileClick = (item) => {
     window.open(item, {
@@ -58,12 +57,12 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
         pageSizeOptions: ["10", "20", "50", "100"],
         showPrevNextJumpers: true,
         showTitle: true,
-        total: total,
+        total: totalDocuments,
         onChange: (page) => {
-          dispatch(setPage(page));
+          dispatch(setPage({ page, triggerBy: "documents" }));
         },
         onShowSizeChange: (current, size) => {
-          dispatch(setPageSize(size));
+          dispatch(setPageSize({ page, triggerBy: "documents" }));
         },
       }}
       dataSource={dataRender}

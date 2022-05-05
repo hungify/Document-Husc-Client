@@ -1,4 +1,5 @@
 import { fetchDocuments } from "features/Home/homeSlice";
+import { fetchRecipients } from "features/Recipients/recipientsSlice";
 
 const { createListenerMiddleware, isAnyOf } = require("@reduxjs/toolkit");
 const {
@@ -15,7 +16,12 @@ documentListenerMiddleware.startListening({
   matcher: isAnyOf(setFiltersBy, setSearchForm, setPage, setPageSize, setSortBy),
   effect: async (action, listenerApi) => {
     const { dispatch } = listenerApi;
-    dispatch(fetchDocuments());
+    console.log("🚀 :: action.payload.triggerBy", action.payload.triggerBy);
+    if (action.payload.triggerBy === "documents") {
+      dispatch(fetchDocuments());
+    } else if (action.payload.triggerBy === "recipients") {
+      dispatch(fetchRecipients());
+    }
   },
 });
 
