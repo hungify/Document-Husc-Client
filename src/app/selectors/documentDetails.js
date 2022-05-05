@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-
+export const getMyReadDate = (state) => state.documentDetails?.myReadDate;
 export const getProperty = (state) => state.documentDetails?.property;
 export const getFiles = (state) => state.documentDetails?.files;
 export const getRelatedDocuments = (state) => state.documentDetails?.relatedDocuments;

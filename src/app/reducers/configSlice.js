@@ -5,7 +5,7 @@ import configService from "services/configService";
 const typesOfDocuments = createAction("config/typesOfDocuments");
 export const fetchConfigApp = createAsyncThunk(typesOfDocuments.type, async (args, thunkAPI) => {
   try {
-    const [typesOfDocuments, categories, agencies] = await Promise.all([
+    const [typesOfDocuments, categories, agencies, urgentLevels] = await Promise.all([
       configService.fetchTypesOfDocuments(),
       configService.fetchCategories(),
       configService.fetchAgencies(),
@@ -15,6 +15,7 @@ export const fetchConfigApp = createAsyncThunk(typesOfDocuments.type, async (arg
       typesOfDocuments: typesOfDocuments.data,
       categories: categories.data,
       agencies: agencies.data,
+      urgentLevels: urgentLevels.data,
     };
     return data;
   } catch (error) {
