@@ -1,20 +1,36 @@
 import { Empty, Table, Transfer } from "antd";
+import { getTotal } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
-import { difference } from "lodash";
+import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function TransferTable({ leftColumns, rightColumns, ...restProps }) {
+export default function TransferTableRelated({
+  leftColumns,
+  rightColumns,
+  targetKeys,
+  dataSource,
+  ...restProps
+}) {
+  const dispatch = useDispatch();
+
   const page = useSelector(getPage);
   const pageSize = useSelector(getPageSize);
-  const dispatch = useDispatch();
+  const total = useSelector(getTotal);
   const [pageFilter, setPageFilter] = React.useState(1);
   const [pageSizeFilter, setPageSizeFilter] = React.useState(10);
-  const [filter, setFilter] = React.useState([]);
+  const [dataRight, setDataRight] = React.useState([]);
+
+  React.useEffect(() => {
+    const newDataSource = dataSource.filter((i) => {
+      return targetKeys.find((k) => k === i._id);
+    });
+    setDataRight([...newDataSource]);
+  }, [targetKeys]);
 
   return (
-    <Transfer {...restProps}>
+    <Transfer {...restProps} dataSource={dataSource} targetKeys={targetKeys}>
       {({
         direction,
         filteredItems,
@@ -32,12 +48,12 @@ export default function TransferTable({ leftColumns, rightColumns, ...restProps 
               .filter((item) => !item.disabled)
               .map(({ _id }) => _id);
             const diffKeys = selected
-              ? difference(treeSelectedKeys, listSelectedKeys)
-              : difference(listSelectedKeys, treeSelectedKeys);
+              ? _.difference(treeSelectedKeys, listSelectedKeys)
+              : _.difference(listSelectedKeys, treeSelectedKeys);
             onItemSelectAll(diffKeys, selected);
           },
-          onSelect({ _id }, selected) {
-            onItemSelect(_id, selected);
+          onSelect(item, selected) {
+            onItemSelect(item._id, selected);
           },
           selectedRowKeys: listSelectedKeys,
         };
@@ -46,20 +62,28 @@ export default function TransferTable({ leftColumns, rightColumns, ...restProps 
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={filteredItems}
+            dataSource={direction === "left" ? filteredItems : dataRight}
             rowKey={(record) => record._id}
             pagination={{
-              size: "small",
+              total: direction === "left" ? total : dataRight.length,
               pageSize: direction === "left" ? pageSize : pageSizeFilter,
               current: direction === "left" ? page : pageFilter,
               showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,
               showSizeChanger: true,
-              pageSizeOptions: ["1", "2", "5"],
+              pageSizeOptions: ["10", "20", "50"],
               onChange: (page) => {
-                dispatch(setPage(page));
+                if (direction === "left") {
+                  dispatch(setPage(page));
+                } else {
+                  setPageFilter(page);
+                }
               },
               onShowSizeChange: (current, size) => {
-                dispatch(setPageSize(size));
+                if (direction === "left") {
+                  dispatch(setPageSize(size));
+                } else {
+                  setPageSizeFilter(size);
+                }
               },
             }}
             locale={{
