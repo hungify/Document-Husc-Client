@@ -1,12 +1,14 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs } from "antd";
-import { getRole, isAuthenticated } from "app/selectors/auth";
+import { getRole, isAuthenticated, getUserId } from "app/selectors/auth";
 import {
   getFiles,
   getMyReadDate,
   getParticipants,
   getProperty,
+  getPublisherId,
   getRelatedDocuments,
+  isPublicDocument,
 } from "app/selectors/documentDetails";
 import { getForwardSuccess, getSuccessUpdateRead } from "app/selectors/inbox";
 import DocumentSummary from "components/DocumentSummary";
@@ -47,14 +49,18 @@ export default function DetailDocument() {
   const dispatch = useDispatch();
   const role = useSelector(getRole);
   const isAuth = useSelector(isAuthenticated);
+  const userId = useSelector(getUserId);
   const property = useSelector(getProperty);
   const files = useSelector(getFiles);
   const relatedDocuments = useSelector(getRelatedDocuments);
   const participants = useSelector(getParticipants);
   const myReadDate = useSelector(getMyReadDate);
+  const publisherId = useSelector(getPublisherId);
+  const isPublic = useSelector(isPublicDocument);
 
   const isUpdateSuccess = useSelector(getSuccessUpdateRead);
   const isForwardSuccess = useSelector(getForwardSuccess);
+
   React.useEffect(() => {
     if (isUpdateSuccess || isForwardSuccess) {
       dispatch(fetchDocumentDetails({ slug, key: activeTab }));
@@ -149,7 +155,7 @@ export default function DetailDocument() {
         extra={
           (role === ROLES.ADMIN || role === ROLES.USER) && (
             <Space split={<Divider type="vertical" />}>
-              {!myReadDate ? (
+              {!myReadDate && userId !== publisherId ? (
                 <Button
                   type="primary"
                   onClick={() => handleReadDocument(property._id)}
@@ -187,11 +193,12 @@ export default function DetailDocument() {
               <Tabs.TabPane tab="Cây xử lý" key="participants">
                 {!_.isEmpty(participants) && <TreeProcessing treeData={participants} />}
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Phân tích" key="analytics">
-                <ChartReceiver />
-              </Tabs.TabPane>
-              {(role === ROLES.ADMIN || role === ROLES.USER) && !property.isPublic && (
+
+              {(role === ROLES.ADMIN || role === ROLES.USER) && !isPublic && (
                 <>
+                  <Tabs.TabPane tab="Phân tích" key="analytics">
+                    <ChartReceiver />
+                  </Tabs.TabPane>
                   <Tabs.TabPane tab="Phản hồi" key="feedback">
                     <ChatRoom />
                   </Tabs.TabPane>
