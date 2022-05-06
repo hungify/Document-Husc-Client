@@ -1,4 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
+export const isPublicDocument = (state) => state.documentDetails?.isPublic;
+export const getPublisherId = (state) => state.documentDetails?.publisherId;
 export const getMyReadDate = (state) => state.documentDetails?.myReadDate;
 export const getProperty = (state) => state.documentDetails?.property;
 export const getFiles = (state) => state.documentDetails?.files;
