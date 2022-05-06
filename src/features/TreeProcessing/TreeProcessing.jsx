@@ -1,6 +1,7 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Alert, Card, Divider, Space, Tree, Typography } from "antd";
-import { getMyReadDate } from "app/selectors/documentDetails";
+import { getUserId } from "app/selectors/auth";
+import { getMyReadDate, getPublisherId, isPublicDocument } from "app/selectors/documentDetails";
 import BadgeCheckIcon from "components/Icons/BadgeCheckIcon";
 import BroadcastIcon from "components/Icons/BroadcastIcon";
 import dayjs from "dayjs";
@@ -12,6 +13,12 @@ import styled from "styled-components";
 const TreeAnt = styled(Tree)`
   &.ant-tree .ant-tree-treenode {
     width: 99%;
+    .ant-tree-switcher-leaf-line::after {
+      height: 20px;
+    }
+    .ant-tree-switcher-leaf-line::before {
+      bottom: -24px;
+    }
   }
   &.ant-tree .ant-tree-node-content-wrapper {
     width: 100%;
@@ -22,6 +29,8 @@ const TreeAnt = styled(Tree)`
     justify-content: center;
   }
 `;
+
+const TypographyTitle = styled(Typography.Title)``;
 
 const Overlay = styled.div`
   display: flex;
@@ -39,10 +48,13 @@ const SpaceAnt = styled(Space)`
 
 export default function TreeProcessing({ treeData }) {
   const myReadDate = useSelector(getMyReadDate);
+  const publisherId = useSelector(getPublisherId);
+  const userId = useSelector(getUserId);
+  const isPublic = useSelector(isPublicDocument);
 
   return (
     <Card>
-      {myReadDate ? (
+      {myReadDate && !isPublic ? (
         <Alert
           message={
             <Typography.Text strong>
@@ -53,13 +65,15 @@ export default function TreeProcessing({ treeData }) {
           showIcon
           closable
         />
-      ) : (
+      ) : userId !== publisherId && !isPublic ? (
         <Alert
           message="Xác nhận xứ lý văn bản"
           description="Thông báo cho mọi người là bạn đã xứ lý văn bản này"
           type="warning"
           showIcon
         />
+      ) : (
+        React.Fragment
       )}
       <TreeAnt
         showIcon={true}
@@ -74,7 +88,7 @@ export default function TreeProcessing({ treeData }) {
           <Overlay key={tree.receiver._id}>
             {tree.root ? (
               <SpaceAnt size="small">
-                <Typography.Title level={4}>{tree.receiver.username}</Typography.Title>
+                <TypographyTitle level={4}>{tree.receiver.username}</TypographyTitle>
                 <BroadcastIcon style={{ color: "rgb(255, 77, 79)" }} />
                 <Typography.Text type="danger" italic style={{ fontSize: "15px" }}>
                   Ban hành:&nbsp; {dayjs(tree.sendDate).format("DD/MM/YYYY HH:mm")}
@@ -93,7 +107,7 @@ export default function TreeProcessing({ treeData }) {
 function TreeItem({ node }) {
   return !_.isEmpty(node.children) ? (
     <SpaceAnt size="small">
-      <Typography.Title level={5}>{node.receiver.username}</Typography.Title>
+      <TypographyTitle level={5}>{node.receiver.username}</TypographyTitle>
       <BadgeCheckIcon style={{ color: "#30AADD" }} />
       <Space direction="horizontal" split={<Divider type="vertical" />}>
         <Typography.Text type="success" italic style={{ fontSize: "15px" }}>
