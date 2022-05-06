@@ -13,6 +13,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PulseLoader from "react-spinners/PulseLoader";
 import { getLoadingInitConfig } from "app/selectors/config";
+import { DoubleRightOutlined, RightOutlined, RightSquareOutlined } from "@ant-design/icons";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
@@ -84,6 +85,7 @@ export default function MainLayout({ children }) {
         <LayoutMain hasSider $isAuth={isAuth}>
           {isAuth && (
             <Sidebar
+              trigger={path[0] === "issue" ? null : ""}
               width={250}
               collapsible
               collapsed={collapsed}
