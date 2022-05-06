@@ -1,12 +1,11 @@
 import axios from "axios";
-import QueryString from "qs";
 import { getRefreshToken } from "features/Auth/authSlice";
-
+import queryString from "query-string";
 const requestConfig = {
   baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
   timeout: 5000,
   paramsSerializer: (params) => {
-    return QueryString.stringify(params, { arrayFormat: "brackets" });
+    return queryString.stringify(params);
   },
 };
 
