@@ -8,39 +8,36 @@ const login = createAction("auth/login");
 
 export const fetchLogin = createAsyncThunk(
   login.type,
-  async ({ email, password }, { rejectWithValue, dispatch }) => {
+  async ({ email, password }, thunkAPI) => {
     try {
       const { data } = await authService.login({ email, password });
       data.message = "Đăng nhập thành công";
       return data;
     } catch (error) {
       const { message } = error?.response.data;
-      const { status } = error?.response;
       if (message === "Email or password is incorrect") {
         const message = "Tài khoản hoặc mật khẩu không đúng";
-        return rejectWithValue(message);
-      } else if (status === 500) {
-        return rejectWithValue(message);
+        return thunkAPI.rejectWithValue(message);
       }
-      return rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const getRefreshToken = createAsyncThunk(
+export const fetchRefreshToken = createAsyncThunk(
   refreshToken.type,
   async (token, { rejectWithValue }) => {
     try {
       const { data } = await authService.refreshToken(token);
       return data;
     } catch (error) {
-      const { status, message } = error.response.data;
-      return rejectWithValue({ status, message });
+      const { message } = error.response.data;
+      return rejectWithValue(message);
     }
   }
 );
 
-export const getLogout = createAsyncThunk(
+export const fetchLogout = createAsyncThunk(
   logout.type,
   async (refreshToken, { rejectWithValue }) => {
     try {
@@ -49,7 +46,6 @@ export const getLogout = createAsyncThunk(
       return message;
     } catch (error) {
       const { message } = error.response.data;
-      const { status } = error.response;
       return rejectWithValue(message);
     }
   }
@@ -94,34 +90,28 @@ const authSlice = createSlice({
       state.countError += 1;
       showToast("error", action.payload, toastPosition.topRight);
     });
-    builder.addCase(getRefreshToken.pending, (state, action) => {
+    builder.addCase(fetchRefreshToken.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(getRefreshToken.fulfilled, (state, action) => {
+    builder.addCase(fetchRefreshToken.fulfilled, (state, action) => {
       state.loading = false;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.role = action.payload.role;
-      state.isAuthenticated = true;
       state.userId = action.payload.userId;
-      showToast("success", action.payload.message, toastPosition.bottomRight);
+      state.isAuthenticated = true;
+      showToast("success", "Refresh token success", toastPosition.bottomRight);
     });
-    builder.addCase(getRefreshToken.rejected, (state, action) => {
+    builder.addCase(fetchRefreshToken.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       state.message = action.payload;
-      state.accessToken = null;
-      state.refreshToken = null;
-      state.isAuthenticated = false;
-      state.userId = null;
-      state.role = null;
       showToast("error", action.payload.message, toastPosition.topRight);
     });
-
-    builder.addCase(getLogout.pending, (state) => {
+    builder.addCase(fetchLogout.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getLogout.fulfilled, (state, action) => {
+    builder.addCase(fetchLogout.fulfilled, (state, action) => {
       state.loading = false;
       state.accessToken = null;
       state.refreshToken = null;
@@ -131,11 +121,10 @@ const authSlice = createSlice({
       state.role = null;
       showToast("success", action.payload, toastPosition.bottomRight);
     });
-    builder.addCase(getLogout.rejected, (state, action) => {
+    builder.addCase(fetchLogout.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
-      state.isAuthenticated = false;
-      state.message = action.payload;
+      showToast("error", action.payload, toastPosition.topRight);
     });
   },
 });

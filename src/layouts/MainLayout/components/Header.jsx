@@ -3,7 +3,7 @@ import { Avatar, Badge, Button, Layout, Menu, Space, Typography } from "antd";
 import { getToken, isAuthenticated } from "app/selectors/auth";
 import LogoHusc from "assets/images/logo/logo.svg";
 import BellIcon from "components/Icons/BellIcon";
-import { getLogout } from "features/Auth/authSlice";
+import { fetchLogout } from "features/Auth/authSlice";
 import useScrollPosition from "hooks/useScrollPosition";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +73,7 @@ export default function Header({ shouldFixed }) {
   const profile = useSelector(getProfile);
 
   const handleLogout = () => {
-    dispatch(getLogout(refreshToken));
+    dispatch(fetchLogout(refreshToken));
     if (!isAuth) navigate("/");
   };
 

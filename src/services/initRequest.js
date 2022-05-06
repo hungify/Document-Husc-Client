@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getRefreshToken } from "features/Auth/authSlice";
+import { fetchLogout, fetchRefreshToken } from "features/Auth/authSlice";
 import queryString from "query-string";
 const requestConfig = {
   baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
@@ -31,15 +31,16 @@ export const initRequest = (store) => {
       return response;
     },
     (error) => {
-      const refreshToken = store?.getState()?.auth?.refreshToken;
-      const { status, message } = error.response;
-      if (status === 401 && message === "Unauthorized") {
-        // if (refreshToken) {
-        //   store.dispatch(getRefreshToken(refreshToken));
-        // }
-      } else if (status === 401 && message === "jwt expired") {
-        if (refreshToken) {
-          store.dispatch(getRefreshToken(refreshToken));
+      const { status } = error.response;
+      const { message } = error.response.data;
+      if (status === 401) {
+        const refreshToken = store?.getState()?.auth?.refreshToken;
+        if (message === "access token has expired") {
+          if (refreshToken) {
+            store.dispatch(fetchRefreshToken(refreshToken));
+          }
+        } else if (message === "refresh token has expired") {
+          store.dispatch(fetchLogout(refreshToken));
         }
       }
       return Promise.reject(error);
