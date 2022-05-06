@@ -1,7 +1,7 @@
 import LoadingOverlay from "react-loading-overlay";
 import styled from "styled-components";
 const Overlay = styled(LoadingOverlay)`
-  height: 100vh;
+  height: 100%;
   width: 100%;
   z-index: 999;
   top: 0%;
