@@ -1,21 +1,21 @@
-import { Avatar, Card, Col, Empty, List, Row, Table, Tag, Typography } from "antd";
-import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
-import ListUploaded from "features/IssueDocument/components/ListUploaded";
-import _ from "lodash";
-import React from "react";
-import styled from "styled-components";
-import { findNodeByKey } from "utils/tree";
-import { v4 as uuidv4 } from "uuid";
-import dayjs from "dayjs";
-import { fetchDocumentByIds } from "features/Home/homeSlice";
-import { getRelatedDocuments } from "app/selectors/documents";
-import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Card, Col, Empty, List, Row, Table, Typography } from "antd";
 import {
   getAgenciesConfig,
   getCategoriesConfig,
   getTypesOfDocumentsConfig,
-  getUrgentLevelsConfig,
+  getUrgentLevelsConfig
 } from "app/selectors/config";
+import { getRelatedDocuments } from "app/selectors/documents";
+import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
+import dayjs from "dayjs";
+import { fetchDocumentByIds } from "features/Home/homeSlice";
+import ListUploaded from "features/IssueDocument/components/ListUploaded";
+import _ from "lodash";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { findNodeByKey } from "utils/tree";
+import { v4 as uuidv4 } from "uuid";
 
 const Container = styled.div`
   padding: 10px 20px;

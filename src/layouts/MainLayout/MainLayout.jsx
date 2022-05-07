@@ -1,5 +1,6 @@
 import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
+import { getLoadingInitConfig } from "app/selectors/config";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
@@ -10,10 +11,8 @@ import Sidebar from "layouts/MainLayout/components/Sidebar";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import PulseLoader from "react-spinners/PulseLoader";
-import { getLoadingInitConfig } from "app/selectors/config";
-import { DoubleRightOutlined, RightOutlined, RightSquareOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
