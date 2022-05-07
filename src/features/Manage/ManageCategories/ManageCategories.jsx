@@ -6,7 +6,7 @@ import {
   PlusCircleTwoTone,
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
-import { getCategoriesConfig } from "app/selectors/config";
+import { getCategoriesConfig } from "app/selectors/categories";
 import DrawerCustom from "components/DrawerCustom";
 import React from "react";
 import { useSelector } from "react-redux";

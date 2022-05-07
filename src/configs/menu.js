@@ -9,6 +9,7 @@ import {
   SnippetsTwoTone,
 } from "@ant-design/icons";
 import ArchiveInIcon from "components/Icons/ArchiveInIcon";
+import BuildingHouseIcon from "components/Icons/BuildingHouse";
 import RocketIcon from "components/Icons/RocketIcon";
 
 export const menuConfig = {
@@ -42,6 +43,12 @@ export const menuConfig = {
           icon: <SnippetsTwoTone style={{ fontSize: 18 }} />,
         },
         {
+          title: "Quản lý phong/ban",
+          key: "departments",
+          value: "departments",
+          icon: <BuildingHouseIcon style={{ fontSize: 18, color: "rgba(24, 144, 255, 0.9)" }} />,
+        },
+        {
           title: "Quản lý loại văn bản",
           key: "types-of-documents",
           value: "types-of-documents",
@@ -63,7 +70,7 @@ export const menuConfig = {
           title: "Quản lý văn bản thu hồi",
           key: "revoke-documents",
           value: "revoke-documents",
-          icon: <ArchiveInIcon style={{ fontSize: 18, color: "rgba(24, 144, 255, 0.9)" }} />,
+          icon: <ArchiveInIcon style={{ fontSize: 18, color: "rgba(24, 144, 255, 0.8)" }} />,
         },
       ],
     },

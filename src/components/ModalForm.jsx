@@ -29,13 +29,11 @@ export default function ModalForm({
           .validateFields()
           .then((values) => {
             setConfirmLoading(true);
-            message.loading({ content: "Đang cập nhật...", key: "updatable" });
             setTimeout(() => {
               setConfirmLoading(false);
-              message.success({ content: "Cập nhật thành công", key: "updatable", duration: 2 });
-              form.resetFields();
               onSubmit(values);
-            }, 2000);
+              form.resetFields();
+            }, 500);
           })
           .catch((info) => {
             message.error({ content: "Opps. Đã xảy ra lỗi", key: "updatable" });
