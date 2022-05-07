@@ -1,6 +1,5 @@
 import { Layout } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
-import { getLoadingInitConfig } from "app/selectors/config";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { menuConfig } from "configs/menu";
 import { ROLES } from "configs/roles";
@@ -9,14 +8,20 @@ import Header from "layouts/MainLayout/components/Header";
 import MenuNavigation from "layouts/MainLayout/components/MenuNavigation";
 import Sidebar from "layouts/MainLayout/components/Sidebar";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 import styled from "styled-components";
+import { fetchAgencies } from "app/reducers/configs/agenciesSlice";
+import { fetchUrgentLevels } from "app/reducers/configs/urgentLevelsSlice";
+import { fetchCategories } from "app/reducers/configs/categoriesSlice";
+import { fetchTypesOfDocuments } from "app/reducers/configs/typesOfDocumentsSlice";
+import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocument";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
   padding: ${(props) => (props.$isAuth ? "0" : "0 60px")};
+  height: 100vh;
 `;
 
 const LayoutWrapContent = styled(Layout)`
@@ -31,7 +36,6 @@ export default function MainLayout({ children }) {
   const navigate = useNavigate();
   const isAuth = useSelector(isAuthenticated);
   const role = useSelector(getRole);
-  const loadingApp = useSelector(getLoadingInitConfig);
 
   const { pathname } = useLocation();
   const path = pathname.split("/").filter((item) => item);
@@ -39,6 +43,25 @@ export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState();
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
+  const [loading, setLoading] = React.useState(true);
+  const loadingApp = useSelector(getLoadingTypesOfDocuments);
+
+  React.useEffect(() => {
+    if (loadingApp) {
+      console.log("loadingApp", loadingApp);
+      setLoading(false);
+    }
+  }, [loadingApp]);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    console.log("fetch");
+    dispatch(fetchAgencies());
+    dispatch(fetchUrgentLevels());
+    dispatch(fetchCategories());
+    dispatch(fetchTypesOfDocuments()); // this line must be end of dispatch
+  }, [dispatch]);
 
   React.useEffect(() => {
     if (path.length > 2) {
@@ -78,7 +101,7 @@ export default function MainLayout({ children }) {
   };
 
   return (
-    <LoadingOverlayApp spinner={<PulseLoader size={15} color="#F5A623" />} active={loadingApp}>
+    <LoadingOverlayApp spinner={<PulseLoader size={15} color="#F5A623" />} active={loading}>
       <Layout>
         <Header shouldFixed={1} />
         <LayoutMain hasSider $isAuth={isAuth}>

@@ -65,10 +65,20 @@ export default function Login({ active }) {
         <>
           <Title>Chào mừng quay trở lại </Title>
           <TitleDesc>Đăng nhập vào hệ thống</TitleDesc>
-          <Form.Item name="email" rules={authRules.email} id="login_email">
+          <Form.Item
+            name="email"
+            rules={authRules.email}
+            id="login_email"
+            initialValue={"admin2022@husc.edu.vn"}
+          >
             <Input placeholder="Email" size="large" spellCheck="false" />
           </Form.Item>
-          <Form.Item name="password" rules={authRules.password} id="login_password">
+          <Form.Item
+            name="password"
+            rules={authRules.password}
+            id="login_password"
+            initialValue={"admin2022"}
+          >
             <Input.Password placeholder="Mật khẩu" size="large" spellCheck="false" />
           </Form.Item>
         </>

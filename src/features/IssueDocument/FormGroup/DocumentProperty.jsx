@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Input, Row, Typography } from "antd";
-import { getUrgentLevelsConfig } from "app/selectors/config";
+import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
 import { DatePicker } from "components/customs";
 import SelectForm from "components/SelectForm";
 import { useSelector } from "react-redux";
