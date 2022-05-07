@@ -7,9 +7,8 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card, Col, List, Row, Space, Tag, Typography } from "antd";
 import { getRole } from "app/selectors/auth";
-import { getTotalDocuments, getTotalDocumentsMatch } from "app/selectors/documents";
+import { getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
-import pdfFile from "assets/pdf/test.pdf";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
 import { ROLES } from "configs/roles";
@@ -111,7 +110,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                       shape="round"
                       icon={<ExpandOutlined />}
                       onButtonClick={handlePreviewFileClick}
-                      document={pdfFile}
+                      // document={pdfFile}
                     >
                       Xem trước
                     </ButtonTooltip>
@@ -123,7 +122,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                       shape="round"
                       icon={<DownloadOutlined />}
                       onButtonClick={handleSaveFileClick}
-                      document={pdfFile}
+                      // document={pdfFile}
                     >
                       Tải xuống
                     </ButtonTooltip>

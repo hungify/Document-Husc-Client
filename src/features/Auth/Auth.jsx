@@ -11,6 +11,13 @@ export default function Auth() {
   const paths = pathname.split("/").filter((item) => item);
   const [key, setKey] = React.useState(paths[paths.length - 1]);
 
+  React.useEffect(() => {
+    const keys = ["login", "register", "forgotPassword"];
+    if (keys.includes(key) && paths[paths.length - 1] !== key) {
+      setKey(paths[paths.length - 1]);
+    }
+  }, [paths, key]);
+
   function handleOnChangeTab(key) {
     setKey(key);
     navigate(`/${key}`);

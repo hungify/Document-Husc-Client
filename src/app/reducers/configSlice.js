@@ -5,17 +5,19 @@ import configService from "services/configService";
 const typesOfDocuments = createAction("config/typesOfDocuments");
 export const fetchConfigApp = createAsyncThunk(typesOfDocuments.type, async (args, thunkAPI) => {
   try {
-    const [typesOfDocuments, categories, agencies, urgentLevels] = await Promise.all([
+    const [typesOfDocuments, categories, agencies, urgentLevels, departments] = await Promise.all([
       configService.fetchTypesOfDocuments(),
       configService.fetchCategories(),
       configService.fetchAgencies(),
       configService.fetchUrgentLevels(),
+      configService.fetchDepartments(),
     ]);
     const data = {
       typesOfDocuments: typesOfDocuments.data,
       categories: categories.data,
       agencies: agencies.data,
       urgentLevels: urgentLevels.data,
+      departments: departments.data
     };
     return data;
   } catch (error) {
@@ -31,6 +33,7 @@ const initialState = {
   categories: [],
   agencies: [],
   urgentLevels: [],
+  departments: [],
 };
 
 const configSlice = createSlice({
@@ -43,6 +46,7 @@ const configSlice = createSlice({
       state.categories = action.payload.categories;
       state.agencies = action.payload.agencies;
       state.urgentLevels = action.payload.urgentLevels;
+      state.departments = action.payload.departments;
     });
     builder.addCase(fetchConfigApp.pending, (state) => {
       state.loading = true;
@@ -52,6 +56,7 @@ const configSlice = createSlice({
       state.error = action.payload;
       showToast("error", action.payload, toastPosition.topRight);
     });
+
   },
 });
 
