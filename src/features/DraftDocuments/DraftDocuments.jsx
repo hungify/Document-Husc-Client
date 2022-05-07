@@ -5,12 +5,10 @@ import {
   Button,
   Card,
   Checkbox,
-  Col,
-  Divider,
-  List,
+  Col, List,
   Row,
   Space,
-  Typography,
+  Typography
 } from "antd";
 import _ from "lodash";
 import React from "react";

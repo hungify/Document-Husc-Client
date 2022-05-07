@@ -1,5 +1,4 @@
 import { Empty, Table, Transfer } from "antd";
-import { getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
 import _ from "lodash";

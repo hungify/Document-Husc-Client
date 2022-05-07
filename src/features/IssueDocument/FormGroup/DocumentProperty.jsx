@@ -3,7 +3,6 @@ import { Col, Form, Input, Row, Typography } from "antd";
 import { getUrgentLevelsConfig } from "app/selectors/config";
 import { DatePicker } from "components/customs";
 import SelectForm from "components/SelectForm";
-import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 

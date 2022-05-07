@@ -1,5 +1,5 @@
 import { Avatar, Card, Col, Empty, List, Row, Typography } from "antd";
-import { getSentDocuments, getTotalSent } from "app/selectors/sent";
+import { getSentDocuments } from "app/selectors/sent";
 import BadgeRibbonUrgent from "components/BadgeRibbonUrgent";
 import { fetchSentDocuments } from "features/SentDocuments/sentDocumentsSlice";
 import _ from "lodash";

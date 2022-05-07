@@ -1,8 +1,6 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import showToast, { toastPosition } from "configs/toast";
-import { fetchProfile } from "features/Profile/profileSlice";
 import authService from "services/authService";
-
 const refreshToken = createAction("auth/refreshToken");
 const logout = createAction("auth/logout");
 const login = createAction("auth/login");
