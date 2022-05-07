@@ -10,13 +10,12 @@ const {
   setPage,
 } = require("features/SearchGroup/searchGroupSlice");
 
-const documentListenerMiddleware = createListenerMiddleware();
+const searchAndFilterMiddleware = createListenerMiddleware();
 
-documentListenerMiddleware.startListening({
+searchAndFilterMiddleware.startListening({
   matcher: isAnyOf(setFiltersBy, setSearchForm, setPage, setPageSize, setSortBy),
   effect: async (action, listenerApi) => {
     const { dispatch } = listenerApi;
-    console.log("🚀 :: action.payload.triggerBy", action.payload.triggerBy);
     if (action.payload.triggerBy === "documents") {
       dispatch(fetchDocuments());
     } else if (action.payload.triggerBy === "recipients") {
@@ -25,4 +24,4 @@ documentListenerMiddleware.startListening({
   },
 });
 
-export default documentListenerMiddleware.middleware;
+export default searchAndFilterMiddleware.middleware;

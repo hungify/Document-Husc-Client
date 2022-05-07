@@ -1,5 +1,5 @@
 import { Button, Form, Input, Typography } from "antd";
-import { getDepartmentsConfig } from "app/selectors/config";
+import { getDepartmentsConfig } from "app/selectors/departments";
 import SelectForm from "components/SelectForm";
 import { fetchRegister } from "features/Auth/authSlice";
 import FormAuth from "features/Auth/components/FormAuth";
