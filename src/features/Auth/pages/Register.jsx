@@ -78,10 +78,10 @@ export default function Register({ active }) {
           />
         </Form.Item>
         <Form.Item name="email" rules={authRules.email} id="register_email">
-          <Input placeholder="Email" size="large" />
+          <Input placeholder="Email" size="large" spellCheck={false} />
         </Form.Item>
         <Form.Item name="password" rules={authRules.password} id="register_password">
-          <Input.Password placeholder="Password" size="large" />
+          <Input.Password placeholder="Password" size="large" spellCheck="false" />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
@@ -101,7 +101,7 @@ export default function Register({ active }) {
           ]}
           id="register_confirm_password"
         >
-          <Input.Password placeholder="Confirm password" size="large" />
+          <Input.Password placeholder="Confirm password" size="large" spellCheck="false" />
         </Form.Item>
         <Form.Item>
           <ButtonAnt type="primary" htmlType="submit">
