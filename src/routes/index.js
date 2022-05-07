@@ -18,6 +18,7 @@ import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
 import SentDocuments from "features/SentDocuments/SentDocuments";
 import MainLayout from "layouts/MainLayout/MainLayout";
 import Profile from "features/Profile/Profile";
+import ManageDepartments from "features/Manage/ManageDepartments/ManageDepartments";
 
 export const routePathDefinition = [
   {
@@ -134,6 +135,11 @@ export const routePathDefinition = [
                 ],
               },
             ],
+          },
+          {
+            path: "departments",
+            element: <ManageDepartments />,
+            breadcrumb: "Cơ quan ban hành",
           },
           {
             path: "categories",

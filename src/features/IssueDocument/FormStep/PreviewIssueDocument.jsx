@@ -1,11 +1,9 @@
 import { Avatar, Card, Col, Empty, List, Row, Table, Typography } from "antd";
-import {
-  getAgenciesConfig,
-  getCategoriesConfig,
-  getTypesOfDocumentsConfig,
-  getUrgentLevelsConfig
-} from "app/selectors/config";
+import { getAgenciesConfig } from "app/selectors/agencies";
+import { getCategoriesConfig } from "app/selectors/categories";
 import { getRelatedDocuments } from "app/selectors/documents";
+import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocument";
+import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
 import dayjs from "dayjs";
 import { fetchDocumentByIds } from "features/Home/homeSlice";

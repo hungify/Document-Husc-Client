@@ -1,10 +1,8 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Row, TreeSelect, Typography } from "antd";
-import {
-  getAgenciesConfig,
-  getCategoriesConfig,
-  getTypesOfDocumentsConfig,
-} from "app/selectors/config";
+import { getAgenciesConfig } from "app/selectors/agencies";
+import { getCategoriesConfig } from "app/selectors/categories";
+import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocument";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import { useSelector } from "react-redux";
