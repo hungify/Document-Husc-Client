@@ -49,6 +49,7 @@ export default function Login({ active }) {
 
   const handleLogin = (values) => {
     dispatch(fetchLogin(values));
+    form.resetFields(["email", "password"]);
   };
 
   const handleLoginFailed = (errorInfo) => {};
@@ -68,7 +69,7 @@ export default function Login({ active }) {
             <Input placeholder="Email" size="large" spellCheck="false" />
           </Form.Item>
           <Form.Item name="password" rules={authRules.password} id="login_password">
-            <Input.Password placeholder="Mật khẩu" size="large" />
+            <Input.Password placeholder="Mật khẩu" size="large" spellCheck="false" />
           </Form.Item>
         </>
         <Form.Item>
