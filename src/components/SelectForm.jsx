@@ -2,14 +2,18 @@ import { Select, Tag } from "antd";
 import React from "react";
 
 export default function SelectForm({ selectData, onSelect, hasTag, ...restProps }) {
-  const [searchSelect, setSearchSelect] = React.useState(selectData);
+  const [searchSelect, setSearchSelect] = React.useState([]);
+
+  React.useEffect(() => {
+    setSearchSelect(selectData);
+  }, [selectData]);
 
   const handleSelect = (value) => {
     onSelect(value);
   };
-  const handleSelectSearch = (value) => {
-    if (value) {
-      setSearchSelect(searchSelect.filter((item) => item.value.includes(value)));
+  const handleSelectSearch = (searchText) => {
+    if (searchText) {
+      setSearchSelect(searchSelect.filter((item) => item.label.includes(searchText)));
     } else {
       setSearchSelect(selectData);
     }
@@ -19,7 +23,7 @@ export default function SelectForm({ selectData, onSelect, hasTag, ...restProps 
   };
 
   return (
-    <Select {...restProps} onSelect={handleSelect} onSearch={handleSelectSearch} size="large" >
+    <Select {...restProps} onSelect={handleSelect} onSearch={handleSelectSearch} size="large">
       {searchSelect?.map((item) => (
         <Select.Option value={item.value} key={item.value}>
           {hasTag ? (

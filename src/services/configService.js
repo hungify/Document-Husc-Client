@@ -17,6 +17,10 @@ const configService = {
     const url = "/urgent-levels";
     return axiosInstance.get(url);
   },
+  fetchDepartments: () => {
+    const url = "/departments";
+    return axiosInstance.get(url);
+  },
 };
 
 export default configService;
