@@ -41,7 +41,7 @@ export default function DocumentSummary({ dataSource }) {
     },
   ];
 
-  const columns = keyShouldShow.map((item) => {
+  const columns = keyShouldShow.forEach((item) => {
     if (dataSource.hasOwnProperty(item.key)) {
       return {
         title: item.title,

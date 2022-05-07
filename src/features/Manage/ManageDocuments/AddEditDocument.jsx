@@ -1,8 +1,8 @@
 import { Alert, Button, Col, Form, Row, Space, Steps } from "antd";
 import ButtonFlexible from "components/ButtonTooltip";
+import FirstStep from "features/IssueDocument/FormStep/FormIssueDocument";
 import PreviewDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
 import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
-import FirstStep from "features/IssueDocument/FormStep/FormIssueDocument";
 import React from "react";
 import styled from "styled-components";
 const steps = [
@@ -45,7 +45,6 @@ export default function AddEditDocument({ visible, onCreate, onCancel, agencyId 
 
   const [form] = Form.useForm();
   const handleSubmitForm = (values) => {
-    console.log("🚀 :: values", values);
     if (values) {
       if (formValues.length > 0) {
         const newFormValues = formValues.map((item, i) => {
