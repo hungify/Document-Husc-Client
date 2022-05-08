@@ -7,18 +7,17 @@ import DashBoard from "features/Dashboard/Dashboard";
 import DetailDocument from "features/DocumentDetails/DocumentDetails";
 import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
-import IssueDocument from "features/IssueDocument/IssueDocument";
+import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
 import ManageAgencies from "features/Manage/ManageAgencies/ManageAgencies";
 import ManageCategories from "features/Manage/ManageCategories/ManageCategories";
-import AddEditDocument from "features/Manage/ManageDocuments/AddEditDocument";
-import ManageDocuments from "features/Manage/ManageDocuments/ManageDocuments";
+import ManageDepartments from "features/Manage/ManageDepartments/ManageDepartments";
+import ManageDocuments from "features/ManageDocuments/ManageDocuments";
 import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";
 import ManageTypesOfDocuments from "features/Manage/ManageTypesOfDocuments/ManageTypesOfDocuments";
-import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
+import Profile from "features/Profile/Profile";
 import SentDocuments from "features/SentDocuments/SentDocuments";
 import MainLayout from "layouts/MainLayout/MainLayout";
-import Profile from "features/Profile/Profile";
-import ManageDepartments from "features/Manage/ManageDepartments/ManageDepartments";
+import AddOrEditDocument from "features/ManageDocuments/AddOrEditDocument";
 
 export const routePathDefinition = [
   {
@@ -107,7 +106,7 @@ export const routePathDefinition = [
         children: [
           {
             path: "issue",
-            element: <IssueDocument />,
+            element: <AddOrEditDocument />,
             breadcrumb: "Ban hành văn bản",
           },
           {
@@ -129,7 +128,7 @@ export const routePathDefinition = [
                 children: [
                   {
                     path: ":slug",
-                    element: <AddEditDocument />,
+                    element: <AddOrEditDocument />,
                     breadcrumb: "Chỉnh sửa văn bản",
                   },
                 ],

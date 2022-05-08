@@ -2,9 +2,8 @@ import { removeEmptyObjects } from "helpers";
 import axiosInstance from "services/initRequest";
 
 const documentsService = {
-  getDocuments: (filterQuery) => {
+  fetchDocuments: (filterQuery) => {
     const url = "/documents";
-
     const { sort, page, pageSize, filtersBy, search, dateRange } = filterQuery;
     const filterParams = removeEmptyObjects(filtersBy);
     const searchParams = removeEmptyObjects(search);
@@ -36,17 +35,25 @@ const documentsService = {
       params: query,
     });
   },
-  getDocumentDetail: ({ slug, key }) => {
+  fetchDocumentDetailsByKey: ({ slug, key }) => {
     const url = `/documents/${slug}?tab=${key}`;
     return axiosInstance.get(url);
   },
-  getDocumentsByIds: (ids) => {
+  fetchDocumentDetails: ({ slug }) => {
+    const url = `/documents/${slug}`;
+    return axiosInstance.get(url);
+  },
+  fetchDocumentsByIds: (ids) => {
     const url = "/documents?ids=".concat(ids.join(","));
     return axiosInstance.get(url);
   },
-  createDocument: (formData) => {
+  fetchCreateDocument: (formData) => {
     const url = "/documents";
     return axiosInstance.post(url, formData);
+  },
+  fetchUpdateDocument: (documentId, formData) => {
+    const url = `/documents/${documentId}`;
+    return axiosInstance.put(url, formData);
   },
 };
 
