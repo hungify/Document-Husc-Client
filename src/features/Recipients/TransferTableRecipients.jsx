@@ -75,11 +75,11 @@ export default function TransferTableRecipients({
                   setPageFilter(page);
                 }
               },
-              onShowSizeChange: (current, size) => {
+              onShowSizeChange: (current, pageSize) => {
                 if (direction === "left") {
-                  dispatch(setPageSize({ size, triggerBy: "recipients" }));
+                  dispatch(setPageSize({ pageSize, triggerBy: "recipients" }));
                 } else {
-                  setPageSizeFilter(size);
+                  setPageSizeFilter(pageSize);
                 }
               },
             }}

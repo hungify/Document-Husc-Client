@@ -16,10 +16,14 @@ searchAndFilterMiddleware.startListening({
   matcher: isAnyOf(setFiltersBy, setSearchForm, setPage, setPageSize, setSortBy),
   effect: async (action, listenerApi) => {
     const { dispatch } = listenerApi;
-    if (action.payload.triggerBy === "documents") {
-      dispatch(fetchDocuments());
-    } else if (action.payload.triggerBy === "recipients") {
-      dispatch(fetchRecipients());
+    if (setPageSize.match(action)) {
+      await listenerApi.delay(5);
+    } else {
+      if (action.payload.triggerBy === "documents") {
+        dispatch(fetchDocuments());
+      } else if (action.payload.triggerBy === "recipients") {
+        dispatch(fetchRecipients());
+      }
     }
   },
 });
