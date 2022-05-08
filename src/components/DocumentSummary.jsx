@@ -1,7 +1,13 @@
-import { Col, Row, Table, Tag, Typography } from "antd";
+import { Col, Row, Table, Tag, Typography, Card, Empty } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import styled from "styled-components";
+import _ from "lodash";
+
+const CardEmpty = styled(Card)`
+  background-color: rgb(248, 250, 252);
+  color: rgba(0, 0, 0, 0.25);
+`;
 
 const RowAnt = styled(Row)`
   &:not(:last-child) {
@@ -41,7 +47,7 @@ export default function DocumentSummary({ dataSource }) {
     },
   ];
 
-  const columns = keyShouldShow.forEach((item) => {
+  const columns = keyShouldShow.map((item) => {
     if (dataSource.hasOwnProperty(item.key)) {
       return {
         title: item.title,
@@ -69,7 +75,13 @@ export default function DocumentSummary({ dataSource }) {
     <>
       <RowAnt>
         <Col span={24}>
-          <Table columns={columns} dataSource={[dataSource]} pagination={false} bordered />
+          {_.isEmpty(dataSource) ? (
+            <CardEmpty>
+              <Empty description="Danh sách trống" />
+            </CardEmpty>
+          ) : (
+            <Table columns={columns} dataSource={[dataSource]} pagination={false} bordered />
+          )}
         </Col>
       </RowAnt>
       <RowAnt gutter={[0, 10]}>

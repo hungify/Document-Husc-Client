@@ -71,10 +71,10 @@ export default function ManageTypesOfDocuments() {
   return (
     <>
       <Card
-        title={<Typography.Text strong>20 cơ quan</Typography.Text>}
+        title={<Typography.Text strong>20 Loại văn bản</Typography.Text>}
         extra={
-          <Button onClick={handleAddClick} type="primary">
-            <PlusCircleTwoTone key="edit" /> Thêm mới
+          <Button onClick={handleAddClick} type="primary" key="add_types_of_document">
+            <PlusCircleTwoTone /> Thêm mới
           </Button>
         }
       >

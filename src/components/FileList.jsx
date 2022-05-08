@@ -11,6 +11,7 @@ const CardEmpty = styled(Card)`
 export default function FileList({ files }) {
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [previewFile, setPreviewFile] = React.useState();
+
   return (
     <>
       {previewVisible && (
@@ -24,6 +25,7 @@ export default function FileList({ files }) {
         files.map((file) => (
           <Button
             key={file.originalName}
+            type="dashed"
             onClick={() => {
               setPreviewVisible(true);
               setPreviewFile(file);

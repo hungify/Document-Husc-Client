@@ -25,10 +25,10 @@ export default function ResultMessage({ modeSave }) {
           : "Bạn có thể vào văn bản nháp để tiếp tục ban hành văn bản này"
       }
       extra={[
-        <Button type="primary" onClick={() => navigate("/")} size="large">
+        <Button type="primary" onClick={() => navigate("/")} size="large" key="go_to_dashboard">
           Quay lại bảng điều khiển
         </Button>,
-        <Button onClick={() => navigate("..")} size="large">
+        <Button onClick={() => navigate("..")} size="large" key="save_document">
           {modeSave === "official"
             ? "Quay lại danh sách văn bản"
             : "Quay lại danh sách văn bản nháp"}

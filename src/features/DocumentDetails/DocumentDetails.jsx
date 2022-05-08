@@ -17,7 +17,7 @@ import { ROLES } from "configs/roles";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
 import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
-import FileList from "features/FileList/FileList";
+import FileList from "components/FileList";
 import { forwardDocuments, updateReadDocument } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
@@ -153,36 +153,40 @@ export default function DetailDocument() {
       <Card
         title="Nội dung văn bản"
         extra={
-          (role === ROLES.ADMIN || role === ROLES.USER) && (
-            <Space split={<Divider type="vertical" />}>
-              {!myReadDate && userId !== publisherId ? (
-                <Button
+          <React.Fragment key="read_and_forward">
+            {(role === ROLES.ADMIN || role === ROLES.USER) && (
+              <Space split={<Divider type="vertical" />}>
+                {!myReadDate && userId !== publisherId ? (
+                  <Button
+                    type="primary"
+                    onClick={() => handleReadDocument(property._id)}
+                    size="large"
+                    key="read"
+                  >
+                    Báo cáo đã xứ lý
+                  </Button>
+                ) : (
+                  <React.Fragment />
+                )}
+                <ButtonAnt
                   type="primary"
-                  onClick={() => handleReadDocument(property._id)}
+                  icon={<ForwardIcon />}
                   size="large"
+                  onClick={() => handleForwardClick(property._id)}
+                  key="forward"
                 >
-                  Báo cáo đã xứ lý
-                </Button>
-              ) : (
-                React.Fragment
-              )}
-              <ButtonAnt
-                type="primary"
-                icon={<ForwardIcon />}
-                size="large"
-                onClick={() => handleForwardClick(property._id)}
-              >
-                Chuyển tiếp
-              </ButtonAnt>
-            </Space>
-          )
+                  Chuyển tiếp
+                </ButtonAnt>
+              </Space>
+            )}
+          </React.Fragment>
         }
       >
         <Row>
           <Col flex="auto">
             <Tabs activeKey={activeTab} type="card" size="large" onTabClick={handleTabChangeClick}>
               <Tabs.TabPane tab="Thuộc tính" key="property">
-                {!_.isEmpty(property) && <DocumentSummary dataSource={property} />}
+                <DocumentSummary dataSource={property} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Danh sách văn bản" key="files">
                 <FileList files={files} />
