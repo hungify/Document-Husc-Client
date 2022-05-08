@@ -26,7 +26,6 @@ export default function ManageDocuments() {
   };
 
   const handleOnSubmit = (values) => {
-    console.log(values);
     setVisible(false);
   };
   return (
