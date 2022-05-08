@@ -3,7 +3,7 @@ export const isPublicDocument = (state) => state.documentDetails?.isPublic;
 export const getPublisherId = (state) => state.documentDetails?.publisherId;
 export const getMyReadDate = (state) => state.documentDetails?.myReadDate;
 export const getProperty = (state) => state.documentDetails?.property;
-export const getFiles = (state) => state.documentDetails?.files;
+export const getFiles = (state) => state.documentDetails?.fileList;
 export const getRelatedDocuments = (state) => state.documentDetails?.relatedDocuments;
 export const getParticipants = (state) => state.documentDetails?.participants;
 const getAnalytics = (state) => state.documentDetails?.analytics;

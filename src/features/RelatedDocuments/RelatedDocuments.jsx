@@ -37,9 +37,7 @@ export default function RelatedDocuments({ dataSource }) {
           pageSize: 10,
           defaultCurrent: 1,
           hideOnSinglePage: true,
-          onChange: (page) => {
-            console.log(page);
-          },
+          onChange: (page) => {},
         }}
         locale={{
           emptyText: <Empty description="Danh sách trống" />,

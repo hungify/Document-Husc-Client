@@ -36,15 +36,6 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
   const totalDocuments = useSelector(getTotalDocuments);
   const documents = useSelector(getDocuments);
 
-  const handlePreviewFileClick = (item) => {
-    window.open(item, {
-      target: "_blank",
-      rel: "noopener noreferrer",
-    });
-  };
-  const handleSaveFileClick = (item) => {
-    saveAs(item, "name_cua_file.pdf");
-  };
   return (
     <List
       itemLayout="vertical"
@@ -62,8 +53,8 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
         onChange: (page) => {
           dispatch(setPage({ page, triggerBy: "documents" }));
         },
-        onShowSizeChange: (current, size) => {
-          dispatch(setPageSize({ size, triggerBy: "documents" }));
+        onShowSizeChange: (current, pageSize) => {
+          dispatch(setPageSize({ pageSize, triggerBy: "documents" }));
         },
       }}
       dataSource={documents}

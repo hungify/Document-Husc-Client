@@ -1,11 +1,20 @@
 import { Card, Form, Typography } from "antd";
+import {
+  getFiles,
+  getParticipants,
+  getProperty,
+  getRelatedDocuments,
+} from "app/selectors/documentDetails";
 import dayjs from "dayjs";
-import RelatedDocuments from "features/IssueDocument/components/RelatedDocuments";
-import DocumentClassification from "features/IssueDocument/FormGroup/DocumentClassification";
-import DocumentContent from "features/IssueDocument/FormGroup/DocumentContent";
-import DocumentProperty from "features/IssueDocument/FormGroup/DocumentProperty";
+import RelatedDocuments from "features/ManageDocuments/components/RelatedDocuments";
+import DocumentClassification from "features/ManageDocuments/FormGroup/DocumentClassification";
+import DocumentContent from "features/ManageDocuments/FormGroup/DocumentContent";
+import DocumentProperty from "features/ManageDocuments/FormGroup/DocumentProperty";
 import React from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { v4 as uuid } from "uuid";
 
 const CardAnt = styled(Card)`
   background-color: rgb(255, 255, 255);
@@ -33,30 +42,67 @@ export default function FormIssuedDocument({
   onSubmitFailed,
   required,
 }) {
+  const { slug } = useParams();
+  const property = useSelector(getProperty);
+  const relatedDocuments = useSelector(getRelatedDocuments);
+  const participants = useSelector(getParticipants);
+  const files = useSelector(getFiles);
+
+  React.useEffect(() => {
+    if (slug) {
+      form.setFieldsValue({
+        //property
+        typesOfDocument: property?.typesOfDocument.value,
+        category: property?.category.value,
+        agency: property?.agency.value,
+        //classification
+        urgentLevel: property?.urgentLevel.value,
+        documentNumber: property?.documentNumber,
+        issueDate: dayjs(property?.issueDate),
+        signer: property?.signer,
+        //content
+        title: property?.title,
+        content: property?.content,
+        summary: property?.summary,
+        documentFrom: files.length > 0 ? dataRadio[0].value : dataRadio[1].value,
+
+        relatedDocuments: relatedDocuments,
+        participants: participants,
+      });
+      setDocumentFrom(files.length > 0 ? dataRadio[0].value : dataRadio[1].value);
+      setFileList(
+        files?.map((file) => ({
+          uid: uuid(),
+          name: file.originalName,
+          status: "done",
+          url: file.location,
+        }))
+      );
+    }
+  }, [slug, form, property, relatedDocuments, participants, files]);
+
   // Document Classification
-  const [typesOfDocument, setTypesOfDocument] = React.useState("quyet-dinh");
-  const [categoryOfDocument, setCategoryOfDocument] = React.useState("khoa-hoc-cong-nghe");
-  const [agencyIssueDocument, setAgencyIssueDocument] = React.useState("dai-hoc-hue");
+  const [typesOfDocument, setTypesOfDocument] = React.useState();
+  const [categoryOfDocument, setCategoryOfDocument] = React.useState();
+  const [agencyIssueDocument, setAgencyIssueDocument] = React.useState();
   // Document Classification
 
   // Document Property
-  const [documentNumber, setDocumentNumber] = React.useState("015/NQ-HĐĐH");
-  const [urgentLevel, setUrgentLevel] = React.useState("binh-thuong");
-  const [issuedDate, setIssuedDate] = React.useState(dayjs());
-  const [signerDocument, setSignerDocument] = React.useState("Nguyễn Vũ Quốc Huy");
+  const [documentNumber, setDocumentNumber] = React.useState();
+  const [urgentLevel, setUrgentLevel] = React.useState();
+  const [issuedDate, setIssuedDate] = React.useState();
+  const [signerDocument, setSignerDocument] = React.useState();
   // Document Property
 
   // Document Content
-  const [documentFrom, setDocumentFrom] = React.useState(
-    formValues?.documentFrom || dataRadio[0].value
-  );
-  const [titleDocument, setTitleDocument] = React.useState("This is my title");
+  const [documentFrom, setDocumentFrom] = React.useState();
+  const [titleDocument, setTitleDocument] = React.useState();
   //option one
-  const [summaryDocument, setSummaryDocument] = React.useState("This is my summary");
+  const [summaryDocument, setSummaryDocument] = React.useState();
   //option two
-  const [contentDocument, setContentDocument] = React.useState("This is my content");
+  const [contentDocument, setContentDocument] = React.useState();
 
-  const [fileList, setFileList] = React.useState(formValues?.files?.fileList || []);
+  const [fileList, setFileList] = React.useState();
 
   const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(
     formValues?.relatedDocuments || []
@@ -165,6 +211,7 @@ export default function FormIssuedDocument({
           required={required}
         />
       </CardAnt>
+
       <CardAnt title={<Typography.Text strong>Văn bản liên quan</Typography.Text>}>
         <RelatedDocuments
           selectedRelatedDocument={selectedRelatedDocument}

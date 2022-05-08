@@ -1,41 +1,41 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import documentsService from "services/documentsService";
 
-const getAll = createAction("documents/getDocuments");
-const getRelated = createAction("documents/getRelatedDocuments");
-const getFilterDateRange = createAction("documents/filterDateRange");
-
+const getAll = createAction("documents/fetch/documents");
 export const fetchDocuments = createAsyncThunk(getAll.type, async (arg, thunkAPI) => {
   try {
     const { getState } = thunkAPI;
     const { searchGroup } = getState();
 
-    const data = await documentsService.getDocuments(searchGroup);
+    const data = await documentsService.fetchDocuments(searchGroup);
     return data;
   } catch (error) {
     const { message } = error.response.data;
-
     return thunkAPI.rejectWithValue(message);
   }
 });
 
-export const fetchDocumentByIds = createAsyncThunk(getRelated.type, async (ids, thunkAPI) => {
+const related = createAction("documents/fetch/relatedDocuments");
+export const fetchDocumentByIds = createAsyncThunk(related.type, async (ids, thunkAPI) => {
   try {
-    const data = await documentsService.getDocumentsByIds(ids);
+    const { data } = await documentsService.fetchDocumentsByIds(ids);
     return data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    const { message } = error.response.data;
+    return thunkAPI.rejectWithValue(message);
   }
 });
 
+const getFilterDateRange = createAction("documents/fetch/filterDateRange");
 export const fetchFilterDateRange = createAsyncThunk(
   getFilterDateRange.type,
   async (filterKeys, thunkAPI) => {
     try {
-      const data = await documentsService.getDocumentsByFilter(filterKeys);
+      const data = await documentsService.fetchDocumentsByFilter(filterKeys);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      const { message } = error.response.data;
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -102,7 +102,7 @@ const homeSlice = createSlice({
     builder.addCase(fetchDocumentByIds.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
-      state.relatedDocuments = action.payload.documents;
+      state.relatedDocuments = action.payload;
     });
     builder.addCase(fetchDocumentByIds.rejected, (state, action) => {
       state.loading = false;

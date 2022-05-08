@@ -21,7 +21,7 @@ export default function TransferTableRelated({
 
   React.useEffect(() => {
     const newDataSource = dataSource.filter((i) => {
-      return targetKeys.find((k) => k === i._id);
+      return targetKeys?.find((k) => k === i._id);
     });
     setDataRight([...newDataSource]);
   }, [targetKeys]);
@@ -74,11 +74,11 @@ export default function TransferTableRelated({
                   setPageFilter(page);
                 }
               },
-              onShowSizeChange: (current, size) => {
+              onShowSizeChange: (current, pageSize) => {
                 if (direction === "left") {
-                  dispatch(setPageSize({ size, triggerBy: "documents" }));
+                  dispatch(setPageSize({ pageSize, triggerBy: "documents" }));
                 } else {
-                  setPageSizeFilter(size);
+                  setPageSizeFilter(pageSize);
                 }
               },
             }}

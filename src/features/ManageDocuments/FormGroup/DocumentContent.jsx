@@ -55,12 +55,11 @@ export default function DocumentContent(props) {
               title: "Tiêu đề văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
-            initialValue={titleDocument}
           >
             <Input
               placeholder="Nhập vào tiêu đề của văn bản"
               size="large"
-              // value={titleDocument}
+              value={titleDocument}
               onChange={onTitleDocumentChange}
             />
           </FormItemAnt>
@@ -78,13 +77,11 @@ export default function DocumentContent(props) {
                   title: "Các tệp văn bản của bạn?",
                   icon: <InfoCircleOutlined />,
                 }}
-                initialValue={fileList}
               >
                 <Upload.Dragger
                   name="files"
                   multiple
                   fileList={fileList}
-                  defaultFileList={fileList}
                   beforeUpload={(file) => {
                     const typesShouldBe = /application\/pdf|application\/doc|application\/docx/;
                     const isMatch = typesShouldBe.test(file.type);

@@ -22,7 +22,6 @@ export default function ManageTypesOfDocuments() {
   const [documentTypeId, setDocumentTypeId] = React.useState(null);
 
   const handleOnSubmit = (values) => {
-    console.log("Received values of form: ", values);
     setVisible(false);
   };
 
@@ -62,9 +61,7 @@ export default function ManageTypesOfDocuments() {
             })
           );
       },
-      onCancel() {
-        console.log("Cancel");
-      },
+      onCancel() {},
     });
   };
 

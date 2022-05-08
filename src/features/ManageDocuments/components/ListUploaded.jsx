@@ -32,7 +32,7 @@ export default function ListUploaded({ fileList }) {
   };
   return (
     <Wrapper>
-      {fileList.map((file) => (
+      {fileList?.map((file) => (
         <WrapLink key={file.uid}>
           <ButtonLink type="link" onClick={() => handlePreviewFileClick(file)}>
             {file.name}

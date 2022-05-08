@@ -35,7 +35,7 @@ export default function DocumentProperty(props) {
               title: "Số hiệu văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
-            initialValue={documentNumber}
+            // initialValue={documentNumber}
           >
             <Input
               placeholder="Nhập vào số hiệu văn bản"
@@ -53,12 +53,12 @@ export default function DocumentProperty(props) {
               title: "Độ khẩn cấp của văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
-            initialValue={urgentLevelSelected}
+            // initialValue={urgentLevelSelected}
           >
             <SelectForm
               hasTag={1}
               showSearch={true}
-              value={urgentLevelSelected}
+              // value={urgentLevelSelected}
               onSelect={onUrgentLevelSelect}
               selectData={urgentLevelsConfig}
               size="large"
@@ -76,7 +76,7 @@ export default function DocumentProperty(props) {
               title: "Ngày ban hành văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
-            initialValue={issuedDate}
+            // initialValue={issuedDate}
           >
             <DatePicker
               format="DD/MM/YYYY"
@@ -98,7 +98,7 @@ export default function DocumentProperty(props) {
               title: "Người kí văn bản của bạn?",
               icon: <InfoCircleOutlined />,
             }}
-            initialValue={signerDocument}
+            // initialValue={signerDocument}
           >
             <Input
               placeholder="Nhập vào người kí văn bản"

@@ -7,7 +7,7 @@ import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
 import dayjs from "dayjs";
 import { fetchDocumentByIds } from "features/Home/homeSlice";
-import ListUploaded from "features/IssueDocument/components/ListUploaded";
+import ListUploaded from "features/ManageDocuments/components/ListUploaded";
 import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,7 +75,7 @@ const generateColumns = (formValues) => {
   const keysProperty = keysPropertyShouldBe.map((item) => item.key);
   const keysClassification = keysClassificationShouldBe.map((item) => item.key);
 
-  const keys = Object.keys(formValues);
+  const keys = Object?.keys(formValues);
   keys.forEach((key) => {
     if (keysProperty.includes(key)) {
       columnsProperty.push({
@@ -105,43 +105,44 @@ export default function PreviewIssueDocument({ formValues }) {
   const urgentLevelsConfig = useSelector(getUrgentLevelsConfig);
 
   React.useEffect(() => {
-    dispatch(fetchDocumentByIds(formValues.relatedDocuments));
+    if (formValues) {
+      dispatch(fetchDocumentByIds(formValues.relatedDocuments));
+    }
   }, [dispatch, formValues]);
 
-  const columns = generateColumns(formValues);
+  const columns = !_.isEmpty(formValues) && generateColumns(formValues);
 
   const dataClassification = [
     {
       key: uuidv4(),
       typesOfDocument: _.find(typesOfDocumentsConfig, {
-        value: formValues.typesOfDocument,
+        value: formValues?.typesOfDocument,
       }),
-      agency: _.find(agenciesConfig, { value: formValues.agency }),
-      category: findNodeByKey(categoriesConfig, { value: formValues.category }),
+      agency: _.find(agenciesConfig, { value: formValues?.agency }),
+      category: findNodeByKey(categoriesConfig, { value: formValues?.category }),
     },
   ];
 
   const dataProperty = [
     {
       key: uuidv4(),
-      urgentLevel: _.find(urgentLevelsConfig, { value: formValues.urgentLevel }),
-      signer: formValues.signer,
-      documentNumber: formValues.documentNumber,
-      issueDate: formValues.issueDate,
+      urgentLevel: _.find(urgentLevelsConfig, { value: formValues?.urgentLevel }),
+      signer: formValues?.signer,
+      documentNumber: formValues?.documentNumber,
+      issueDate: formValues?.issueDate,
     },
   ];
 
   const dataContent = [
     {
       key: uuidv4(),
-      title: formValues.title,
+      title: formValues?.title,
       content: formValues?.content,
       summary: formValues?.summary,
       fileList: formValues?.files?.fileList,
     },
   ];
-  const relatedDocuments = useSelector(getRelatedDocuments);
-
+  const relatedDocuments = useSelector(getRelatedDocuments) || [];
   return (
     <Container>
       <Row>
@@ -168,9 +169,9 @@ export default function PreviewIssueDocument({ formValues }) {
               <Row>
                 {dataContent.map((item) => (
                   <React.Fragment key={item.key}>
-                    <Col span={formValues.documentFrom === "input" ? 24 : 18}>
+                    <Col span={formValues?.documentFrom === "input" ? 24 : 18}>
                       <Typography.Title level={5}>{item.title}</Typography.Title>
-                      {formValues.documentFrom === "input" ? (
+                      {formValues?.documentFrom === "input" ? (
                         <>
                           <Typography.Paragraph>{item?.content}</Typography.Paragraph>
                         </>
@@ -178,7 +179,7 @@ export default function PreviewIssueDocument({ formValues }) {
                         <Typography.Paragraph>{item?.summary}</Typography.Paragraph>
                       )}
                     </Col>
-                    {formValues.documentFrom === "attach" && (
+                    {formValues?.documentFrom === "attach" && (
                       <Col span={6}>
                         <Typography.Title level={5}>Danh sách tệp</Typography.Title>
                         <ListUploaded fileList={item.fileList} />
@@ -198,15 +199,15 @@ export default function PreviewIssueDocument({ formValues }) {
                   hideOnSinglePage: true,
                 }}
                 locale={{
-                  emptyText: (
-                    <span>
-                      <Empty description="Danh sách trống" />
-                    </span>
-                  ),
+                  emptyText: <Empty description="Danh sách trống" />,
                 }}
                 dataSource={relatedDocuments}
                 renderItem={(item) => (
-                  <BadgeRibbonAgency text={item.urgentLevel.label} key={item._id}>
+                  <BadgeRibbonAgency
+                    text={item.urgentLevel.label}
+                    key={item._id}
+                    colorTag={item.urgentLevel.colorTag}
+                  >
                     <CardItemAnt>
                       <List.Item>
                         <Row align="middle" justify="space-between">

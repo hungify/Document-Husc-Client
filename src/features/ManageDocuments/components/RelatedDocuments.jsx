@@ -4,7 +4,7 @@ import { getDocuments } from "app/selectors/documents";
 import ButtonTooltip from "components/ButtonTooltip";
 import DocumentSummary from "components/DocumentSummary";
 import DrawerCustom from "components/DrawerCustom";
-import TransferTableRelated from "features/IssueDocument/components/TransferTableRelated";
+import TransferTableRelated from "features/ManageDocuments/components/TransferTableRelated";
 import ViewPDF from "components/ViewPDF";
 import { fetchDocuments } from "features/Home/homeSlice";
 import { resetSearchAndFilters } from "features/SearchGroup/searchGroupSlice";
@@ -131,7 +131,7 @@ export default function RelatedDocuments({ selectedRelatedDocument, setSelectedR
 
       <Row>
         <ColFull span={24}>
-          <Form.Item name="relatedDocuments" initialValue={selectedRelatedDocument || []}>
+          <Form.Item name="relatedDocuments" initialValue={selectedRelatedDocument}>
             <TransferTableRelated
               onChange={handleTableTransferChange}
               titles={["Tất cả văn bản", "Văn bản được chọn"]}

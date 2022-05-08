@@ -38,9 +38,9 @@ export default function DocumentClassification(props) {
             title: "Loại văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
-          initialValue={typesOfDocument}
         >
           <SelectForm
+            value={typesOfDocument}
             selectData={typesOfDocumentsConfig}
             onSelect={onTypesOfDocumentSelect}
             showSearch={true}
@@ -61,9 +61,9 @@ export default function DocumentClassification(props) {
             title: "Chuyên mục văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
-          initialValue={categoryOfDocument}
         >
           <TreeSelectForm
+            value={categoryOfDocument}
             treeData={categoriesConfig}
             onSelect={onCategoryOfDocumentSelect}
             onDeselect={onCategoryOfDocumentDeSelect}
@@ -83,9 +83,9 @@ export default function DocumentClassification(props) {
             title: "Cơ quan ban hành văn bản của bạn?",
             icon: <InfoCircleOutlined />,
           }}
-          initialValue={agencyIssueDocument}
         >
           <SelectForm
+            value={agencyIssueDocument}
             selectData={agenciesConfig}
             onSelect={onAgencyIssueDocumentSelect}
             showSearch={true}
