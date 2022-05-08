@@ -1,18 +1,30 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, SaveOutlined } from "@ant-design/icons";
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Typography } from "antd";
+import { getUserId } from "app/selectors/auth";
+import {
+  getFiles,
+  getParticipants,
+  getProperty,
+  getRelatedDocuments,
+} from "app/selectors/documentDetails";
 import { getLoadingIssueDocument, getSuccessIssueDocument } from "app/selectors/issueDocument";
 import PlaneIcon from "components/Icons/PlaneIcon";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
-import FormIssuedDocument from "features/IssueDocument/FormStep/FormIssueDocument";
-import PreviewIssueDocument from "features/IssueDocument/FormStep/PreviewIssueDocument";
+import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
+import FormIssuedDocument from "features/ManageDocuments/FormStep/FormIssueDocument";
+import PreviewIssueDocument from "features/ManageDocuments/FormStep/PreviewIssueDocument";
+import ResultMessage from "features/ManageDocuments/FormStep/ResultMessage";
+import {
+  fetchIssueDocumentOfficial,
+  fetchUpdateDocument,
+} from "features/ManageDocuments/issueDocumentSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
-import ResultMessage from "features/IssueDocument/FormStep/ResultMessage";
-import { issueDocumentOfficial } from "features/IssueDocument/issueDocumentSlice";
+import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { getUserId } from "app/selectors/auth";
+import { useParams } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
+import styled from "styled-components";
 
 const steps = [
   {
@@ -60,7 +72,7 @@ const ButtonReverse = styled(Button)`
   }
 `;
 
-export default function IssueDocument() {
+export default function AddOrEditDocument() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
   const [modeSave, setModeSave] = React.useState(null);
@@ -70,6 +82,13 @@ export default function IssueDocument() {
   const hasSuccess = useSelector(getSuccessIssueDocument);
   const isLoading = useSelector(getLoadingIssueDocument);
   const userId = useSelector(getUserId);
+  const { slug } = useParams();
+
+  React.useEffect(() => {
+    if (slug) {
+      dispatch(fetchDocumentDetails({ slug }));
+    }
+  }, [slug, dispatch]);
 
   React.useEffect(() => {
     if (hasSuccess && !isLoading && currentStep === 2) {
@@ -139,7 +158,6 @@ export default function IssueDocument() {
               sender: userId,
               sendDate: new Date(dataSubmit.issueDate).getTime(),
             };
-      dataSubmit.publisher = userId;
       dataSubmit.issueDate = new Date(dataSubmit.issueDate).getTime();
       dataSubmit.participants = participants;
 
@@ -158,7 +176,16 @@ export default function IssueDocument() {
           }
         }
       }
-      dispatch(issueDocumentOfficial(formData));
+
+      if (slug) {
+        const formValues = {
+          formData,
+          documentId: slug,
+        };
+        dispatch(fetchUpdateDocument(formValues));
+      } else {
+        dispatch(fetchIssueDocumentOfficial(formData));
+      }
     }
   };
 
@@ -288,7 +315,7 @@ export default function IssueDocument() {
               onClick={handleIssueDocumentClick}
               icon={<PlaneIcon />}
             >
-              Ban hành ngay
+              {slug ? "Cập nhật và ban hành" : "Ban hành ngay"}
             </ButtonReverse>
           </Space>
         ) : null}
