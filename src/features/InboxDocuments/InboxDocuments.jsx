@@ -53,8 +53,8 @@ export default function InboxDocuments() {
           onChange: (page) => {
             setPage(page);
           },
-          onShowSizeChange: (current, size) => {
-            setPageSize(size);
+          onShowSizeChange: (current, pageSize) => {
+            setPageSize(pageSize);
           },
           defaultCurrent: page,
           showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,

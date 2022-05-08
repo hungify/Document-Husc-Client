@@ -64,7 +64,6 @@ export default function ManageAgencies() {
           );
       },
       onCancel() {
-        console.log("Cancel");
       },
     });
   };

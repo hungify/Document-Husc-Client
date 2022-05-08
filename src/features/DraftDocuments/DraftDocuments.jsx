@@ -1,15 +1,5 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  Checkbox,
-  Col, List,
-  Row,
-  Space,
-  Typography
-} from "antd";
+import { Avatar, Badge, Button, Card, Checkbox, Col, List, Row, Space, Typography } from "antd";
 import _ from "lodash";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -119,9 +109,7 @@ export default function DraftDocuments(props) {
             itemLayout="vertical"
             pagination={{
               pageSize: 10,
-              onChange: (page) => {
-                console.log(page);
-              },
+              onChange: (page) => {},
             }}
             dataSource={listData}
             renderItem={(item) => (

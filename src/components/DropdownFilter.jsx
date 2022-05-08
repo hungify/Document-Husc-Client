@@ -2,9 +2,7 @@ import { Select, Space } from "antd";
 import React from "react";
 
 export default function DropdownFilter({ dataRender }) {
-  function handleSelectChange(value) {
-    console.log(`selected ${value}`);
-  }
+  function handleSelectChange(value) {}
   return (
     <Space wrap>
       <Select onChange={handleSelectChange}>
