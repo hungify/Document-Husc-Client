@@ -7,10 +7,11 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card, Col, List, Row, Space, Tag, Typography } from "antd";
 import { getRole } from "app/selectors/auth";
-import { getTotalDocuments } from "app/selectors/documents";
+import { getDocuments, getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
+import FileList from "components/FileList";
 import { ROLES } from "configs/roles";
 import dayjs from "dayjs";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
@@ -26,13 +27,14 @@ const CardItemAnt = styled(Card)`
   border-radius: 10px;
 `;
 
-export default function ListDocument({ dataRender, onEditDocument, onRevokeDocument }) {
+export default function ListDocument({ onEditDocument, onRevokeDocument }) {
   const dispatch = useDispatch();
 
   const role = useSelector(getRole);
   const page = useSelector(getPage);
   const pageSize = useSelector(getPageSize);
   const totalDocuments = useSelector(getTotalDocuments);
+  const documents = useSelector(getDocuments);
 
   const handlePreviewFileClick = (item) => {
     window.open(item, {
@@ -43,7 +45,7 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
   const handleSaveFileClick = (item) => {
     saveAs(item, "name_cua_file.pdf");
   };
-  return !_.isEmpty(dataRender) ? (
+  return (
     <List
       itemLayout="vertical"
       size="default"
@@ -61,10 +63,10 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
           dispatch(setPage({ page, triggerBy: "documents" }));
         },
         onShowSizeChange: (current, size) => {
-          dispatch(setPageSize({ page, triggerBy: "documents" }));
+          dispatch(setPageSize({ size, triggerBy: "documents" }));
         },
       }}
-      dataSource={dataRender}
+      dataSource={documents}
       renderItem={(item) => (
         <List.Item key={item._id}>
           <BadgeRibbonUrgency text={item.urgentLevel.label}>
@@ -102,32 +104,11 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
                     </Typography.Text>
                   </Space>
                 </Col>
-
-                <Col span={4}>
-                  <Typography.Title level={5}>
-                    <ButtonTooltip
-                      type="primary"
-                      shape="round"
-                      icon={<ExpandOutlined />}
-                      onButtonClick={handlePreviewFileClick}
-                      // document={pdfFile}
-                    >
-                      Xem trước
-                    </ButtonTooltip>
-                  </Typography.Title>
-
-                  <Typography.Title level={5}>
-                    <ButtonTooltip
-                      type="primary"
-                      shape="round"
-                      icon={<DownloadOutlined />}
-                      onButtonClick={handleSaveFileClick}
-                      // document={pdfFile}
-                    >
-                      Tải xuống
-                    </ButtonTooltip>
-                  </Typography.Title>
-                </Col>
+                {item.fileList.length > 0 && (
+                  <>
+                    <FileList files={item.fileList} />
+                  </>
+                )}
                 <Col span={4}>
                   {role === ROLES.ADMIN ? (
                     <>
@@ -167,5 +148,5 @@ export default function ListDocument({ dataRender, onEditDocument, onRevokeDocum
         </List.Item>
       )}
     />
-  ) : null;
+  );
 }

@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const documents = useSelector(getDocuments);
 
   React.useEffect(() => {
     dispatch(fetchDocuments());
@@ -18,7 +17,7 @@ export default function Home() {
     <>
       <SearchGroup />
       <HeaderListDocument>
-        <ListDocument dataRender={documents} />
+        <ListDocument />
       </HeaderListDocument>
     </>
   );

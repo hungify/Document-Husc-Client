@@ -21,7 +21,7 @@ import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocument";
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
   padding: ${(props) => (props.$isAuth ? "0" : "0 60px")};
-  height: 100vh;
+  height: calc(100vh - 128px);
 `;
 
 const LayoutWrapContent = styled(Layout)`
@@ -48,7 +48,6 @@ export default function MainLayout({ children }) {
 
   React.useEffect(() => {
     if (loadingApp) {
-      console.log("loadingApp", loadingApp);
       setLoading(false);
     }
   }, [loadingApp]);
@@ -56,7 +55,6 @@ export default function MainLayout({ children }) {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log("fetch");
     dispatch(fetchAgencies());
     dispatch(fetchUrgentLevels());
     dispatch(fetchCategories());
