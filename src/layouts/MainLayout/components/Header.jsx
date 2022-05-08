@@ -13,7 +13,7 @@ import { getProfile } from "app/selectors/profile";
 
 const HeaderAnt = styled(Layout.Header)`
   position: ${(props) => (props.$shouldFixed ? "fixed" : "relative")};
-  z-index: 5;
+  z-index: 10;
   width: 100%;
   transition: all 0.3s ease-in-out;
   box-shadow: ${(props) => (props.$positionY > 40 ? "rgba(0, 0, 0, 0.1) 0px 10px 50px" : "none")};

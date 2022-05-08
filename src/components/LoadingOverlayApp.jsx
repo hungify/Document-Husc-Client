@@ -1,5 +1,6 @@
 import LoadingOverlay from "react-loading-overlay";
 import styled from "styled-components";
+import ClipLoader from "react-spinners/ClipLoader";
 const Overlay = styled(LoadingOverlay)`
   height: 100%;
   width: 100%;
@@ -13,7 +14,7 @@ const Overlay = styled(LoadingOverlay)`
 
 export default function LoadingOverlayApp({ active, children, ...restProps }) {
   return (
-    <Overlay {...restProps} active={active}>
+    <Overlay spinner={<ClipLoader size={35}/>} {...restProps} active={active}>
       {children}
     </Overlay>
   );

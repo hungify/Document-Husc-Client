@@ -73,7 +73,7 @@ export default function ManageAgencies() {
     <Card
       title={<Typography.Text strong>20 cơ quan ban hành</Typography.Text>}
       extra={
-        <Button onClick={handleAddClick} type="primary">
+        <Button onClick={handleAddClick} type="primary" key="add_agency">
           <PlusCircleTwoTone key="edit" /> Thêm mới
         </Button>
       }

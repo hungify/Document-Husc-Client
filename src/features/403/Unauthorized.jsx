@@ -13,7 +13,7 @@ export default function Unauthorized() {
         </Typography.Text>
       }
       extra={
-        <Button type="primary" onClick={() => navigate("/")}>
+        <Button type="primary" onClick={() => navigate("/")} key="go_to_home">
           Back Home
         </Button>
       }

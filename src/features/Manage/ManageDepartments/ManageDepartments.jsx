@@ -86,10 +86,10 @@ export default function ManageDepartments() {
 
   return (
     <Card
-      title={<Typography.Text strong>20 cơ quan ban hành</Typography.Text>}
+      title={<Typography.Text strong>20 phòng/ban</Typography.Text>}
       extra={
-        <Button onClick={handleAddClick} type="primary">
-          <PlusCircleTwoTone key="edit" /> Thêm mới
+        <Button onClick={handleAddClick} type="primary" key="add_department">
+          <PlusCircleTwoTone /> Thêm mới
         </Button>
       }
     >

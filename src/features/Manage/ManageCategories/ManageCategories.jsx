@@ -132,6 +132,7 @@ export default function ManageCategories() {
             placement="topLeft"
             title="Thêm một chuyên mục là con của chuyên mục này"
             arrowPointAtCenter
+            key="add_category"
           >
             <Button onClick={handleAddClick}>
               <PlusCircleTwoTone />

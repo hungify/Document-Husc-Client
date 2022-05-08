@@ -39,13 +39,16 @@ export default function PreviewPdf({ previewFile, setPreviewVisible, previewVisi
         visible={previewVisible}
         extra={
           <Space>
-            <Button onClick={onClose}>Ẩn</Button>
+            <Button onClick={onClose} key="hide">
+              Ẩn
+            </Button>
             <ButtonFlexible
               type="primary"
               shape="round"
               icon={<DownloadOutlined />}
               onButtonClick={handleSaveFileClick}
               document={previewFile}
+              key="download"
             >
               Tải xuống
             </ButtonFlexible>

@@ -6,8 +6,9 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 const create = createAction("issueDocument/issue");
 export const issueDocumentOfficial = createAsyncThunk(create.type, async (formData, thunkAPI) => {
   try {
-    const data = await documentsService.createDocument(formData);
-    return data.message;
+    const { data } = await documentsService.createDocument(formData);
+    const message = "Ban hành thành công";
+    return { message, data };
   } catch (error) {
     const { message } = error.response.data;
     return thunkAPI.rejectWithValue(message);
@@ -37,8 +38,7 @@ const issueDocumentSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.success = true;
-      state.message = action.payload;
-      showToast("success", action.payload, toastPosition.bottomRight, {
+      showToast("success", action.payload.message, toastPosition.bottomRight, {
         pauseOnHover: false,
       });
     });
@@ -46,7 +46,6 @@ const issueDocumentSlice = createSlice({
       state.loading = false;
       state.error = true;
       state.success = false;
-      state.message = action.payload;
       showToast("error", action.payload, toastPosition.bottomRight, {
         pauseOnHover: false,
       });
