@@ -1,7 +1,6 @@
 import { Avatar, Button, Comment, Form, Input } from "antd";
 import CommentList from "features/ChatRoom/CommentList";
 import React from "react";
-import "./style.css";
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
