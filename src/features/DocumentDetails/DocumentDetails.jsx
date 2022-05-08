@@ -1,6 +1,6 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs } from "antd";
-import { getRole, isAuthenticated, getUserId } from "app/selectors/auth";
+import { getRole, getUserId, isAuthenticated } from "app/selectors/auth";
 import {
   getFiles,
   getMyReadDate,
@@ -12,12 +12,13 @@ import {
 } from "app/selectors/documentDetails";
 import { getForwardSuccess, getSuccessUpdateRead } from "app/selectors/inbox";
 import DocumentSummary from "components/DocumentSummary";
+import FileList from "components/FileList";
 import ForwardIcon from "components/Icons/ForwardIcon";
+import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { ROLES } from "configs/roles";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
-import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
-import FileList from "components/FileList";
+import { fetchDocumentDetailsByKey } from "features/DocumentDetails/documentDetailsSlice";
 import { forwardDocuments, updateReadDocument } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
@@ -26,9 +27,8 @@ import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import LoadingOverlayApp from "components/LoadingOverlayApp";
 import HashLoader from "react-spinners/HashLoader";
+import styled from "styled-components";
 
 const ButtonAnt = styled(Button)`
   display: flex;
@@ -63,13 +63,13 @@ export default function DetailDocument() {
 
   React.useEffect(() => {
     if (isUpdateSuccess || isForwardSuccess) {
-      dispatch(fetchDocumentDetails({ slug, key: activeTab }));
+      dispatch(fetchDocumentDetailsByKey({ slug, key: activeTab }));
     }
   }, [isUpdateSuccess, dispatch, slug, activeTab, isForwardSuccess]);
 
   React.useEffect(() => {
     if (activeTab) {
-      dispatch(fetchDocumentDetails({ slug, key: activeTab }));
+      dispatch(fetchDocumentDetailsByKey({ slug, key: activeTab }));
     } else {
       navigate(`?tab=property`);
     }
@@ -77,7 +77,7 @@ export default function DetailDocument() {
 
   const handleTabChangeClick = (key) => {
     navigate(`?tab=${key}`);
-    dispatch(fetchDocumentDetails({ slug, key }));
+    dispatch(fetchDocumentDetailsByKey({ slug, key }));
   };
 
   const handleForwardClick = () => {

@@ -9,7 +9,7 @@ import dashboardSlice from "features/Dashboard/dashboardSlice";
 import documentDetailsSlice from "features/DocumentDetails/documentDetailsSlice";
 import homeSlice from "features/Home/homeSlice";
 import inboxDocumentsSlice from "features/InboxDocuments/inboxDocumentsSlice";
-import issueDocumentSlice from "features/IssueDocument/issueDocumentSlice";
+import issueDocumentSlice from "features/ManageDocuments/issueDocumentSlice";
 import profileSlice from "features/Profile/profileSlice";
 import recipientsSlice from "features/Recipients/recipientsSlice";
 import searchGroupSlice from "features/SearchGroup/searchGroupSlice";

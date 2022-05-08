@@ -117,9 +117,7 @@ export default function ManageCategories() {
             })
           );
       },
-      onCancel() {
-        console.log("Cancel");
-      },
+      onCancel() {},
     });
   };
 
