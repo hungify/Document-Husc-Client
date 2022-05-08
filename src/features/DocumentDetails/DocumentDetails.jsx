@@ -153,33 +153,31 @@ export default function DetailDocument() {
       <Card
         title="Nội dung văn bản"
         extra={
-          <React.Fragment key="read_and_forward">
-            {(role === ROLES.ADMIN || role === ROLES.USER) && (
-              <Space split={<Divider type="vertical" />}>
-                {!myReadDate && userId !== publisherId ? (
-                  <Button
-                    type="primary"
-                    onClick={() => handleReadDocument(property._id)}
-                    size="large"
-                    key="read"
-                  >
-                    Báo cáo đã xứ lý
-                  </Button>
-                ) : (
-                  <React.Fragment />
-                )}
-                <ButtonAnt
+          (role === ROLES.ADMIN || role === ROLES.USER) && (
+            <Space split={<Divider type="vertical" />} key="read_and_forward">
+              {!myReadDate && userId !== publisherId ? (
+                <Button
                   type="primary"
-                  icon={<ForwardIcon />}
+                  onClick={() => handleReadDocument(property._id)}
                   size="large"
-                  onClick={() => handleForwardClick(property._id)}
-                  key="forward"
+                  key="read"
                 >
-                  Chuyển tiếp
-                </ButtonAnt>
-              </Space>
-            )}
-          </React.Fragment>
+                  Báo cáo đã xứ lý
+                </Button>
+              ) : (
+                <React.Fragment key="a" />
+              )}
+              <ButtonAnt
+                type="primary"
+                icon={<ForwardIcon />}
+                size="large"
+                onClick={() => handleForwardClick(property._id)}
+                key="forward"
+              >
+                Chuyển tiếp
+              </ButtonAnt>
+            </Space>
+          )
         }
       >
         <Row>

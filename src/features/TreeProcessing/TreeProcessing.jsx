@@ -85,7 +85,7 @@ export default function TreeProcessing({ treeData }) {
         defaultExpandAll={true}
         treeData={treeData}
         titleRender={(tree) => (
-          <Overlay key={tree.receiver._id}>
+          <Overlay key={tree.key}>
             {tree.root ? (
               <SpaceAnt size="small">
                 <TypographyTitle level={4}>{tree.receiver.username}</TypographyTitle>
