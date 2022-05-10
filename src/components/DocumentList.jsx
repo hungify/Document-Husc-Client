@@ -1,11 +1,5 @@
-import {
-  ClockCircleOutlined,
-  DeleteTwoTone,
-  DownloadOutlined,
-  EditTwoTone,
-  ExpandOutlined,
-} from "@ant-design/icons";
-import { Avatar, Card, Col, List, Row, Space, Tag, Typography } from "antd";
+import { ClockCircleOutlined, DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
+import { Avatar, Card, Col, List, Row, Space, Tag, Typography, Empty } from "antd";
 import { getRole } from "app/selectors/auth";
 import { getDocuments, getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
@@ -15,8 +9,6 @@ import FileList from "components/FileList";
 import { ROLES } from "configs/roles";
 import dayjs from "dayjs";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
-import { saveAs } from "file-saver";
-import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -40,6 +32,9 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
     <List
       itemLayout="vertical"
       size="default"
+      locale={{
+        emptyText: <Empty>Danh sách trống</Empty>,
+      }}
       pagination={{
         pageSize: pageSize,
         defaultCurrent: page,
