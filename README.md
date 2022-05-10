@@ -30,7 +30,7 @@ DocumentKHH is a website used to lookup, receive, track, manage and store docume
 - [x] **Issue Official Document**
 - [x] **Read Document**
 - [x] **...**
-- [] **Store Draft Document**
+- [ ] **Store Draft Document**
 
 ## Screenshots
 
