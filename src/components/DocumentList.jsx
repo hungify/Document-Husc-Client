@@ -33,7 +33,8 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
       itemLayout="vertical"
       size="default"
       locale={{
-        emptyText: <Empty>Danh sách trống</Empty>,
+    
+        emptyText: <Empty description="Danh sách trống" />,
       }}
       pagination={{
         pageSize: pageSize,
