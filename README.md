@@ -7,7 +7,7 @@ DocumentKHH is a website used to lookup, receive, track, manage and store docume
 - [Technologies](#technologies)
 - [Features](#features)
 - [Screenshots](#screenshots)
-- [Setup](#setup)
+- [Setup Locally](#setuplocally)
 
 ## Technologies
 
