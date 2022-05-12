@@ -1,19 +1,19 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import agenciesSlice from "app/reducers/configs/agenciesSlice";
 import categoriesSlice from "app/reducers/configs/categoriesSlice";
-import departmentsSlice from "app/reducers/configs/departmentsSlice";
-import typesOfDocumentsSlice from "app/reducers/configs/typesOfDocumentsSlice";
 import urgentLevelsSlice from "app/reducers/configs/urgentLevelsSlice";
 import authSlice from "features/Auth/authSlice";
 import dashboardSlice from "features/Dashboard/dashboardSlice";
 import documentDetailsSlice from "features/DocumentDetails/documentDetailsSlice";
 import homeSlice from "features/Home/homeSlice";
 import inboxDocumentsSlice from "features/InboxDocuments/inboxDocumentsSlice";
+import agenciesSlice from "features/ManageAgencies/agenciesSlice";
+import departmentsSlice from "features/ManageDepartments/departmentsSlice";
 import issueDocumentSlice from "features/ManageDocuments/issueDocumentSlice";
 import profileSlice from "features/Profile/profileSlice";
 import recipientsSlice from "features/Recipients/recipientsSlice";
 import searchGroupSlice from "features/SearchGroup/searchGroupSlice";
 import sentDocumentsSlice from "features/SentDocuments/sentDocumentsSlice";
+import typesOfDocumentsSlice from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 

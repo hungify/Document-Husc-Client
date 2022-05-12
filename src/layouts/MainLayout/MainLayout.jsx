@@ -12,11 +12,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 import styled from "styled-components";
-import { fetchAgencies } from "app/reducers/configs/agenciesSlice";
+import { fetchAgencies } from "features/ManageAgencies/agenciesSlice";
 import { fetchUrgentLevels } from "app/reducers/configs/urgentLevelsSlice";
 import { fetchCategories } from "app/reducers/configs/categoriesSlice";
-import { fetchTypesOfDocuments } from "app/reducers/configs/typesOfDocumentsSlice";
-import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocument";
+import { fetchTypesOfDocuments } from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
+import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocuments";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
