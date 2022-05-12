@@ -9,7 +9,7 @@ const departmentService = {
     const url = "departments";
     return axiosInstance.post(url, { label });
   },
-  editDepartment: (label, departmentId) => {
+  updateDepartment: (label, departmentId) => {
     const url = `departments/${departmentId}`;
     return axiosInstance.patch(url, { label });
   },
