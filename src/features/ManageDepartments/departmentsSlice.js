@@ -14,10 +14,11 @@ export const fetchDepartments = createAsyncThunk(fetch.type, async (args, thunkA
 });
 
 const create = createAction("config/departments/create");
-export const fetchCreateDepartment = createAsyncThunk(create.type, async (values, thunkAPI) => {
-  const { label } = values;
+export const fetchCreateDepartment = createAsyncThunk(create.type, async (label, thunkAPI) => {
   try {
+    const { dispatch } = thunkAPI;
     await departmentService.createDepartment(label);
+    dispatch(fetchDepartments());
     const message = "Thêm mới phong ban thành công";
     return message;
   } catch (error) {
@@ -31,11 +32,13 @@ export const fetchCreateDepartment = createAsyncThunk(create.type, async (values
   }
 });
 
-const edit = createAction("config/departments/edit");
-export const fetchEditDepartment = createAsyncThunk(edit.type, async (values, thunkAPI) => {
-  const { label, departmentId } = values;
+const update = createAction("config/departments/update");
+export const fetchUpdateDepartment = createAsyncThunk(update.type, async (values, thunkAPI) => {
+  const { departmentId, label } = values;
   try {
-    await departmentService.editDepartment(label, departmentId);
+    const { dispatch } = thunkAPI;
+    await departmentService.updateDepartment(label, departmentId);
+    dispatch(fetchDepartments());
     const message = "Cập nhật phong ban thành công";
     return message;
   } catch (error) {
@@ -94,18 +97,18 @@ const departmentSlice = createSlice({
       showToast("success", action.payload, toastPosition.bottomRight);
     });
 
-    builder.addCase(fetchEditDepartment.pending, (state) => {
+    builder.addCase(fetchUpdateDepartment.pending, (state) => {
       state.loading = true;
       state.error = null;
       state.success = false;
     });
-    builder.addCase(fetchEditDepartment.rejected, (state, action) => {
+    builder.addCase(fetchUpdateDepartment.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
       state.success = false;
       showToast("error", action.payload, toastPosition.topRight);
     });
-    builder.addCase(fetchEditDepartment.fulfilled, (state, action) => {
+    builder.addCase(fetchUpdateDepartment.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
       state.success = true;

@@ -1,7 +1,7 @@
 import { Col, Row, TreeSelect, Typography } from "antd";
 import { getAgenciesConfig } from "app/selectors/agencies";
 import { getCategoriesConfig } from "app/selectors/categories";
-import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocument";
+import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import React from "react";

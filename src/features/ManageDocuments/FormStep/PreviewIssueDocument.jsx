@@ -2,7 +2,7 @@ import { Avatar, Card, Col, Empty, List, Row, Table, Typography } from "antd";
 import { getAgenciesConfig } from "app/selectors/agencies";
 import { getCategoriesConfig } from "app/selectors/categories";
 import { getRelatedDocuments } from "app/selectors/documents";
-import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocument";
+import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
 import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
 import dayjs from "dayjs";
