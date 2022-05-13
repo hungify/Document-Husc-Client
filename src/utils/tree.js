@@ -1,5 +1,14 @@
 import _ from "lodash";
 
+export const listToTree = (arr, id = null, parentKey = "parentId") =>
+  arr
+    ?.filter((item) => item[parentKey] === id)
+    ?.map((item) => ({
+      ...item,
+      key: item._id,
+      children: listToTree(arr, item._id),
+    }));
+
 export function flattenArrayTree(trees, wrapKey = "children") {
   return trees.reduce((flattenedItems, node) => {
     flattenedItems.push(node);

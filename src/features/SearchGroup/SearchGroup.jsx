@@ -50,7 +50,7 @@ export default function SearchGroup() {
   };
 
   const handleTypesOfDocumentSelect = (value) => {
-    dispatch(setFiltersBy({ typesOfDocument: value, triggerBy: "documents", }));
+    dispatch(setFiltersBy({ typesOfDocument: value, triggerBy: "documents" }));
     setTypesOfDocument(value);
   };
   const handleTypesOfDocumentDeselect = (value) => {
@@ -79,6 +79,10 @@ export default function SearchGroup() {
     }
   };
 
+  const handleDatePickerChange = (value, dateString) => {
+    console.log("From: ", value, ", to: ", dateString);
+  };
+
   return (
     <Wrapper>
       <CardForm bordered={false}>
@@ -105,7 +109,7 @@ export default function SearchGroup() {
                 <Form name="lookupDocument" onFinish={handleFormSearchSubmit}>
                   <Row>
                     <Col span={11}>
-                      <SearchTime />
+                      <SearchTime onDatePickerChange={handleDatePickerChange} />
                     </Col>
                     <Col span={13}>
                       <SearchBox />

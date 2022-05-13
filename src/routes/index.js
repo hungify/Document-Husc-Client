@@ -9,7 +9,7 @@ import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
 import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
 import ManageAgencies from "features/ManageAgencies/ManageAgencies";
-import ManageCategories from "features/Manage/ManageCategories/ManageCategories";
+import ManageCategories from "features/ManageCategories/ManageCategories";
 import ManageDepartments from "features/ManageDepartments/ManageDepartments";
 import ManageDocuments from "features/ManageDocuments/ManageDocuments";
 import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";

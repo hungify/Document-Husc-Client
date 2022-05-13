@@ -14,7 +14,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import styled from "styled-components";
 import { fetchAgencies } from "features/ManageAgencies/agenciesSlice";
 import { fetchUrgentLevels } from "app/reducers/configs/urgentLevelsSlice";
-import { fetchCategories } from "app/reducers/configs/categoriesSlice";
+import { fetchCategories } from "features/ManageCategories/categoriesSlice";
 import { fetchTypesOfDocuments } from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
 import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocuments";
 
