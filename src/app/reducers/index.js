@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import categoriesSlice from "app/reducers/configs/categoriesSlice";
+import categoriesSlice from "features/ManageCategories/categoriesSlice";
 import urgentLevelsSlice from "app/reducers/configs/urgentLevelsSlice";
 import authSlice from "features/Auth/authSlice";
 import dashboardSlice from "features/Dashboard/dashboardSlice";

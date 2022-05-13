@@ -13,6 +13,21 @@ export const fetchCategories = createAsyncThunk(fetch.type, async (args, thunkAP
   }
 });
 
+const create = createAction("config/categories/create");
+export const fetchCreateCategory = createAsyncThunk(create.type, async (values, thunkAPI) => {
+  try {
+    const { dispatch } = thunkAPI;
+    const { title, parentId } = values;
+    await categoriesService.fetchCreateCategory({ title, parentId });
+    dispatch(fetchCategories());
+    const message = "Thêm mới chuyên mục thành công";
+    return message;
+  } catch (error) {
+    const { message } = error.response.data;
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const initialState = {
   loading: false,
   error: null,
@@ -35,6 +50,20 @@ const categoriesSlice = createSlice({
     builder.addCase(fetchCategories.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      showToast("error", action.payload, toastPosition.topRight);
+    });
+
+    builder.addCase(fetchCreateCategory.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchCreateCategory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.categories = action.payload.data;
+      showToast("success", action.payload.message, toastPosition.bottomRight);
+    });
+    builder.addCase(fetchCreateCategory.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
       showToast("error", action.payload, toastPosition.topRight);
     });
   },
