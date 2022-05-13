@@ -1,6 +1,6 @@
 import { Avatar, Card, Col, Empty, List, Row, Table, Typography } from "antd";
 import { getAgenciesConfig } from "app/selectors/agencies";
-import { getCategoriesConfig } from "app/selectors/categories";
+import { getCategoriesTreeConfig } from "app/selectors/categories";
 import { getRelatedDocuments } from "app/selectors/documents";
 import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
 import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
@@ -100,7 +100,7 @@ const generateColumns = (formValues) => {
 export default function PreviewIssueDocument({ formValues }) {
   const dispatch = useDispatch();
   const agenciesConfig = useSelector(getAgenciesConfig);
-  const categoriesConfig = useSelector(getCategoriesConfig);
+  const categoriesConfig = useSelector(getCategoriesTreeConfig);
   const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
   const urgentLevelsConfig = useSelector(getUrgentLevelsConfig);
 

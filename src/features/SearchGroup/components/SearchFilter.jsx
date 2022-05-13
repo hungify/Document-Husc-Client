@@ -1,6 +1,6 @@
 import { Col, Row, TreeSelect, Typography } from "antd";
 import { getAgenciesConfig } from "app/selectors/agencies";
-import { getCategoriesConfig } from "app/selectors/categories";
+import { getCategoriesTreeConfig } from "app/selectors/categories";
 import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
@@ -17,7 +17,7 @@ export default function SearchFilter({
   onCategorySelect,
 }) {
   const agenciesConfig = useSelector(getAgenciesConfig);
-  const categoriesConfig = useSelector(getCategoriesConfig);
+  const categoriesConfig = useSelector(getCategoriesTreeConfig);
   const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
 
   return (

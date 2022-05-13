@@ -6,7 +6,7 @@ import {
   PlusCircleTwoTone,
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
-import { getCategoriesTreeConfig } from "app/selectors/categories";
+import { getCategoriesTotal, getCategoriesTreeConfig } from "app/selectors/categories";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateCategory,
@@ -42,11 +42,19 @@ const ActionList = styled.div`
 
 export default function ManageCategories() {
   const categories = useSelector(getCategoriesTreeConfig);
-  
+  const categoriesTotal = useSelector(getCategoriesTotal);
   const [showLayer, setShowLayer] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState();
   const [visible, setVisible] = React.useState(false);
   const [isAddMode, setIsAddMode] = React.useState(false);
+
+  const categoriesTree = [
+    {
+      title: "Danh mục gốc",
+      _id: "root",
+      children: categories,
+    },
+  ];
 
   const dispatch = useDispatch();
 
@@ -55,7 +63,7 @@ export default function ManageCategories() {
       setSelectedNode([
         {
           title: nodeInfo?.selectedNodes[0].title,
-          key: nodeInfo?.selectedNodes[0].key,
+          key: nodeInfo?.selectedNodes[0]._id,
         },
       ]);
       setShowLayer(true);
@@ -118,13 +126,13 @@ export default function ManageCategories() {
       onCancel() {},
     });
   };
+  console.log(selectedNode?.map((item) => item.key));
 
   return (
     <>
       <ModalForm
         initialValues={{
           title: isAddMode ? null : selectedNode && selectedNode[0].title,
-
         }}
         visible={visible}
         onSubmit={handleCreateOrEdit}
@@ -151,7 +159,7 @@ export default function ManageCategories() {
       </ModalForm>
 
       <Card
-        title={<Typography.Text strong>Danh sách chuyên mục</Typography.Text>}
+        title={<Typography.Text strong>{categoriesTotal} chuyên mục</Typography.Text>}
         extra={
           selectedNode && (
             <Tooltip
@@ -178,9 +186,9 @@ export default function ManageCategories() {
           defaultExpandAll={true}
           onSelect={handleOnSelect}
           switcherIcon={<DownOutlined />}
-          treeData={categories}
+          treeData={categoriesTree}
           titleRender={(item) =>
-            showLayer && item.key !== "root" && item.key === selectedNode[0]?.key ? (
+            showLayer && item.key !== "root" && item._id === selectedNode[0]?.key ? (
               <Overlay>
                 <Typography.Text strong>{item.title}</Typography.Text>
                 <ActionList>
