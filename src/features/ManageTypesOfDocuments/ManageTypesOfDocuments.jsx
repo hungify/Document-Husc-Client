@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
-import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
+import { getTypesOfDocumentsConfig, getTypesOfDocumentsTotal } from "app/selectors/typesOfDocuments";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateTypesOfDocuments,
@@ -28,10 +28,10 @@ export default function ManageTypesOfDocuments() {
   const [visible, setVisible] = React.useState(false);
   const [typeOfDocument, setTypeOfDocument] = React.useState(null);
   const typesOfDocuments = useSelector(getTypesOfDocumentsConfig);
+  const typesOfDocumentsTotal = useSelector(getTypesOfDocumentsTotal);
   const dispatch = useDispatch();
 
   const handleOnCreateOrUpdate = ({ label }) => {
-    console.log("🚀 :: label", label);
     if (typeOfDocument) {
       dispatch(fetchUpdateTypesOfDocuments({ typeOfDocumentId: typeOfDocument.id, label }));
     } else {
@@ -111,7 +111,7 @@ export default function ManageTypesOfDocuments() {
         </Form.Item>
       </ModalForm>
       <Card
-        title={<Typography.Text strong>20 Loại văn bản</Typography.Text>}
+        title={<Typography.Text strong>{typesOfDocumentsTotal} Loại văn bản</Typography.Text>}
         extra={
           <Button onClick={handleAddClick} type="primary" key="create_typeOfDocument">
             <PlusCircleTwoTone /> Thêm mới

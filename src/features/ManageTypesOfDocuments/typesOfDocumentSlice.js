@@ -85,7 +85,7 @@ const typesOfDocumentsSlice = createSlice({
     });
     builder.addCase(fetchCreateTypesOfDocuments.fulfilled, (state, action) => {
       state.loading = false;
-      showToast("success", action.payload, toastPosition.topRight);
+      showToast("success", action.payload, toastPosition.bottomRight);
     });
     builder.addCase(fetchCreateTypesOfDocuments.rejected, (state, action) => {
       state.loading = false;
@@ -97,7 +97,7 @@ const typesOfDocumentsSlice = createSlice({
     });
     builder.addCase(fetchUpdateTypesOfDocuments.fulfilled, (state, action) => {
       state.loading = false;
-      showToast("success", action.payload, toastPosition.topRight);
+      showToast("success", action.payload, toastPosition.bottomRight);
     });
     builder.addCase(fetchUpdateTypesOfDocuments.rejected, (state, action) => {
       state.loading = false;

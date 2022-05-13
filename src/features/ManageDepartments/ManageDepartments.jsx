@@ -5,12 +5,11 @@ import {
   InfoCircleOutlined,
   PlusCircleTwoTone,
 } from "@ant-design/icons";
-import { Button, Card, Empty, Form, Input, List, Modal, notification, Typography } from "antd";
-import { getDepartmentsConfig, getDepartmentsTotal } from "app/selectors/departments";
+import { Button, Card, Empty, Form, Input, List, Modal, Typography } from "antd";
+import { getDepartmentsConfig } from "app/selectors/departments";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateDepartment,
-  fetchDepartments,
   fetchUpdateDepartment,
 } from "features/ManageDepartments/departmentsSlice";
 import React from "react";
@@ -27,8 +26,7 @@ const CardAnt = styled(Card)`
 export default function ManageDepartments() {
   const [visible, setVisible] = React.useState(false);
   const [department, setDepartment] = React.useState(null);
-  const departmentsConfig = useSelector(getDepartmentsConfig);
-  const departmentsTotal = useSelector(getDepartmentsTotal);
+  const departments = useSelector(getDepartmentsConfig);
   const dispatch = useDispatch();
 
   const handleCreateOrEdit = ({ label }) => {
@@ -98,7 +96,7 @@ export default function ManageDepartments() {
       </ModalForm>
 
       <Card
-        title={<Typography.Text strong>20 phòng/ban</Typography.Text>}
+        title={<Typography.Text strong>{departments.length} phòng/ban</Typography.Text>}
         extra={
           <Button onClick={handleAddClick} type="primary" key="add_department">
             <PlusCircleTwoTone /> Thêm mới
@@ -118,10 +116,8 @@ export default function ManageDepartments() {
           locale={{
             emptyText: <Empty description="Danh sách trống" />,
           }}
-          pagination={{
-            total: departmentsTotal,
-          }}
-          dataSource={departmentsConfig}
+          pagination={{}}
+          dataSource={departments}
           renderItem={(item) => (
             <List.Item>
               <CardAnt

@@ -1,7 +1,7 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Col, Form, Row, TreeSelect, Typography } from "antd";
 import { getAgenciesConfig } from "app/selectors/agencies";
-import { getCategoriesConfig } from "app/selectors/categories";
+import { getCategoriesTreeConfig } from "app/selectors/categories";
 import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
 import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
@@ -24,7 +24,7 @@ export default function DocumentClassification(props) {
     required,
   } = props;
   const agenciesConfig = useSelector(getAgenciesConfig);
-  const categoriesConfig = useSelector(getCategoriesConfig);
+  const categoriesConfig = useSelector(getCategoriesTreeConfig);
   const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
 
   return (
