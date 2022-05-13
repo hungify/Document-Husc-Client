@@ -5,6 +5,10 @@ const categoriesService = {
     const url = "categories";
     return axiosInstance.get(url);
   },
+  fetchCreateCategory: ({ title, parentId }) => {
+    const url = "categories";
+    return axiosInstance.post(url, { title, parentId });
+  },
 };
 
 export default categoriesService;
