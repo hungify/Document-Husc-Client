@@ -42,7 +42,7 @@ const ActionList = styled.div`
 
 export default function ManageCategories() {
   const categories = useSelector(getCategoriesTreeConfig);
-
+  
   const [showLayer, setShowLayer] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState();
   const [visible, setVisible] = React.useState(false);
@@ -124,6 +124,7 @@ export default function ManageCategories() {
       <ModalForm
         initialValues={{
           title: isAddMode ? null : selectedNode && selectedNode[0].title,
+
         }}
         visible={visible}
         onSubmit={handleCreateOrEdit}
