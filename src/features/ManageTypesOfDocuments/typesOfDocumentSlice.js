@@ -46,11 +46,11 @@ export const fetchUpdateTypesOfDocuments = createAsyncThunk(
       const message = "Cập nhật thông tin loại văn bản thành công";
       return message;
     } catch (error) {
+      const { message } = error.response.data;
       if (message === `TypeOfDocument with label ${label} already exists`) {
         const message = `Loại văn bản ${label} đã tồn tại`;
         return thunkAPI.rejectWithValue(message);
       }
-      const { message } = error.response.data;
       return thunkAPI.rejectWithValue(message);
     }
   }
