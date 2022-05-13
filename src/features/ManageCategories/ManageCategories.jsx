@@ -8,7 +8,10 @@ import {
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
 import { getCategoriesTreeConfig } from "app/selectors/categories";
 import ModalForm from "components/ModalForm";
-import { fetchCreateCategory } from "features/ManageCategories/categoriesSlice";
+import {
+  fetchCreateCategory,
+  fetchUpdateCategory,
+} from "features/ManageCategories/categoriesSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -39,8 +42,7 @@ const ActionList = styled.div`
 
 export default function ManageCategories() {
   const categories = useSelector(getCategoriesTreeConfig);
-  console.log("🚀 :: categories", categories);
-
+  
   const [showLayer, setShowLayer] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState();
   const [visible, setVisible] = React.useState(false);
@@ -49,15 +51,15 @@ export default function ManageCategories() {
   const dispatch = useDispatch();
 
   const handleOnSelect = (selectedKeys, nodeInfo) => {
-    console.log("🚀 :: (selectedKeys, nodeInfo", (selectedKeys, nodeInfo));
-    // setSelectedNode([
-    //   {
-    //     title: nodeInfo.selectedNodes[0].title,
-    //     key: nodeInfo.selectedNodes[0].key,
-    //   },
-    // ]);
-
-    setShowLayer(true);
+    if (nodeInfo?.selectedNodes.length > 0) {
+      setSelectedNode([
+        {
+          title: nodeInfo?.selectedNodes[0].title,
+          key: nodeInfo?.selectedNodes[0].key,
+        },
+      ]);
+      setShowLayer(true);
+    }
   };
 
   const handleCreateOrEdit = (values) => {
@@ -66,16 +68,23 @@ export default function ManageCategories() {
     if (isAddMode) {
       dispatch(fetchCreateCategory({ title, parentId: key === "root" ? null : key }));
     } else {
+      dispatch(fetchUpdateCategory({ title, categoryId: key }));
     }
+    setVisible(false);
   };
 
-  const handleAddClick = (item) => {
+  const handleAddClick = () => {
     setVisible(true);
     setIsAddMode(true);
   };
 
   const handleEditClick = (item) => {
-    setSelectedNode(item);
+    setSelectedNode([
+      {
+        title: item.title,
+        key: item.key,
+      },
+    ]);
     setIsAddMode(false);
     setVisible(true);
   };
@@ -114,7 +123,8 @@ export default function ManageCategories() {
     <>
       <ModalForm
         initialValues={{
-          title: isAddMode ? isAddMode?.title : null,
+          title: isAddMode ? null : selectedNode && selectedNode[0].title,
+
         }}
         visible={visible}
         onSubmit={handleCreateOrEdit}
@@ -170,7 +180,7 @@ export default function ManageCategories() {
           switcherIcon={<DownOutlined />}
           treeData={categories}
           titleRender={(item) =>
-            showLayer && item.key !== "root" && item.key === selectedNode?.key ? (
+            showLayer && item.key !== "root" && item.key === selectedNode[0]?.key ? (
               <Overlay>
                 <Typography.Text strong>{item.title}</Typography.Text>
                 <ActionList>
