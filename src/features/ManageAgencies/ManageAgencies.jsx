@@ -3,16 +3,16 @@ import {
   EditTwoTone,
   ExclamationCircleOutlined,
   InfoCircleOutlined,
-  PlusCircleTwoTone,
+  PlusCircleTwoTone
 } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { getAgenciesConfig } from "app/selectors/agencies";
+import { getTypesOfDocumentsTotal } from "app/selectors/typesOfDocuments";
 import ModalForm from "components/ModalForm";
 import { fetchCreateAgencies, fetchUpdateAgencies } from "features/ManageAgencies/agenciesSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const CardAnt = styled(Card)`
@@ -26,6 +26,7 @@ export default function ManageAgencies() {
   const [visible, setVisible] = React.useState(false);
   const [agency, setAgency] = React.useState(null);
   const agencies = useSelector(getAgenciesConfig);
+  const agenciesTotal = useSelector(getTypesOfDocumentsTotal);
   const dispatch = useDispatch();
 
   const handleOnCreateOrEdit = ({ label }) => {
@@ -109,7 +110,7 @@ export default function ManageAgencies() {
       </ModalForm>
 
       <Card
-        title={<Typography.Text strong>20 cơ quan ban hành</Typography.Text>}
+        title={<Typography.Text strong>{agenciesTotal} cơ quan ban hành</Typography.Text>}
         extra={
           <Button onClick={handleAddClick} type="primary" key="add_agency">
             <PlusCircleTwoTone key="edit" /> Thêm mới
