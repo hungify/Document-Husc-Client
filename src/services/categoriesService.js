@@ -9,6 +9,10 @@ const categoriesService = {
     const url = "categories";
     return axiosInstance.post(url, { title, parentId });
   },
+  fetchUpdateCategory: ({ title, categoryId }) => {
+    const url = `categories/${categoryId}`;
+    return axiosInstance.patch(url, { title });
+  },
 };
 
 export default categoriesService;
