@@ -69,7 +69,6 @@ export default function FormIssuedDocument({
         participants: participants,
       });
       setDocumentFrom(files?.length > 0 ? dataRadio[0].value : dataRadio[1].value);
-      console.log("🚀 :: files?.length", files?.length);
       setFileList(
         files?.map((file) => ({
           uid: uuid(),
