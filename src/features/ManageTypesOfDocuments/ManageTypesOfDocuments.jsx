@@ -3,15 +3,18 @@ import {
   EditTwoTone,
   ExclamationCircleOutlined,
   InfoCircleOutlined,
-  PlusCircleTwoTone,
+  PlusCircleTwoTone
 } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
-import { getTypesOfDocumentsConfig, getTypesOfDocumentsTotal } from "app/selectors/typesOfDocuments";
+import {
+  getTypesOfDocumentsConfig,
+  getTypesOfDocumentsTotal
+} from "app/selectors/typesOfDocuments";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateTypesOfDocuments,
-  fetchUpdateTypesOfDocuments,
+  fetchUpdateTypesOfDocuments
 } from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
