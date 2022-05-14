@@ -115,7 +115,7 @@ const initialState = {
     //   ],
     //   relatedDocuments: [],
     //   isPublic: true,
-    //   isArchived: false,
+    //   type: "official" || "draft" || "archive",
     //   participants: [],
     // },
   ],

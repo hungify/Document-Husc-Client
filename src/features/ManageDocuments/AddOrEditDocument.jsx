@@ -7,7 +7,7 @@ import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
 import {
   fetchIssueDocumentOfficial,
-  fetchUpdateDocument
+  fetchUpdateDocument,
 } from "features/ManageDocuments/documentsSlice";
 import FormIssuedDocument from "features/ManageDocuments/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/ManageDocuments/FormStep/PreviewIssueDocument";
@@ -153,6 +153,8 @@ export default function AddOrEditDocument() {
             };
       dataSubmit.issueDate = new Date(dataSubmit.issueDate).getTime();
       dataSubmit.participants = participants;
+      dataSubmit.type = modeSave;
+      console.log("🚀 :: dataSubmit", dataSubmit);
 
       // dataSubmit.
       const formData = new FormData();
