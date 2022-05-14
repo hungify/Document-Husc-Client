@@ -64,7 +64,6 @@ export default function FormIssuedDocument({
         title: property?.title,
         content: property?.content,
         summary: property?.summary,
-        documentFrom: files.length > 0 ? dataRadio[0].value : dataRadio[1].value,
 
         relatedDocuments: relatedDocuments,
         participants: participants,
@@ -95,7 +94,9 @@ export default function FormIssuedDocument({
   // Document Property
 
   // Document Content
-  const [documentFrom, setDocumentFrom] = React.useState();
+  const [documentFrom, setDocumentFrom] = React.useState(
+    files?.length > 0 ? dataRadio[0].value : dataRadio[1].value
+  );
   const [titleDocument, setTitleDocument] = React.useState();
   //option one
   const [summaryDocument, setSummaryDocument] = React.useState();
@@ -103,7 +104,6 @@ export default function FormIssuedDocument({
   const [contentDocument, setContentDocument] = React.useState();
 
   const [fileList, setFileList] = React.useState();
-
   const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(
     formValues?.relatedDocuments || []
   );
