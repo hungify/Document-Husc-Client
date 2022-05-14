@@ -3,14 +3,14 @@ import {
   DownOutlined,
   EditTwoTone,
   ExclamationCircleOutlined,
-  PlusCircleTwoTone,
+  PlusCircleTwoTone
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
 import { getCategoriesTotal, getCategoriesTreeConfig } from "app/selectors/categories";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateCategory,
-  fetchUpdateCategory,
+  fetchUpdateCategory
 } from "features/ManageCategories/categoriesSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -187,7 +187,7 @@ export default function ManageCategories() {
           switcherIcon={<DownOutlined />}
           treeData={categoriesTree}
           titleRender={(item) =>
-            showLayer && item.key !== "root" && item._id === selectedNode[0]?.key ? (
+            showLayer && item.key !== "root" && item.key === selectedNode[0]?.key ? (
               <Overlay>
                 <Typography.Text strong>{item.title}</Typography.Text>
                 <ActionList>
