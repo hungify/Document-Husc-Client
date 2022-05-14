@@ -8,16 +8,15 @@ import DetailDocument from "features/DocumentDetails/DocumentDetails";
 import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
 import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
+import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";
 import ManageAgencies from "features/ManageAgencies/ManageAgencies";
 import ManageCategories from "features/ManageCategories/ManageCategories";
 import ManageDepartments from "features/ManageDepartments/ManageDepartments";
-import ManageDocuments from "features/ManageDocuments/ManageDocuments";
-import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";
+import AddOrEditDocument from "features/ManageDocuments/AddOrEditDocument";
 import ManageTypesOfDocuments from "features/ManageTypesOfDocuments/ManageTypesOfDocuments";
 import Profile from "features/Profile/Profile";
 import SentDocuments from "features/SentDocuments/SentDocuments";
 import MainLayout from "layouts/MainLayout/MainLayout";
-import AddOrEditDocument from "features/ManageDocuments/AddOrEditDocument";
 
 export const routePathDefinition = [
   {
@@ -120,7 +119,7 @@ export const routePathDefinition = [
             children: [
               {
                 index: true,
-                element: <ManageDocuments />,
+                element: <Home />,
               },
               {
                 path: "edit",
