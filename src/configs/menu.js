@@ -68,8 +68,8 @@ export const menuConfig = {
         },
         {
           title: "Quản lý văn bản thu hồi",
-          key: "revoke-documents",
-          value: "revoke-documents",
+          key: "archives",
+          value: "archives",
           icon: <ArchiveInIcon style={{ fontSize: 18, color: "rgba(24, 144, 255, 0.8)" }} />,
         },
       ],

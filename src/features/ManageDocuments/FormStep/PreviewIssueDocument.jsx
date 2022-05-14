@@ -7,7 +7,7 @@ import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
 import dayjs from "dayjs";
 import ListUploaded from "features/ManageDocuments/components/ListUploaded";
-import { fetchDocumentByIds } from "features/ManageDocuments/documentSlice";
+import { fetchDocumentByIds } from "features/ManageDocuments/documentsSlice";
 import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
