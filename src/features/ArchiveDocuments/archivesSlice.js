@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import showToast, { toastPosition } from "configs/toast";
 import archivesService from "services/archivesService";
 
-const archive = createAction("archives/fetch/archive");
+const archive = createAction("documents/fetch/archives");
 export const fetchArchivesDocuments = createAsyncThunk(archive.type, async (args, thunkAPI) => {
   try {
     const { data, total } = await archivesService.fetchArchivesDocuments();

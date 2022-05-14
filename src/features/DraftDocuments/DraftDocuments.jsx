@@ -1,7 +1,11 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Card, Checkbox, Col, List, Row, Space, Typography } from "antd";
+import { getDraftDocuments } from "app/selectors/draft";
+import dayjs from "dayjs";
+import { fetchDraftDocument } from "features/DraftDocuments/draftSlice";
 import _ from "lodash";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -29,28 +33,18 @@ const CardItemAnt = styled(Card)`
 
 const ListItemAnt = styled(List.Item)``;
 
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    key: new Date().getTime() + i,
-    title: `21/NQ-HĐĐH : Nghị quyết về việc công nhận Hiệu trưởng Trường Đại học Y - Dược, Đại học Huế nhiệm kỳ 2020 - 2025`,
-    avatar: "Admin",
-    textNumber: "21/NQ-HĐĐH",
-    signer: "Nguyễn Vũ Quốc Huy",
-    dateIssued: "2020-05-01",
-    authorityIssuing: "Đại Học Huế",
-    urgency: "Bình thường",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  });
-}
-
-export default function DraftDocuments(props) {
+export default function DraftDocuments() {
   const navigate = useNavigate();
   const [checkedDraft, setCheckedDraft] = React.useState([]);
   const [indeterminate, setIndeterminate] = React.useState(false);
   const [checkAll, setCheckAll] = React.useState(false);
   const [titleCheckAll, setTitleCheckAll] = React.useState("Chọn tất cả");
+  const dispatch = useDispatch();
+  const documentsDraft = useSelector(getDraftDocuments);
+
+  React.useEffect(() => {
+    dispatch(fetchDraftDocument());
+  }, [dispatch]);
 
   const handleCheckedSingleDraft = (e) => {
     const id = e.target.value;
@@ -65,7 +59,7 @@ export default function DraftDocuments(props) {
     if (newCheckedDraft.length === 0) {
       setCheckAll(false);
       setIndeterminate(false);
-    } else if (_.isEqual(_.sortBy(newCheckedDraft), _.sortBy(listData))) {
+    } else if (_.isEqual(_.sortBy(newCheckedDraft), _.sortBy(documentsDraft))) {
       setIndeterminate(false);
       setCheckAll(true);
       setTitleCheckAll("Bỏ chọn tất cả");
@@ -81,7 +75,7 @@ export default function DraftDocuments(props) {
     setCheckAll(currentCheckAll);
     if (currentCheckAll) {
       setTitleCheckAll("Bỏ chọn tất cả");
-      setCheckedDraft(listData.map((item) => item.key));
+      setCheckedDraft(documentsDraft.map((item) => item._id));
     } else {
       setTitleCheckAll("Chọn tất cả");
       setCheckedDraft([]);
@@ -111,10 +105,10 @@ export default function DraftDocuments(props) {
               pageSize: 10,
               onChange: (page) => {},
             }}
-            dataSource={listData}
+            dataSource={documentsDraft}
             renderItem={(item) => (
-              <ListItemAnt>
-                <Badge.Ribbon text="Bản nháp" key={item.key}>
+              <ListItemAnt key={item._id}>
+                <Badge.Ribbon text="Bản nháp">
                   <CardItemAnt bordered={false} onClick={() => navigate("/issue")}>
                     <List.Item.Meta
                       avatar={
@@ -122,19 +116,17 @@ export default function DraftDocuments(props) {
                           <Checkbox
                             value={item.key}
                             onChange={handleCheckedSingleDraft}
-                            checked={checkedDraft.includes(item.key)}
+                            checked={checkedDraft.includes(item._id)}
                           />
-                          <Avatar size="large">{item.avatar.charAt(0).toUpperCase()}</Avatar>
+                          <Avatar size="large">{item?.publisher.avatar}</Avatar>
                         </Space>
                       }
                       title={
-                        <Typography.Text strong>
-                          {item.key % 2 === 0 ? item.title : "Không có tiêu đề"}
-                        </Typography.Text>
+                        <Typography.Text strong>{item.title || "Không có tiêu đề"}</Typography.Text>
                       }
                       description={
                         <Typography.Text type="secondary">
-                          Chỉnh sửa lần cuối lúc: 10:10 24/5/2022
+                          Chỉnh sửa lần cuối lúc {dayjs(item.updatedAt).format("HH:mm DD/MM/YYYY")}
                         </Typography.Text>
                       }
                     />

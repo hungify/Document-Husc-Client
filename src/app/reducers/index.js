@@ -4,6 +4,7 @@ import archiveSlice from "features/ArchiveDocuments/archivesSlice";
 import authSlice from "features/Auth/authSlice";
 import dashboardSlice from "features/Dashboard/dashboardSlice";
 import documentDetailsSlice from "features/DocumentDetails/documentDetailsSlice";
+import draftSlice from "features/DraftDocuments/draftSlice";
 import inboxDocumentsSlice from "features/InboxDocuments/inboxDocumentsSlice";
 import agenciesSlice from "features/ManageAgencies/agenciesSlice";
 import categoriesSlice from "features/ManageCategories/categoriesSlice";
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   dashboard: dashboardSlice,
   profile: profileSlice,
   archives: archiveSlice,
+  draft: draftSlice,
 });
 
 const persistConfig = {

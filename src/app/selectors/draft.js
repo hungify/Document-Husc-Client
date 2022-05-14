@@ -1,0 +1,1 @@
+export const getDraftDocuments = (state) => state.draft.draft;
