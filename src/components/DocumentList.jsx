@@ -2,18 +2,18 @@ import {
   ClockCircleOutlined,
   DeleteTwoTone,
   EditTwoTone,
-  InfoCircleOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Col, List, Row, Space, Tag, Typography, Empty, Input, Form } from "antd";
+import { Avatar, Card, Col, Empty, List, Modal, Row, Space, Tag, Typography } from "antd";
 import { getRole } from "app/selectors/auth";
 import { getDocuments, getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
 import FileList from "components/FileList";
-import ModalForm from "components/ModalForm";
 import { ROLES } from "configs/roles";
 import dayjs from "dayjs";
+import { fetchRevokeDocument } from "features/ManageDocuments/documentSlice";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,6 @@ const CardItemAnt = styled(Card)`
 `;
 
 export default function ListDocument({ onEditDocument, onRevokeDocument }) {
-  const [visible, setVisible] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,13 +35,24 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
   const totalDocuments = useSelector(getTotalDocuments);
   const documents = useSelector(getDocuments);
 
-  const handleOnSubmit = (values) => {
-    
-    setVisible(false);
-  };
-
   const handleRevokeDocumentClick = (item) => {
-    setVisible(true);
+    Modal.confirm({
+      title: <Typography.Text strong>Bạn có muốn thu hồi văn bản này?</Typography.Text>,
+      icon: <ExclamationCircleOutlined />,
+      content: (
+        <Typography.Paragraph>
+          Bạn có thể khôi phục lại văn bản ở danh sách văn bản đã thu hồi
+        </Typography.Paragraph>
+      ),
+      okText: "Đồng ý",
+      cancelText: "Huỷ",
+      okType: "danger",
+      onOk() {
+        setTimeout(() => {
+          dispatch(fetchRevokeDocument(item._id));
+        }, 200);
+      },
+    });
   };
 
   const handleEditDocumentClick = (item) => {
@@ -51,8 +61,7 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
 
   return (
     <>
-      <ModalForm
-        visible={visible}
+      {/* <ModalForm
         onSubmit={handleOnSubmit}
         onCancel={() => setVisible(false)}
         size="large"
@@ -78,7 +87,7 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
             autoSize={{ minRows: 3, maxRows: 5 }}
           />
         </Form.Item>
-      </ModalForm>
+      </ModalForm> */}
       <List
         itemLayout="vertical"
         size="default"

@@ -63,6 +63,10 @@ const documentsService = {
       },
     });
   },
+  fetchRevokeDocument: (documentId) => {
+    const url = `/documents/${documentId}`;
+    return axiosInstance.delete(url);
+  },
 };
 
 export default documentsService;

@@ -1,25 +1,18 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, SaveOutlined } from "@ant-design/icons";
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Typography } from "antd";
 import { getUserId } from "app/selectors/auth";
-import {
-  getFiles,
-  getParticipants,
-  getProperty,
-  getRelatedDocuments,
-} from "app/selectors/documentDetails";
-import { getLoadingIssueDocument, getSuccessIssueDocument } from "app/selectors/issueDocument";
+import { getLoadingIssueDocument, getSuccessIssueDocument } from "app/selectors/documents";
 import PlaneIcon from "components/Icons/PlaneIcon";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
+import {
+  fetchIssueDocumentOfficial,
+  fetchUpdateDocument
+} from "features/ManageDocuments/documentSlice";
 import FormIssuedDocument from "features/ManageDocuments/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/ManageDocuments/FormStep/PreviewIssueDocument";
 import ResultMessage from "features/ManageDocuments/FormStep/ResultMessage";
-import {
-  fetchIssueDocumentOfficial,
-  fetchUpdateDocument,
-} from "features/ManageDocuments/issueDocumentSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
-import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
