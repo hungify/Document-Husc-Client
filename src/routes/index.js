@@ -8,7 +8,7 @@ import DetailDocument from "features/DocumentDetails/DocumentDetails";
 import DraftDocuments from "features/DraftDocuments/DraftDocuments";
 import Home from "features/Home/Home";
 import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
-import ManageRevokeDocuments from "features/Manage/ManageRevokeDocuments/ManageRevokeDocuments";
+import ArchiveDocuments from "features/ArchiveDocuments/ArchiveDocuments";
 import ManageAgencies from "features/ManageAgencies/ManageAgencies";
 import ManageCategories from "features/ManageCategories/ManageCategories";
 import ManageDepartments from "features/ManageDepartments/ManageDepartments";
@@ -155,8 +155,8 @@ export const routePathDefinition = [
             breadcrumb: "Cơ quan ban hành",
           },
           {
-            path: "revoke-documents",
-            element: <ManageRevokeDocuments />,
+            path: "archives",
+            element: <ArchiveDocuments />,
             breadcrumb: "Văn bản thu hồi",
           },
         ],

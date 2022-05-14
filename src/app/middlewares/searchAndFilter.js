@@ -1,4 +1,4 @@
-import { fetchDocuments } from "features/ManageDocuments/documentSlice";
+import { fetchDocuments } from "features/ManageDocuments/documentsSlice";
 import { fetchRecipients } from "features/Recipients/recipientsSlice";
 const { createListenerMiddleware, isAnyOf } = require("@reduxjs/toolkit");
 const {

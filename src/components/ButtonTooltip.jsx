@@ -6,6 +6,10 @@ export default function ButtonTooltip(props) {
   return (
     <Tooltip title={title}>
       <Button
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
         {...rest}
         type={type}
         icon={icon}
