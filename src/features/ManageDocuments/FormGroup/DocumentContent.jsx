@@ -39,11 +39,7 @@ export default function DocumentContent(props) {
             }}
             initialValue={documentFrom} // must have
           >
-            <RadioGroup
-              dataRadio={dataRadio}
-              onChange={onDocumentFromChange}
-              value={documentFrom}
-            />
+            <RadioGroup dataRadio={dataRadio} onChange={onDocumentFromChange} />
           </FormItemAnt>
         </Col>
         <Col span={20}>
