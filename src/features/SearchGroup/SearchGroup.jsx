@@ -35,18 +35,20 @@ export default function SearchGroup() {
 
   const handleFormSearchSubmit = (values) => {
     const { start, end, orderBy, searchText, searchBy } = values;
-    const startDate = start && dayjs(start).format("YYYY/MM/DD");
-    const endDate = end && dayjs(end).format("YYYY/MM/DD");
-    dispatch(
-      setSearchForm({
-        start: startDate,
-        end: endDate,
-        orderBy,
-        searchText,
-        searchBy,
-        triggerBy: "documents",
-      })
-    );
+    if (start && end) {
+      const startDate = start && dayjs(start).format("YYYY/MM/DD");
+      const endDate = end && dayjs(end).format("YYYY/MM/DD");
+      dispatch(
+        setSearchForm({
+          start: startDate,
+          end: endDate,
+          orderBy,
+          searchText,
+          searchBy,
+          triggerBy: "documents",
+        })
+      );
+    }
   };
 
   const handleTypesOfDocumentSelect = (value) => {
@@ -79,9 +81,7 @@ export default function SearchGroup() {
     }
   };
 
-  const handleDatePickerChange = (value, dateString) => {
-    console.log("From: ", value, ", to: ", dateString);
-  };
+  const handleDatePickerChange = (value, dateString) => {};
 
   return (
     <Wrapper>

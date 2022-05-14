@@ -16,7 +16,7 @@ const options = [
 
 export default function SearchTime(props) {
   const { onDatePickerChange, onSelectDateChange, onDateOk } = props;
-  
+
   const [selectedDateType, setSelectedDateType] = React.useState(options[0].value);
   const handleRadioChange = (value) => {
     setSelectedDateType(value);
@@ -42,7 +42,7 @@ export default function SearchTime(props) {
             size="large"
             placeholder="Từ ngày"
             format="DD/MM/YYYY"
-            onChange={onDatePickerChange}
+            // onChange={onDatePickerChange}
             onOk={onDateOk}
           />
         </Form.Item>
@@ -58,7 +58,7 @@ export default function SearchTime(props) {
             placeholder="Đến ngày"
             size="large"
             format="DD/MM/YYYY"
-            onChange={onDatePickerChange}
+            // onChange={onDatePickerChange}
             onOk={onDateOk}
           />
         </Form.Item>
