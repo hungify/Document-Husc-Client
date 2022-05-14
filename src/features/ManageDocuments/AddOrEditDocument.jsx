@@ -6,6 +6,7 @@ import PlaneIcon from "components/Icons/PlaneIcon";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSlice";
 import {
+  fetchIssueDocumentDraft,
   fetchIssueDocumentOfficial,
   fetchUpdateDocument,
 } from "features/ManageDocuments/documentsSlice";
@@ -114,6 +115,8 @@ export default function AddOrEditDocument() {
         setFormValues([{ ...values }]);
       }
       if (modeSave === "draft") {
+        values.type = modeSave;
+        dispatch(fetchIssueDocumentDraft(values));
         setCurrentStep(steps[steps.length - 1].key);
       } else {
         setCurrentStep(currentStep + 1);
@@ -154,7 +157,6 @@ export default function AddOrEditDocument() {
       dataSubmit.issueDate = new Date(dataSubmit.issueDate).getTime();
       dataSubmit.participants = participants;
       dataSubmit.type = modeSave;
-      console.log("🚀 :: dataSubmit", dataSubmit);
 
       // dataSubmit.
       const formData = new FormData();
@@ -177,9 +179,9 @@ export default function AddOrEditDocument() {
           formData,
           documentId: slug,
         };
-        dispatch(fetchUpdateDocument(formValues));
+        // dispatch(fetchUpdateDocument(formValues));
       } else {
-        dispatch(fetchIssueDocumentOfficial(formData));
+        // dispatch(fetchIssueDocumentOfficial(formData));
       }
     }
   };

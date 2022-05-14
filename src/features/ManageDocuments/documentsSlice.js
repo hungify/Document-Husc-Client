@@ -1,6 +1,7 @@
-import documentsService from "services/documentsService";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import showToast, { toastPosition } from "configs/toast";
-import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import documentsService from "services/documentsService";
+import fetchDraftDocument from "features/DraftDocuments/draftSlice";
 
 const getAll = createAction("documents/fetch/documents");
 export const fetchDocuments = createAsyncThunk(getAll.type, async (arg, thunkAPI) => {
@@ -41,12 +42,12 @@ export const fetchFilterDateRange = createAsyncThunk(
   }
 );
 
-const create = createAction("documents/fetch/issue");
+const createOfficial = createAction("documents/fetch/issue/offical");
 export const fetchIssueDocumentOfficial = createAsyncThunk(
-  create.type,
+  createOfficial.type,
   async (formData, thunkAPI) => {
     try {
-      const { data } = await documentsService.fetchCreateDocument(formData);
+      const { data } = await documentsService.fetchCreateDocumentOfficial(formData);
       const message = "Ban hành thành công";
       return { message, data };
     } catch (error) {
@@ -55,6 +56,23 @@ export const fetchIssueDocumentOfficial = createAsyncThunk(
     }
   }
 );
+
+const createDraft = createAction("documents/fetch/issue/draft");
+export const fetchIssueDocumentDraft = createAsyncThunk(
+  createDraft.type,
+  async (formData, thunkAPI) => {
+    try {
+      const { dispatch } = thunkAPI;
+      await documentsService.fetchCreateDocumentDraft(formData);
+      const message = "Lưu văn bản nháp thành công";
+      return message;
+    } catch (error) {
+      const { message } = error.response.data;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const update = createAction("documents/fetch/update");
 export const fetchUpdateDocument = createAsyncThunk(update.type, async (formValues, thunkAPI) => {
   try {
@@ -179,6 +197,27 @@ const issueDocumentSlice = createSlice({
       showToast("error", action.payload, toastPosition.bottomRight, {
         pauseOnHover: false,
       });
+    });
+
+    builder.addCase(fetchIssueDocumentDraft.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+      state.success = null;
+      state.message = null;
+    });
+    builder.addCase(fetchIssueDocumentDraft.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+      showToast("success", action.payload, toastPosition.topRight, {
+        pauseOnHover: false,
+      });
+    });
+    builder.addCase(fetchIssueDocumentDraft.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.success = false;
+      showToast("error", action.payload, toastPosition.bottomRight);
     });
 
     builder.addCase(fetchUpdateDocument.pending, (state, action) => {
