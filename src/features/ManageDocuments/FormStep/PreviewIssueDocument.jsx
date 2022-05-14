@@ -169,7 +169,7 @@ export default function PreviewIssueDocument({ formValues }) {
               <Row>
                 {dataContent.map((item) => (
                   <React.Fragment key={item.key}>
-                    <Col span={formValues?.documentFrom === "input" ? 24 : 18}>
+                    <Col span={formValues?.documentFrom === "input" ? 24 : 17}>
                       <Typography.Title level={5}>{item.title}</Typography.Title>
                       {formValues?.documentFrom === "input" ? (
                         <>
@@ -180,7 +180,7 @@ export default function PreviewIssueDocument({ formValues }) {
                       )}
                     </Col>
                     {formValues?.documentFrom === "attach" && (
-                      <Col span={6}>
+                      <Col span={7}>
                         <Typography.Title level={5}>Danh sách tệp</Typography.Title>
                         <ListUploaded fileList={item.fileList} />
                       </Col>
