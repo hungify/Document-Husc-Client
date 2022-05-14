@@ -1,5 +1,5 @@
 import { Button, Result } from "antd";
-import { getSuccessIssueDocument } from "app/selectors/issueDocument";
+import { getSuccessIssueDocument } from "app/selectors/documents";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

@@ -1,6 +1,5 @@
-import { fetchDocuments } from "features/Home/homeSlice";
+import { fetchDocuments } from "features/ManageDocuments/documentSlice";
 import { fetchRecipients } from "features/Recipients/recipientsSlice";
-
 const { createListenerMiddleware, isAnyOf } = require("@reduxjs/toolkit");
 const {
   setFiltersBy,
