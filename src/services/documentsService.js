@@ -47,7 +47,15 @@ const documentsService = {
     const url = "/documents?ids=".concat(ids.join(","));
     return axiosInstance.get(url);
   },
-  fetchCreateDocument: (formData) => {
+  fetchCreateDocumentOfficial: (formData) => {
+    const url = "/documents";
+    return axiosInstance.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+  fetchCreateDocumentDraft: (formData) => {
     const url = "/documents";
     return axiosInstance.post(url, formData, {
       headers: {
