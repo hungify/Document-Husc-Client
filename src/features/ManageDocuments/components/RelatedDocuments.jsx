@@ -6,7 +6,7 @@ import DocumentSummary from "components/DocumentSummary";
 import DrawerCustom from "components/DrawerCustom";
 import TransferTableRelated from "features/ManageDocuments/components/TransferTableRelated";
 import ViewPDF from "components/ViewPDF";
-import { fetchDocuments } from "features/ManageDocuments/documentSlice";
+import { fetchDocuments } from "features/ManageDocuments/documentsSlice";
 import { resetSearchAndFilters } from "features/SearchGroup/searchGroupSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";

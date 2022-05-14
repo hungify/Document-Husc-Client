@@ -11,13 +11,15 @@ import { getPage, getPageSize } from "app/selectors/searchGroup";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
 import FileList from "components/FileList";
+import RestoreIcon from "components/Icons/RestoreIcon";
 import { ROLES } from "configs/roles";
 import dayjs from "dayjs";
-import { fetchRevokeDocument } from "features/ManageDocuments/documentSlice";
+import { fetchRestoreDocument } from "features/ArchiveDocuments/archivesSlice";
+import { fetchRevokeDocument } from "features/ManageDocuments/documentsSlice";
 import { setPage, setPageSize } from "features/SearchGroup/searchGroupSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const CardItemAnt = styled(Card)`
@@ -25,7 +27,7 @@ const CardItemAnt = styled(Card)`
   border-radius: 10px;
 `;
 
-export default function ListDocument({ onEditDocument, onRevokeDocument }) {
+export default function ListDocument({ dataSource }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,6 +36,10 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
   const pageSize = useSelector(getPageSize);
   const totalDocuments = useSelector(getTotalDocuments);
   const documents = useSelector(getDocuments);
+
+  const path = useLocation()
+    .pathname.split("/")
+    .filter((item) => item)[0];
 
   const handleRevokeDocumentClick = (item) => {
     Modal.confirm({
@@ -55,107 +61,111 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
     });
   };
 
+  const handleRestoreDocument = (item) => {
+    Modal.confirm({
+      title: <Typography.Text strong>Bạn có muốn khôi phục văn bản này?</Typography.Text>,
+      icon: <ExclamationCircleOutlined />,
+      content: (
+        <Typography.Paragraph>
+          Văn bản này xuất hiện trong danh sách văn bản tìm kiếm
+        </Typography.Paragraph>
+      ),
+      okText: "Đồng ý",
+      cancelText: "Huỷ",
+      okType: "primary",
+      onOk() {
+        setTimeout(() => {
+          dispatch(fetchRestoreDocument(item._id));
+        }, 200);
+      },
+    });
+  };
+
   const handleEditDocumentClick = (item) => {
     navigate(`/documents/edit/${item._id}`);
   };
 
   return (
-    <>
-      {/* <ModalForm
-        onSubmit={handleOnSubmit}
-        onCancel={() => setVisible(false)}
-        size="large"
-        title="Thu hồi văn bản"
-        okText="Thu hồi"
-        cancelText="Hủy"
-        layout="vertical"
-        name="revoke-document-form"
-        wrapperCol={{
-          xs: { span: 24, offset: 0 },
-          sm: { span: 22, offset: 1 },
-          md: { span: 20, offset: 2 },
-        }}
-      >
-        <Form.Item
-          name="agency_description"
-          label="Lý do"
-          tooltip={{ title: "Lý do thu hồi văn bản?", icon: <InfoCircleOutlined /> }}
-          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
-        >
-          <Input.TextArea
-            placeholder="Vui lòng mô tả lý do thu hồi văn bản"
-            autoSize={{ minRows: 3, maxRows: 5 }}
-          />
-        </Form.Item>
-      </ModalForm> */}
-      <List
-        itemLayout="vertical"
-        size="default"
-        locale={{
-          emptyText: <Empty description="Danh sách trống" />,
-        }}
-        pagination={{
-          pageSize: pageSize,
-          defaultCurrent: page,
-          showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,
-          showQuickJumper: true,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "50", "100"],
-          showPrevNextJumpers: true,
-          showTitle: true,
-          total: totalDocuments,
-          onChange: (page) => {
-            dispatch(setPage({ page, triggerBy: "documents" }));
-          },
-          onShowSizeChange: (current, pageSize) => {
-            dispatch(setPageSize({ pageSize, triggerBy: "documents" }));
-          },
-        }}
-        dataSource={documents}
-        renderItem={(item) => (
-          <List.Item key={item._id}>
-            <BadgeRibbonUrgency text={item.urgentLevel.label}>
-              <CardItemAnt bordered={false}>
-                <Row align="middle" justify="space-between">
-                  <Col span={24}>
-                    <List.Item.Meta
-                      avatar={<Avatar size="large">{item.publisher?.avatar ?? "?"}</Avatar>}
-                      title={<Link to={`/detail/${item._id}?tab=property`}>{item.title}</Link>}
-                    />
-                  </Col>
-                  <Col span={8}>
-                    <Space direction="vertical">
-                      <Typography.Text>
-                        Số hiệu văn bản:&nbsp;
-                        <Typography.Text strong>{item.documentNumber}</Typography.Text>
+    <List
+      itemLayout="vertical"
+      size="default"
+      locale={{
+        emptyText: <Empty description="Danh sách trống" />,
+      }}
+      pagination={{
+        pageSize: pageSize,
+        defaultCurrent: page,
+        showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} kết quả`,
+        showQuickJumper: true,
+        showSizeChanger: true,
+        pageSizeOptions: ["10", "20", "50", "100"],
+        showPrevNextJumpers: true,
+        showTitle: true,
+        total: totalDocuments,
+        onChange: (page) => {
+          dispatch(setPage({ page, triggerBy: "documents" }));
+        },
+        onShowSizeChange: (current, pageSize) => {
+          dispatch(setPageSize({ pageSize, triggerBy: "documents" }));
+        },
+      }}
+      dataSource={dataSource ? dataSource : documents}
+      renderItem={(item) => (
+        <List.Item key={item._id}>
+          <BadgeRibbonUrgency text={item.urgentLevel.label}>
+            <CardItemAnt bordered={false}>
+              <Row align="middle" justify="space-between">
+                <Col span={24}>
+                  <List.Item.Meta
+                    avatar={<Avatar size="large">{item.publisher?.avatar ?? "?"}</Avatar>}
+                    title={<Link to={`/detail/${item._id}?tab=property`}>{item.title}</Link>}
+                  />
+                </Col>
+                <Col span={8}>
+                  <Space direction="vertical">
+                    <Typography.Text>
+                      Số hiệu văn bản:&nbsp;
+                      <Typography.Text strong>{item.documentNumber}</Typography.Text>
+                    </Typography.Text>
+                    <Typography.Text>
+                      Người ký:&nbsp;
+                      <Typography.Text strong>{item.signer}</Typography.Text>
+                    </Typography.Text>
+                  </Space>
+                </Col>
+                <Col span={8}>
+                  <Space direction="vertical">
+                    <Typography.Text>
+                      Ngày Ban hành:&nbsp;
+                      <Typography.Text strong>
+                        {dayjs(item.issueDate).format("DD/MM/YYYY")}
                       </Typography.Text>
-                      <Typography.Text>
-                        Người ký:&nbsp;
-                        <Typography.Text strong>{item.signer}</Typography.Text>
-                      </Typography.Text>
-                    </Space>
-                  </Col>
-                  <Col span={8}>
-                    <Space direction="vertical">
-                      <Typography.Text>
-                        Ngày Ban hành:&nbsp;
-                        <Typography.Text strong>
-                          {dayjs(item.issueDate).format("DD/MM/YYYY")}
-                        </Typography.Text>
-                      </Typography.Text>
-                      <Typography.Text>
-                        Cơ quan ban hành:&nbsp;
-                        <Typography.Text strong>{item.agency.label}</Typography.Text>
-                      </Typography.Text>
-                    </Space>
-                  </Col>
-                  {item.fileList.length > 0 && (
-                    <>
-                      <FileList files={item.fileList} />
-                    </>
-                  )}
-                  <Col span={4}>
-                    {role === ROLES.ADMIN ? (
+                    </Typography.Text>
+                    <Typography.Text>
+                      Cơ quan ban hành:&nbsp;
+                      <Typography.Text strong>{item.agency.label}</Typography.Text>
+                    </Typography.Text>
+                  </Space>
+                </Col>
+                {item.fileList.length > 0 && (
+                  <>
+                    <FileList files={item.fileList} />
+                  </>
+                )}
+                <Col span={4}>
+                  {role === ROLES.ADMIN ? (
+                    path === "archives" ? (
+                      <Typography.Title level={5}>
+                        <ButtonTooltip
+                          onButtonClick={handleRestoreDocument}
+                          document={item}
+                          icon={<RestoreIcon />}
+                          type="primary"
+                        >
+                          Khôi phục
+                        </ButtonTooltip>
+                      </Typography.Title>
+                    ) : (
                       <>
                         <Typography.Title level={5}>
                           <ButtonTooltip
@@ -179,20 +189,20 @@ export default function ListDocument({ onEditDocument, onRevokeDocument }) {
                           </ButtonTooltip>
                         </Typography.Title>
                       </>
-                    ) : role === ROLES.USER && !item.isRead ? (
-                      <Typography.Text strong>
-                        <Tag icon={<ClockCircleOutlined />} color="processing">
-                          Chờ xử lý
-                        </Tag>
-                      </Typography.Text>
-                    ) : null}
-                  </Col>
-                </Row>
-              </CardItemAnt>
-            </BadgeRibbonUrgency>
-          </List.Item>
-        )}
-      />
-    </>
+                    )
+                  ) : role === ROLES.USER && !item.isRead ? (
+                    <Typography.Text strong>
+                      <Tag icon={<ClockCircleOutlined />} color="processing">
+                        Chờ xử lý
+                      </Tag>
+                    </Typography.Text>
+                  ) : null}
+                </Col>
+              </Row>
+            </CardItemAnt>
+          </BadgeRibbonUrgency>
+        </List.Item>
+      )}
+    />
   );
 }

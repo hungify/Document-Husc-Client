@@ -90,6 +90,7 @@ const initialState = {
   message: null,
   modeSave: "official",
   documentDraft: null,
+  archived: [],
 
   total: 0,
   totalMatch: 0,
@@ -127,6 +128,8 @@ const issueDocumentSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchDocuments.pending, (state, action) => {
       state.loading = true;
+      state.archived = [];
+      state.total = 0;
     });
     builder.addCase(fetchDocuments.fulfilled, (state, action) => {
       state.loading = false;
@@ -198,7 +201,7 @@ const issueDocumentSlice = createSlice({
 
     builder.addCase(fetchRevokeDocument.pending, (state, action) => {
       state.loading = true;
-    })
+    });
     builder.addCase(fetchRevokeDocument.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
@@ -206,13 +209,13 @@ const issueDocumentSlice = createSlice({
       showToast("success", action.payload, toastPosition.bottomRight, {
         pauseOnHover: false,
       });
-    })
+    });
     builder.addCase(fetchRevokeDocument.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       state.success = false;
       showToast("error", action.payload, toastPosition.topRight);
-    })
+    });
   },
 });
 

@@ -8,7 +8,7 @@ import { fetchDocumentDetails } from "features/DocumentDetails/documentDetailsSl
 import {
   fetchIssueDocumentOfficial,
   fetchUpdateDocument
-} from "features/ManageDocuments/documentSlice";
+} from "features/ManageDocuments/documentsSlice";
 import FormIssuedDocument from "features/ManageDocuments/FormStep/FormIssueDocument";
 import PreviewIssueDocument from "features/ManageDocuments/FormStep/PreviewIssueDocument";
 import ResultMessage from "features/ManageDocuments/FormStep/ResultMessage";
