@@ -126,7 +126,6 @@ export default function ManageCategories() {
       onCancel() {},
     });
   };
-  console.log(selectedNode?.map((item) => item.key));
 
   return (
     <>
