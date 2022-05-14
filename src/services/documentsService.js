@@ -49,11 +49,19 @@ const documentsService = {
   },
   fetchCreateDocument: (formData) => {
     const url = "/documents";
-    return axiosInstance.post(url, formData);
+    return axiosInstance.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   fetchUpdateDocument: (documentId, formData) => {
     const url = `/documents/${documentId}`;
-    return axiosInstance.put(url, formData);
+    return axiosInstance.put(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
 };
 

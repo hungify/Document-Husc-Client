@@ -79,8 +79,14 @@ export default function DocumentContent(props) {
                   multiple
                   fileList={fileList}
                   beforeUpload={(file) => {
-                    const typesShouldBe = /application\/pdf|application\/doc|application\/docx/;
-                    const isMatch = typesShouldBe.test(file.type);
+                    const typesShouldBe = [
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                      "application/msword",
+                      "application/pdf",
+                      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                      "application/vnd.ms-excel",
+                    ];
+                    const isMatch = typesShouldBe.some((type) => file.type === type);
 
                     if (!isMatch) {
                       message.error(
@@ -91,7 +97,7 @@ export default function DocumentContent(props) {
                     }
                     return false;
                   }}
-                  accept=".pdf,.doc,.docx"
+                  accept=".pdf,.doc,.docx,.xlsx,.xls"
                   onRemove={(file) => {
                     const index = fileList.indexOf(file);
                     const newFileList = fileList.slice();

@@ -52,11 +52,11 @@ export default function FormIssuedDocument({
     if (slug) {
       form.setFieldsValue({
         //property
-        typesOfDocument: property?.typesOfDocument.value,
-        category: property?.category.value,
-        agency: property?.agency.value,
+        typesOfDocument: property?.typesOfDocument?.value,
+        category: property?.category?.value,
+        agency: property?.agency?.value,
         //classification
-        urgentLevel: property?.urgentLevel.value,
+        urgentLevel: property?.urgentLevel?.value,
         documentNumber: property?.documentNumber,
         issueDate: dayjs(property?.issueDate),
         signer: property?.signer,
@@ -68,7 +68,8 @@ export default function FormIssuedDocument({
         relatedDocuments: relatedDocuments,
         participants: participants,
       });
-      setDocumentFrom(files.length > 0 ? dataRadio[0].value : dataRadio[1].value);
+      setDocumentFrom(files?.length > 0 ? dataRadio[0].value : dataRadio[1].value);
+      console.log("🚀 :: files?.length", files?.length);
       setFileList(
         files?.map((file) => ({
           uid: uuid(),
@@ -95,7 +96,7 @@ export default function FormIssuedDocument({
 
   // Document Content
   const [documentFrom, setDocumentFrom] = React.useState(
-    files?.length > 0 ? dataRadio[0].value : dataRadio[1].value
+    formValues?.documentFrom || files?.length > 0 ? dataRadio[0].value : dataRadio[1].value
   );
   const [titleDocument, setTitleDocument] = React.useState();
   //option one
@@ -103,7 +104,8 @@ export default function FormIssuedDocument({
   //option two
   const [contentDocument, setContentDocument] = React.useState();
 
-  const [fileList, setFileList] = React.useState();
+  const [fileList, setFileList] = React.useState(formValues?.files?.fileList || []);
+
   const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(
     formValues?.relatedDocuments || []
   );

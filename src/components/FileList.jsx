@@ -22,7 +22,7 @@ export default function FileList({ files }) {
         />
       )}
       {files.length > 0 ? (
-        files.map((file) => (
+        files?.map((file) => (
           <Button
             key={file.originalName}
             type="dashed"

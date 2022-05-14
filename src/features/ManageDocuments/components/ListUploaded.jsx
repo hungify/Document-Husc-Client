@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Typography } from "antd";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,8 +15,10 @@ const WrapLink = styled.div`
   align-items: center;
 `;
 
-const ButtonLink = styled(Button)`
+const LinkAnt = styled(Typography.Link)`
   transition: background-color 0.3s ease-in-out;
+  margin: 2px;
+  padding: 3px;
   &:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
@@ -34,9 +36,7 @@ export default function ListUploaded({ fileList }) {
     <Wrapper>
       {fileList?.map((file) => (
         <WrapLink key={file.uid}>
-          <ButtonLink type="link" onClick={() => handlePreviewFileClick(file)}>
-            {file.name}
-          </ButtonLink>
+          <LinkAnt onClick={() => handlePreviewFileClick(file)}>{file.name}</LinkAnt>
         </WrapLink>
       ))}
     </Wrapper>
