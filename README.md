@@ -36,7 +36,7 @@ DocumentKHH is a website used to lookup, track, manage, store documents and redu
 
 ## Setup Locally
 
-1. Create file `.env`and the format should be as given in .env.example.
+1. Create file `.env`and the format should be as given in `.env.example.`
 2. Run command `npm instal` or `yarn install` 
 3. Run commnad `npm start` or `yarn start`
 
