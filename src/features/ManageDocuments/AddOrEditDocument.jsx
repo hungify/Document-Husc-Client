@@ -179,9 +179,9 @@ export default function AddOrEditDocument() {
           formData,
           documentId: slug,
         };
-        // dispatch(fetchUpdateDocument(formValues));
+        dispatch(fetchUpdateDocument(formValues));
       } else {
-        // dispatch(fetchIssueDocumentOfficial(formData));
+        dispatch(fetchIssueDocumentOfficial(formData));
       }
     }
   };
