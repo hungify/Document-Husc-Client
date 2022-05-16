@@ -51,7 +51,7 @@ export default function ManageCategories() {
   const categoriesTree = [
     {
       title: "Danh mục gốc",
-      _id: "root",
+      key: "root",
       children: categories,
     },
   ];
