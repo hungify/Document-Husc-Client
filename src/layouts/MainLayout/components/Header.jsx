@@ -24,6 +24,7 @@ const WrapHeader = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
+  justify-content: space-between;
 `;
 const Logo = styled.div`
   display: flex;
@@ -33,9 +34,7 @@ const Logo = styled.div`
     object-fit: contain;
   }
 `;
-const WrapLink = styled.div`
-  width: 100%;
-`;
+
 const Title = styled.h1`
   margin-left: 10px;
   margin-bottom: 0;
@@ -79,14 +78,14 @@ export default function Header({ shouldFixed }) {
   return (
     <HeaderAnt theme="light" $shouldFixed={shouldFixed} $positionY={scrollPosition}>
       <WrapHeader>
-        <WrapLink>
+        <div>
           <Link to="/">
             <Logo>
               <img src={LogoHusc} alt="logo" />
               <Title>Hệ thống tra cứu văn bản Đại học Khoa học Huế</Title>
             </Logo>
           </Link>
-        </WrapLink>
+        </div>
         {isAuth ? (
           <Menu
             mode="horizontal"
