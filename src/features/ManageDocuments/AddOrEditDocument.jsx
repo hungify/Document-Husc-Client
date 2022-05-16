@@ -38,6 +38,7 @@ const steps = [
     title: "Kết thúc",
   },
 ];
+const Wrapper = styled.div``;
 const Container = styled.div`
   padding: 10px 20px;
 `;
@@ -51,21 +52,48 @@ const WrapAlert = styled.div`
 `;
 const StepAction = styled.div`
   text-align: center;
+  padding: 20px;
 `;
+
 const ButtonReverse = styled(Button)`
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-  & > span {
-    display: flex;
-  }
-  &.ant-btn > .anticon + span,
-  .ant-btn > span {
-    margin-right: 8px;
-    margin-left: 0;
+  position: relative;
+  overflow: hidden;
+  padding-right: 0;
+  vertical-align: middle;
+  z-index: 1;
+  cursor: pointer;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease,
+    background 0.1s ease, -webkit-box-shadow 0.1s ease;
+`;
+const ButtonWrapText = styled.div`
+  position: relative;
+  margin-right: 15px;
+  right: 0;
+  transition: right 0.3s ease 0s;
+  will-change: transform, opacity;
+  ${ButtonReverse}:hover & {
+    left: auto;
+    right: 200%;
   }
 `;
 
+const ButtonWrapIcon = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  transition: left 0.3s ease 0s;
+  ${ButtonReverse}:hover & {
+    left: 0;
+  }
+`;
 export default function AddOrEditDocument() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState([]);
@@ -118,9 +146,8 @@ export default function AddOrEditDocument() {
         values.type = modeSave;
         dispatch(fetchIssueDocumentDraft(values));
         setCurrentStep(steps[steps.length - 1].key);
-      } else {
-        setCurrentStep(currentStep + 1);
       }
+      setCurrentStep(currentStep + 1);
     }
   };
 
@@ -190,7 +217,6 @@ export default function AddOrEditDocument() {
     setRequired(false);
     setModeSave("draft");
     form.submit();
-    // save draft
   };
 
   const handleIssueDocumentClick = () => {
@@ -199,7 +225,7 @@ export default function AddOrEditDocument() {
   };
 
   return (
-    <>
+    <Wrapper>
       <Steps current={currentStep}>
         {steps.map((item) => (
           <Steps.Step key={item.key} title={item.title} />
@@ -270,53 +296,75 @@ export default function AddOrEditDocument() {
       <StepAction>
         {currentStep === 0 ? (
           <Space size="large">
+            <ButtonReverse size="large" onClick={() => prevStep(currentStep)}>
+              <ButtonWrapText>Quay lại</ButtonWrapText>
+              <ButtonWrapIcon>
+                <ArrowLeftOutlined />
+              </ButtonWrapIcon>
+            </ButtonReverse>
             <Button
-              type="default"
+              type="dashed"
               size="large"
               onClick={() => handleSaveDraftDocumentClick()}
               icon={<SaveOutlined />}
             >
               Lưu bản nháp
             </Button>
-            <ButtonReverse
-              type="primary"
-              size="large"
-              onClick={() => nextStep(currentStep)}
-              icon={<ArrowRightOutlined />}
-            >
-              Tiếp theo
+            <ButtonReverse type="primary" size="large" onClick={() => nextStep(currentStep)}>
+              <ButtonWrapText>Tiếp theo</ButtonWrapText>
+              <ButtonWrapIcon>
+                <ArrowRightOutlined />
+              </ButtonWrapIcon>
             </ButtonReverse>
           </Space>
         ) : currentStep === 1 ? (
           <Space size="large">
-            <Button size="large" onClick={() => prevStep(currentStep)} icon={<ArrowLeftOutlined />}>
-              Quay lại
-            </Button>
-            <ButtonReverse
-              type="primary"
+            <ButtonReverse size="large" onClick={() => prevStep(currentStep)}>
+              <ButtonWrapText>Quay lại</ButtonWrapText>
+              <ButtonWrapIcon>
+                <ArrowLeftOutlined />
+              </ButtonWrapIcon>
+            </ButtonReverse>
+            <Button
+              type="dashed"
               size="large"
-              onClick={() => nextStep(currentStep)}
-              icon={<ArrowRightOutlined />}
+              onClick={() => handleSaveDraftDocumentClick()}
+              icon={<SaveOutlined />}
             >
-              Tiếp theo
+              Lưu bản nháp
+            </Button>
+            <ButtonReverse type="primary" size="large" onClick={() => nextStep(currentStep)}>
+              <ButtonWrapText>Tiếp theo</ButtonWrapText>
+              <ButtonWrapIcon>
+                <ArrowRightOutlined />
+              </ButtonWrapIcon>
             </ButtonReverse>
           </Space>
         ) : currentStep === 2 ? (
           <Space size="large">
-            <Button size="large" onClick={() => prevStep(currentStep)} icon={<ArrowLeftOutlined />}>
-              Quay lại
-            </Button>
-            <ButtonReverse
+            <ButtonReverse size="large" onClick={() => prevStep(currentStep)}>
+              <ButtonWrapText>Quay lại</ButtonWrapText>
+              <ButtonWrapIcon>
+                <ArrowLeftOutlined />
+              </ButtonWrapIcon>
+            </ButtonReverse>
+            <Button
+              type="dashed"
               size="large"
-              type="primary"
-              onClick={handleIssueDocumentClick}
-              icon={<PlaneIcon />}
+              onClick={() => handleSaveDraftDocumentClick()}
+              icon={<SaveOutlined />}
             >
-              {slug ? "Cập nhật và ban hành" : "Ban hành ngay"}
+              Lưu bản nháp
+            </Button>
+            <ButtonReverse size="large" type="primary" onClick={handleIssueDocumentClick}>
+              <ButtonWrapText>{slug ? "Cập nhật và ban hành" : "Ban hành ngay"}</ButtonWrapText>
+              <ButtonWrapIcon>
+                <PlaneIcon />
+              </ButtonWrapIcon>
             </ButtonReverse>
           </Space>
         ) : null}
       </StepAction>
-    </>
+    </Wrapper>
   );
 }
