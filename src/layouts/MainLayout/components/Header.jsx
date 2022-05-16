@@ -90,9 +90,9 @@ export default function Header({ shouldFixed }) {
           <Menu
             mode="horizontal"
             style={{
-              width: "100%",
               display: "flex",
               justifyContent: "flex-end",
+              flexGrow: "1",
             }}
           >
             <MenuSubMenuAnt
