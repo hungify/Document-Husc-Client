@@ -1,6 +1,7 @@
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Layout, Menu, Space, Typography } from "antd";
 import { getToken, isAuthenticated } from "app/selectors/auth";
+import { getProfile } from "app/selectors/profile";
 import LogoHusc from "assets/images/logo/logo.svg";
 import BellIcon from "components/Icons/BellIcon";
 import { fetchLogout } from "features/Auth/authSlice";
@@ -9,7 +10,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getProfile } from "app/selectors/profile";
 
 const HeaderAnt = styled(Layout.Header)`
   position: ${(props) => (props.$shouldFixed ? "fixed" : "relative")};
@@ -33,13 +33,12 @@ const Logo = styled.div`
     object-fit: contain;
   }
 `;
+const WrapLink = styled.div`
+  width: 100%;
+`;
 const Title = styled.h1`
   margin-left: 10px;
   margin-bottom: 0;
-`;
-
-const Flex = styled.div`
-  flex: 1 1 0%;
 `;
 const MenuSubMenuAnt = styled(Menu.SubMenu)`
   & .ant-menu-submenu-title {
@@ -80,17 +79,23 @@ export default function Header({ shouldFixed }) {
   return (
     <HeaderAnt theme="light" $shouldFixed={shouldFixed} $positionY={scrollPosition}>
       <WrapHeader>
-        <div>
+        <WrapLink>
           <Link to="/">
             <Logo>
               <img src={LogoHusc} alt="logo" />
               <Title>Hệ thống tra cứu văn bản Đại học Khoa học Huế</Title>
             </Logo>
           </Link>
-        </div>
-        <Flex />
+        </WrapLink>
         {isAuth ? (
-          <Menu mode="horizontal">
+          <Menu
+            mode="horizontal"
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <MenuSubMenuAnt
               key="notification"
               icon={
