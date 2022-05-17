@@ -147,11 +147,6 @@ export default function ListDocument({ dataSource }) {
                     </Typography.Text>
                   </Space>
                 </Col>
-                {item.fileList.length > 0 && (
-                  <>
-                    <FileList files={item.fileList} />
-                  </>
-                )}
                 <Col span={4}>
                   {role === ROLES.ADMIN ? (
                     path === "archives" ? (

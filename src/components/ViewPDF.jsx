@@ -11,7 +11,6 @@ const PageControl = styled.div`
   position: absolute;
   bottom: 5%;
   left: 50%;
-  width: 120px;
   background: white;
   opacity: 1;
   transform: translateX(-50%);
@@ -20,14 +19,33 @@ const PageControl = styled.div`
   border-radius: 4px;
 `;
 
+const ButtonAnt = styled(Button)`
+  background: white;
+  border: 0;
+  font: inherit;
+  border-radius: 4px;
+  padding: 5px;
+`;
+
+const PageNumberView = styled.span`
+  font-size: 1.2em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ant-drawer-body:hover & {
+    opacity: 1;
+  }
+`;
+
 const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
 `;
-
 export default function PreviewPDF(props) {
-  const { fileLocation, onLoadFileSuccess, onPreviousClick, onNextClick, pageNumber } = props;
+  const { fileLocation, onLoadFileSuccess, onPreviousClick, onNextClick, pageNumber, totalPage } =
+    props;
 
   return (
     <>
@@ -36,9 +54,24 @@ export default function PreviewPDF(props) {
           <Page pageNumber={pageNumber} scale={1.2} />
         </Document>
       </Wrapper>
-      <PageControl className="page-control">
-        <Button type="button" onClick={onPreviousClick} icon={<LeftOutlined />} size={"large"} />
-        <Button type="button" onClick={onNextClick} icon={<RightOutlined />} size={"large"} />
+      <PageControl className="page-controls">
+        <ButtonAnt
+          type="button"
+          onClick={onPreviousClick}
+          icon={<LeftOutlined />}
+          size="large"
+          disabled={pageNumber === 1}
+        />
+        <PageNumberView>
+          {pageNumber} của {totalPage}
+        </PageNumberView>
+        <ButtonAnt
+          type="button"
+          onClick={onNextClick}
+          icon={<RightOutlined />}
+          size="large"
+          disabled={pageNumber === totalPage}
+        />
       </PageControl>
     </>
   );

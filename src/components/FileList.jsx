@@ -1,4 +1,4 @@
-import { Button, Card, Empty } from "antd";
+import { Button, Card, Empty, Space } from "antd";
 import PreviewPdf from "components/PreviewPDF";
 import React from "react";
 import styled from "styled-components";
@@ -21,24 +21,26 @@ export default function FileList({ files }) {
           setPreviewVisible={setPreviewVisible}
         />
       )}
-      {files.length > 0 ? (
-        files?.map((file) => (
-          <Button
-            key={file.originalName}
-            type="dashed"
-            onClick={() => {
-              setPreviewVisible(true);
-              setPreviewFile(file);
-            }}
-          >
-            {file.originalName}
-          </Button>
-        ))
-      ) : (
-        <CardEmpty>
-          <Empty description="Danh sách trống" />
-        </CardEmpty>
-      )}
+      <Space size="large">
+        {files?.length > 0 ? (
+          files?.map((file) => (
+            <Button
+              key={file.originalName}
+              type="dashed"
+              onClick={() => {
+                setPreviewVisible(true);
+                setPreviewFile(file);
+              }}
+            >
+              {file.originalName}
+            </Button>
+          ))
+        ) : (
+          <CardEmpty>
+            <Empty description="Danh sách trống" />
+          </CardEmpty>
+        )}
+      </Space>
     </>
   );
 }

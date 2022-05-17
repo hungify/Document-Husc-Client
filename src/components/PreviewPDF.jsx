@@ -61,6 +61,7 @@ export default function PreviewPdf({ previewFile, setPreviewVisible, previewVisi
           onNextClick={handleNextClick}
           onLoadFileSuccess={handleLoadFileSuccess}
           pageNumber={pageNumber}
+          totalPage={totalPage}
         />
       </Drawer>
     </>
