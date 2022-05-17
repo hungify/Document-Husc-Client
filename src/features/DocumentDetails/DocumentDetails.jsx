@@ -61,13 +61,13 @@ export default function DetailDocument() {
   const isUpdateSuccess = useSelector(getSuccessUpdateRead);
   const isForwardSuccess = useSelector(getForwardSuccess);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (isUpdateSuccess || isForwardSuccess) {
       dispatch(fetchDocumentDetailsByKey({ slug, key: activeTab }));
     }
   }, [isUpdateSuccess, dispatch, slug, activeTab, isForwardSuccess]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (activeTab) {
       dispatch(fetchDocumentDetailsByKey({ slug, key: activeTab }));
     } else {
@@ -167,15 +167,17 @@ export default function DetailDocument() {
               ) : (
                 <React.Fragment key="a" />
               )}
-              <ButtonAnt
-                type="primary"
-                icon={<ForwardIcon />}
-                size="large"
-                onClick={() => handleForwardClick(property._id)}
-                key="forward"
-              >
-                Chuyển tiếp
-              </ButtonAnt>
+              {!isPublic && (
+                <ButtonAnt
+                  type="primary"
+                  icon={<ForwardIcon />}
+                  size="large"
+                  onClick={() => handleForwardClick(property._id)}
+                  key="forward"
+                >
+                  Chuyển tiếp
+                </ButtonAnt>
+              )}
             </Space>
           )
         }

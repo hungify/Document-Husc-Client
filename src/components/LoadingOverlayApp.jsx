@@ -1,6 +1,7 @@
 import LoadingOverlay from "react-loading-overlay";
 import ClipLoader from "react-spinners/ClipLoader";
 LoadingOverlay.propTypes = undefined;
+
 export default function LoadingOverlayApp({ active, children, ...restProps }) {
   return (
     <LoadingOverlay

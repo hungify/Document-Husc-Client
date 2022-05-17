@@ -2,7 +2,7 @@ import axiosInstance from "services/initRequest";
 
 const dashboardService = {
   fetchAnalytics: () => {
-    const url = "/dashboard/analytics";
+    const url = "dashboard/analytics";
     return axiosInstance.get(url);
   },
 };

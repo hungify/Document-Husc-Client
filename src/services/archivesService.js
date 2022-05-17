@@ -2,11 +2,11 @@ const { default: axiosInstance } = require("services/initRequest");
 
 const archiveService = {
   fetchArchivesDocuments: () => {
-    const url = "/archives";
+    const url = "archives";
     return axiosInstance.get(url);
   },
   fetchRestoreDocument: (documentId) => {
-    const url = `/archives/${documentId}`;
+    const url = `archives/${documentId}`;
     return axiosInstance.patch(url);
   },
 };

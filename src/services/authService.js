@@ -8,13 +8,14 @@ const authService = {
       password,
     });
   },
-  register: ({ username, email, password, department }) => {
+  register: ({ username, email, password, department, role }) => {
     const url = "auth/register";
     return axiosInstance.post(url, {
       username,
       email,
       password,
       department,
+      role,
     });
   },
   refreshToken: (refreshToken) => {

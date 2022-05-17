@@ -10,6 +10,7 @@ import { getDepartmentsConfig } from "app/selectors/departments";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateDepartment,
+  fetchDepartments,
   fetchUpdateDepartment,
 } from "features/ManageDepartments/departmentsSlice";
 import React from "react";
@@ -28,6 +29,10 @@ export default function ManageDepartments() {
   const [department, setDepartment] = React.useState(null);
   const departments = useSelector(getDepartmentsConfig);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchDepartments());
+  }, [dispatch]);
 
   const handleCreateOrEdit = ({ label }) => {
     if (department) {

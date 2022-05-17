@@ -76,7 +76,7 @@ export default function DocumentSummary({ dataSource }) {
       <RowAnt>
         <Col span={24}>
           {_.isEmpty(dataSource) ? (
-            <CardEmpty key="empty">
+            <CardEmpty>
               <Empty description="Danh sách trống" />
             </CardEmpty>
           ) : (

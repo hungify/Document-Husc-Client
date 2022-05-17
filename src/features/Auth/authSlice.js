@@ -23,10 +23,10 @@ export const fetchLogin = createAsyncThunk(login.type, async (values, thunkAPI) 
 
 const register = createAction("register");
 export const fetchRegister = createAsyncThunk(register.type, async (values, thunkAPI) => {
-  const { username, email, password, department, navigate } = values;
+  const { username, email, password, department, navigate, role } = values;
   try {
-    const { data } = await authService.register({ username, email, password, department });
-    data.message = "Đăng ký thành công !\nVui lòng đăng nhập";
+    const { data } = await authService.register({ username, email, password, department, role });
+    data.message = "Đăng ký thành công !\n Vui lòng đăng nhập";
     navigate("/login");
     return data;
   } catch (error) {
