@@ -1,22 +1,26 @@
-import RequireAuth from "components/RequireAuth";
+import { lazy } from "react";
+
 import { ROLES } from "configs/roles";
-import Unauthorized from "features/403/Unauthorized";
-import NotFound from "features/404/NotFound";
-import TabsAuth from "features/Auth/Auth";
-import DashBoard from "features/Dashboard/Dashboard";
-import DetailDocument from "features/DocumentDetails/DocumentDetails";
-import DraftDocuments from "features/DraftDocuments/DraftDocuments";
-import Home from "features/Home/Home";
-import ReceiverDocuments from "features/InboxDocuments/InboxDocuments";
-import ArchiveDocuments from "features/ArchiveDocuments/ArchiveDocuments";
-import ManageAgencies from "features/ManageAgencies/ManageAgencies";
-import ManageCategories from "features/ManageCategories/ManageCategories";
-import ManageDepartments from "features/ManageDepartments/ManageDepartments";
-import AddOrEditDocument from "features/ManageDocuments/AddOrEditDocument";
-import ManageTypesOfDocuments from "features/ManageTypesOfDocuments/ManageTypesOfDocuments";
-import Profile from "features/Profile/Profile";
-import SentDocuments from "features/SentDocuments/SentDocuments";
-import MainLayout from "layouts/MainLayout/MainLayout";
+const RequireAuth = lazy(() => import("components/RequireAuth"));
+const Unauthorized = lazy(() => import("features/403/Unauthorized"));
+const NotFound = lazy(() => import("features/404/NotFound"));
+const TabsAuth = lazy(() => import("features/Auth/Auth"));
+const DashBoard = lazy(() => import("features/Dashboard/Dashboard"));
+const DocumentDetails = lazy(() => import("features/DocumentDetails/DocumentDetails"));
+const DraftDocuments = lazy(() => import("features/DraftDocuments/DraftDocuments"));
+const Home = lazy(() => import("features/Home/Home"));
+const InboxDocuments = lazy(() => import("features/InboxDocuments/InboxDocuments"));
+const ArchiveDocuments = lazy(() => import("features/ArchiveDocuments/ArchiveDocuments"));
+const ManageAgencies = lazy(() => import("features/ManageAgencies/ManageAgencies"));
+const ManageCategories = lazy(() => import("features/ManageCategories/ManageCategories"));
+const ManageDepartments = lazy(() => import("features/ManageDepartments/ManageDepartments"));
+const AddOrEditDocument = lazy(() => import("features/ManageDocuments/AddOrEditDocument"));
+const ManageTypesOfDocuments = lazy(() =>
+  import("features/ManageTypesOfDocuments/ManageTypesOfDocuments")
+);
+const Profile = lazy(() => import("features/Profile/Profile"));
+const SentDocuments = lazy(() => import("features/SentDocuments/SentDocuments"));
+const MainLayout = lazy(() => import("layouts/MainLayout/MainLayout"));
 
 export const routePathDefinition = [
   {
@@ -34,7 +38,7 @@ export const routePathDefinition = [
         children: [
           {
             path: ":slug",
-            element: <DetailDocument />,
+            element: <DocumentDetails />,
             breadcrumb: "Chi tiết văn bản",
           },
         ],
@@ -73,11 +77,11 @@ export const routePathDefinition = [
               {
                 index: true,
                 breadcrumb: "Văn bản đến",
-                element: <ReceiverDocuments />,
+                element: <InboxDocuments />,
               },
               {
                 path: ":slug",
-                element: <DetailDocument />,
+                element: <DocumentDetails />,
                 breadcrumb: "Thông tin chi tiết",
               },
             ],
@@ -92,7 +96,7 @@ export const routePathDefinition = [
               },
               {
                 path: ":slug",
-                element: <DetailDocument />,
+                element: <DocumentDetails />,
                 breadcrumb: "Thông tin chi tiết",
               },
             ],
