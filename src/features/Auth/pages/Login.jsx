@@ -71,7 +71,7 @@ export default function Login({ active }) {
             id="login_email"
             initialValue={"admin2022@husc.edu.vn"}
           >
-            <Input placeholder="Email" size="large" spellCheck="false" />
+            <Input placeholder="Email" size="large" spellCheck={false} />
           </Form.Item>
           <Form.Item
             name="password"
@@ -79,7 +79,7 @@ export default function Login({ active }) {
             id="login_password"
             initialValue={"admin2022"}
           >
-            <Input.Password placeholder="Mật khẩu" size="large" spellCheck="false" />
+            <Input.Password placeholder="Mật khẩu" size="large" spellCheck={false} />
           </Form.Item>
         </>
         <Form.Item>

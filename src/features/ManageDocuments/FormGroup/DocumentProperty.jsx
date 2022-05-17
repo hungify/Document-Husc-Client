@@ -41,6 +41,7 @@ export default function DocumentProperty(props) {
               placeholder="Nhập vào số hiệu văn bản"
               size="large"
               onChange={onDocumentNumberChange}
+              spellCheck={false}
             />
           </FormItemAnt>
         </Col>
@@ -104,6 +105,7 @@ export default function DocumentProperty(props) {
               placeholder="Nhập vào người kí văn bản"
               size="large"
               onChange={onSignerDocumentChange}
+              spellCheck={false}
             />
           </FormItemAnt>
         </Col>

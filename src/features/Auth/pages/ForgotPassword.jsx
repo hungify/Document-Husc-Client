@@ -47,7 +47,7 @@ export default function ForgotPassword({ active }) {
         <Title>Quên mật khẩu</Title>
         <TitleDesc>Kiểm tra hộp thư email</TitleDesc>
         <Form.Item name="email" rules={authRules.email}>
-          <Input placeholder="Email" size="large" spellCheck="false" />
+          <Input placeholder="Email" size="large" spellCheck={false} />
         </Form.Item>
         <Form.Item>
           <ButtonAnt type="primary" htmlType="submit">
