@@ -3,10 +3,11 @@ import showToast, { toastPosition } from "configs/toast";
 import documentsService from "services/documentsService";
 
 const fetch = createAction("documentDetails/fetch/key");
-export const fetchDocumentDetailsByKey = createAsyncThunk(fetch.type, async (query, thunkAPI) => {
+export const fetchDocumentDetailsByTab = createAsyncThunk(fetch.type, async (query, thunkAPI) => {
   try {
-    const { data, myReadDate, publisherId, isPublic } =
-      await documentsService.fetchDocumentDetailsByKey(query);
+    const response = await documentsService.fetchDocumentDetailsByTab(query);
+    const { data, myReadDate, publisherId, isPublic } = response;
+    data.key = query.key;
     return { data, key: query.key, myReadDate, publisherId, isPublic };
   } catch (error) {
     const { message } = error.response.data;
@@ -51,7 +52,7 @@ const documentDetailsSlice = createSlice({
   name: "documentDetails",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchDocumentDetailsByKey.fulfilled, (state, action) => {
+    builder.addCase(fetchDocumentDetailsByTab.fulfilled, (state, action) => {
       state.property = action.payload.key === "property" ? action.payload.data : {};
       state.fileList = action.payload.key === "files" ? action.payload.data : [];
       state.relatedDocuments = action.payload.key === "relatedDocuments" ? action.payload.data : [];
@@ -61,11 +62,11 @@ const documentDetailsSlice = createSlice({
       state.publisherId = action.payload.publisherId;
       state.isPublic = action.payload.isPublic;
     });
-    builder.addCase(fetchDocumentDetailsByKey.rejected, (state, action) => {
+    builder.addCase(fetchDocumentDetailsByTab.rejected, (state, action) => {
       state.error = action.payload;
       showToast("error", action.payload, toastPosition.topRight);
     });
-    builder.addCase(fetchDocumentDetailsByKey.pending, (state, action) => {
+    builder.addCase(fetchDocumentDetailsByTab.pending, (state, action) => {
       state.loading = true;
     });
 

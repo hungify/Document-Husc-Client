@@ -10,7 +10,6 @@ import { getDocuments, getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
-import FileList from "components/FileList";
 import RestoreIcon from "components/Icons/RestoreIcon";
 import { ROLES } from "configs/roles";
 import dayjs from "dayjs";

@@ -52,7 +52,6 @@ export default function DocumentSummary({ dataSource }) {
       return {
         title: item.title,
         dataIndex: item.key,
-        key: item.key,
         render: (text) => {
           if (item.key === "urgentLevel") {
             return (
