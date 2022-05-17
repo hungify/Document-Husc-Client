@@ -43,6 +43,7 @@ export default function Register({ active }) {
 
   const handleRegister = (values) => {
     values.navigate = navigate;
+    values.role = "user";
     dispatch(fetchRegister(values));
     form.resetFields(["password", "confirmPassword"]);
   };
@@ -71,7 +72,7 @@ export default function Register({ active }) {
             onSelect={handleDepartmentSelect}
             value={department}
             showSearch={true}
-            placeholder="Chọn phòng ban làm việc"
+            placeholder="Chọn phòng/ban làm việc"
             size="large"
             allowClear
             filterOption={false}
