@@ -16,7 +16,7 @@ export default function DocumentContent(props) {
 
     titleDocument,
     onTitleDocumentChange,
-    summaryValue,
+    summaryDocument,
     onSummaryChange,
     contentDocument,
     onContentDocumentChange,
@@ -74,6 +74,7 @@ export default function DocumentContent(props) {
                   title: "Các tệp văn bản của bạn?",
                   icon: <InfoCircleOutlined />,
                 }}
+                initialValue={fileList} // must have
               >
                 <Upload.Dragger
                   name="files"
@@ -123,10 +124,10 @@ export default function DocumentContent(props) {
                     title: "Tóm tắt nhanh văn bản của bạn?",
                     icon: <InfoCircleOutlined />,
                   }}
-                  initialValue={summaryValue}
+                  // initialValue={summaryDocument}
                 >
                   <Input.TextArea
-                    value={summaryValue}
+                    value={summaryDocument}
                     onChange={onSummaryChange}
                     placeholder="Nhập vào tóm tắt của văn bản"
                     autoSize={{ minRows: 6, maxRows: 6 }}
@@ -142,7 +143,7 @@ export default function DocumentContent(props) {
               label={<Typography.Text strong>Nội dung</Typography.Text>}
               name="content"
               rules={[{ required: required, message: "Trường này là bắt buộc" }]}
-              initialValue={contentDocument}
+              // initialValue={contentDocument}
             >
               <Input.TextArea
                 value={contentDocument}
