@@ -1,8 +1,7 @@
-import { DownloadOutlined, ExpandOutlined } from "@ant-design/icons";
-import { Avatar, Card, Col, Empty, List, Row, Typography } from "antd";
+import { Avatar, Card, Col, Empty, List, Row, Space, Typography } from "antd";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
-import ButtonFlexible from "components/ButtonTooltip";
-import { saveAs } from "file-saver";
+import FileList from "components/FileList";
+import dayjs from "dayjs";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -17,16 +16,6 @@ const CardItemAnt = styled(Card)`
 `;
 
 export default function RelatedDocuments({ dataSource }) {
-  const handlePreviewFileClick = (item) => {
-    window.open(item, {
-      target: "_blank",
-      rel: "noopener noreferrer",
-    });
-  };
-  const handleSaveFileClick = (item) => {
-    saveAs(item, "name_cua_file.pdf");
-  };
-
   return (
     <WrapCard bordered={false}>
       <List
@@ -44,56 +33,44 @@ export default function RelatedDocuments({ dataSource }) {
         }}
         renderItem={(item) => (
           <List.Item key={item._id}>
-            <BadgeRibbonUrgency text={item.urgentLevel.label} colorTag={item.urgentLevel.colorTag}>
+            <BadgeRibbonUrgency text={item.urgentLevel.label}>
               <CardItemAnt bordered={false}>
                 <Row align="middle" justify="space-between">
                   <Col span={24}>
                     <List.Item.Meta
-                      avatar={
-                        <Avatar size="large">
-                          {item.publisher.username.charAt(0).toUpperCase()}
-                        </Avatar>
-                      }
-                      title={<Link to={`/detail/${item._id}`}>{item.title}</Link>}
+                      avatar={<Avatar size="large">{item.publisher?.avatar ?? "?"}</Avatar>}
+                      title={<Link to={`/detail/${item._id}?tab=property`}>{item.title}</Link>}
                     />
                   </Col>
-                  <Col span={7}>
-                    <Typography.Title level={5}>
-                      Số hiệu văn bản:
-                      <Typography.Text keyboard>{item.documentNumber}</Typography.Text>
-                    </Typography.Title>
+                  <Col span={8}>
+                    <Space direction="vertical">
+                      <Typography.Text>
+                        Số hiệu văn bản:&nbsp;
+                        <Typography.Text strong>{item.documentNumber}</Typography.Text>
+                      </Typography.Text>
+                      <Typography.Text>
+                        Người ký:&nbsp;
+                        <Typography.Text strong>{item.signer}</Typography.Text>
+                      </Typography.Text>
+                    </Space>
                   </Col>
-                  <Col span={7}>
-                    <Typography.Title level={5}>
-                      Người ký: <Typography.Text keyboard>{item.signer}</Typography.Text>
-                    </Typography.Title>
+                  <Col span={8}>
+                    <Space direction="vertical">
+                      <Typography.Text>
+                        Ngày Ban hành:&nbsp;
+                        <Typography.Text strong>
+                          {dayjs(item.issueDate).format("DD/MM/YYYY")}
+                        </Typography.Text>
+                      </Typography.Text>
+
+                      <Typography.Text>
+                        Cơ quan ban hành:&nbsp;
+                        <Typography.Text strong>{item.agency.label}</Typography.Text>
+                      </Typography.Text>
+                    </Space>
                   </Col>
-                  <Col span={7}>
-                    <Typography.Title level={5}>
-                      Ngày Ban hành: <Typography.Text keyboard>{item.issueDate}</Typography.Text>
-                    </Typography.Title>
-                  </Col>
-                  <Col span={1}>
-                    <Typography.Title level={5}>
-                      <ButtonFlexible
-                        type="primary"
-                        shape="round"
-                        icon={<ExpandOutlined />}
-                        onButtonClick={handlePreviewFileClick}
-                        document={item.fileUrl}
-                      />
-                    </Typography.Title>
-                  </Col>
-                  <Col span={1}>
-                    <Typography.Title level={5}>
-                      <ButtonFlexible
-                        type="primary"
-                        shape="round"
-                        icon={<DownloadOutlined />}
-                        onButtonClick={handleSaveFileClick}
-                        document={item.fileUrl}
-                      />
-                    </Typography.Title>
+                  <Col span={8}>
+                    <FileList files={item.fileList} direction="vertical" />
                   </Col>
                 </Row>
               </CardItemAnt>

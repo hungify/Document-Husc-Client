@@ -7,7 +7,9 @@ export const fetchDocumentDetailsByTab = createAsyncThunk(fetch.type, async (que
   try {
     const response = await documentsService.fetchDocumentDetailsByTab(query);
     const { data, myReadDate, publisherId, isPublic } = response;
-    data.key = query.key;
+    if (query.key === "property") {
+      data.key = query.key;
+    }
     return { data, key: query.key, myReadDate, publisherId, isPublic };
   } catch (error) {
     const { message } = error.response.data;
