@@ -3,7 +3,7 @@ import {
   EditTwoTone,
   ExclamationCircleOutlined,
   InfoCircleOutlined,
-  PlusCircleTwoTone
+  PlusCircleTwoTone,
 } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
@@ -105,7 +105,7 @@ export default function ManageAgencies() {
           tooltip={{ title: "Tên cơ quan ban hành của bạn?", icon: <InfoCircleOutlined /> }}
           rules={[{ required: true, message: "Trường này là bắt buộc" }]}
         >
-          <Input placeholder="Vui lòng nhập vào cơ quan ban hành" />
+          <Input placeholder="Vui lòng nhập vào cơ quan ban hành" spellCheck="false" />
         </Form.Item>
       </ModalForm>
 

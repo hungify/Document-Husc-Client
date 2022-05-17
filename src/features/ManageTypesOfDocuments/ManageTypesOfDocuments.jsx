@@ -3,18 +3,18 @@ import {
   EditTwoTone,
   ExclamationCircleOutlined,
   InfoCircleOutlined,
-  PlusCircleTwoTone
+  PlusCircleTwoTone,
 } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Modal, notification, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
 import {
   getTypesOfDocumentsConfig,
-  getTypesOfDocumentsTotal
+  getTypesOfDocumentsTotal,
 } from "app/selectors/typesOfDocuments";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateTypesOfDocuments,
-  fetchUpdateTypesOfDocuments
+  fetchUpdateTypesOfDocuments,
 } from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -110,7 +110,7 @@ export default function ManageTypesOfDocuments() {
           tooltip={{ title: "Tên loại văn bản của bạn?", icon: <InfoCircleOutlined /> }}
           rules={[{ required: true, message: "Trường này là bắt buộc" }]}
         >
-          <Input placeholder="Vui lòng nhập vào tên loại văn bản" />
+          <Input placeholder="Vui lòng nhập vào tên loại văn bản" spellCheck="false" />
         </Form.Item>
       </ModalForm>
       <Card
