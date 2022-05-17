@@ -176,9 +176,7 @@ export default function PreviewIssueDocument({ formValues }) {
                     <Col span={formValues?.documentFrom === "input" ? 24 : 17}>
                       <Typography.Title level={5}>{item.title}</Typography.Title>
                       {formValues?.documentFrom === "input" ? (
-                        <>
-                          <Typography.Paragraph>{item?.content}</Typography.Paragraph>
-                        </>
+                        <Typography.Paragraph>{item?.content}</Typography.Paragraph>
                       ) : (
                         <Typography.Paragraph>{item?.summary}</Typography.Paragraph>
                       )}
