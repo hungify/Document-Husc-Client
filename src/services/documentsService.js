@@ -3,7 +3,7 @@ import axiosInstance from "services/initRequest";
 
 const documentsService = {
   fetchDocuments: (filterQuery) => {
-    const url = "/documents";
+    const url = "documents";
     const { sort, page, pageSize, filtersBy, search, dateRange } = filterQuery;
     const filterParams = removeEmptyObjects(filtersBy);
     const searchParams = removeEmptyObjects(search);
@@ -36,19 +36,19 @@ const documentsService = {
     });
   },
   fetchDocumentDetailsByKey: ({ slug, key }) => {
-    const url = `/documents/${slug}?tab=${key}`;
+    const url = `documents/${slug}?tab=${key}`;
     return axiosInstance.get(url);
   },
   fetchDocumentDetails: ({ slug }) => {
-    const url = `/documents/${slug}`;
+    const url = `documents/${slug}`;
     return axiosInstance.get(url);
   },
   fetchDocumentsByIds: (ids) => {
-    const url = "/documents?ids=".concat(ids.join(","));
+    const url = "documents?ids=".concat(ids.join(","));
     return axiosInstance.get(url);
   },
   fetchCreateDocumentOfficial: (formData) => {
-    const url = "/documents";
+    const url = "documents";
     return axiosInstance.post(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -56,7 +56,7 @@ const documentsService = {
     });
   },
   fetchCreateDocumentDraft: (formData) => {
-    const url = "/documents";
+    const url = "documents";
     return axiosInstance.post(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -64,7 +64,7 @@ const documentsService = {
     });
   },
   fetchUpdateDocument: (documentId, formData) => {
-    const url = `/documents/${documentId}`;
+    const url = `documents/${documentId}`;
     return axiosInstance.put(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -72,7 +72,7 @@ const documentsService = {
     });
   },
   fetchRevokeDocument: (documentId) => {
-    const url = `/documents/${documentId}`;
+    const url = `documents/${documentId}`;
     return axiosInstance.delete(url);
   },
 };
