@@ -96,7 +96,7 @@ export default function ManageDepartments() {
           tooltip={{ title: "Tên phòng/ban của bạn", icon: <InfoCircleOutlined /> }}
           rules={[{ required: true, message: "Trường này là bắt buộc" }]}
         >
-          <Input placeholder="Nhập vào tên phòng/ban" />
+          <Input placeholder="Nhập vào tên phòng/ban" spellCheck="false" />
         </Form.Item>
       </ModalForm>
 

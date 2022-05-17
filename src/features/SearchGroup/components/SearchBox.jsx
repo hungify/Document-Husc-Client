@@ -57,7 +57,7 @@ export default function SearchBox(props) {
               display: "flex",
             }}
           >
-            <Input allowClear placeholder={placeholder} size="large" />
+            <Input allowClear placeholder={placeholder} size="large" spellCheck="false" />
             <Button type="primary" htmlType="submit" size="large" icon={<SearchOutlined />}>
               Tìm kiếm
             </Button>
