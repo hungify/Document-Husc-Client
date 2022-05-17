@@ -57,6 +57,7 @@ export default function DocumentContent(props) {
               size="large"
               value={titleDocument}
               onChange={onTitleDocumentChange}
+              spellCheck={false}
             />
           </FormItemAnt>
         </Col>
@@ -129,6 +130,7 @@ export default function DocumentContent(props) {
                     onChange={onSummaryChange}
                     placeholder="Nhập vào tóm tắt của văn bản"
                     autoSize={{ minRows: 6, maxRows: 6 }}
+                    spellCheck={false}
                   />
                 </FormItemAnt>
               )}
@@ -147,6 +149,7 @@ export default function DocumentContent(props) {
                 onChange={onContentDocumentChange}
                 placeholder="Nhập vào nội dung của văn bản"
                 autoSize={{ minRows: 6, maxRows: 6 }}
+                spellCheck={false}
               />
             </FormItemAnt>
           </Col>

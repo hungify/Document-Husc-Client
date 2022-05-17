@@ -63,7 +63,7 @@ export default function Register({ active }) {
         <Title>Chào mừng đến với hệ thống</Title>
         <TitleDesc>Đăng ký vào hệ thống</TitleDesc>
         <Form.Item name="username" rules={authRules.username}>
-          <Input placeholder="Tên hiển thị" size="large" spellCheck="false" />
+          <Input placeholder="Tên hiển thị" size="large" spellCheck={false} />
         </Form.Item>
         <Form.Item name="department" rules={authRules.department}>
           <SelectForm
@@ -81,7 +81,7 @@ export default function Register({ active }) {
           <Input placeholder="Email" size="large" spellCheck={false} />
         </Form.Item>
         <Form.Item name="password" rules={authRules.password} id="register_password">
-          <Input.Password placeholder="Password" size="large" spellCheck="false" />
+          <Input.Password placeholder="Password" size="large" spellCheck={false} />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
@@ -101,7 +101,7 @@ export default function Register({ active }) {
           ]}
           id="register_confirm_password"
         >
-          <Input.Password placeholder="Confirm password" size="large" spellCheck="false" />
+          <Input.Password placeholder="Confirm password" size="large" spellCheck={false} />
         </Form.Item>
         <Form.Item>
           <ButtonAnt type="primary" htmlType="submit">
