@@ -17,6 +17,7 @@ import { fetchUrgentLevels } from "app/reducers/configs/urgentLevelsSlice";
 import { fetchCategories } from "features/ManageCategories/categoriesSlice";
 import { fetchTypesOfDocuments } from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
 import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocuments";
+import { fetchDepartments } from "features/ManageDepartments/departmentsSlice";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
@@ -58,6 +59,7 @@ export default function MainLayout({ children }) {
     dispatch(fetchAgencies());
     dispatch(fetchUrgentLevels());
     dispatch(fetchCategories());
+    dispatch(fetchDepartments());
     dispatch(fetchTypesOfDocuments()); // this line must be end of dispatch
   }, [dispatch]);
 
