@@ -35,7 +35,7 @@ const documentsService = {
       params: query,
     });
   },
-  fetchDocumentDetailsByKey: ({ slug, key }) => {
+  fetchDocumentDetailsByTab: ({ slug, key }) => {
     const url = `documents/${slug}?tab=${key}`;
     return axiosInstance.get(url);
   },
