@@ -4,6 +4,7 @@ import { getCategoriesTreeConfig } from "app/selectors/categories";
 import { getRelatedDocuments } from "app/selectors/documents";
 import { getTypesOfDocumentsConfig } from "app/selectors/typesOfDocuments";
 import { getUrgentLevelsConfig } from "app/selectors/urgentLevels";
+import { getFiles } from "app/selectors/documentDetails";
 import BadgeRibbonAgency from "components/BadgeRibbonUrgent";
 import dayjs from "dayjs";
 import ListUploaded from "features/ManageDocuments/components/ListUploaded";
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { findNodeByKey } from "utils/tree";
 import { v4 as uuidv4 } from "uuid";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -31,7 +33,6 @@ const CardAnt = styled(Card)`
     margin-bottom: 20px;
   }
 `;
-
 const CardItemAnt = styled(Card)`
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
@@ -103,6 +104,7 @@ export default function PreviewIssueDocument({ formValues }) {
   const categoriesConfig = useSelector(getCategoriesTreeConfig);
   const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
   const urgentLevelsConfig = useSelector(getUrgentLevelsConfig);
+  const { slug } = useParams();
 
   React.useEffect(() => {
     if (formValues) {
@@ -139,10 +141,12 @@ export default function PreviewIssueDocument({ formValues }) {
       title: formValues?.title,
       content: formValues?.content,
       summary: formValues?.summary,
-      fileList: formValues?.files?.fileList,
+      fileList: slug ? formValues?.files : formValues?.files?.fileList,
     },
   ];
+
   const relatedDocuments = useSelector(getRelatedDocuments) || [];
+
   return (
     <Container>
       <Row>
@@ -182,7 +186,7 @@ export default function PreviewIssueDocument({ formValues }) {
                     {formValues?.documentFrom === "attach" && (
                       <Col span={7}>
                         <Typography.Title level={5}>Danh sách tệp</Typography.Title>
-                        <ListUploaded fileList={item.fileList} />
+                        <ListUploaded fileList={item?.fileList} />
                       </Col>
                     )}
                   </React.Fragment>
