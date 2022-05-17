@@ -3,14 +3,14 @@ import {
   DownOutlined,
   EditTwoTone,
   ExclamationCircleOutlined,
-  PlusCircleTwoTone
+  PlusCircleTwoTone,
 } from "@ant-design/icons";
 import { Button, Card, Form, Input, Modal, notification, Tooltip, Tree, Typography } from "antd";
 import { getCategoriesTotal, getCategoriesTreeConfig } from "app/selectors/categories";
 import ModalForm from "components/ModalForm";
 import {
   fetchCreateCategory,
-  fetchUpdateCategory
+  fetchUpdateCategory,
 } from "features/ManageCategories/categoriesSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -151,9 +151,9 @@ export default function ManageCategories() {
         <Form.Item
           name="title"
           label="Tên chuyên mục"
-          rules={[{ required: true, message: "Vui lòng nhập vào tên chuyên mục!" }]}
+          rules={[{ required: true, message: "Trường này là bắt buộc" }]}
         >
-          <Input />
+          <Input placeholder="Nhập vào tên chuyên mục" spellCheck="false" />
         </Form.Item>
       </ModalForm>
 
