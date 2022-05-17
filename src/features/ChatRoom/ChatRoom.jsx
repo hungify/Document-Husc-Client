@@ -1,7 +1,10 @@
 import { Avatar, Button, Comment, Form, Input } from "antd";
 import CommentList from "features/ChatRoom/CommentList";
 import React from "react";
-
+import { io } from "socket.io-client";
+const socket = io.connect("https://localhost:8000", {
+  transports: ["websocket"],
+});
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
     <Form.Item>
@@ -25,6 +28,10 @@ export default function ChatRoom() {
   const [submitting, setSubmitting] = React.useState(false);
   const [value, setValue] = React.useState("");
 
+  socket.on("connect", () => {
+    console.log(socket.id);
+  });
+
   const handleSubmit = () => {
     if (!value) {
       return;
@@ -32,19 +39,19 @@ export default function ChatRoom() {
 
     setSubmitting(true);
 
-    setTimeout(() => {
-      setSubmitting(false);
-      setValue("");
-      setComments([
-        ...comments,
-        {
-          author: "Nguyễn Kim Ngàn",
-          avatar: "Nguyễn Kim Ngàn",
-          content: <p>{value}</p>,
-          datetime: "2 day ago",
-        },
-      ]);
-    }, 1000);
+    // setTimeout(() => {
+    //   setSubmitting(false);
+    //   setValue("");
+    //   setComments([
+    //     ...comments,
+    //     {
+    //       author: "Nguyễn Kim Ngàn",
+    //       avatar: "Nguyễn Kim Ngàn",
+    //       content: <p>{value}</p>,
+    //       datetime: "2 day ago",
+    //     },
+    //   ]);
+    // }, 1000);
   };
 
   const handleChange = (e) => {
