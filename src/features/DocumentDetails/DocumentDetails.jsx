@@ -18,7 +18,7 @@ import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { ROLES } from "configs/roles";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
-import { fetchDocumentDetailsByKey } from "features/DocumentDetails/documentDetailsSlice";
+import { fetchDocumentDetailsByTab } from "features/DocumentDetails/documentDetailsSlice";
 import { forwardDocuments, updateReadDocument } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
@@ -63,13 +63,13 @@ export default function DetailDocument() {
 
   React.useLayoutEffect(() => {
     if (isUpdateSuccess || isForwardSuccess) {
-      dispatch(fetchDocumentDetailsByKey({ slug, key: activeTab }));
+      dispatch(fetchDocumentDetailsByTab({ slug, key: activeTab }));
     }
   }, [isUpdateSuccess, dispatch, slug, activeTab, isForwardSuccess]);
 
   React.useLayoutEffect(() => {
     if (activeTab) {
-      dispatch(fetchDocumentDetailsByKey({ slug, key: activeTab }));
+      dispatch(fetchDocumentDetailsByTab({ slug, key: activeTab }));
     } else {
       navigate(`?tab=property`);
     }
@@ -77,7 +77,7 @@ export default function DetailDocument() {
 
   const handleTabChangeClick = (key) => {
     navigate(`?tab=${key}`);
-    dispatch(fetchDocumentDetailsByKey({ slug, key }));
+    dispatch(fetchDocumentDetailsByTab({ slug, key }));
   };
 
   const handleForwardClick = () => {
