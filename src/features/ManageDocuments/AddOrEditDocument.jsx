@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import styled from "styled-components";
+import _ from "lodash";
+import { getFileFromUrl } from "utils/file";
 
 const steps = [
   {
@@ -166,7 +168,7 @@ export default function AddOrEditDocument() {
 
   const handleIssueOfficialDocument = (values) => {
     if (values) {
-      const dataSubmit = formValues[formValues.length - 1];
+      const dataSubmit = _.pickBy(formValues[formValues.length - 1], _.identity);
 
       const participants =
         values.recipients.length > 0
@@ -185,13 +187,19 @@ export default function AddOrEditDocument() {
       dataSubmit.participants = participants;
       dataSubmit.type = modeSave;
 
-      // dataSubmit.
       const formData = new FormData();
       for (const key in dataSubmit) {
         if (dataSubmit.hasOwnProperty(key)) {
           if (key === "files") {
-            dataSubmit[key].fileList.forEach((file) => {
-              formData.append(key, file.originFileObj);
+            const data = slug ? dataSubmit[key] : dataSubmit[key].fileList;
+
+            data.forEach(async (file) => {
+              if (slug) {
+                const fileObj = await getFileFromUrl(file.url, file.name, file.type);
+                formData.append(key, fileObj);
+              } else {
+                formData.append(key, file.originFileObj);
+              }
             });
           } else if (key === "participants") {
             formData.append(key, JSON.stringify(dataSubmit[key]));
@@ -223,7 +231,6 @@ export default function AddOrEditDocument() {
     setModeSave("official");
     form.submit();
   };
-
   return (
     <Wrapper>
       <Steps current={currentStep}>
@@ -233,7 +240,7 @@ export default function AddOrEditDocument() {
       </Steps>
       <Container>
         <Row>
-          {steps[currentStep].key === 0 ? (
+          {steps[currentStep]?.key === 0 ? (
             <Col span={24}>
               <WrapAlert>
                 <Alert
@@ -296,20 +303,16 @@ export default function AddOrEditDocument() {
       <StepAction>
         {currentStep === 0 ? (
           <Space size="large">
-            <ButtonReverse size="large" onClick={() => prevStep(currentStep)}>
-              <ButtonWrapText>Quay lại</ButtonWrapText>
-              <ButtonWrapIcon>
-                <ArrowLeftOutlined />
-              </ButtonWrapIcon>
-            </ButtonReverse>
-            <Button
-              type="dashed"
-              size="large"
-              onClick={() => handleSaveDraftDocumentClick()}
-              icon={<SaveOutlined />}
-            >
-              Lưu bản nháp
-            </Button>
+            {!slug && (
+              <Button
+                type="dashed"
+                size="large"
+                onClick={() => handleSaveDraftDocumentClick()}
+                icon={<SaveOutlined />}
+              >
+                Lưu bản nháp
+              </Button>
+            )}
             <ButtonReverse type="primary" size="large" onClick={() => nextStep(currentStep)}>
               <ButtonWrapText>Tiếp theo</ButtonWrapText>
               <ButtonWrapIcon>
@@ -325,14 +328,16 @@ export default function AddOrEditDocument() {
                 <ArrowLeftOutlined />
               </ButtonWrapIcon>
             </ButtonReverse>
-            <Button
-              type="dashed"
-              size="large"
-              onClick={() => handleSaveDraftDocumentClick()}
-              icon={<SaveOutlined />}
-            >
-              Lưu bản nháp
-            </Button>
+            {!slug && (
+              <Button
+                type="dashed"
+                size="large"
+                onClick={() => handleSaveDraftDocumentClick()}
+                icon={<SaveOutlined />}
+              >
+                Lưu bản nháp
+              </Button>
+            )}
             <ButtonReverse type="primary" size="large" onClick={() => nextStep(currentStep)}>
               <ButtonWrapText>Tiếp theo</ButtonWrapText>
               <ButtonWrapIcon>
@@ -348,14 +353,16 @@ export default function AddOrEditDocument() {
                 <ArrowLeftOutlined />
               </ButtonWrapIcon>
             </ButtonReverse>
-            <Button
-              type="dashed"
-              size="large"
-              onClick={() => handleSaveDraftDocumentClick()}
-              icon={<SaveOutlined />}
-            >
-              Lưu bản nháp
-            </Button>
+            {!slug && (
+              <Button
+                type="dashed"
+                size="large"
+                onClick={() => handleSaveDraftDocumentClick()}
+                icon={<SaveOutlined />}
+              >
+                Lưu bản nháp
+              </Button>
+            )}
             <ButtonReverse size="large" type="primary" onClick={handleIssueDocumentClick}>
               <ButtonWrapText>{slug ? "Cập nhật và ban hành" : "Ban hành ngay"}</ButtonWrapText>
               <ButtonWrapIcon>

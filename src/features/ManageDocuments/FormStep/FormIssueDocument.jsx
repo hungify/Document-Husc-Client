@@ -69,14 +69,6 @@ export default function FormIssuedDocument({
         participants: participants,
       });
       setDocumentFrom(files?.length > 0 ? dataRadio[0].value : dataRadio[1].value);
-      setFileList(
-        files?.map((file) => ({
-          uid: uuid(),
-          name: file.originalName,
-          status: "done",
-          url: file.location,
-        }))
-      );
     }
   }, [slug, form, property, relatedDocuments, participants, files]);
 
@@ -108,7 +100,18 @@ export default function FormIssuedDocument({
   //option two
   const [contentDocument, setContentDocument] = React.useState();
 
-  const [fileList, setFileList] = React.useState(formValues?.files?.fileList || []);
+  const [fileList, setFileList] = React.useState(
+    formValues?.files?.fileList
+      ? formValues?.files?.fileList
+      : files?.length > 0 && slug
+      ? files?.map((file) => ({
+          uid: uuid(),
+          name: file.originalName,
+          status: "done",
+          url: file.location,
+        }))
+      : []
+  );
 
   const [selectedRelatedDocument, setSelectedRelatedDocument] = React.useState(
     formValues?.relatedDocuments || []
@@ -206,7 +209,7 @@ export default function FormIssuedDocument({
           documentFrom={documentFrom}
           dataRadio={dataRadio}
           onDocumentFromChange={handleDocumentFromChange}
-          summaryValue={summaryDocument}
+          summaryDocument={summaryDocument}
           onSummaryChange={handleSummaryDocumentChange}
           titleDocument={titleDocument}
           onTitleDocumentChange={handleTitleDocumentChange}
