@@ -8,11 +8,10 @@ import {
   getProperty,
   getPublisherId,
   getRelatedDocuments,
-  isPublicDocument,
+  isPublicDocument
 } from "app/selectors/documentDetails";
 import { getForwardSuccess, getSuccessUpdateRead } from "app/selectors/inbox";
 import DocumentSummary from "components/DocumentSummary";
-import FileList from "components/FileList";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { ROLES } from "configs/roles";
@@ -27,9 +26,10 @@ import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import HashLoader from "react-spinners/HashLoader";
 import styled from "styled-components";
-
+const FileList = React.lazy(() => import("components/FileList"));
 const ButtonAnt = styled(Button)`
   display: flex;
 `;
@@ -189,7 +189,16 @@ export default function DetailDocument() {
                 <DocumentSummary dataSource={property} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Danh sách văn bản" key="files">
-                <FileList files={files} />
+                <React.Suspense
+                  fallback={
+                    <LoadingOverlayApp
+                      spinner={<PulseLoader size={15} color="#F5A623" />}
+                      active={true}
+                    />
+                  }
+                >
+                  <FileList files={files} />
+                </React.Suspense>
               </Tabs.TabPane>
               <Tabs.TabPane tab="Văn bản liên quan" key="relatedDocuments">
                 <RelatedDocuments dataSource={relatedDocuments} />

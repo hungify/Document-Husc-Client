@@ -5,12 +5,12 @@ import ButtonTooltip from "components/ButtonTooltip";
 import DocumentSummary from "components/DocumentSummary";
 import DrawerCustom from "components/DrawerCustom";
 import TransferTableRelated from "features/ManageDocuments/components/TransferTableRelated";
-import ViewPDF from "components/ViewPDF";
 import { fetchDocuments } from "features/ManageDocuments/documentsSlice";
 import { resetSearchAndFilters } from "features/SearchGroup/searchGroupSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import FileList from "components/FileList";
 
 const ColFull = styled(Col)`
   & .ant-form-item-control {
@@ -21,10 +21,6 @@ const ColFull = styled(Col)`
 export default function RelatedDocuments({ selectedRelatedDocument, setSelectedRelatedDocument }) {
   const [visible, setVisible] = React.useState(false);
   const [documentsClicked, setDocumentsClicked] = React.useState();
-  const [pageNumber, setPageNumber] = React.useState(1);
-  const [totalPage, setTotalPage] = React.useState(null);
-  const [previewVisible, setPreviewVisible] = React.useState(false);
-  const [previewFile, setPreviewFile] = React.useState();
   const documents = useSelector(getDocuments);
 
   const dispatch = useDispatch();
@@ -77,18 +73,6 @@ export default function RelatedDocuments({ selectedRelatedDocument, setSelectedR
   const handleTableTransferChange = (nextTargetKeys, direction, moveKeys) => {
     setSelectedRelatedDocument(nextTargetKeys);
   };
-  const handleLoadFileSuccess = (numPages) => {
-    setTotalPage(numPages);
-  };
-
-  const handlePreviousClick = () => {
-    if (pageNumber === 1) return;
-    setPageNumber(pageNumber - 1);
-  };
-  const handleNextClick = () => {
-    if (pageNumber === totalPage) return;
-    setPageNumber(pageNumber + 1);
-  };
 
   return (
     <>
@@ -105,26 +89,7 @@ export default function RelatedDocuments({ selectedRelatedDocument, setSelectedR
           </Tabs.TabPane>
 
           <Tabs.TabPane tab="Văn bản gốc" key="original-document">
-            {documentsClicked?.fileList.map((file) => (
-              <Button
-                key={file.originalName}
-                onClick={() => {
-                  setPreviewFile(file);
-                  setPreviewVisible(true);
-                }}
-              >
-                {file.originalName}
-              </Button>
-            ))}
-            {previewVisible && (
-              <ViewPDF
-                fileLocation={previewFile.location}
-                pageNumber={pageNumber}
-                onPreviousClick={handlePreviousClick}
-                onNextClick={handleNextClick}
-                onLoadFileSuccess={handleLoadFileSuccess}
-              />
-            )}
+            <FileList files={documentsClicked?.fileList} />
           </Tabs.TabPane>
         </Tabs>
       </DrawerCustom>
