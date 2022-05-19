@@ -5,6 +5,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import TransferTableRecipients from "features/Recipients/TransferTableRecipients";
+import { getDepartmentsConfig } from "app/selectors/departments";
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -74,14 +75,28 @@ export default function RecipientsDocument({
 }) {
   const dispatch = useDispatch();
 
-  const filterRecipients = useSelector(getFilterRecipients);
-
   React.useEffect(() => {
     dispatch(fetchRecipients());
     if (documentId) {
       dispatch(fetchExcludedRecipients(documentId));
     }
   }, [dispatch, documentId]);
+
+  const filterRecipients = useSelector(getFilterRecipients);
+  const departments = useSelector(getDepartmentsConfig);
+  const columns = TableColumns.map((c) => {
+    if (c.dataIndex === "department") {
+      return {
+        ...c,
+        filters: departments.map((d) => ({
+          text: d.label,
+          value: d.value,
+        })),
+      };
+    } else {
+      return c;
+    }
+  });
 
   const handleTableTransferChange = (nextTargetKeys) => {
     onSelectRelatedRecipient(nextTargetKeys);
@@ -110,8 +125,8 @@ export default function RecipientsDocument({
                   filterOption={(inputValue, item) =>
                     item.username.toLowerCase().includes(inputValue.toLowerCase())
                   }
-                  leftColumns={TableColumns}
-                  rightColumns={TableColumns}
+                  leftColumns={columns}
+                  rightColumns={columns}
                   rowKey={(record) => record._id}
                 />
               </Form.Item>
