@@ -7,6 +7,7 @@ import SelectForm from "components/SelectForm";
 import TreeSelectForm from "components/TreeSelectForm";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import _ from "lodash";
 
 const FormItemAnt = styled(Form.Item)`
   padding-left: 20px;
@@ -24,7 +25,8 @@ export default function DocumentClassification(props) {
     required,
   } = props;
   const agenciesConfig = useSelector(getAgenciesConfig);
-  const categoriesConfig = useSelector(getCategoriesTreeConfig);
+  const categories = useSelector(getCategoriesTreeConfig);
+  const categoriesConfig = categories.map((item) => _.omit(item, "key"));
   const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
 
   return (
