@@ -8,7 +8,7 @@ import {
   getProperty,
   getPublisherId,
   getRelatedDocuments,
-  isPublicDocument
+  isPublicDocument,
 } from "app/selectors/documentDetails";
 import { getForwardSuccess, getSuccessUpdateRead } from "app/selectors/inbox";
 import DocumentSummary from "components/DocumentSummary";
@@ -61,19 +61,19 @@ export default function DetailDocument() {
   const isUpdateSuccess = useSelector(getSuccessUpdateRead);
   const isForwardSuccess = useSelector(getForwardSuccess);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (isUpdateSuccess || isForwardSuccess) {
       dispatch(fetchDocumentDetailsByTab({ slug, key: activeTab }));
     }
   }, [isUpdateSuccess, dispatch, slug, activeTab, isForwardSuccess]);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (activeTab) {
       dispatch(fetchDocumentDetailsByTab({ slug, key: activeTab }));
     } else {
       navigate(`?tab=property`);
     }
-  }, [isAuth, slug, dispatch, activeTab, navigate]);
+  }, [dispatch, activeTab]);
 
   const handleTabChangeClick = (key) => {
     navigate(`?tab=${key}`);
