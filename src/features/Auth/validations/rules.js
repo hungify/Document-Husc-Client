@@ -37,7 +37,6 @@ export const authRules = {
       message: "Tên đăng nhập phải có tối đa 30 ký tự!",
     },
     {
-      pattern: /^[a-zA-Z0-9_]+$/,
       message: "Tên đăng nhập không được chứa ký tự đặc biệt!",
     },
   ],
