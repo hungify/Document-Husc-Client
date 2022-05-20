@@ -1,7 +1,6 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import showToast, { toastPosition } from "configs/toast";
 import documentsService from "services/documentsService";
-import fetchDraftDocument from "features/DraftDocuments/draftSlice";
 
 const getAll = createAction("documents/fetch/documents");
 export const fetchDocuments = createAsyncThunk(getAll.type, async (arg, thunkAPI) => {
