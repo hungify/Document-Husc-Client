@@ -25,8 +25,7 @@ export default function DocumentClassification(props) {
     required,
   } = props;
   const agenciesConfig = useSelector(getAgenciesConfig);
-  const categories = useSelector(getCategoriesTreeConfig);
-  const categoriesConfig = categories.map((item) => _.omit(item, "key"));
+  const categoriesConfig = useSelector(getCategoriesTreeConfig);
   const typesOfDocumentsConfig = useSelector(getTypesOfDocumentsConfig);
 
   return (
