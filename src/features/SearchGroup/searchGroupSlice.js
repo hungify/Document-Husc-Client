@@ -7,7 +7,7 @@ const initialState = {
 
   search: {
     searchBy: null,
-    searchValue: null,
+    searchText: null,
   },
 
   dateRange: {
@@ -39,7 +39,7 @@ const searchGroupSlice = createSlice({
     setSearchForm: (state, action) => {
       state.search = {
         searchBy: action.payload.searchBy,
-        searchValue: action.payload.searchText,
+        searchText: action.payload.searchText,
       };
       state.dateRange = {
         orderBy: action.payload.orderBy,
@@ -60,7 +60,7 @@ const searchGroupSlice = createSlice({
     resetSearchAndFilters: (state) => {
       state.search = {
         searchBy: null,
-        searchValue: null,
+        searchText: null,
       };
       state.dateRange = {
         orderBy: null,

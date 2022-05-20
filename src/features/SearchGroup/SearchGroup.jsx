@@ -35,6 +35,9 @@ export default function SearchGroup() {
 
   const handleFormSearchSubmit = (values) => {
     const { start, end, orderBy, searchText, searchBy } = values;
+    if (searchText?.length > 0 && searchBy) {
+      dispatch(setSearchForm({ searchText: searchText, searchBy, triggerBy: "documents" }));
+    }
     if (start && end) {
       const startDate = start && dayjs(start).format("YYYY/MM/DD");
       const endDate = end && dayjs(end).format("YYYY/MM/DD");
@@ -43,8 +46,6 @@ export default function SearchGroup() {
           start: startDate,
           end: endDate,
           orderBy,
-          searchText,
-          searchBy,
           triggerBy: "documents",
         })
       );
