@@ -1,5 +1,17 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Button, Card, Checkbox, Col, List, Row, Space, Typography } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Empty,
+  List,
+  Row,
+  Space,
+  Typography,
+} from "antd";
 import { getDraftDocuments } from "app/selectors/draft";
 import dayjs from "dayjs";
 import { fetchDraftDocument } from "features/DraftDocuments/draftSlice";
@@ -83,20 +95,22 @@ export default function DraftDocuments() {
   };
   return (
     <WrapCard bordered={false}>
-      <CardCheckBox bordered={false}>
-        <Space>
-          <Checkbox
-            indeterminate={indeterminate}
-            onChange={handleCheckedAllDraft}
-            checked={checkAll}
-          >
-            {titleCheckAll}
-          </Checkbox>
-          <Button type="default" size="middle" icon={<DeleteOutlined />} danger>
-            Xóa
-          </Button>
-        </Space>
-      </CardCheckBox>
+      {documentsDraft.length > 0 && (
+        <CardCheckBox bordered={false}>
+          <Space>
+            <Checkbox
+              indeterminate={indeterminate}
+              onChange={handleCheckedAllDraft}
+              checked={checkAll}
+            >
+              {titleCheckAll}
+            </Checkbox>
+            <Button type="default" size="middle" icon={<DeleteOutlined />} danger>
+              Xóa
+            </Button>
+          </Space>
+        </CardCheckBox>
+      )}
       <Row>
         <Col span={24}>
           <List
@@ -104,6 +118,9 @@ export default function DraftDocuments() {
             pagination={{
               pageSize: 10,
               onChange: (page) => {},
+            }}
+            locale={{
+              emptyText: <Empty description="Danh sách trống" />,
             }}
             dataSource={documentsDraft}
             renderItem={(item) => (
