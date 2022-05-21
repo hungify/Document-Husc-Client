@@ -41,7 +41,7 @@ export const fetchFilterDateRange = createAsyncThunk(
   }
 );
 
-const createOfficial = createAction("documents/fetch/issue/offical");
+const createOfficial = createAction("documents/fetch/issue/official");
 export const fetchIssueDocumentOfficial = createAsyncThunk(
   createOfficial.type,
   async (formData, thunkAPI) => {
