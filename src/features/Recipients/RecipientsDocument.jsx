@@ -28,7 +28,7 @@ const TableColumns = [
     dataIndex: "department",
     title: "Phòng ban",
     render: (text) => {
-      return text.label;
+      return text?.label;
     },
     filters: [
       {
@@ -84,6 +84,7 @@ export default function RecipientsDocument({
 
   const filterRecipients = useSelector(getFilterRecipients);
   const departments = useSelector(getDepartmentsConfig);
+
   const columns = TableColumns.map((c) => {
     if (c.dataIndex === "department") {
       return {
@@ -128,18 +129,6 @@ export default function RecipientsDocument({
                   leftColumns={columns}
                   rightColumns={columns}
                   rowKey={(record) => record._id}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-        </CardAnt>
-        <CardAnt title={<Typography.Text strong>Lời nhắc</Typography.Text>}>
-          <Row>
-            <Col span={24}>
-              <Form.Item name="reminder">
-                <Input.TextArea
-                  autoSize={{ minRows: 3, maxRows: 5 }}
-                  placeholder="Nhập nội dung lời nhắc"
                 />
               </Form.Item>
             </Col>
