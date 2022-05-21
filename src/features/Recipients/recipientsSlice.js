@@ -20,12 +20,12 @@ export const fetchExcludedRecipients = createAsyncThunk(
     try {
       const { data } = await recipientsService.getExcludedRecipients(documentId);
       const participants = data.participants;
-      const publisherId = data.publisher._id;
-
-      const receiversNotExists = participants.map((user) => user.receiver._id);
+      const publisherId = data.property.publisher._id;
+      const receiversNotExists = participants.map((user) => user._id);
       receiversNotExists.push(publisherId);
 
       return receiversNotExists;
+      return [];
     } catch (error) {
       const { message } = error.response.data;
       thunkAPI.rejectWithValue(message);
