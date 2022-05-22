@@ -5,13 +5,14 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card, Col, Empty, List, Modal, Row, Space, Tag, Typography } from "antd";
-import { getRole } from "app/selectors/auth";
+import { getRole, getUserId } from "app/selectors/auth";
 import { getDocuments, getTotalDocuments } from "app/selectors/documents";
 import { getPage, getPageSize } from "app/selectors/searchGroup";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import ButtonTooltip from "components/ButtonTooltip";
 import RestoreIcon from "components/Icons/RestoreIcon";
 import { ROLES } from "configs/roles";
+import { TABS } from "constants/tabs";
 import dayjs from "dayjs";
 import { fetchRestoreDocument } from "features/ArchiveDocuments/archivesSlice";
 import { fetchRevokeDocument } from "features/ManageDocuments/documentsSlice";
@@ -35,6 +36,7 @@ export default function ListDocument({ dataSource }) {
   const pageSize = useSelector(getPageSize);
   const totalDocuments = useSelector(getTotalDocuments);
   const documents = useSelector(getDocuments);
+  const userId = useSelector(getUserId);
 
   const path = useLocation()
     .pathname.split("/")
@@ -117,7 +119,9 @@ export default function ListDocument({ dataSource }) {
                 <Col span={24}>
                   <List.Item.Meta
                     avatar={<Avatar size="large">{item.publisher?.avatar ?? "?"}</Avatar>}
-                    title={<Link to={`/detail/${item._id}?tab=property`}>{item.title}</Link>}
+                    title={
+                      <Link to={`/detail/${item._id}?tab=${TABS.PROPERTY}`}>{item.title}</Link>
+                    }
                   />
                 </Col>
                 <Col span={8}>
@@ -184,7 +188,9 @@ export default function ListDocument({ dataSource }) {
                         </Typography.Title>
                       </>
                     )
-                  ) : role === ROLES.USER && !item.isRead ? (
+                  ) : role === ROLES.USER &&
+                    !item.isPublic &&
+                    !item.participants.find((item) => item?.receiver?._id === userId)?.readDate ? (
                     <Typography.Text strong>
                       <Tag icon={<ClockCircleOutlined />} color="processing">
                         Chờ xử lý

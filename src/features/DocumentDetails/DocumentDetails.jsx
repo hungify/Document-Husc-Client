@@ -15,11 +15,14 @@ import DocumentSummary from "components/DocumentSummary";
 import ForwardIcon from "components/Icons/ForwardIcon";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { ROLES } from "configs/roles";
+import { TABS } from "constants/tabs";
+import { useSockets } from "context/socket";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
 import { fetchDocumentDetailsByTab } from "features/DocumentDetails/documentDetailsSlice";
 import { forwardDocuments, updateReadDocument } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
+import { fetchExcludedRecipients } from "features/Recipients/recipientsSlice";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import _ from "lodash";
@@ -71,17 +74,13 @@ export default function DetailDocument() {
     if (activeTab) {
       dispatch(fetchDocumentDetailsByTab({ slug, key: activeTab }));
     } else {
-      navigate(`?tab=property`);
+      navigate(`?tab=${TABS.PROPERTY}`);
     }
   }, [dispatch, activeTab]);
 
   const handleTabChangeClick = (key) => {
     navigate(`?tab=${key}`);
     dispatch(fetchDocumentDetailsByTab({ slug, key }));
-  };
-
-  const handleForwardClick = () => {
-    setVisible(true);
   };
 
   const handleReadDocument = () => {
@@ -118,6 +117,15 @@ export default function DetailDocument() {
       setSelectedRecipient([]);
       setConfirmLoading(false);
     }, 500);
+  };
+
+  const handleForwardClick = (documentId) => {
+    return () => {
+      setVisible(true);
+      if (documentId) {
+        dispatch(fetchExcludedRecipients(documentId));
+      }
+    };
   };
 
   return (
@@ -172,7 +180,7 @@ export default function DetailDocument() {
                   type="primary"
                   icon={<ForwardIcon />}
                   size="large"
-                  onClick={() => handleForwardClick(property._id)}
+                  onClick={handleForwardClick(property._id)}
                   key="forward"
                 >
                   Chuyển tiếp
@@ -185,10 +193,10 @@ export default function DetailDocument() {
         <Row>
           <Col flex="auto">
             <Tabs activeKey={activeTab} type="card" size="large" onTabClick={handleTabChangeClick}>
-              <Tabs.TabPane tab="Thuộc tính" key="property">
+              <Tabs.TabPane tab="Thuộc tính" key={TABS.PROPERTY}>
                 <DocumentSummary dataSource={property} />
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Danh sách văn bản" key="files">
+              <Tabs.TabPane tab="Danh sách văn bản" key={TABS.FILES}>
                 <React.Suspense
                   fallback={
                     <LoadingOverlayApp
@@ -200,19 +208,19 @@ export default function DetailDocument() {
                   <FileList files={files} />
                 </React.Suspense>
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Văn bản liên quan" key="relatedDocuments">
+              <Tabs.TabPane tab="Văn bản liên quan" key={TABS.RELATED_DOCUMENTS}>
                 <RelatedDocuments dataSource={relatedDocuments} />
               </Tabs.TabPane>
-              <Tabs.TabPane tab="Cây xử lý" key="participants">
+              <Tabs.TabPane tab="Cây xử lý" key={TABS.PARTICIPANTS}>
                 {!_.isEmpty(participants) && <TreeProcessing treeData={participants} />}
               </Tabs.TabPane>
 
               {(role === ROLES.ADMIN || role === ROLES.USER) && !isPublic && (
                 <>
-                  <Tabs.TabPane tab="Phân tích" key="analytics">
+                  <Tabs.TabPane tab="Phân tích" key={TABS.ANALYTICS}>
                     <ChartReceiver />
                   </Tabs.TabPane>
-                  <Tabs.TabPane tab="Phản hồi" key="feedback">
+                  <Tabs.TabPane tab="Phản hồi" key={TABS.CHAT_ROOM}>
                     <ChatRoom />
                   </Tabs.TabPane>
                 </>
