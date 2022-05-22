@@ -11,27 +11,30 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SocketProvider from "context/socket";
 const persistor = persistStore(store);
 
 ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>
     {/* <PersistGate loading={null} persistor={persistor}> */}
-    <BrowserRouter>
-      <GlobalStyle />
-      <ToastContainer
-        autoClose={5000}
-        position="bottom-right"
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <App />
-    </BrowserRouter>
+    <SocketProvider>
+      <BrowserRouter>
+        <GlobalStyle />
+        <ToastContainer
+          autoClose={5000}
+          position="bottom-right"
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <App />
+      </BrowserRouter>
+    </SocketProvider>
     {/* </PersistGate> */}
   </Provider>,
   // </React.StrictMode>,
