@@ -1,77 +1,60 @@
-import { Avatar, Button, Comment, Form, Input } from "antd";
+import { Avatar, Comment } from "antd";
+import { getUserId } from "app/selectors/auth";
+import { getConversationId } from "app/selectors/documentDetails";
+import { EVENTS } from "constants/events";
+import { useSockets } from "context/socket";
 import CommentList from "features/ChatRoom/CommentList";
+import Editor from "features/ChatRoom/Editor";
 import React from "react";
-import { io } from "socket.io-client";
-const socket = io.connect("https://localhost:8000", {
-  transports: ["websocket"],
-});
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <>
-    <Form.Item>
-      <Input.TextArea
-        rows={4}
-        onChange={onChange}
-        value={value}
-        placeholder="Nhập vào thông tin phản hồi"
-      />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        Gửi phản hồi
-      </Button>
-    </Form.Item>
-  </>
-);
+import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 export default function ChatRoom() {
-  const [comments, setComments] = React.useState([]);
-  const [submitting, setSubmitting] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const { socket, messages, roomId, username, setMessages } = useSockets();
+  const [message, setMessage] = React.useState("");
+  const userId = useSelector(getUserId);
+  const conversationId = useSelector(getConversationId);
 
-  socket.on("connect", () => {
-    console.log(socket.id);
-  });
+  const [searchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab");
 
-  const handleSubmit = () => {
-    if (!value) {
+  React.useEffect(() => {
+    if (conversationId) {
+      socket.emit(EVENTS.CLIENT.CREATE_ROOM, { roomId: conversationId });
+    }
+  }, [conversationId, socket]);
+
+  function handleSendMessage() {
+    if (!String(message).trim()) {
       return;
     }
 
-    setSubmitting(true);
+    socket.emit(EVENTS.CLIENT.SEND_ROOM_MESSAGE, { roomId, message, username, sender: userId });
 
-    // setTimeout(() => {
-    //   setSubmitting(false);
-    //   setValue("");
-    //   setComments([
-    //     ...comments,
-    //     {
-    //       author: "Nguyễn Kim Ngàn",
-    //       avatar: "Nguyễn Kim Ngàn",
-    //       content: <p>{value}</p>,
-    //       datetime: "2 day ago",
-    //     },
-    //   ]);
-    // }, 1000);
-  };
+    const date = new Date();
+
+    setMessages([
+      ...messages,
+      {
+        username: "You",
+        message,
+        time: `${date.getHours()}:${date.getMinutes()}`,
+      },
+    ]);
+    setMessage("");
+  }
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setMessage(e.target.value);
   };
 
   return (
-    <div>
-      <CommentList comments={comments} />
+    <>
+      <CommentList />
       <Comment
-        avatar={<Avatar>N</Avatar>}
-        content={
-          <Editor
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            submitting={submitting}
-            value={value}
-          />
-        }
+        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        content={<Editor onChange={handleChange} onSubmit={handleSendMessage} value={message} />}
       />
-    </div>
+    </>
   );
 }
