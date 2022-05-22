@@ -51,8 +51,8 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["auth", "home", "searchGroup", "recipients", "issueDocument"],
-  whitelist: ["typesOfDocuments", "categories", "agencies", "departments"],
+  blacklist: ["home", "searchGroup", "recipients", "issueDocument"],
+  whitelist: ["auth", "typesOfDocuments", "categories", "agencies", "departments", "urgentLevels"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
