@@ -47,6 +47,9 @@ const initialState = {
 const recipientsSlice = createSlice({
   name: "recipients",
   initialState,
+  reducers: {
+    resetRecipients: (state) => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipients.pending, (state, action) => {
       state.loading = true;
@@ -91,4 +94,5 @@ const recipientsSlice = createSlice({
   },
 });
 
+export const { resetRecipients } = recipientsSlice.actions;
 export default recipientsSlice.reducer;

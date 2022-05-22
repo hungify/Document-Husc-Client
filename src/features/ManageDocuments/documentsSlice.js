@@ -61,7 +61,6 @@ export const fetchIssueDocumentDraft = createAsyncThunk(
   createDraft.type,
   async (formData, thunkAPI) => {
     try {
-      const { dispatch } = thunkAPI;
       await documentsService.fetchCreateDocumentDraft(formData);
       const message = "Lưu văn bản nháp thành công";
       return message;

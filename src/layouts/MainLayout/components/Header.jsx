@@ -71,8 +71,11 @@ export default function Header({ shouldFixed }) {
   const profile = useSelector(getProfile);
 
   const handleLogout = () => {
-    dispatch(fetchLogout(refreshToken));
-    if (!isAuth) navigate("/");
+    const obj = {
+      refreshToken,
+      navigate,
+    };
+    dispatch(fetchLogout(obj));
   };
 
   return (
