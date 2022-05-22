@@ -26,9 +26,6 @@ export const initialState = {
 const sentDocumentsSlice = createSlice({
   name: "sent",
   initialState,
-  reducers: {
-    resetSent: (state) => initialState,
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchSentDocuments.pending, (state, action) => {
       state.loading = true;
@@ -46,5 +43,4 @@ const sentDocumentsSlice = createSlice({
   },
 });
 
-export const { resetSent } = sentDocumentsSlice.actions;
 export default sentDocumentsSlice.reducer;

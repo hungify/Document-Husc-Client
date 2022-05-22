@@ -59,9 +59,6 @@ const initialState = {
 const inboxDocumentsSlice = createSlice({
   name: "inbox",
   initialState: initialState,
-  reducers: {
-    resetInbox: (state) => initialState,
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchInboxDocuments.pending, (state, action) => {
       state.loading = true;
@@ -113,5 +110,4 @@ const inboxDocumentsSlice = createSlice({
   },
 });
 
-export const { resetInbox } = inboxDocumentsSlice.actions;
 export default inboxDocumentsSlice.reducer;

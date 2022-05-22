@@ -25,9 +25,6 @@ const initialState = {
 const draftSlice = createSlice({
   name: "draft",
   initialState,
-  reducers: {
-    resetDraft: (state) => initialState,
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchDraftDocument.pending, (state, action) => {
       state.loading = true;
@@ -47,5 +44,4 @@ const draftSlice = createSlice({
   },
 });
 
-export const { resetDraft } = draftSlice.actions;
 export default draftSlice.reducer;
