@@ -1,6 +1,7 @@
 import { Avatar, Card, Col, Empty, List, Row, Space, Typography } from "antd";
 import BadgeRibbonUrgency from "components/BadgeRibbonUrgent";
 import FileList from "components/FileList";
+import { TABS } from "constants/tabs";
 import dayjs from "dayjs";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -21,7 +22,7 @@ export default function RelatedDocuments({ dataSource }) {
       <List
         itemLayout="vertical"
         size="default"
-        dataSource={dataSource}
+        dataSource={[]}
         pagination={{
           pageSize: 10,
           defaultCurrent: 1,
@@ -39,7 +40,9 @@ export default function RelatedDocuments({ dataSource }) {
                   <Col span={24}>
                     <List.Item.Meta
                       avatar={<Avatar size="large">{item.publisher?.avatar ?? "?"}</Avatar>}
-                      title={<Link to={`/detail/${item._id}?tab=property`}>{item.title}</Link>}
+                      title={
+                        <Link to={`/detail/${item._id}?tab=${TABS.PROPERTY}`}>{item.title}</Link>
+                      }
                     />
                   </Col>
                   <Col span={8}>
