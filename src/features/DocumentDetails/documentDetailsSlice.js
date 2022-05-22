@@ -58,6 +58,9 @@ const initialState = {
 const documentDetailsSlice = createSlice({
   name: "documentDetails",
   initialState,
+  reducers: {
+    resetDocumentDetail: (state) => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchDocumentDetailsByTab.fulfilled, (state, action) => {
       state.property = action.payload.key === TABS.PROPERTY ? action.payload.data : {};
@@ -96,4 +99,5 @@ const documentDetailsSlice = createSlice({
   },
 });
 
+export const { resetDocumentDetail } = documentDetailsSlice.actions;
 export default documentDetailsSlice.reducer;
