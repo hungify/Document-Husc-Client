@@ -58,19 +58,18 @@ export const fetchRefreshToken = createAsyncThunk(
   }
 );
 
-export const fetchLogout = createAsyncThunk(
-  logout.type,
-  async (refreshToken, { rejectWithValue }) => {
-    try {
-      await authService.logout(refreshToken);
-      const message = "Đăng xuất thành công";
-      return message;
-    } catch (error) {
-      const { message } = error.response.data;
-      return rejectWithValue(message);
-    }
+export const fetchLogout = createAsyncThunk(logout.type, async (data, { rejectWithValue }) => {
+  const { navigate, refreshToken} = data;
+  try {
+    await authService.logout(refreshToken);
+    const message = "Đăng xuất thành công";
+    navigate("/");
+    return message;
+  } catch (error) {
+    const { message } = error.response.data;
+    return rejectWithValue(message);
   }
-);
+});
 
 const initialState = {
   accessToken: null,
