@@ -1,22 +1,27 @@
-import { Avatar, Comment, List, Tooltip, Typography } from "antd";
+import { Comment, List, Typography, Avatar, Tooltip } from "antd";
+import { useSockets } from "context/socket";
 import React from "react";
 
-export default function CommentList(prop) {
-  const { comments } = prop;
+export default function CommentList() {
+  const { messages, roomId } = useSockets();
+  if (!roomId) {
+    return <div />;
+  }
+
   return (
-    comments.length > 0 && (
+    messages.length > 0 && (
       <List
-        dataSource={comments}
-        header={`${comments.length} phản hồi`}
+        dataSource={messages}
+        header={`${messages.length} phản hồi`}
         itemLayout="horizontal"
         renderItem={(item) => (
           <Comment
-            author={<Typography.Text strong>{item.author}</Typography.Text>}
-            avatar={<Avatar>{item.author.charAt(0).toUpperCase()}</Avatar>}
-            content={<Typography.Paragraph>{item.content}</Typography.Paragraph>}
+            author={<Typography.Text strong>{item.username}</Typography.Text>}
+            avatar={<Avatar>{item.username.charAt(0).toUpperCase()}</Avatar>}
+            content={<Typography.Paragraph>{item.message}</Typography.Paragraph>}
             datetime={
               <Tooltip title="10:10 AM 20/02/2022">
-                <span>{item.datetime} </span>
+                <span>{item.time} </span>
               </Tooltip>
             }
           />

@@ -6,6 +6,8 @@ export const getProperty = (state) => state.documentDetails?.property;
 export const getFiles = (state) => state.documentDetails?.fileList;
 export const getRelatedDocuments = (state) => state.documentDetails?.relatedDocuments;
 export const getParticipants = (state) => state.documentDetails?.participants;
+export const getConversationId = (state) => state.documentDetails?.conversation?.conversationId;
+export const getMessages = (state) => state.documentDetails?.conversation?.messages;
 const getAnalytics = (state) => state.documentDetails?.analytics;
 export const getDatasets = createSelector(getAnalytics, (a) => {
   return [a.read?.count, a.unread?.count];
