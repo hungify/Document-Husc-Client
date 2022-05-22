@@ -1,5 +1,6 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import showToast, { toastPosition } from "configs/toast";
+import { TABS } from "constants/tabs";
 import documentsService from "services/documentsService";
 
 const fetch = createAction("documentDetails/fetch/key");
@@ -7,7 +8,7 @@ export const fetchDocumentDetailsByTab = createAsyncThunk(fetch.type, async (que
   try {
     const response = await documentsService.fetchDocumentDetailsByTab(query);
     const { data, myReadDate, publisherId, isPublic } = response;
-    if (query.key === "property") {
+    if (query.key === TABS.PROPERTY) {
       data.key = query.key;
     }
     return { data, key: query.key, myReadDate, publisherId, isPublic };
@@ -38,6 +39,10 @@ const initialState = {
   files: [],
   relatedDocuments: [],
   participants: [],
+  conversation: {
+    conversationId: null,
+    messages: [],
+  },
   analytics: {
     read: {
       count: 0,
@@ -55,11 +60,14 @@ const documentDetailsSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchDocumentDetailsByTab.fulfilled, (state, action) => {
-      state.property = action.payload.key === "property" ? action.payload.data : {};
-      state.fileList = action.payload.key === "files" ? action.payload.data : [];
-      state.relatedDocuments = action.payload.key === "relatedDocuments" ? action.payload.data : [];
-      state.participants = action.payload.key === "participants" ? action.payload.data : [];
-      state.analytics = action.payload.key === "analytics" ? action.payload.data : {};
+      state.property = action.payload.key === TABS.PROPERTY ? action.payload.data : {};
+      state.fileList = action.payload.key === TABS.FILES ? action.payload.data : [];
+      state.relatedDocuments =
+        action.payload.key === TABS.RELATED_DOCUMENTS ? action.payload.data : [];
+      state.participants = action.payload.key === TABS.PARTICIPANTS ? action.payload.data : [];
+      state.analytics = action.payload.key === TABS.ANALYTICS ? action.payload.data : {};
+      state.conversation = action.payload.key === TABS.CHAT_ROOM ? action.payload.data : null;
+
       state.myReadDate = action.payload.myReadDate;
       state.publisherId = action.payload.publisherId;
       state.isPublic = action.payload.isPublic;
