@@ -18,6 +18,22 @@ const getUnreaders = createSelector(getAnalytics, (a) => {
 });
 export const getReadAndUnread = createSelector(getReaders, getUnreaders, (readers, unreaders) => {
   if (readers && unreaders) {
-    return [...readers, ...unreaders];
+    const newReaders = readers.map((item) => {
+      return {
+        ...item,
+        key: item._id,
+      };
+    });
+
+    const newUnreaders = unreaders.map((item) => {
+      return {
+        ...item,
+        key: item._id,
+      };
+    });
+    return [...newReaders, ...newUnreaders];
   }
 });
+
+export const getConversationId = (state) => state.documentDetails?.conversationId;
+export const getMessages = (state) => state.documentDetails?.messages;

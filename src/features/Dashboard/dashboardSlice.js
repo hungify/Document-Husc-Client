@@ -18,6 +18,9 @@ const initialState = {
 const analyticsSlice = createSlice({
   name: "dashboard",
   initialState,
+  reducers: {
+    resetDashboard: (state) => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAnalytics.pending, (state, action) => {
       state.loading = true;
@@ -33,4 +36,5 @@ const analyticsSlice = createSlice({
   },
 });
 
+export const { resetDashboard } = analyticsSlice.actions;
 export default analyticsSlice.reducer;

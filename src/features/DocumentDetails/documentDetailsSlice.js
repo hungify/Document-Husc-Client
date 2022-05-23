@@ -21,8 +21,11 @@ export const fetchDocumentDetailsByTab = createAsyncThunk(fetch.type, async (que
 const fetchAll = createAction("documentDetails/fetch/All");
 export const fetchDocumentDetails = createAsyncThunk(fetchAll.type, async (query, thunkAPI) => {
   try {
-    const { data } = await documentsService.fetchDocumentDetails(query);
-    return data;
+    const {
+      data: { messages, conversationId },
+    } = await documentsService.fetchDocumentDetails(query);
+
+    return { messages, conversationId };
   } catch (error) {
     const { message } = error.response.data;
     return thunkAPI.rejectWithValue(message);
@@ -39,10 +42,16 @@ const initialState = {
   files: [],
   relatedDocuments: [],
   participants: [],
-  conversation: {
-    conversationId: null,
-    messages: [],
-  },
+  conversationId: null,
+  messages: [
+    {
+      _id: null,
+      content: null,
+      createdAt: null,
+      username: null,
+      avatar: null,
+    },
+  ],
   analytics: {
     read: {
       count: 0,
@@ -58,6 +67,14 @@ const initialState = {
 const documentDetailsSlice = createSlice({
   name: "documentDetails",
   initialState,
+  reducers: {
+    addMessage: (state, action) => {
+      state.messages.push(action.payload);
+    },
+    setMessages: (state, action) => {
+      state.messages = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchDocumentDetailsByTab.fulfilled, (state, action) => {
       state.property = action.payload.key === TABS.PROPERTY ? action.payload.data : {};
@@ -66,7 +83,10 @@ const documentDetailsSlice = createSlice({
         action.payload.key === TABS.RELATED_DOCUMENTS ? action.payload.data : [];
       state.participants = action.payload.key === TABS.PARTICIPANTS ? action.payload.data : [];
       state.analytics = action.payload.key === TABS.ANALYTICS ? action.payload.data : {};
-      state.conversation = action.payload.key === TABS.CHAT_ROOM ? action.payload.data : null;
+      state.conversationId =
+        action.payload.key === TABS.CHAT_ROOM ? action.payload.data.conversationId : null;
+
+      state.messages = action.payload.key === TABS.CHAT_ROOM ? action.payload.data.messages : [];
 
       state.myReadDate = action.payload.myReadDate;
       state.publisherId = action.payload.publisherId;
@@ -95,5 +115,7 @@ const documentDetailsSlice = createSlice({
     });
   },
 });
+
+export const { addMessage, setMessages } = documentDetailsSlice.actions;
 
 export default documentDetailsSlice.reducer;

@@ -5,10 +5,12 @@ const refreshToken = createAction("auth/refreshToken");
 const logout = createAction("auth/logout");
 const login = createAction("auth/login");
 
-export const fetchLogin = createAsyncThunk(login.type, async (values, thunkAPI) => {
+export const fetchLogin = createAsyncThunk(login.type, async (args, thunkAPI) => {
   try {
+    const { navigate, values } = args;
     const { email, password } = values;
     const { data } = await authService.login({ email, password });
+    navigate("/dashboard");
     data.message = "Đăng nhập thành công";
     return data;
   } catch (error) {
@@ -58,19 +60,18 @@ export const fetchRefreshToken = createAsyncThunk(
   }
 );
 
-export const fetchLogout = createAsyncThunk(
-  logout.type,
-  async (refreshToken, { rejectWithValue }) => {
-    try {
-      await authService.logout(refreshToken);
-      const message = "Đăng xuất thành công";
-      return message;
-    } catch (error) {
-      const { message } = error.response.data;
-      return rejectWithValue(message);
-    }
+export const fetchLogout = createAsyncThunk(logout.type, async (data, { rejectWithValue }) => {
+  const { navigate, refreshToken } = data;
+  try {
+    await authService.logout(refreshToken);
+    const message = "Đăng xuất thành công";
+    navigate("/");
+    return message;
+  } catch (error) {
+    const { message } = error.response.data;
+    return rejectWithValue(message);
   }
-);
+});
 
 const initialState = {
   accessToken: null,

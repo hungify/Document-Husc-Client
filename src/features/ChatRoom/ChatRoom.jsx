@@ -1,77 +1,77 @@
-import { Avatar, Button, Comment, Form, Input } from "antd";
+import { Avatar, Comment } from "antd";
+import { getUserId } from "app/selectors/auth";
+import { getConversationId } from "app/selectors/documentDetails";
+import { getProfile } from "app/selectors/profile";
+import { EVENTS } from "constants/events";
+import { useSockets } from "context/socket";
 import CommentList from "features/ChatRoom/CommentList";
+import Editor from "features/ChatRoom/Editor";
+import { addMessage } from "features/DocumentDetails/documentDetailsSlice";
 import React from "react";
-import { io } from "socket.io-client";
-const socket = io.connect("https://localhost:8000", {
-  transports: ["websocket"],
-});
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <>
-    <Form.Item>
-      <Input.TextArea
-        rows={4}
-        onChange={onChange}
-        value={value}
-        placeholder="Nhập vào thông tin phản hồi"
-      />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        Gửi phản hồi
-      </Button>
-    </Form.Item>
-  </>
-);
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ChatRoom() {
-  const [comments, setComments] = React.useState([]);
-  const [submitting, setSubmitting] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [content, setContent] = React.useState("");
+  const conversationId = useSelector(getConversationId);
+  const dispatch = useDispatch();
+  const username = useSelector(getProfile)?.username;
+  const avatar = useSelector(getProfile)?.avatar;
+  const userId = useSelector(getUserId);
 
-  socket.on("connect", () => {
-    console.log(socket.id);
-  });
+  const { socketClient } = useSockets();
 
-  const handleSubmit = () => {
-    if (!value) {
+  React.useEffect(() => {
+    if (socketClient) {
+      if (conversationId) {
+        socketClient.emit(EVENTS.CLIENT.CREATE_ROOM, { conversationId });
+      }
+    }
+  }, [conversationId, socketClient]);
+
+  function handleSendMessage() {
+    if (!String(content).trim()) {
       return;
     }
+    socketClient.emit(
+      EVENTS.CLIENT.SEND_ROOM_MESSAGE,
+      {
+        conversationId,
+        content,
+        username,
+        senderId: userId,
+        avatar,
+      },
+      ({ status }) => {
+        if (status === "ok") {
+          dispatch(
+            addMessage({
+              content,
+              sender: {
+                username,
+                avatar,
+                _id: userId,
+              },
+              createdAt: new Date().getTime(),
+            })
+          );
+        }
+      }
+    );
 
-    setSubmitting(true);
-
-    // setTimeout(() => {
-    //   setSubmitting(false);
-    //   setValue("");
-    //   setComments([
-    //     ...comments,
-    //     {
-    //       author: "Nguyễn Kim Ngàn",
-    //       avatar: "Nguyễn Kim Ngàn",
-    //       content: <p>{value}</p>,
-    //       datetime: "2 day ago",
-    //     },
-    //   ]);
-    // }, 1000);
-  };
+    setContent("");
+  }
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setContent(e.target.value);
   };
 
   return (
-    <div>
-      <CommentList comments={comments} />
+    <>
+      <CommentList />
       <Comment
-        avatar={<Avatar>N</Avatar>}
-        content={
-          <Editor
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            submitting={submitting}
-            value={value}
-          />
-        }
+        avatar={<Avatar>{avatar}</Avatar>}
+        content={<Editor onChange={handleChange} onSubmit={handleSendMessage} value={content} />}
       />
-    </div>
+    </>
   );
 }

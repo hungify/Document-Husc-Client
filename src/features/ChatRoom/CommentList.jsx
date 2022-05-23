@@ -1,22 +1,37 @@
-import { Avatar, Comment, List, Tooltip, Typography } from "antd";
+import { Comment, List, Typography, Avatar, Tooltip } from "antd";
 import React from "react";
+import { getConversationId, getMessages } from "app/selectors/documentDetails";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import { getUserId } from "app/selectors/auth";
 
-export default function CommentList(prop) {
-  const { comments } = prop;
+export default function CommentList() {
+  const messages = useSelector(getMessages);
+  const userId = useSelector(getUserId);
+  const conversationId = useSelector(getConversationId);
+
+  if (!conversationId) {
+    return <div />;
+  }
+
   return (
-    comments.length > 0 && (
+    messages?.length > 0 && (
       <List
-        dataSource={comments}
-        header={`${comments.length} phản hồi`}
+        dataSource={messages}
+        header={`${messages.length} phản hồi`}
         itemLayout="horizontal"
         renderItem={(item) => (
           <Comment
-            author={<Typography.Text strong>{item.author}</Typography.Text>}
-            avatar={<Avatar>{item.author.charAt(0).toUpperCase()}</Avatar>}
+            author={
+              <Typography.Text strong>
+                {userId === item?.sender._id ? "Bạn" : item?.sender?.username}
+              </Typography.Text>
+            }
+            avatar={<Avatar>{item?.sender?.avatar}</Avatar>}
             content={<Typography.Paragraph>{item.content}</Typography.Paragraph>}
             datetime={
-              <Tooltip title="10:10 AM 20/02/2022">
-                <span>{item.datetime} </span>
+              <Tooltip title={dayjs(item.createdAt).format("HH:MM DD/MM/YYYY")}>
+                <span>{dayjs(item?.createdAt).format("DD/MM/YYYY")} </span>
               </Tooltip>
             }
           />

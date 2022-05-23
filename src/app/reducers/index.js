@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import urgentLevelsSlice from "app/reducers/configs/urgentLevelsSlice";
 import archiveSlice from "features/ArchiveDocuments/archivesSlice";
-import authSlice from "features/Auth/authSlice";
+import authSlice, { fetchLogout } from "features/Auth/authSlice";
 import dashboardSlice from "features/Dashboard/dashboardSlice";
 import documentDetailsSlice from "features/DocumentDetails/documentDetailsSlice";
 import draftSlice from "features/DraftDocuments/draftSlice";
@@ -18,7 +18,7 @@ import sentDocumentsSlice from "features/SentDocuments/sentDocumentsSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
   // configs
   typesOfDocuments: typesOfDocumentsSlice,
   categories: categoriesSlice,
@@ -37,14 +37,32 @@ const rootReducer = combineReducers({
   profile: profileSlice,
   archives: archiveSlice,
   draft: draftSlice,
+
+  chat: chatSlice,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === fetchLogout.fulfilled.type) {
+    state = undefined;
+  }
+
+  return combinedReducer(state, action);
+};
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["auth", "home", "searchGroup", "recipients", "issueDocument"],
-  whitelist: ["typesOfDocuments", "categories", "agencies", "departments"],
+  blacklist: ["home", "searchGroup", "recipients", "issueDocument"],
+  whitelist: [
+    "auth",
+    "typesOfDocuments",
+    "categories",
+    "agencies",
+    "departments",
+    "urgentLevels",
+    "profile",
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
