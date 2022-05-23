@@ -2,7 +2,7 @@ import axios from "axios";
 import { fetchLogout, fetchRefreshToken } from "features/Auth/authSlice";
 import queryString from "query-string";
 const requestConfig = {
-  baseURL: `${process.env.REACT_APP_ENDPOINT_URL}/api/v1`,
+  baseURL: `${process.env.REACT_APP_ENDPOINT}/api/v1`,
   paramsSerializer: (params) => {
     return queryString.stringify(params);
   },
