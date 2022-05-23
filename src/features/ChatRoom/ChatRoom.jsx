@@ -1,59 +1,76 @@
 import { Avatar, Comment } from "antd";
 import { getUserId } from "app/selectors/auth";
 import { getConversationId } from "app/selectors/documentDetails";
+import { getProfile } from "app/selectors/profile";
 import { EVENTS } from "constants/events";
 import { useSockets } from "context/socket";
 import CommentList from "features/ChatRoom/CommentList";
 import Editor from "features/ChatRoom/Editor";
+import { addMessage } from "features/DocumentDetails/documentDetailsSlice";
 import React from "react";
-import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ChatRoom() {
-  const { socket, messages, roomId, username, setMessages } = useSockets();
-  const [message, setMessage] = React.useState("");
-  const userId = useSelector(getUserId);
+  const [content, setContent] = React.useState("");
   const conversationId = useSelector(getConversationId);
+  const dispatch = useDispatch();
+  const username = useSelector(getProfile)?.username;
+  const avatar = useSelector(getProfile)?.avatar;
+  const userId = useSelector(getUserId);
 
-  const [searchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab");
+  const { socketClient } = useSockets();
 
   React.useEffect(() => {
-    if (conversationId) {
-      socket.emit(EVENTS.CLIENT.CREATE_ROOM, { roomId: conversationId });
+    if (socketClient) {
+      if (conversationId) {
+        socketClient.emit(EVENTS.CLIENT.CREATE_ROOM, { conversationId });
+      }
     }
-  }, [conversationId, socket]);
+  }, [conversationId, socketClient]);
 
   function handleSendMessage() {
-    if (!String(message).trim()) {
+    if (!String(content).trim()) {
       return;
     }
-
-    socket.emit(EVENTS.CLIENT.SEND_ROOM_MESSAGE, { roomId, message, username, sender: userId });
-
-    const date = new Date();
-
-    setMessages([
-      ...messages,
+    socketClient.emit(
+      EVENTS.CLIENT.SEND_ROOM_MESSAGE,
       {
-        username: "You",
-        message,
-        time: `${date.getHours()}:${date.getMinutes()}`,
+        conversationId,
+        content,
+        username,
+        senderId: userId,
+        avatar,
       },
-    ]);
-    setMessage("");
+      ({ status }) => {
+        if (status === "ok") {
+          dispatch(
+            addMessage({
+              content,
+              sender: {
+                username,
+                avatar,
+                _id: userId,
+              },
+              createdAt: new Date().getTime(),
+            })
+          );
+        }
+      }
+    );
+
+    setContent("");
   }
 
   const handleChange = (e) => {
-    setMessage(e.target.value);
+    setContent(e.target.value);
   };
 
   return (
     <>
       <CommentList />
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-        content={<Editor onChange={handleChange} onSubmit={handleSendMessage} value={message} />}
+        avatar={<Avatar>{avatar}</Avatar>}
+        content={<Editor onChange={handleChange} onSubmit={handleSendMessage} value={content} />}
       />
     </>
   );

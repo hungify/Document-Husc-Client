@@ -1,27 +1,37 @@
 import { Comment, List, Typography, Avatar, Tooltip } from "antd";
-import { useSockets } from "context/socket";
 import React from "react";
+import { getConversationId, getMessages } from "app/selectors/documentDetails";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import { getUserId } from "app/selectors/auth";
 
 export default function CommentList() {
-  const { messages, roomId } = useSockets();
-  if (!roomId) {
+  const messages = useSelector(getMessages);
+  const userId = useSelector(getUserId);
+  const conversationId = useSelector(getConversationId);
+
+  if (!conversationId) {
     return <div />;
   }
 
   return (
-    messages.length > 0 && (
+    messages?.length > 0 && (
       <List
         dataSource={messages}
         header={`${messages.length} phản hồi`}
         itemLayout="horizontal"
         renderItem={(item) => (
           <Comment
-            author={<Typography.Text strong>{item.username}</Typography.Text>}
-            avatar={<Avatar>{item.username.charAt(0).toUpperCase()}</Avatar>}
-            content={<Typography.Paragraph>{item.message}</Typography.Paragraph>}
+            author={
+              <Typography.Text strong>
+                {userId === item?.sender._id ? "Bạn" : item?.sender?.username}
+              </Typography.Text>
+            }
+            avatar={<Avatar>{item?.sender?.avatar}</Avatar>}
+            content={<Typography.Paragraph>{item.content}</Typography.Paragraph>}
             datetime={
-              <Tooltip title="10:10 AM 20/02/2022">
-                <span>{item.time} </span>
+              <Tooltip title={dayjs(item.createdAt).format("HH:MM DD/MM/YYYY")}>
+                <span>{dayjs(item?.createdAt).format("DD/MM/YYYY")} </span>
               </Tooltip>
             }
           />
