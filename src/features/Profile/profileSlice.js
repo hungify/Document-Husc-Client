@@ -14,10 +14,10 @@ export const fetchProfile = createAsyncThunk(profile.type, async (args, thunkAPI
 });
 
 const initialState = {
-  username: "",
-  email: "",
-  avatar: "",
-  department: "",
+  username: null,
+  email: null,
+  avatar: null,
+  department: null,
 
   loading: false,
   error: null,

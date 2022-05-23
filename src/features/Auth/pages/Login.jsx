@@ -1,11 +1,9 @@
 import { Button, Form, Input, Typography } from "antd";
-import { isAuthenticated } from "app/selectors/auth";
 import { fetchLogin } from "features/Auth/authSlice";
 import FormAuth from "features/Auth/components/FormAuth";
 import { authRules } from "features/Auth/validations/rules";
-import { fetchProfile } from "features/Profile/profileSlice";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -37,18 +35,14 @@ const ButtonAnt = styled(Button)`
 export default function Login({ active }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const isAuth = useSelector(isAuthenticated);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (isAuth) {
-      dispatch(fetchProfile());
-      navigate("/dashboard");
-    }
-  }, [isAuth, navigate, dispatch]);
-
   const handleLogin = (values) => {
-    dispatch(fetchLogin(values));
+    const obj = {
+      navigate,
+      values,
+    };
+    dispatch(fetchLogin(obj));
     form.resetFields(["email", "password"]);
   };
 
