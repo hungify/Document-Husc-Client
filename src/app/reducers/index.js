@@ -37,6 +37,8 @@ const combinedReducer = combineReducers({
   profile: profileSlice,
   archives: archiveSlice,
   draft: draftSlice,
+
+  chat: chatSlice,
 });
 
 const rootReducer = (state, action) => {
@@ -52,7 +54,15 @@ const persistConfig = {
   version: 1,
   storage,
   blacklist: ["home", "searchGroup", "recipients", "issueDocument"],
-  whitelist: ["auth", "typesOfDocuments", "categories", "agencies", "departments", "urgentLevels"],
+  whitelist: [
+    "auth",
+    "typesOfDocuments",
+    "categories",
+    "agencies",
+    "departments",
+    "urgentLevels",
+    "profile",
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

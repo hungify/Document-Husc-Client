@@ -1,51 +1,75 @@
-import { getProfile } from "app/selectors/profile";
 import { EVENTS } from "constants/events";
+import { addMessage } from "features/DocumentDetails/documentDetailsSlice";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
+import { getAccessToken } from "app/selectors/auth";
+import { getConversationId } from "app/selectors/documentDetails";
 
-const socket = io("https://localhost:8000", {
+const socketClient = io.connect(process.env.REACT_APP_ENDPOINT, {
   transports: ["websocket"],
+  auth: {
+    headers: {
+      authorization: null,
+    },
+  },
 });
 
 const SocketContext = React.createContext({
-  socket,
-  sender: null,
-  setUsername: () => false,
-  setMessages: () => false,
-  rooms: {},
-  messages: [],
+  socketClient,
 });
 
 function SocketProvider(props) {
-  const [roomId, setRoomId] = React.useState("");
-  const [messages, setMessages] = React.useState([]);
-  // const [rooms, setRooms] = React.useState();
-  const username = useSelector(getProfile)?.username;
-
-  // socket.on(EVENTS.SERVER.ROOMS, (value) => {
-  //   setRooms(value);
-  // });
-
-  socket.on(EVENTS.SERVER.JOINED_ROOM, (value) => {
-    setRoomId(value);
-    setMessages([]);
-  });
+  const dispatch = useDispatch();
+  const accessToken = useSelector(getAccessToken);
+  const conversationId = useSelector(getConversationId);
 
   React.useEffect(() => {
-    socket.on(EVENTS.SERVER.ROOM_MESSAGE, ({ message, username, time }) => {
-      setMessages((messages) => [...messages, { message, username, time }]);
+    if (socketClient) {
+      if (accessToken && conversationId) {
+        Object.assign(socketClient.io.opts.auth, {
+          headers: {
+            authorization: accessToken,
+          },
+        });
+        socketClient.connect();
+      }
+    } else {
+      socketClient.connect();
+    }
+  }, [accessToken, conversationId]);
+
+  React.useEffect(() => {
+    socketClient.on("disconnect", () => {
+      socketClient.connect();
     });
-  }, [socket]);
+    socketClient.on("reconnect", () => {
+      socketClient.emit(EVENTS.CLIENT.JOIN_ROOM, { conversationId });
+    });
+  }, [socketClient]);
+
+  React.useEffect(() => {
+    socketClient.on(
+      EVENTS.SERVER.ROOM_MESSAGE,
+      ({ content, username, avatar, createdAt, senderId }) => {
+        const message = {
+          content,
+          sender: {
+            username,
+            avatar,
+            _id: senderId,
+          },
+          createdAt,
+        };
+        dispatch(addMessage(message));
+      }
+    );
+  }, [socketClient]);
 
   return (
     <SocketContext.Provider
       value={{
-        socket,
-        username,
-        roomId,
-        messages,
-        setMessages,
+        socketClient,
       }}
       {...props}
     />
