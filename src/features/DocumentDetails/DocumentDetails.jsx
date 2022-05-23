@@ -1,6 +1,6 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Divider, Form, Modal, Row, Space, Tabs } from "antd";
-import { getRole, getUserId, isAuthenticated } from "app/selectors/auth";
+import { getRole, getUserId } from "app/selectors/auth";
 import {
   getFiles,
   getMyReadDate,
@@ -74,7 +74,7 @@ export default function DetailDocument() {
     } else {
       navigate(`?tab=${TABS.PROPERTY}`);
     }
-  }, [dispatch, activeTab]);
+  }, [dispatch, activeTab, slug]);
 
   const handleTabChangeClick = (key) => {
     navigate(`?tab=${key}`);
