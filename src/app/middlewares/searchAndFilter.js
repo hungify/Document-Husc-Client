@@ -1,5 +1,6 @@
 import { fetchDocuments } from "features/ManageDocuments/documentsSlice";
 import { fetchRecipients } from "features/Recipients/recipientsSlice";
+import logger from "redux-logger";
 const { createListenerMiddleware, isAnyOf } = require("@reduxjs/toolkit");
 const {
   setFiltersBy,
