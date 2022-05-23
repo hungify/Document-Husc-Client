@@ -16,7 +16,6 @@ import ForwardIcon from "components/Icons/ForwardIcon";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { ROLES } from "configs/roles";
 import { TABS } from "constants/tabs";
-import { useSockets } from "context/socket";
 import ChartReceiver from "features/ChartReceiver/ChartReceiver";
 import ChatRoom from "features/ChatRoom/ChatRoom";
 import { fetchDocumentDetailsByTab } from "features/DocumentDetails/documentDetailsSlice";
@@ -51,7 +50,6 @@ export default function DetailDocument() {
 
   const dispatch = useDispatch();
   const role = useSelector(getRole);
-  const isAuth = useSelector(isAuthenticated);
   const userId = useSelector(getUserId);
   const property = useSelector(getProperty);
   const files = useSelector(getFiles);
