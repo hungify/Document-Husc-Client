@@ -37,7 +37,7 @@ function SocketProvider(props) {
     } else {
       socketClient.connect();
     }
-  }, [accessToken, conversationId]);
+  }, [accessToken, conversationId, socketClient]);
 
   React.useEffect(() => {
     socketClient.on("disconnect", () => {
