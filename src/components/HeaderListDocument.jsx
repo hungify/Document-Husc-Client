@@ -2,6 +2,7 @@ import { Card, Col, Divider, Row, Typography } from "antd";
 import { getTotalDocumentsMatch } from "app/selectors/documents";
 import { getSearchGroup, getSearchDateRange } from "app/selectors/searchGroup";
 import SortFilter from "components/SortFilter";
+import dayjs from "dayjs";
 import { setSortBy } from "features/SearchGroup/searchGroupSlice";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -50,10 +51,12 @@ export default function HeaderListDocument({ children }) {
               &nbsp;kết quả từ ngày
               <Typography.Text strong>
                 &nbsp;
-                {searchDateRange.start}
+                {dayjs(searchDateRange.start).format("DD/MM/YYYY")}
               </Typography.Text>
               &nbsp; đến ngày
-              <Typography.Text strong> {searchDateRange.end}</Typography.Text>
+              <Typography.Text strong>
+                {dayjs(searchDateRange.end).format("DD/MM/YYYY")}
+              </Typography.Text>
             </Col>
           )}
 

@@ -5,19 +5,20 @@ const documentsService = {
   fetchDocuments: (filterQuery) => {
     const url = "documents";
     const { sort, page, pageSize, filtersBy, search, dateRange } = filterQuery;
-    const filterParams = removeEmptyObjects(filtersBy);
+    const filtersKey = { ...filtersBy };
+    delete filtersKey.triggerBy; // key not needed in request
+    const filterParams = removeEmptyObjects(filtersKey);
     const searchParams = removeEmptyObjects(search);
     const dateRangeParam = removeEmptyObjects(dateRange);
-
     let searchParamsString = null;
-    if (searchParams.searchValue) {
+    if (searchParams.searchText) {
       if (searchParams.searchBy === "both") {
         searchParamsString = {
-          q: searchParams.searchValue,
+          q: searchParams.searchText,
         };
       } else {
         searchParamsString = {
-          [`${searchParams.searchBy}[regex]`]: searchParams.searchValue,
+          [`${searchParams.searchBy}[regex]`]: searchParams.searchText,
         };
       }
     }

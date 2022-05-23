@@ -48,7 +48,7 @@ const searchGroupSlice = createSlice({
       };
     },
     setFiltersBy: (state, action) => {
-      delete action.payload["triggerBy"]; // key need to trigger in middleware
+      state.triggerBy = action.payload.triggerBy;
       for (const key in action.payload) {
         // check also if property is not inherited from prototype
         if (action.payload.hasOwnProperty(key)) {
