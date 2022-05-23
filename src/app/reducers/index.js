@@ -37,8 +37,6 @@ const combinedReducer = combineReducers({
   profile: profileSlice,
   archives: archiveSlice,
   draft: draftSlice,
-
-  chat: chatSlice,
 });
 
 const rootReducer = (state, action) => {
