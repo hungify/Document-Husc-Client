@@ -67,8 +67,8 @@ export default function TreeProcessing({ treeData }) {
         />
       ) : userId !== publisherId && !isPublic ? (
         <Alert
-          message="Xác nhận xứ lý văn bản"
-          description="Thông báo cho mọi người là bạn đã xứ lý văn bản này"
+          message="Xác nhận xử lý văn bản"
+          description="Thông báo cho mọi người là bạn đã xử lý văn bản này"
           type="warning"
           showIcon
         />
