@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import { getAccessToken } from "app/selectors/auth";
 import { getConversationId } from "app/selectors/documentDetails";
 
-const socketClient = io.connect(process.env.REACT_APP_ENDPOINT, {
+const socketClient = io.connect(process.env.REACT_APP_API_ENDPOINT, {
   transports: ["websocket"],
   auth: {
     headers: {
