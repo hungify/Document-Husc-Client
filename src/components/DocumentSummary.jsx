@@ -62,7 +62,7 @@ export default function DocumentSummary({ dataSource }) {
           } else if (item.key === "issueDate") {
             return dayjs(text).format("DD/MM/YYYY");
           } else if (item.key === "category") {
-            return text.title;
+            return text?.title;
           }
           return text.label || text;
         },
