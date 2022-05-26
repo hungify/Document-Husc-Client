@@ -5,12 +5,10 @@ const refreshToken = createAction("auth/refreshToken");
 const logout = createAction("auth/logout");
 const login = createAction("auth/login");
 
-export const fetchLogin = createAsyncThunk(login.type, async (args, thunkAPI) => {
+export const fetchLogin = createAsyncThunk(login.type, async (values, thunkAPI) => {
   try {
-    const { navigate, values } = args;
     const { email, password } = values;
     const { data } = await authService.login({ email, password });
-    navigate("/dashboard");
     data.message = "Đăng nhập thành công";
     return data;
   } catch (error) {
@@ -61,11 +59,10 @@ export const fetchRefreshToken = createAsyncThunk(
 );
 
 export const fetchLogout = createAsyncThunk(logout.type, async (data, { rejectWithValue }) => {
-  const { navigate, refreshToken } = data;
+  const { refreshToken } = data;
   try {
     await authService.logout(refreshToken);
     const message = "Đăng xuất thành công";
-    navigate("/");
     return message;
   } catch (error) {
     const { message } = error.response.data;
@@ -109,7 +106,6 @@ const authSlice = createSlice({
     builder.addCase(fetchLogin.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
-      state.message = action.payload;
       state.countError += 1;
       showToast("error", action.payload, toastPosition.topRight);
     });

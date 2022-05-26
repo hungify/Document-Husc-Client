@@ -38,11 +38,7 @@ export default function Login({ active }) {
   const navigate = useNavigate();
 
   const handleLogin = (values) => {
-    const obj = {
-      navigate,
-      values,
-    };
-    dispatch(fetchLogin(obj));
+    dispatch(fetchLogin(values));
     form.resetFields(["email", "password"]);
   };
 
