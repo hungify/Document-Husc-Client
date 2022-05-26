@@ -51,7 +51,7 @@ const initialState = {
   success: false,
   error: false,
   message: "",
-
+  myReadDate: null,
   total: 0,
   inboxDocuments: [],
 };
@@ -84,6 +84,7 @@ const inboxDocumentsSlice = createSlice({
     builder.addCase(updateReadDocument.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+
       showToast("success", "Xử lý văn bản thành công", toastPosition.bottomRight);
     });
     builder.addCase(updateReadDocument.rejected, (state, action) => {

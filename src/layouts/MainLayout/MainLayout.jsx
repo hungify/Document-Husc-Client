@@ -18,6 +18,7 @@ import { fetchCategories } from "features/ManageCategories/categoriesSlice";
 import { fetchTypesOfDocuments } from "features/ManageTypesOfDocuments/typesOfDocumentSlice";
 import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocuments";
 import { fetchDepartments } from "features/ManageDepartments/departmentsSlice";
+import { fetchProfile } from "features/Profile/profileSlice";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
@@ -46,6 +47,16 @@ export default function MainLayout({ children }) {
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
   const [loading, setLoading] = React.useState(true);
   const loadingApp = useSelector(getLoadingTypesOfDocuments);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (isAuth) {
+      dispatch(fetchProfile());
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  }, [isAuth, dispatch]);
 
   React.useEffect(() => {
     if (loadingApp) {
@@ -53,15 +64,13 @@ export default function MainLayout({ children }) {
     }
   }, [loadingApp]);
 
-  const dispatch = useDispatch();
-
   React.useEffect(() => {
     dispatch(fetchAgencies());
     dispatch(fetchUrgentLevels());
     dispatch(fetchCategories());
     dispatch(fetchDepartments());
     dispatch(fetchTypesOfDocuments()); // this line must be end of dispatch
-  }, [dispatch]);
+  }, [dispatch, isAuth]);
 
   React.useEffect(() => {
     if (path.length > 2) {

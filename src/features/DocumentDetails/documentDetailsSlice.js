@@ -21,11 +21,9 @@ export const fetchDocumentDetailsByTab = createAsyncThunk(fetch.type, async (que
 const fetchAll = createAction("documentDetails/fetch/All");
 export const fetchDocumentDetails = createAsyncThunk(fetchAll.type, async (query, thunkAPI) => {
   try {
-    const {
-      data: { messages, conversationId },
-    } = await documentsService.fetchDocumentDetails(query);
+    const { data } = await documentsService.fetchDocumentDetails(query);
 
-    return { messages, conversationId };
+    return data;
   } catch (error) {
     const { message } = error.response.data;
     return thunkAPI.rejectWithValue(message);
