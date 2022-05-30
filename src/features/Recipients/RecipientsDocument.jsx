@@ -1,11 +1,11 @@
-import { Card, Col, Form, Input, Row, Typography } from "antd";
+import { Card, Col, Form, Row, Typography } from "antd";
+import { getDepartmentsConfig } from "app/selectors/departments";
 import { getFilterRecipients } from "app/selectors/recipients";
 import { fetchExcludedRecipients, fetchRecipients } from "features/Recipients/recipientsSlice";
+import TransferTableRecipients from "features/Recipients/TransferTableRecipients";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import TransferTableRecipients from "features/Recipients/TransferTableRecipients";
-import { getDepartmentsConfig } from "app/selectors/departments";
 
 const Container = styled.div`
   padding: 10px 20px;
