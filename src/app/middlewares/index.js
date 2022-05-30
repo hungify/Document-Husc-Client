@@ -6,8 +6,7 @@ const middlewares = (getDefaultMiddleware) =>
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
-  })
-    .prepend(searchAndFilterMiddleware)
-    .concat(logger);
+  }).prepend(searchAndFilterMiddleware);
+// .concat(logger);
 
 export default middlewares;
