@@ -16,7 +16,7 @@ DocumentKHH is a website used to lookup, track, manage, store documents and redu
 - Redux Toolkit
 - Styled Components
 - Socket.io
-- Libraries such as React Router Dom, React PDF...
+- Libraries such as React Router Dom ...
 
 ## Features
 
