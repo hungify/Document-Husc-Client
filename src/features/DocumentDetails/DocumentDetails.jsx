@@ -21,7 +21,7 @@ import ChatRoom from "features/ChatRoom/ChatRoom";
 import { fetchDocumentDetailsByTab } from "features/DocumentDetails/documentDetailsSlice";
 import { forwardDocuments, updateReadDocument } from "features/InboxDocuments/inboxDocumentsSlice";
 import RecipientDocument from "features/Recipients/RecipientsDocument";
-import { fetchExcludedRecipients } from "features/Recipients/recipientsSlice";
+import { addExcludedUsers } from "features/Recipients/recipientsSlice";
 import RelatedDocuments from "features/RelatedDocuments/RelatedDocuments";
 import TreeProcessing from "features/TreeProcessing/TreeProcessing";
 import _ from "lodash";
@@ -112,6 +112,7 @@ export default function DetailDocument() {
     setVisible(false);
     setTimeout(() => {
       dispatch(forwardDocuments({ documentId: slug, ids: values.recipients }));
+      dispatch(addExcludedUsers(values.recipients));
       setSelectedRecipient([]);
       setConfirmLoading(false);
     }, 500);
@@ -120,9 +121,6 @@ export default function DetailDocument() {
   const handleForwardClick = (documentId) => {
     return () => {
       setVisible(true);
-      if (documentId) {
-        dispatch(fetchExcludedRecipients(documentId));
-      }
     };
   };
 

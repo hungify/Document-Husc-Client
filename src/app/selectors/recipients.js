@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import _ from "lodash";
 
-const getRecipients = (state) => state?.recipients?.users;
+export const getRecipients = (state) => state?.recipients?.users;
 const getExcludedRecipients = (state) => state?.recipients?.excludedUsers;
 export const getTotalRecipients = (state) => state?.recipients?.total;
 
