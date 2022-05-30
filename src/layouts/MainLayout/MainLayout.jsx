@@ -1,4 +1,4 @@
-import { Layout } from "antd";
+import { Empty, Layout, Space, Typography } from "antd";
 import { getRole, isAuthenticated } from "app/selectors/auth";
 import LoadingOverlayApp from "components/LoadingOverlayApp";
 import { menuConfig } from "configs/menu";
@@ -19,6 +19,7 @@ import { fetchTypesOfDocuments } from "features/ManageTypesOfDocuments/typesOfDo
 import { getLoadingTypesOfDocuments } from "app/selectors/typesOfDocuments";
 import { fetchDepartments } from "features/ManageDepartments/departmentsSlice";
 import { fetchProfile } from "features/Profile/profileSlice";
+import useWindowSize from "hooks/useWindowSize";
 
 const LayoutMain = styled(Layout)`
   margin-top: 64px;
@@ -39,6 +40,9 @@ export default function MainLayout({ children }) {
   const isAuth = useSelector(isAuthenticated);
   const role = useSelector(getRole);
 
+  const loadingApp = useSelector(getLoadingTypesOfDocuments);
+  const dispatch = useDispatch();
+
   const { pathname } = useLocation();
   const path = pathname.split("/").filter((item) => item);
 
@@ -46,8 +50,17 @@ export default function MainLayout({ children }) {
   const [activeKey, setActiveKey] = React.useState();
   const [menuItems, setMenuItems] = React.useState(menuConfig.GUEST);
   const [loading, setLoading] = React.useState(true);
-  const loadingApp = useSelector(getLoadingTypesOfDocuments);
-  const dispatch = useDispatch();
+
+  const [isMobile, setMobile] = React.useState(false);
+  const windowSize = useWindowSize();
+
+  React.useEffect(() => {
+    if (windowSize.width > 1000) {
+      setMobile(false);
+    } else {
+      setMobile(true);
+    }
+  }, [windowSize]);
 
   React.useEffect(() => {
     if (isAuth) {
@@ -112,33 +125,48 @@ export default function MainLayout({ children }) {
   return (
     <LoadingOverlayApp spinner={<PulseLoader size={15} color="#F5A623" />} active={loading}>
       <Layout>
-        <Header shouldFixed={1} />
-        <LayoutMain hasSider $isAuth={isAuth}>
-          {isAuth && (
-            <Sidebar
-              trigger={path[0] === "issue" ? null : ""}
-              width={250}
-              collapsible
-              collapsed={collapsed}
-              onCollapse={handleOnCollapse}
-              theme="light"
-            >
-              <MenuNavigation
-                mode="inline"
-                onSelect={handleMenuSelect}
-                selectedKeys={activeKey}
-                menuItems={menuItems}
-              />
-            </Sidebar>
-          )}
-          <LayoutWrapContent $collapsed={collapsed ? 1 : 0} $isAuth={isAuth}>
-            <ContentAnt>
-              <BreadcrumbTrail />
-              {children}
-              <Outlet />
-            </ContentAnt>
-          </LayoutWrapContent>
-        </LayoutMain>
+        {isMobile ? (
+          <Empty
+            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            description={
+              <Space direction="vertical">
+                <Typography.Title level={4}>BETA</Typography.Title>
+                <Typography.Title level={3}>Not available on Mobile yet</Typography.Title>
+                <Typography.Title level={3}>Chưa hỗ trợ trên các thiết bị di động</Typography.Title>
+              </Space>
+            }
+          />
+        ) : (
+          <>
+            <Header shouldFixed={1} />
+            <LayoutMain hasSider $isAuth={isAuth}>
+              {isAuth && (
+                <Sidebar
+                  trigger={path[0] === "issue" ? null : ""}
+                  width={250}
+                  collapsible
+                  collapsed={collapsed}
+                  onCollapse={handleOnCollapse}
+                  theme="light"
+                >
+                  <MenuNavigation
+                    mode="inline"
+                    onSelect={handleMenuSelect}
+                    selectedKeys={activeKey}
+                    menuItems={menuItems}
+                  />
+                </Sidebar>
+              )}
+              <LayoutWrapContent $collapsed={collapsed ? 1 : 0} $isAuth={isAuth}>
+                <ContentAnt>
+                  <BreadcrumbTrail />
+                  {children}
+                  <Outlet />
+                </ContentAnt>
+              </LayoutWrapContent>
+            </LayoutMain>
+          </>
+        )}
       </Layout>
     </LoadingOverlayApp>
   );
