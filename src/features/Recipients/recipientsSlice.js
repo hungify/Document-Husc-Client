@@ -25,7 +25,6 @@ export const fetchExcludedRecipients = createAsyncThunk(
       receiversNotExists.push(publisherId);
 
       return receiversNotExists;
-      return [];
     } catch (error) {
       const { message } = error.response.data;
       thunkAPI.rejectWithValue(message);
@@ -48,7 +47,9 @@ const recipientsSlice = createSlice({
   name: "recipients",
   initialState,
   reducers: {
-    resetRecipients: (state) => initialState,
+    addExcludedUsers: (state, action) => {
+      state.excludedUsers.push(...action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipients.pending, (state, action) => {
@@ -94,5 +95,5 @@ const recipientsSlice = createSlice({
   },
 });
 
-export const { resetRecipients } = recipientsSlice.actions;
+export const { addExcludedUsers } = recipientsSlice.actions;
 export default recipientsSlice.reducer;
