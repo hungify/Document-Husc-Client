@@ -159,7 +159,7 @@ const authSlice = createSlice({
       state.error = false;
       state.isAuthenticated = false;
       state.role = null;
-      showToast("success", action.payload, toastPosition.bottomRight);
+      // showToast("success", action.payload, toastPosition.bottomRight);
     });
     builder.addCase(fetchLogout.rejected, (state, action) => {
       state.loading = false;
